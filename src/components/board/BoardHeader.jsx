@@ -7,8 +7,8 @@ export default function BoardListHeader({ header, desc }) {
     <div className="board-list-header">
       <h2>{header}</h2>
       <div className="flex-box">
-        {desc}
-        <Button variant="contained" color="secondary" size="small">
+        <p>{desc}</p>
+        <Button variant="contained" color="secondary" sx={{ fontSize: 16 }}>
           작성하기
         </Button>
       </div>

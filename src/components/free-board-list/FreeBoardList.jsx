@@ -1,6 +1,6 @@
 import React from "react";
-import ChatOutlinedIcon from "@mui/icons-material/ChatOutlined";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import SmsOutlinedIcon from "@mui/icons-material/SmsOutlined";
 import "./FreeBoardList.scss";
 
 export default function FreeBoardList({ boardList }) {
@@ -21,7 +21,7 @@ export default function FreeBoardList({ boardList }) {
           <div className="flex-box bottom">
             <div className="content">{post.content}</div>
             <div className="coments">
-              <ChatOutlinedIcon sx={{ fontSize: 16 }} />
+              <SmsOutlinedIcon sx={{ fontSize: 16 }} />
               <span>{post.coments}</span>
             </div>
           </div>

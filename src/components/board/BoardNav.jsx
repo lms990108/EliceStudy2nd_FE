@@ -9,7 +9,7 @@ export default function BoardNav({ point, text }) {
         <span className="point">{point}</span>
         <span>{text}</span>
       </div>
-      <LoopIcon color="secondary" />
+      <LoopIcon color="secondary" className="refresh" />
     </div>
   );
 }

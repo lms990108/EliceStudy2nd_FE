@@ -4,6 +4,8 @@ import BoardNav from "../../components/board/BoardNav";
 import FreeBoardList from "../../components/free-board-list/FreeBoardList";
 import "./FreeBoardListPage.scss";
 import { Pagination } from "@mui/material";
+import { Route, Routes } from "react-router";
+import FreeBoardDetail from "../../components/free-board-detail/FreeBoardDetail";
 
 export default function FreeBoardListPage() {
   const desc = (
@@ -31,6 +33,7 @@ export default function FreeBoardListPage() {
       time: "2023-10-31",
     },
   ];
+
   return (
     <div className="free-board-page">
       <BoardListHeader header="자유게시판" desc={desc}></BoardListHeader>

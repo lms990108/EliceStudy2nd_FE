@@ -7,4 +7,7 @@ export const theme = createTheme({
       contrastText: "#FFFFFF",
     },
   },
+  typography: {
+    fontFamily: "Noto Sans KR",
+  },
 });

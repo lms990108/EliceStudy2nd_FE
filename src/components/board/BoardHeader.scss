@@ -3,17 +3,21 @@
   h2 {
     margin: 0;
     padding: 10px;
+    font-size: 48px;
+    font-weight: bold;
   }
   .flex-box {
     display: flex;
     justify-content: space-between;
     padding: 10px;
+
     p {
       margin: 0;
-      font-size: small;
+      font-size: 18px;
     }
     Button {
-      height: 30px;
+      height: 45px;
+      width: 115px;
       text-align: center;
       line-height: 30px;
       font-weight: 600;
