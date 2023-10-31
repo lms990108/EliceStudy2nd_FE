@@ -1,0 +1,25 @@
+@media (min-width: 480px) {
+  .play-detail-nav {
+    display: flex;
+    margin-top: 150px;
+  }
+
+  .play-detail-nav div {
+    font-size: 22px;
+    font-weight: 700;
+    padding: 0 10px 10px 10px;
+    margin-right: 100px;
+  }
+
+  .play-detail-nav div:hover {
+    cursor: pointer;
+  }
+
+  .play-detail-nav .detail-info {
+    color: #ffb400;
+    border-bottom: 2px solid #ffb400;
+  }
+}
+
+@media (max-width: 480px) {
+}
