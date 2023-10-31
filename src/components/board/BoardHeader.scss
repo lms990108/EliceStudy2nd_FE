@@ -1,0 +1,28 @@
+.board-list-header {
+  width: 100%;
+  h2 {
+    margin: 0;
+    padding: 10px;
+  }
+  .flex-box {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    p {
+      margin: 0;
+      font-size: small;
+    }
+    Button {
+      height: 30px;
+      text-align: center;
+      line-height: 30px;
+      font-weight: 600;
+      margin-top: auto;
+    }
+  }
+  hr {
+    border: 0;
+    height: 2px;
+    background-color: black;
+  }
+}

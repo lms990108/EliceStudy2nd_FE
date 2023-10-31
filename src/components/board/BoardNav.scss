@@ -1,0 +1,12 @@
+.nav-box {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  .point {
+    color: #ffb400;
+  }
+  span {
+    font-weight: 600;
+    font-size: small;
+  }
+}
