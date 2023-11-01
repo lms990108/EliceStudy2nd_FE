@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import "./UpButton.scss";
 
-export default function UpButton() {
+export function UpButton() {
   const [showButton, setShowButton] = useState(false);
 
   const scrollToTop = () => {

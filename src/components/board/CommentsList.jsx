@@ -1,9 +1,9 @@
 import React from "react";
-import Comment from "./Comment";
+import { Comment } from "./Comment";
 import { Button, Pagination } from "@mui/material";
 import "./CommentsList.scss";
 
-export default function CommentsList() {
+export function CommentsList() {
   const comments = [
     {
       user: "user123",

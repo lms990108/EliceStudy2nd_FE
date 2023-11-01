@@ -1,14 +1,14 @@
 import React from "react";
-import PRBoardPost from "../../components/board-pr/PRBoardPost";
+import FreeBoardPost from "../../components/board-free/FreeBoardPost";
+import "./FreeBoardDetailPage.scss";
 import { BoardSecondHeader, BoardNav, CommentForm, CommentsList } from "../../components/board";
-import "./PRBoardDetailPage.scss";
 
-export function PRBoardDetailPage() {
+export function FreeBoardDetailPage() {
   return (
-    <div className="pr-board-detail-page">
-      <BoardSecondHeader header="홍보게시판" />
+    <div className="free-board-detail">
+      <BoardSecondHeader header="자유게시판" />
       <div className="body">
-        <PRBoardPost />
+        <FreeBoardPost />
         <BoardNav point="4개" text="의 댓글" />
         <CommentForm />
         <CommentsList />

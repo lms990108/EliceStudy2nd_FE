@@ -1,10 +1,10 @@
 import React from "react";
-import BoardListHeader from "../../components/board/BoardHeader";
+import { BoardListHeader } from "../../components/board";
 import "./PRBoardListPage.scss";
 import PRBoardList from "../../components/board-pr/PRBoardList";
-import UpButton from "../../components/common/button/UpButton";
+import { UpButton } from "../../components/common/button/UpButton";
 
-export default function PRBoardListPage() {
+export function PRBoardListPage() {
   const desc = (
     <p>
       소규모 연극을 홍보하는 곳입니다.
