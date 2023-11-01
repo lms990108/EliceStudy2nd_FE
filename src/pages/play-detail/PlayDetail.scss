@@ -11,12 +11,6 @@ body {
     margin: 30px auto;
     font-family: "Nanum Gothic", sans-serif;
   }
-
-  .play-list-main {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-  }
 }
 
 /*(반응형) 핸드폰 사이즈에서 적용될 CSS*/
@@ -26,11 +20,5 @@ body {
     flex-direction: column;
     margin: 30px auto;
     font-family: "Nanum Gothic", sans-serif;
-  }
-
-  .play-list-main {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
   }
 }

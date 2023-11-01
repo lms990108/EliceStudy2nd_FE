@@ -1,0 +1,131 @@
+/*(반응형) 컴퓨터 사이즈에서 적용될 CSS*/
+@media (min-width: 480px) {
+  .condition-search-header {
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 24px;
+  }
+
+  .condition-search-header span {
+    font-size: 26px;
+    font-weight: 700;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .condition-search-main {
+    display: flex;
+    flex-direction: column;
+    background-color: #ffffff;
+    border: 1px solid rgba(188, 188, 188, 0.5);
+    border-radius: 8px;
+  }
+
+  .condition-search-main .flex-layout {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 5px 0;
+    border-bottom: 1px solid rgba(188, 188, 188, 0.5);
+  }
+
+  .condition-search-main .label {
+    width: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 20px;
+    font-weight: 700;
+    border-right: 1.5px solid rgba(188, 188, 188, 0.5);
+  }
+
+  .condition-search-main .checkbox {
+    padding-left: 20px;
+    width: 85%;
+    display: flex;
+  }
+
+  .checkbox label {
+    margin: 0;
+    padding-right: 36px;
+  }
+
+  .adapt-button {
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px 30px;
+  }
+
+  .adapt-button .button-text {
+    font-weight: 700;
+    font-size: 14px;
+  }
+}
+
+/*(반응형) 핸드폰 사이즈에서 적용될 CSS*/
+@media (max-width: 480px) {
+  .condition-search-header {
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 24px;
+  }
+
+  .condition-search-header span {
+    font-size: 26px;
+    font-weight: 700;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .condition-search-main {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: #ffffff;
+    border: 1px solid rgba(188, 188, 188, 0.5);
+    border-radius: 8px;
+  }
+
+  .condition-search-main .flex-layout {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 15px 0;
+    border-bottom: 1px solid rgba(188, 188, 188, 0.5);
+  }
+
+  .condition-search-main .label {
+    width: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 10px;
+    margin: 0 20px;
+    font-weight: 700;
+    border-bottom: 1.5px solid rgba(188, 188, 188, 0.5);
+  }
+
+  .condition-search-main .checkbox {
+    padding: 5px 0 0 20px;
+    width: 85%;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .checkbox label {
+    margin: 0;
+    padding-right: 5px;
+  }
+
+  .adapt-button {
+    display: flex;
+    justify-content: center;
+  }
+
+  .adapt-button .button-text {
+    font-weight: 700;
+    font-size: 15px;
+  }
+}
