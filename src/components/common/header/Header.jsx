@@ -1,5 +1,5 @@
 import React from "react";
 
 export default function Header() {
-  return <div>header</div>;
+  return <div>헤더입니다.</div>;
 }
