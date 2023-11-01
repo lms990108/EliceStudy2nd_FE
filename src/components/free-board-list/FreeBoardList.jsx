@@ -20,7 +20,7 @@ export default function FreeBoardList({ boardList }) {
           </div>
           <div className="flex-box bottom">
             <div className="content">{post.content}</div>
-            <div className="coments">
+            <div className="comments">
               <SmsOutlinedIcon sx={{ fontSize: 16 }} />
               <span>{post.coments}</span>
             </div>

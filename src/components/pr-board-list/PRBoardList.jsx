@@ -9,7 +9,7 @@ export default function PRBoardList({ boardList }) {
       <div className="post-content-box">
         <div className="flex-box">
           <div className="title">{post.title}</div>
-          <div className="flex-box coments">
+          <div className="flex-box comments">
             <SmsOutlinedIcon sx={{ fontSize: 20 }} />
             <span>{post.coments}</span>
           </div>

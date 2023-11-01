@@ -5,7 +5,7 @@ import FreeBoardList from "../../components/free-board-list/FreeBoardList";
 import "./FreeBoardListPage.scss";
 import { Pagination } from "@mui/material";
 import { Route, Routes } from "react-router";
-import FreeBoardDetail from "../../components/free-board-detail/FreeBoardDetail";
+import FreeBoardDetail from "../../components/free-board-detail/FreeBoardPost";
 
 export default function FreeBoardListPage() {
   const desc = (
