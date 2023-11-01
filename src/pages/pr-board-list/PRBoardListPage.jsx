@@ -1,7 +1,7 @@
 import React from "react";
 import BoardListHeader from "../../components/board/BoardHeader";
 import "./PRBoardListPage.scss";
-import PRBoardList from "../../components/pr-board-list/PRBoardList";
+import PRBoardList from "../../components/board-pr/PRBoardList";
 import UpButton from "../../components/common/button/UpButton";
 
 export default function PRBoardListPage() {

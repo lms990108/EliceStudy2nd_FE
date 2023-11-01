@@ -8,6 +8,7 @@ import FreeBoardDetailPage from "./pages/free-board-detail/FreeBoardDetailPage";
 import Header from "./components/common/header/Header";
 import PlayList from "./pages/play-list/PlayList";
 import PlayDetail from "./pages/play-detail/PlayDetail";
+import PRBoardDetailPage from "./pages/pr-board-detail/PRBoardDetailPage";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
             <Route path="/free-board" element={<FreeBoardListPage />} />
             <Route path="/free-board/detail" element={<FreeBoardDetailPage />} />
             <Route path="/PR-board" element={<PRBoardListPage />} />
+            <Route path="/PR-board/detail" element={<PRBoardDetailPage />} />
             <Route path="/play-list" element={<PlayList />} />
             <Route path="/play-detail/:playId" element={<PlayDetail />} />
           </Routes>
