@@ -1,13 +1,27 @@
 import React, { useState } from "react";
-import { Alert, AlertTitle, IconButton, Snackbar } from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import SmsOutlinedIcon from "@mui/icons-material/SmsOutlined";
 import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";
 import "./PostTop.scss";
+import { AlertCustom, AlertTest } from "../common/alert/Alerts";
 
 export function PostTop({ user, time, commentsCnt }) {
   const [open, setOpen] = useState(false);
+
+  const handleScrollTo = () => {
+    const location = document.querySelector("#commentForm").offsetTop;
+    window.scrollTo({ top: location, behavior: "smooth" });
+  };
+
+  const handleCopy = () => {
+    const textarea = document.createElement("textarea");
+    document.body.appendChild(textarea);
+    textarea.value = window.document.location.href;
+    textarea.select();
+    document.execCommand("copy");
+    document.body.removeChild(textarea);
+    setOpen(true);
+  };
 
   return (
     <div className="board-post-top">
@@ -17,34 +31,14 @@ export function PostTop({ user, time, commentsCnt }) {
         <div className="date">{time}</div>
       </div>
       <div className="icons">
-        <ShareOutlinedIcon className="share-icon pointer" onClick={() => setOpen(true)} />
-        <div className="comments-icon pointer" onClick={() => (location.href = "#commentForm")}>
+        <ShareOutlinedIcon className="share-icon pointer" onClick={handleCopy} />
+        <div className="comments-icon pointer" onClick={handleScrollTo}>
           <SmsOutlinedIcon />
           <span>{commentsCnt}</span>
         </div>
       </div>
 
-      <Snackbar open={open} onClose={() => setOpen(false)} autoHideDuration={1500} anchorOrigin={{ vertical: "top", horizontal: "center" }}>
-        <Alert
-          sx={{ width: 500 }}
-          severity="success"
-          action={
-            <IconButton
-              aria-label="close"
-              color="inherit"
-              size="small"
-              onClick={() => {
-                setOpen(false);
-              }}
-            >
-              <CloseIcon fontSize="inherit" />
-            </IconButton>
-          }
-        >
-          <AlertTitle>URL이 복사되었습니다!</AlertTitle>
-          <small>{window.location.href}</small>
-        </Alert>
-      </Snackbar>
+      <AlertCustom open={open} onclose={() => setOpen(false)} title={"URL이 복사되었습니다!"} content={window.location.href} time={1500} />
     </div>
   );
 }

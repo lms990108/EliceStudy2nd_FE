@@ -16,11 +16,11 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/free-board" element={<FreeBoardListPage />} />
-            <Route path="/free-board/:detail" element={<FreeBoardDetailPage />} />
+            <Route path="/free-board/:postId" element={<FreeBoardDetailPage />} />
             <Route path="/free-board/create-form" element={<FreeBoardFormPage />} />
 
             <Route path="/PR-board" element={<PRBoardListPage />} />
-            <Route path="/PR-board/:detail" element={<PRBoardDetailPage />} />
+            <Route path="/PR-board/:postId" element={<PRBoardDetailPage />} />
             <Route path="/PR-board/create-form" element={<PRBoardFormPage />} />
 
             <Route path="/play-list" element={<PlayList />} />

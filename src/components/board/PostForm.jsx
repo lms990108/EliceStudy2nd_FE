@@ -32,21 +32,21 @@ export function PostForm({ title = true, content = true, tags = true, image = tr
 
       {title && (
         <div className="input title flex-box">
-          <label for="title">*제목</label>
+          <label htmlFor="title">*제목</label>
           <input type="text" id="title" name="title" placeholder="제목을 작성해 주세요." />
         </div>
       )}
 
       {content && (
         <div className="input content flex-box">
-          <label for="content">*내용</label>
+          <label htmlFor="content">*내용</label>
           <textarea id="content" name="content" placeholder="내용을 작성해 주세요"></textarea>
         </div>
       )}
 
       {tags && (
         <div className="input tag flex-box">
-          <label for="tags">태그</label>
+          <label htmlFor="tags">태그</label>
           <input type="text" id="tags" name="tags" placeholder="#태그를-작성해-주세요" />
         </div>
       )}
@@ -54,7 +54,7 @@ export function PostForm({ title = true, content = true, tags = true, image = tr
       {image && (
         <div className="input image">
           <div>
-            <label for="image">*사진 URL</label>
+            <label htmlFor="image">*사진 URL</label>
             <input type="text" id="image" name="image" onChange={handleImageChange} required />
           </div>
           {imageURL && <img src={imageURL} alt="?" />}

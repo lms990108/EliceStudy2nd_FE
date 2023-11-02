@@ -6,7 +6,7 @@ import "./PRBoardFormPage.scss";
 export function PRBoardFormPage() {
   return (
     <div className="pr-board-form-page">
-      <BoardSecondHeader header="홍보게시판" />
+      <BoardSecondHeader header="홍보게시판" path="/pr-board" />
       <div className="body">
         <PRBoardForm />
       </div>
