@@ -1,0 +1,74 @@
+@import url('https://fonts.cdnfonts.com/css/baloo-bhaina-2');
+
+.header-container {
+    display: flex;
+    justify-content: center;
+    background-color: #282828;
+    height: 250px;
+}
+.header-box {
+    display: flex;
+    flex-direction: column;
+    background-color: #4cb84c;
+    width: 1110px;
+    height: 250px;
+}
+.vertical-box1 {
+    display: flex;
+    justify-content: end;
+    height: 50px;
+    background-color: #282828;
+    color: white;
+}
+.header-login-btn-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    text-align: center;
+    cursor: pointer;
+}
+.vertical-box2 {
+    height: 150px;
+    background-color: #282828;
+    color: white;
+    font-size: 50px;
+    display: flex;
+    justify-content: center;
+    font-family: 'Baloo Bhaina 2', sans-serif;
+}
+.vertical-box3 {
+    display: flex;
+}
+h1 {
+    margin: 0;
+}
+.highlight {
+    color: #ffb400;
+}
+.vertical-box3 {
+    display: flex;
+    justify-content: space-between;
+    height: 50px;
+    background-color: #282828;
+}
+.header-search-input {
+    border: #ffb400 solid 2.5px;
+    border-radius: 15px;
+    padding-left: 20px;
+    width: 350px;
+    height: 35px;
+}
+.header-search-input:focus {
+    outline: none;
+}
+.search-container {
+    position: relative;
+}
+.search-icon {
+    color: #ffb400;
+    position: absolute;
+    right: 15px; // 오른쪽 여백
+    top: 45%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
