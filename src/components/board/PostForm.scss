@@ -84,4 +84,21 @@
       font-weight: 400;
     }
   }
+
+  .tag-list {
+    justify-content: flex-start;
+    font-size: 14px;
+
+    > * {
+      background-color: #e8e8e8;
+      border-radius: 20px;
+      padding: 2px 6px 2px 10px;
+      margin: 8px 6px 0 0;
+      height: 24px;
+    }
+
+    span {
+      line-height: 22px;
+    }
+  }
 }

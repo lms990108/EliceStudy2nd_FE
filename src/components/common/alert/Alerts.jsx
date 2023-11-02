@@ -2,7 +2,6 @@ import { Alert, AlertTitle, Button, IconButton, Snackbar } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import CheckIcon from "@mui/icons-material/Check";
 import React from "react";
-import "./Alerts.scss";
 
 // 필수
 // open : const [open, setOpen] = useState(false); 셋팅 후 open={open} 로 넘겨주세용
@@ -30,7 +29,8 @@ export function AlertCustom({ open, onclose, onclick, checkBtn, closeBtn, checkB
   return (
     <Snackbar open={open} onClose={onclose} autoHideDuration={time || null} anchorOrigin={{ vertical: "top", horizontal: "center" }}>
       <Alert
-        sx={{ width }}
+        variant="outlined"
+        sx={{ width, backgroundColor: "white" }}
         severity={severity || "success"}
         color={color || null}
         action={
@@ -41,7 +41,7 @@ export function AlertCustom({ open, onclose, onclick, checkBtn, closeBtn, checkB
                   className="alert-button"
                   aria-label="check"
                   size="small"
-                  sx={{ minWidth: 48, color: checkBtnColor || "inherit" }}
+                  sx={{ minWidth: 48, color: checkBtnColor || "inherit", "&:hover": { textDecoration: "underline" } }}
                   onClick={() => {
                     onclick();
                     onclose();
@@ -62,15 +62,23 @@ export function AlertCustom({ open, onclose, onclick, checkBtn, closeBtn, checkB
                   <CheckIcon fontSize="inherit" />
                 </IconButton>
               ))}
-            {btnCloseHidden || closeBtn ? (
-              <Button className="alert-button" aria-label="close" size="small" onClick={onclose} sx={{ minWidth: 48, color: closeBtnColor || "inherit" }}>
-                {closeBtn}
-              </Button>
-            ) : (
-              <IconButton aria-label="close" size="small" onClick={onclose} sx={{ color: closeBtnColor || "inherit" }}>
-                <CloseIcon fontSize="inherit" />
-              </IconButton>
-            )}
+
+            {btnCloseHidden ||
+              (closeBtn ? (
+                <Button
+                  className="alert-button"
+                  aria-label="close"
+                  size="small"
+                  onClick={onclose}
+                  sx={{ minWidth: 48, color: closeBtnColor || "inherit", "&:hover": { textDecoration: "underline" } }}
+                >
+                  {closeBtn}
+                </Button>
+              ) : (
+                <IconButton aria-label="close" size="small" onClick={onclose} sx={{ color: closeBtnColor || "inherit" }}>
+                  <CloseIcon fontSize="inherit" />
+                </IconButton>
+              ))}
           </>
         }
       >
