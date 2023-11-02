@@ -7,6 +7,7 @@ import { FreeBoardDetailPage, FreeBoardFormPage, FreeBoardListPage } from "./pag
 import Header from "./components/common/header/Header";
 import PlayList from "./pages/play-list/PlayList";
 import PlayDetail from "./pages/play-detail/PlayDetail";
+import ScrollToTop from "./utils/ScrollToTop";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
       <ThemeProvider theme={theme}>
         <Header />
         <BrowserRouter>
+          <ScrollToTop />
           <Routes>
             <Route path="/free-board" element={<FreeBoardListPage />} />
             <Route path="/free-board/:postId" element={<FreeBoardDetailPage />} />
