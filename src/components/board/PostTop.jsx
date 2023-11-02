@@ -3,7 +3,7 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import SmsOutlinedIcon from "@mui/icons-material/SmsOutlined";
 import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";
 import "./PostTop.scss";
-import { AlertCustom, AlertTest } from "../common/alert/Alerts";
+import { AlertCustom } from "../common/alert/Alerts";
 
 export function PostTop({ user, time, commentsCnt }) {
   const [open, setOpen] = useState(false);
