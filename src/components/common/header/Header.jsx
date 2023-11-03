@@ -14,10 +14,7 @@ const Header = () => {
         </div>
         <div className="vertical-box2">
           <div>
-            <h1>
-              <span className="highlight">T</span>eeny
-              <span className="highlight">B</span>ox
-            </h1>
+            <img className="logo" src="/logo.png" alt="logo-image"></img>
           </div>
         </div>
         <div className="vertical-box3">
