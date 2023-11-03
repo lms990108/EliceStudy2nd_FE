@@ -4,7 +4,7 @@
     display: flex;
     justify-content: center;
     background-color: #282828;
-    height: 250px;
+    height: 200px;
 }
 .header-box {
     display: flex;
@@ -15,19 +15,21 @@
 .vertical-box1 {
     display: flex;
     justify-content: end;
-    height: 50px;
+    height: 25px;
     background-color: #282828;
     color: white;
+    font-weight: 200;
 }
 .header-login-btn-box {
     display: flex;
     flex-direction: column;
     justify-content: end;
     text-align: center;
+    font-size: 15px;
     cursor: pointer;
 }
 .vertical-box2 {
-    height: 150px;
+    height: 125px;
     background-color: #282828;
     color: white;
     font-size: 50px;
@@ -36,8 +38,8 @@
     font-family: 'Baloo Bhaina 2', sans-serif;
 }
 .logo {
-    height: 150px;
-    width: 550px;
+    height: 135px;
+    width: 440px;
     margin-right: 50px;
 }
 .vertical-box3 {
@@ -59,7 +61,8 @@ h1 {
     border: #ffb400 solid 2.5px;
     border-radius: 15px;
     padding-left: 20px;
-    width: 350px;
+    font-size: 18px;
+    width: 300px;
     height: 35px;
 }
 .header-search-input:focus {
@@ -72,7 +75,7 @@ h1 {
     color: #ffb400;
     position: absolute;
     right: 15px;
-    top: 45%;
+    top: 43%;
     transform: translateY(-50%);
     cursor: pointer;
 }

@@ -21,7 +21,7 @@ const Header = () => {
           <div>
             <ColorTabs />
           </div>
-          <div className="search-container">
+          <div className="search-container">  
             <input className="header-search-input" />
             <SearchRoundedIcon className="search-icon" />
           </div>

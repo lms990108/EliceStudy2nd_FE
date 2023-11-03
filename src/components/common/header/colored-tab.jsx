@@ -20,8 +20,10 @@ export default function ColorTabs() {
         aria-label="secondary tabs example"
         sx={{
           ".MuiTab-root": {
-            width: '150px',
-            fontSize: '18px',
+            width: '130px',
+            padding: '0px',
+            fontWeight: "350",
+            fontSize: '17px',
             color: "white",
             "&.Mui-selected": {
               color: "#ffb400",
