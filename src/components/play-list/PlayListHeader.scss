@@ -1,0 +1,55 @@
+/*(반응형) 컴퓨터 사이즈에서 적용될 CSS*/
+@media (min-width: 480px) {
+  .play-list-header {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 80px;
+  }
+
+  .play-list-header .number-of-plays {
+    font-weight: 700;
+    font-size: 28px;
+  }
+
+  .play-list-header .number-of-plays span {
+    color: #ffb400;
+  }
+
+  .play-list-header .sort-by {
+    width: 120px;
+    height: 40px;
+    font-size: 16px;
+    font-family: "Nanum Gothic", sans-serif;
+    text-align: center;
+    border: 1px solid rgba(188, 188, 188, 0.7);
+    border-radius: 8px;
+  }
+}
+
+/*(반응형) 핸드폰 사이즈에서 적용될 CSS*/
+@media (max-width: 480px) {
+  .play-list-header {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 80px;
+  }
+
+  .play-list-header .number-of-plays {
+    font-weight: 700;
+    font-size: 26px;
+  }
+
+  .play-list-header .number-of-plays span {
+    color: #ffb400;
+  }
+
+  .play-list-header .sort-by {
+    width: 120px;
+    height: 40px;
+    font-size: 16px;
+    font-family: "Nanum Gothic", sans-serif;
+    text-align: center;
+    border: 1px solid rgba(188, 188, 188, 0.7);
+    border-radius: 8px;
+  }
+}

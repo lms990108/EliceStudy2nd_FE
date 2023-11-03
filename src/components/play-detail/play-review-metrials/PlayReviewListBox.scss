@@ -1,0 +1,54 @@
+@media (min-width: 480px) {
+  .play-review-list-box {
+    border-bottom: 1px solid rgb(188, 188, 188, 0.5);
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+
+    .review-author-and-date {
+      width: 12%;
+      p {
+        margin: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+
+    .play-review-title {
+      width: 60%;
+      display: flex;
+      align-items: center;
+      padding-left: 30px;
+
+      svg {
+        padding-right: 10px;
+      }
+    }
+
+    .play-review-accordion {
+      width: 5%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .play-review-rating {
+      width: 15%;
+      display: flex;
+      justify-items: center;
+      align-items: center;
+    }
+
+    .play-review-remove {
+      display: flex;
+      justify-items: center;
+      align-items: center;
+      cursor: pointer;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+}

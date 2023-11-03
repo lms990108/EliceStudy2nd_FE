@@ -1,0 +1,65 @@
+.board-list-header {
+  width: 100%;
+
+  .content {
+    padding: 0 10px;
+  }
+
+  h2 {
+    margin: 0;
+    padding: 10px;
+    font-size: 48px;
+    font-weight: bold;
+  }
+  .flex-box {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+
+    p {
+      margin: 0;
+      font-size: 18px;
+    }
+    Button {
+      height: 45px;
+      width: 115px;
+      text-align: center;
+      line-height: 30px;
+      font-weight: 600;
+      margin-top: auto;
+    }
+  }
+  hr {
+    border: 0;
+    height: 3px;
+    background-color: rgb(100, 100, 100);
+  }
+}
+
+.board-second-header {
+  display: flex;
+  align-items: center;
+  margin: 38px 0;
+
+  .click-box {
+    display: flex;
+    align-items: center;
+  }
+
+  .header-title {
+    margin: 0 8px 0 4px;
+    font-size: 20px;
+    font-weight: 600;
+  }
+
+  hr {
+    flex-grow: 1;
+    border: none;
+    background-color: #000;
+    height: 2px;
+  }
+
+  .pointer {
+    cursor: pointer;
+  }
+}

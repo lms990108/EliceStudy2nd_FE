@@ -1,0 +1,38 @@
+.comment-form-box {
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  padding: 18px 14px;
+  border-radius: 30px;
+
+  .flex-box {
+    display: flex;
+
+    textarea {
+      margin-left: 10px;
+      border-radius: 10px;
+      flex-grow: 1;
+      min-height: 60px;
+      max-height: 100px;
+      padding: 10px;
+      font-weight: 500;
+      resize: none;
+      font-family: "Noto Sans KR";
+      outline: none;
+      border: #bcbcbc solid 1px;
+    }
+    textarea:focus {
+      border-color: black;
+    }
+
+    textarea::placeholder {
+      color: #bcbcbc;
+    }
+  }
+  .btn {
+    margin-top: 10px;
+    width: fit-content;
+    align-self: flex-end;
+  }
+}

@@ -1,0 +1,80 @@
+@media (min-width: 480px) {
+  .play-detail-top {
+    display: flex;
+  }
+
+  .play-poster {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .poster-box {
+    width: 350px;
+    height: 450px;
+    border-radius: 8px;
+    box-shadow: -3px 3px 5px #bcbcbc;
+  }
+
+  .poster-box img {
+    width: 350px;
+    height: 450px;
+    border-radius: 8px;
+  }
+
+  .play-info {
+    margin-left: 100px;
+    width: 800px;
+  }
+
+  .play-info h1,
+  .play-info div {
+    height: 45px;
+    padding-left: 10px;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .play-info h1 {
+    font-size: 36px;
+  }
+
+  .play-info p {
+    margin-left: 15px;
+    font-size: 18px;
+    margin-top: 19px;
+  }
+
+  .play-info .play-detail-buttons {
+    height: 60px;
+    margin-top: 25px;
+    display: flex;
+  }
+
+  .play-detail-buttons div {
+    padding: 0;
+    margin-right: 30px;
+    height: 60px;
+  }
+
+  /* mui 버튼에서의 text는 p tag 안에 담겨 있으므로 위 .play-info p 땜에 이상하게 css가 적용되었음!*/
+  /* 이 점 주의하기! */
+  .play-detail-buttons p {
+    font-weight: 700;
+    font-size: 23px;
+    margin: 0;
+    padding: 5px;
+  }
+
+  .share-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .share-btn:hover {
+    cursor: pointer;
+  }
+}
+
+@media (max-width: 480px) {
+}

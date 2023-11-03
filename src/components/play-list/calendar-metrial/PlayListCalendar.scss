@@ -1,0 +1,17 @@
+@media (min-width: 480px) {
+  .play-list-calendar-container {
+    .calendar-guide-text {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 30px;
+
+      svg {
+        margin-right: 10px;
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+}

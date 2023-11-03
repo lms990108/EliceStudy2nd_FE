@@ -1,0 +1,48 @@
+body {
+  background-color: #fcf9f5;
+}
+
+/*(반응형) 컴퓨터 사이즈에서 적용될 CSS*/
+@media (min-width: 480px) {
+  play-region-select-big-container {
+    margin: 0 auto;
+  }
+
+  .play-list-container {
+    display: flex;
+    flex-direction: column;
+    width: 1110px;
+    margin: 30px auto;
+    font-family: "Nanum Gothic", sans-serif;
+  }
+
+  .play-list-main {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  .play-no-exsist {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px 0;
+  }
+}
+
+/*(반응형) 핸드폰 사이즈에서 적용될 CSS*/
+@media (max-width: 480px) {
+  .play-list-container {
+    display: flex;
+    flex-direction: column;
+    margin: 30px auto;
+    padding: 0 15px;
+    font-family: "Nanum Gothic", sans-serif;
+  }
+
+  .play-list-main {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+}
