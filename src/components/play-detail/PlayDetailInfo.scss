@@ -2,10 +2,10 @@
   .play-detail-info {
     display: flex;
     flex-direction: column;
-    margin-top: 50px;
+    margin-top: 10px;
   }
 
-  .play-detail-info div {
+  .play-detail-info > div {
     margin-bottom: 30px;
   }
 
@@ -31,22 +31,32 @@
 
   .crew-box {
     display: flex;
-    justify-content: space-between;
-  }
+    border: 1.5px solid rgba(188, 188, 188, 0.5);
+    border-radius: 8px;
 
-  .crew-box div {
-    border-left: 1.5px solid #bcbcbc;
-    padding-left: 20px;
+    div {
+      padding-left: 20px;
+      flex: 1;
+    }
+
+    div:first-child,
+    div:nth-child(2) {
+      border-right: 1.5px solid rgba(188, 188, 188, 0.5);
+    }
   }
 
   .crew-box li {
     font-size: 22px;
-    margin-bottom: 30px;
+    margin: 10px 0 30px 0;
     font-weight: 700;
   }
 
   .crew-box p {
     font-size: 16px;
+  }
+
+  .detail-poster h3 {
+    padding-top: 20px;
   }
 
   .detail-poster-img {

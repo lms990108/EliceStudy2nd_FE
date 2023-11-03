@@ -1,6 +1,6 @@
 /*(반응형) 컴퓨터 사이즈에서 적용될 CSS*/
 @media (min-width: 480px) {
-  .pagenation {
+  .play-list-pagenation {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -10,7 +10,7 @@
 
 /*(반응형) 핸드폰 사이즈에서 적용될 CSS*/
 @media (max-width: 480px) {
-  .pagenation {
+  .play-list-pagenation {
     display: flex;
     justify-content: center;
     align-items: center;

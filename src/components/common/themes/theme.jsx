@@ -6,6 +6,9 @@ export const theme = createTheme({
       main: "#FFB400",
       contrastText: "#FFFFFF",
     },
+    ourGrey: {
+      main: "#BCBCBC",
+    },
   },
   typography: {
     fontFamily: "Noto Sans KR",

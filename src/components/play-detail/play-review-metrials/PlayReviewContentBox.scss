@@ -1,0 +1,38 @@
+.play-review-hide {
+  display: none;
+}
+
+@media (min-width: 480px) {
+  .play-review-content-container {
+    background-color: #ffffff;
+    border-radius: 8px;
+    border: 1px solid rgba(188, 188, 188, 0.5);
+    margin: 20px 0;
+    padding: 0 30px 10px 30px;
+
+    .play-review-content {
+      line-height: 160%;
+    }
+
+    .play-review-photo {
+      width: 400px;
+      height: 400px;
+    }
+
+    .play-review-modify-btn {
+      display: inline;
+      position: relative;
+      bottom: 15px;
+      left: 44%;
+
+      button {
+        width: 130px;
+        height: 40px;
+        font-size: 16px;
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+}

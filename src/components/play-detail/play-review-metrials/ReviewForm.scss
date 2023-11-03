@@ -1,0 +1,87 @@
+@media (min-width: 480px) {
+  .review-form-container {
+    margin-top: 30px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    border: 1px solid rgba(188, 188, 188, 0.5);
+    padding: 10px 30px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .review-title-box {
+    display: flex;
+    align-items: center;
+
+    h3 {
+      margin-right: 30px;
+    }
+  }
+
+  .review-author-box {
+    display: flex;
+    align-items: center;
+
+    h3 {
+      margin-right: 30px;
+    }
+  }
+
+  .review-content-box {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .review-content-box textarea {
+    width: 100%;
+    height: 100px;
+  }
+
+  .review-rating-box {
+    display: flex;
+    align-items: center;
+
+    h3 {
+      margin-right: 30px;
+    }
+  }
+
+  .reivew-photo-upload-box {
+    .file-upload-btn {
+      position: relative;
+      bottom: 171px;
+      left: 105px;
+    }
+
+    img {
+      position: relative;
+      right: 240px;
+      width: 150px;
+      height: 150px;
+    }
+  }
+
+  .review-guide-text {
+    margin-bottom: 10px;
+
+    p {
+      margin: 10px 0;
+      font-size: 15px;
+    }
+  }
+
+  .play-review-btn {
+    height: 38px;
+    position: relative;
+    bottom: 35px;
+    left: 38%;
+    display: inline;
+
+    button {
+      margin-left: 30px;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+}
