@@ -1,8 +1,6 @@
 // 소셜 로그인 및 회원가입 페이지
 import React from "react";
 
-
-
 export default function SignUp_In() {
   return (
     <>
