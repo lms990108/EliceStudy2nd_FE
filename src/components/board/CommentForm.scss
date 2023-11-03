@@ -19,6 +19,11 @@
       font-weight: 500;
       resize: none;
       font-family: "Noto Sans KR";
+      outline: none;
+      border: #bcbcbc solid 1px;
+    }
+    textarea:focus {
+      border-color: black;
     }
 
     textarea::placeholder {

@@ -1,0 +1,32 @@
+.board-post-top {
+  display: flex;
+
+  .flex-box {
+    margin-left: 5px;
+    flex-grow: 1;
+  }
+  .user-id {
+    font-size: 18px;
+  }
+  .date {
+    font-size: 12px;
+    color: #616161;
+  }
+  .icons {
+    align-self: center;
+    display: flex;
+    height: 24px;
+    align-items: flex-start;
+    font-size: 18px;
+    .share-icon {
+      margin-right: 14px;
+    }
+    .comments-icon {
+      display: flex;
+    }
+    span {
+      line-height: 20px;
+      margin-left: 2px;
+    }
+  }
+}

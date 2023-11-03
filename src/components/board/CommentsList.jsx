@@ -1,26 +1,16 @@
 import React from "react";
-import Comment from "./Comment";
+import { Comment } from "./Comment";
 import { Button, Pagination } from "@mui/material";
 import "./CommentsList.scss";
+import { useNavigate } from "react-router-dom";
 
-export default function CommentsList() {
-  const comments = [
-    {
-      user: "user123",
-      time: "2023-10-31 11:32:09",
-      content: "우왕 기대돼요! 댓글이에요",
-    },
-    {
-      user: "user123",
-      time: "2023-10-31 11:32:09",
-      content: "우왕 기대돼요! 댓글이에요",
-    },
-    {
-      user: "user123",
-      time: "2023-10-31 11:32:09",
-      content: "우왕 기대돼요! 댓글이에요",
-    },
-  ];
+export function CommentsList({ comments, path }) {
+  const nav = useNavigate();
+
+  const handleClick = () => {
+    nav(path);
+  };
+
   return (
     <div className="comments-list-box">
       {comments.map((comment) => (
@@ -29,7 +19,7 @@ export default function CommentsList() {
       <div className="pagination">
         <Pagination />
       </div>
-      <Button className="back-btn" color="inherit" variant="contained">
+      <Button className="back-btn" color="inherit" variant="contained" onClick={handleClick}>
         목록보기
       </Button>
     </div>

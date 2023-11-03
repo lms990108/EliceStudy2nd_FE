@@ -1,5 +1,10 @@
 .board-list-header {
   width: 100%;
+
+  .content {
+    padding: 0 10px;
+  }
+
   h2 {
     margin: 0;
     padding: 10px;
@@ -26,7 +31,35 @@
   }
   hr {
     border: 0;
+    height: 3px;
+    background-color: rgb(100, 100, 100);
+  }
+}
+
+.board-second-header {
+  display: flex;
+  align-items: center;
+  margin: 38px 0;
+
+  .click-box {
+    display: flex;
+    align-items: center;
+  }
+
+  .header-title {
+    margin: 0 8px 0 4px;
+    font-size: 20px;
+    font-weight: 600;
+  }
+
+  hr {
+    flex-grow: 1;
+    border: none;
+    background-color: #000;
     height: 2px;
-    background-color: black;
+  }
+
+  .pointer {
+    cursor: pointer;
   }
 }

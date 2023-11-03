@@ -1,13 +1,10 @@
 import React from "react";
-import BoardListHeader from "../../components/board/BoardHeader";
-import BoardNav from "../../components/board/BoardNav";
-import FreeBoardList from "../../components/free-board-list/FreeBoardList";
+import { BoardListHeader, BoardNav } from "../../components/board";
+import FreeBoardList from "../../components/board-free/FreeBoardList";
 import "./FreeBoardListPage.scss";
 import { Pagination } from "@mui/material";
-import { Route, Routes } from "react-router";
-import FreeBoardDetail from "../../components/free-board-detail/FreeBoardPost";
 
-export default function FreeBoardListPage() {
+export function FreeBoardListPage() {
   const desc = (
     <p>
       연극 및 다양한 공연에 대해 이야기 하는 곳입니다. <br /> 누구나 작성할 수 있으며,
