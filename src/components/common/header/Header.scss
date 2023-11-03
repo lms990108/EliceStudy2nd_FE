@@ -9,10 +9,9 @@
 .header-box {
     display: flex;
     flex-direction: column;
-    background-color: #4cb84c;
     width: 1110px;
     height: 250px;
-}
+}   
 .vertical-box1 {
     display: flex;
     justify-content: end;
@@ -35,6 +34,11 @@
     display: flex;
     justify-content: center;
     font-family: 'Baloo Bhaina 2', sans-serif;
+}
+.logo {
+    height: 150px;
+    width: 550px;
+    margin-right: 50px;
 }
 .vertical-box3 {
     display: flex;
@@ -67,7 +71,7 @@ h1 {
 .search-icon {
     color: #ffb400;
     position: absolute;
-    right: 15px; // 오른쪽 여백
+    right: 15px;
     top: 45%;
     transform: translateY(-50%);
     cursor: pointer;
