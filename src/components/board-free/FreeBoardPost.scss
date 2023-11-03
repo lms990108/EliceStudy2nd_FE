@@ -1,0 +1,12 @@
+.free-board-post {
+  background-color: #fff;
+  padding: 40px;
+  border-radius: 40px;
+  display: flex;
+  flex-direction: column;
+
+  .title {
+    font-size: 34px;
+    font-weight: 500;
+  }
+}

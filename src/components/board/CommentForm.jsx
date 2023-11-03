@@ -3,9 +3,9 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { Button } from "@mui/material";
 import "./CommentForm.scss";
 
-export default function CommentForm() {
+export function CommentForm() {
   return (
-    <div className="comment-form-box">
+    <div id="commentForm" className="comment-form-box">
       <div className="flex-box">
         <AccountCircleIcon sx={{ fontSize: 36 }} />
         <textarea placeholder="댓글을 작성하세요."></textarea>

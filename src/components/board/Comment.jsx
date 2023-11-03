@@ -2,7 +2,7 @@ import React from "react";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import "./Comment.scss";
 
-export default function Comment({ data }) {
+export function Comment({ data }) {
   return (
     <div className="comment-box">
       <div className="top">
