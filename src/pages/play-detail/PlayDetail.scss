@@ -4,21 +4,29 @@ body {
 
 /*(반응형) 컴퓨터 사이즈에서 적용될 CSS*/
 @media (min-width: 480px) {
-  .container {
+  .play-detail-container {
     display: flex;
     flex-direction: column;
     width: 1110px;
     margin: 30px auto;
     font-family: "Nanum Gothic", sans-serif;
   }
+
+  .play-detail-main-box {
+    border-radius: 8px;
+    border: 1.5px solid rgba(188, 188, 188, 0.5);
+    padding: 0 20px 0;
+    margin-top: 30px;
+  }
 }
 
 /*(반응형) 핸드폰 사이즈에서 적용될 CSS*/
 @media (max-width: 480px) {
-  .container {
+  .play-detail-container {
     display: flex;
     flex-direction: column;
     margin: 30px auto;
+    padding: 0 15px;
     font-family: "Nanum Gothic", sans-serif;
   }
 }

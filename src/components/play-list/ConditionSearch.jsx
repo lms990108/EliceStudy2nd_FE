@@ -19,8 +19,8 @@ export default function ConditionSearch() {
       </div>
       <div className="condition-search-main">
         <div className="flex-layout">
-          <span className="label">좌석 규모별</span>
-          <span className="checkbox">
+          <span className="condition-label">좌석 규모별</span>
+          <span className="condition-checkbox">
             <FormControlLabel
               control={<Checkbox color="secondary" />}
               label={
@@ -57,8 +57,8 @@ export default function ConditionSearch() {
           </span>
         </div>
         <div className="flex-layout">
-          <span className="label">공연 상태</span>
-          <span className="checkbox ">
+          <span className="condition-label">공연 상태</span>
+          <span className="condition-checkbox">
             <FormControlLabel
               control={<Checkbox color="secondary" />}
               label={
@@ -78,8 +78,8 @@ export default function ConditionSearch() {
           </span>
         </div>
         <div className="flex-layout">
-          <span className="label">가격</span>
-          <span className="checkbox ">
+          <span className="condition-label">가격</span>
+          <span className="condition-checkbox">
             <FormControlLabel
               control={<Checkbox color="secondary" />}
               label={
@@ -126,7 +126,7 @@ export default function ConditionSearch() {
           <Button variant="contained" color="secondary" onClick={handleClick}>
             <Typography
               fontFamily="Nanum Gothic, sans-serif"
-              className="button-text"
+              className="adapt-button-text"
             >
               적용하기
             </Typography>

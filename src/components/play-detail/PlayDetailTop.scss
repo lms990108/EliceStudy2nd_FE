@@ -44,13 +44,13 @@
     margin-top: 19px;
   }
 
-  .play-info .buttons {
+  .play-info .play-detail-buttons {
     height: 60px;
     margin-top: 25px;
     display: flex;
   }
 
-  .buttons div {
+  .play-detail-buttons div {
     padding: 0;
     margin-right: 30px;
     height: 60px;
@@ -58,7 +58,7 @@
 
   /* mui 버튼에서의 text는 p tag 안에 담겨 있으므로 위 .play-info p 땜에 이상하게 css가 적용되었음!*/
   /* 이 점 주의하기! */
-  .buttons p {
+  .play-detail-buttons p {
     font-weight: 700;
     font-size: 23px;
     margin: 0;
