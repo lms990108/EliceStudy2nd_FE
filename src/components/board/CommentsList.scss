@@ -1,13 +1,13 @@
 .comments-list-box {
   display: flex;
   flex-direction: column;
-}
 
-.pagination {
-  width: fit-content;
-  margin: 20px auto;
-}
+  .pagination {
+    width: fit-content;
+    margin: 20px auto;
+  }
 
-.back-btn {
-  margin: 50px auto;
+  .back-btn {
+    margin: 50px auto;
+  }
 }

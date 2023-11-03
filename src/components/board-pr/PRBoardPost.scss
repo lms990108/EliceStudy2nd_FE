@@ -1,0 +1,41 @@
+.pr-board-post-box {
+  background-color: rgba(255, 255, 255, 0.653);
+  border-radius: 52px;
+  overflow: hidden;
+
+  .post-header {
+    background-color: #ffb400;
+    height: 90px;
+    display: flex;
+    box-sizing: border-box;
+    padding: 32px 40px;
+
+    .dot {
+      margin-right: 10px;
+    }
+  }
+
+  .post-content-box {
+    min-height: 500px;
+    padding: 30px;
+
+    hr {
+      border: none;
+      background-color: #bcbcbc;
+      height: 2px;
+    }
+  }
+
+  .post-image {
+    width: 100%;
+    margin-top: 20px;
+  }
+
+  .post-title {
+    font-size: 30px;
+  }
+
+  .post-content {
+    margin: 30px 0;
+  }
+}

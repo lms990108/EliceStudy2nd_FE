@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import "./UpButton.scss";
 
-export default function UpButton() {
+export function UpButton({ y }) {
   const [showButton, setShowButton] = useState(false);
 
   const scrollToTop = () => {
@@ -14,14 +14,13 @@ export default function UpButton() {
 
   useEffect(() => {
     const handleShowButton = () => {
-      if (window.scrollY > 1500) {
+      if (window.scrollY > (y || 1500)) {
         setShowButton(true);
       } else {
         setShowButton(false);
       }
     };
 
-    console.log(window.scrollY);
     window.addEventListener("scroll", handleShowButton);
     return () => {
       window.removeEventListener("scroll", handleShowButton);

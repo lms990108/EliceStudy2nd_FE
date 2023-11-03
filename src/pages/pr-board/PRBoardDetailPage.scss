@@ -1,0 +1,16 @@
+.pr-board-detail-page {
+  font-family: "Noto Sans KR";
+  margin: 0 auto;
+  max-width: 840px;
+
+  .body {
+    padding: 0 20px;
+  }
+
+  .nav-box {
+    margin-top: 40px;
+    * {
+      font-weight: 500;
+    }
+  }
+}
