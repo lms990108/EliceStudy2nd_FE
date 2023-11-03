@@ -10,10 +10,10 @@ export default function PlayBox({ playInfo }) {
         <div className="play-img-box">
           <img src={imgSrc} alt={`${title} 포스터`} />
         </div>
-        <div className="title">{title}</div>
-        <div className="place">{place}</div>
-        <div className="period">{period}</div>
-        <div className="price">{price}원</div>
+        <div className="play-title">{title}</div>
+        <div className="play-place">{place}</div>
+        <div className="play-period">{period}</div>
+        <div className="play-price">{price}원</div>
       </div>
     </>
   );

@@ -30,7 +30,7 @@
     border-bottom: 1px solid rgba(188, 188, 188, 0.5);
   }
 
-  .condition-search-main .label {
+  .condition-search-main .condition-label {
     width: 100px;
     display: flex;
     justify-content: center;
@@ -40,15 +40,19 @@
     border-right: 1.5px solid rgba(188, 188, 188, 0.5);
   }
 
-  .condition-search-main .checkbox {
+  .condition-search-main .condition-checkbox {
     padding-left: 20px;
     width: 85%;
     display: flex;
   }
 
-  .checkbox label {
+  .condition-checkbox condition-label {
     margin: 0;
     padding-right: 36px;
+  }
+
+  .condition-checkbox label {
+    margin-right: 45px;
   }
 
   .adapt-button {
@@ -57,7 +61,7 @@
     padding: 10px 30px;
   }
 
-  .adapt-button .button-text {
+  .adapt-button .adapt-button-text {
     font-weight: 700;
     font-size: 14px;
   }
@@ -96,7 +100,7 @@
     border-bottom: 1px solid rgba(188, 188, 188, 0.5);
   }
 
-  .condition-search-main .label {
+  .condition-search-main .condition-label {
     width: 100px;
     display: flex;
     justify-content: center;
@@ -107,14 +111,14 @@
     border-bottom: 1.5px solid rgba(188, 188, 188, 0.5);
   }
 
-  .condition-search-main .checkbox {
+  .condition-search-main .condition-checkbox {
     padding: 5px 0 0 20px;
     width: 85%;
     display: flex;
     flex-wrap: wrap;
   }
 
-  .checkbox label {
+  .condition-checkbox condition-label {
     margin: 0;
     padding-right: 5px;
   }
@@ -124,7 +128,7 @@
     justify-content: center;
   }
 
-  .adapt-button .button-text {
+  .adapt-button .adapt-button-text {
     font-weight: 700;
     font-size: 15px;
   }

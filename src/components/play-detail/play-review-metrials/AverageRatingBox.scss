@@ -1,0 +1,44 @@
+@media (min-width: 480px) {
+  .average-rating-box {
+    display: flex;
+    padding: 0 30px;
+    justify-content: space-between;
+    border: 1.5px solid rgba(188, 188, 188, 0.5);
+    border-radius: 8px;
+    margin-bottom: 50px;
+  }
+
+  .star-and-rating .rating {
+    font-size: 28px;
+    font-weight: 700;
+    padding-left: 30px;
+  }
+
+  .star-and-rating .rating {
+    position: relative;
+    bottom: 5px;
+  }
+
+  .star-and-score .rating-addtional-text {
+    font-size: 15px;
+  }
+
+  .review-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .review-button button {
+    width: 240px;
+    height: 60px;
+  }
+
+  .review-button button p {
+    font-weight: 700;
+    font-size: 23px;
+  }
+}
+
+@media (max-width: 480px) {
+}

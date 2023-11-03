@@ -1,0 +1,22 @@
+@media (min-width: 480px) {
+  .play-review-header-container {
+    margin: 20px 0;
+    display: flex;
+  }
+
+  .play-review-header-container .number-of-plays {
+    font-weight: 700;
+    font-size: 28px;
+  }
+
+  .play-review-header-container .number-of-plays span {
+    color: #ffb400;
+  }
+
+  .review-header-line {
+    border-bottom: 1px solid #bcbcbc;
+  }
+}
+
+@media (max-width: 480px) {
+}

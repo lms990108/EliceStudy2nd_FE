@@ -50,7 +50,7 @@ export default function PlayDetailTop() {
             <Rating value={4} readOnly />
           </p>
         </div>
-        <div className="buttons">
+        <div className="play-detail-buttons">
           <div className="dibs-btn">
             <Button variant="outlined" color="error" size="large">
               <Typography

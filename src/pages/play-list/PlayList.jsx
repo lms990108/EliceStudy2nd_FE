@@ -1,14 +1,24 @@
 import React from "react";
 import "./PlayList.scss";
-import Header from "../../components/common/header/Header";
-import Footer from "../../components/common/footer/Footer";
 import ConditionSearch from "../../components/play-list/ConditionSearch";
 import PlayListHeader from "../../components/play-list/PlayListHeader";
 import PlayBox from "../../components/play-list/PlayBox";
 import PaginationBox from "../../components/play-list/PaginationBox";
-// import { useState, useEffect } from "react";
+import RegionSelectBar from "../../components/play-list/RegionSelectBar";
+import PlayListCalendar from "../../components/play-list/calendar-metrial/PlayListCalendar";
+import { useState, useEffect } from "react";
 
 export default function ListMain() {
+  const [selectedRegion, setSelectedRegion] = useState("전체");
+  const [regionAtCalendar, setRegionAtCalendar] = useState("전체");
+
+  const changeSelectedRegion = (e) => {
+    setSelectedRegion(e.target.innerText);
+  };
+
+  const changeRegionAtCalendar = (e) => {
+    setRegionAtCalendar(e.target.innerText);
+  };
   // const [isLoading, setLoading] = useState(true);
 
   // useEffect(() => {
@@ -23,10 +33,24 @@ export default function ListMain() {
 
   return (
     <>
-      <Header />
-      <div className="container">
-        <ConditionSearch />
+      <div className="play-region-select-big-container">
+        <RegionSelectBar
+          changeSelectedRegion={changeSelectedRegion}
+          selectedRegion={selectedRegion}
+        />
+      </div>
+      <div className="play-list-container">
+        {selectedRegion !== "캘린더로 보기" && <ConditionSearch />}
+        {selectedRegion === "캘린더로 보기" && (
+          <PlayListCalendar
+            regionAtCalendar={regionAtCalendar}
+            changeRegionAtCalendar={changeRegionAtCalendar}
+          />
+        )}
         <PlayListHeader count="32" />
+        {/* <div className="play-no-exsist">
+          <h2>연극이 존재하지 않습니다.</h2>
+        </div> */}
         <div className="play-list-main">
           <PlayBox
             playInfo={{
@@ -98,16 +122,16 @@ export default function ListMain() {
               price: "17,000",
             }}
           />
-          <PlayBox
-            playInfo={{
-              imgSrc:
-                "https://ticketimage.interpark.com/Play/image/large/23/23010838_p.gif",
-              title: "카페 쥬에네스",
-              place: "대학로 TOM(티오엠) 2관",
-              period: "2023.09.25 ~ 2023.11.26",
-              price: "39,600",
-            }}
-          />
+          {/* <PlayBox
+              playInfo={{
+                imgSrc:
+                  "https://ticketimage.interpark.com/Play/image/large/23/23010838_p.gif",
+                title: "카페 쥬에네스",
+                place: "대학로 TOM(티오엠) 2관",
+                period: "2023.09.25 ~ 2023.11.26",
+                price: "39,600",
+              }}
+            /> */}
           <PlayBox
             playInfo={{
               imgSrc:
@@ -121,7 +145,6 @@ export default function ListMain() {
         </div>
         <PaginationBox />
       </div>
-      <Footer />
     </>
   );
 }
