@@ -28,7 +28,7 @@ function App() {
             <Route path="/play-detail/:playId" element={<PlayDetail />} />
           </Routes>
         </BrowserRouter>
-        <Footer/>
+        <Footer />
       </ThemeProvider>
     </div>
   );
