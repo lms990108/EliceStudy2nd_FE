@@ -6,7 +6,7 @@ function MainRating() {
   return (
     <div>
       <div>
-        <h1>믿고보는 별점⭐️ 높은 작품</h1>
+        <h1 className="main-title">믿고보는 별점⭐️ 높은 작품</h1>
       </div>
       <div className="main-rating-container">
         <MainPlayBox
@@ -47,16 +47,6 @@ function MainRating() {
             place: "틴틴홀",
             period: "2019.08.04 ~ 2023.11.30",
             price: "11,000",
-          }}
-        />
-        <MainPlayBox
-          playInfo={{
-            imgSrc:
-              "https://ticketimage.interpark.com/Play/image/large/23/23010838_p.gif",
-            title: "카페 쥬에네스",
-            place: "대학로 TOM(티오엠) 2관",
-            period: "2023.09.25 ~ 2023.11.26",
-            price: "39,600",
           }}
         />
         <MainPlayBox

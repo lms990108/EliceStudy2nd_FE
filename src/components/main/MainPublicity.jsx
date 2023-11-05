@@ -1,9 +1,10 @@
 import React from "react";
-import "./MainPlayBox";
+import PublictySlide from "./PublicitySlide";
 
 function MainPublicity() {
   return (
-    <div>
+    <div className="abc">
+      <PublictySlide />
     </div>
   );
 }

@@ -15,8 +15,8 @@ function App() {
   return (
     <div className="App">
       <ThemeProvider theme={theme}>
-        <Header />
         <BrowserRouter>
+        <Header />
           <ScrollToTop />
           <Routes>
             <Route path="/" element={<Main />} />

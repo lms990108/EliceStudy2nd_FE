@@ -10,11 +10,30 @@
     background-color: #eee;
     border-radius: 30px;
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
+    h3 {
+        font-size: 20px;
+        margin: 20px 0 10px 0;
+        text-align: center;
+    }
+
+    p {
+        font-size: 13px;
+        word-wrap: break-word;
+        padding: 10px;
+        line-height: 23px;
+    }
+    .stars {
+        text-align: center;
+        color: rgb(135, 135, 135);
+    }
+
 }
 .review-title-box {
+    display: flex;
+    flex-direction: column;
     width: 310px;
     margin: 0 0 220px 50px;
-    color: white;
+    color: #eee;
 }
 .review-h2 {
     font-size: 35px;

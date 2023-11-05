@@ -17,16 +17,10 @@
     justify-content: space-around;
     height: 500px;
     background-color: #282828;
-    border-top: solid 1px black;
 }
 .publicity-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
     height: 500px;
-    background: linear-gradient(to bottom, #000000 90%, #282828 10%);
-    border-top: solid 1px black;
+    background: linear-gradient(to bottom, #202020 90%, #282828 10%);
 }
 .rating-container {
     display: flex;
@@ -40,7 +34,7 @@
     display: flex;
     justify-content: center;
     height: 500px;
-    background: linear-gradient(to bottom, #dbd2b1 90%, #282828 10%);
+    background: linear-gradient(to bottom, #202020 90%, #282828 10%);
     border-top: solid 1px black;
 }
 .child-container {  
