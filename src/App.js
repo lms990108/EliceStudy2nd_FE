@@ -21,16 +21,16 @@ function App() {
           <Routes>
             <Route path="/" element={<Main />} />
 
-            <Route path="/free-board" element={<FreeBoardListPage />} />
-            <Route path="/free-board/:postId" element={<FreeBoardDetailPage />} />
-            <Route path="/free-board/create-form" element={<FreeBoardFormPage />} />
+            <Route path="/community" element={<FreeBoardListPage />} />
+            <Route path="/community/:postId" element={<FreeBoardDetailPage />} />
+            <Route path="/community/create-form" element={<FreeBoardFormPage />} />
 
-            <Route path="/PR-board" element={<PRBoardListPage />} />
-            <Route path="/PR-board/:postId" element={<PRBoardDetailPage />} />
-            <Route path="/PR-board/create-form" element={<PRBoardFormPage />} />
+            <Route path="/promotion" element={<PRBoardListPage />} />
+            <Route path="/promotion/:postId" element={<PRBoardDetailPage />} />
+            <Route path="/promotion/create-form" element={<PRBoardFormPage />} />
 
-            <Route path="/play-list" element={<PlayList />} />
-            <Route path="/play-detail/:playId" element={<PlayDetail />} />
+            <Route path="/play" element={<PlayList />} />
+            <Route path="/play/:playId" element={<PlayDetail />} />
           </Routes>
         </BrowserRouter>
         <Footer />

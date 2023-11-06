@@ -1,13 +1,17 @@
 import React from "react";
 import "./RegionSelectBar.scss";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import MenuIcon from "@mui/icons-material/Menu";
 
 export default function RegionSelectBar({
   changeSelectedRegion,
   selectedRegion,
+  changeIsCalendar,
+  isCalendar,
 }) {
   return (
     <div className="play-region-select-container">
+      {/* 여기는 지역 조정하는 부분! */}
       <div className="play-region-select">
         {[
           "전체",
@@ -21,6 +25,7 @@ export default function RegionSelectBar({
         ].map((region) => {
           return (
             <span
+              key={region}
               onClick={(e) => changeSelectedRegion(e)}
               className={
                 selectedRegion === region ? "play-region-selected-design" : null
@@ -31,18 +36,30 @@ export default function RegionSelectBar({
           );
         })}
       </div>
+      {/* 여기는 캘린더로 보기 or 리스트로 보기 조정하는 부분! */}
       <div className="play-calendar-select">
-        <CalendarMonthIcon color="secondary" fontSize="large" />
-        <span
-          onClick={(e) => changeSelectedRegion(e)}
-          className={
-            selectedRegion === "캘린더로 보기"
-              ? "play-calendar-selected-design"
-              : null
-          }
-        >
-          캘린더로 보기
-        </span>
+        {!isCalendar && (
+          <>
+            <CalendarMonthIcon color="secondary" fontSize="large" />
+            <span
+              onClick={() => changeIsCalendar()}
+              // className="play-calendar-selected-design"
+            >
+              캘린더로 보기
+            </span>
+          </>
+        )}
+        {isCalendar && (
+          <>
+            <MenuIcon color="secondary" fontSize="large" />
+            <span
+              onClick={() => changeIsCalendar()}
+              // className="play-calendar-selected-design"
+            >
+              리스트로 보기
+            </span>
+          </>
+        )}
       </div>
     </div>
   );

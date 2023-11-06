@@ -26,7 +26,16 @@
     width: 800px;
   }
 
-  .play-info h1,
+  .play-info h1 {
+    height: 45px;
+    padding-left: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    font-family: "Noto Sans KR";
+    font-size: 42px;
+    line-height: 0.7;
+  }
+
   .play-info div {
     height: 45px;
     padding-left: 10px;
@@ -34,14 +43,13 @@
     flex-wrap: wrap;
   }
 
-  .play-info h1 {
-    font-size: 36px;
-  }
-
   .play-info p {
     margin-left: 15px;
     font-size: 18px;
-    margin-top: 19px;
+  }
+
+  .play-info hr {
+    margin: 15px 0 30px;
   }
 
   .play-info .play-detail-buttons {

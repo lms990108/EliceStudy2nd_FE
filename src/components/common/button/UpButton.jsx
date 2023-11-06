@@ -27,5 +27,7 @@ export function UpButton({ y }) {
     };
   }, []);
 
-  return showButton && <ArrowUpwardIcon className="up-button" onClick={scrollToTop} fontSize="large" sx={{ color: "#ffffff" }} />;
+  return (
+    showButton && <ArrowUpwardIcon className="up-button" fontSize="large" onClick={scrollToTop} sx={{ color: "#ffffff", "@media (max-width: 780px)": { fontSize: "24px" } }} />
+  );
 }
