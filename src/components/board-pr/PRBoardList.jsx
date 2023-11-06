@@ -29,6 +29,7 @@ export default function PRBoardList({ boardList }) {
       suml += cur.clientHeight;
       if (idx === left.length - 1) lastl = cur.clientHeight;
     });
+
     right.forEach((cur, idx) => {
       sumr += cur.clientHeight;
       if (idx === right.length - 1) lastr = cur.clientHeight;

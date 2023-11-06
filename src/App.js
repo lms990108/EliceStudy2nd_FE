@@ -29,8 +29,8 @@ function App() {
             <Route path="/promotion/:postId" element={<PRBoardDetailPage />} />
             <Route path="/promotion/create-form" element={<PRBoardFormPage />} />
 
-            <Route path="/play-list" element={<PlayList />} />
-            <Route path="/play-detail/:playId" element={<PlayDetail />} />
+            <Route path="/play" element={<PlayList />} />
+            <Route path="/play/:playId" element={<PlayDetail />} />
           </Routes>
         </BrowserRouter>
         <Footer />
