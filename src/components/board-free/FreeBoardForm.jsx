@@ -1,10 +1,10 @@
 import React from "react";
 import { PostForm } from "../board";
 
-export function FreeBoardForm() {
+export function FreeBoardForm({ setInput, handleCancle }) {
   return (
     <>
-      <PostForm tags={false} image={false} />
+      <PostForm path="/free-board" handleCancle={handleCancle} setInput={setInput} />
     </>
   );
 }

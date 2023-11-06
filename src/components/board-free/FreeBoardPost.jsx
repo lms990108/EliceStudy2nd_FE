@@ -1,15 +1,19 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./FreeBoardPost.scss";
 import { PostTop } from "../board";
 
-export default function FreeBoardPost() {
+export default function FreeBoardPost({ data }) {
+  const [post, setPost] = useState({});
+
+  useEffect(() => {
+    setPost(data);
+  });
+
   return (
     <div className="free-board-post">
-      <PostTop user="user" time="2023-11-01" commentsCnt="3" />
-      <h2 className="title">title</h2>
-      <div>
-        sodslkfslfkefkjsd내용입니다sodslkfslfkefkjsd내용입니다sodslkfslfkefkjsd내용입니다sodslkfslfkefkjsd내용입니다sodslkfslfkefkjsd내용입니다sodslkfslfkefkjsd내용입니다sodslkfslfkefkjsd내용입니다sodslkfslfkefkjsd내용입니다sodslkfslfkefkjsd내용입니다sodslkfslfkefkjsd내용입니다sodslkfslfkefkjsd내용입니다sodslkfslfkefkjsd내용입니다sodslkfslfkefkjsd내용입니다sodslkfslfkefkjsd내용입니다sodslkfslfkefkjsd내용입니다sodslkfslfkefkjsd내용입니다sodslkfslfkefkjsd내용입니다sodslkfslfkefkjsd내용입니다sodslkfslfkefkjsd내용입니다sodslkfslfkefkjsd내용입니다sodslkfslfkefkjsd내용입니다sodslkfslfkefkjsd내용입니다sodslkfslfkefkjsd내용입니다sodslkfslfkefkjsd내용입니다sodslkfslfkefkjsd내용입니다sodslkfslfkefkjsd내용입니다sodslkfslfkefkjsd내용입니다sodslkfslfkefkjsd내용입니다sodslkfslfkefkjsd내용입니다sodslkfslfkefkjsd내용입니다sodslkfslfkefkjsd내용입니다sodslkfslfkefkjsd내용입니다sodslkfslfkefkjsd내용입니다sodslkfslfkefkjsd내용입니다sodslkfslfkefkjsd내용입니다sodslkfslfkefkjsd내용입니다
-      </div>
+      <PostTop user={post.user} time={post.time} commentsCnt={post.comments} />
+      <h2 className="title">{post.title}</h2>
+      <div>{post.content}</div>
     </div>
   );
 }

@@ -9,29 +9,6 @@ export default function PRBoardList({ boardList }) {
   const [boardListRight, setBoardListRight] = useState([]);
   const nav = useNavigate();
 
-  const content = (post) => (
-    <div className={`content-box pointer`} key={post._id} id={post._id} onClick={handleClick}>
-      <img src={post.img} alt="" />
-      <div className="post-content-box">
-        <div className="flex-box">
-          <div className="title">{post.title}</div>
-          <div className="flex-box comments">
-            <SmsOutlinedIcon sx={{ fontSize: 20 }} />
-            <span>{post.comments}</span>
-          </div>
-        </div>
-        {post.tags.length !== 0 && (
-          <div className="tags">
-            {post.tags.map((tag) => (
-              <div># {tag}</div>
-            ))}
-          </div>
-        )}
-        <div className="content">{post.content}</div>
-      </div>
-    </div>
-  );
-
   const handleClick = (e) => {
     const postEl = e.target.closest(".content-box");
     const post = posts.filter((post) => parseInt(post._id) === parseInt(postEl.id));
@@ -71,6 +48,29 @@ export default function PRBoardList({ boardList }) {
     setBoardListLeft(boardList.filter((b, idx) => idx % 2 == 0));
     setBoardListRight(boardList.filter((b, idx) => idx % 2 == 1));
   }, [boardList]);
+
+  const content = (post) => (
+    <div className={`content-box pointer`} key={post._id} id={post._id} onClick={handleClick}>
+      <img src={post.img} alt="" />
+      <div className="post-content-box">
+        <div className="flex-box">
+          <div className="title">{post.title}</div>
+          <div className="flex-box comments">
+            <SmsOutlinedIcon sx={{ fontSize: 20 }} />
+            <span>{post.comments}</span>
+          </div>
+        </div>
+        {post.tags.length !== 0 && (
+          <div className="tags">
+            {post.tags.map((tag) => (
+              <div># {tag}</div>
+            ))}
+          </div>
+        )}
+        <div className="content">{post.content}</div>
+      </div>
+    </div>
+  );
 
   return (
     <div className="pr-board-list-box">

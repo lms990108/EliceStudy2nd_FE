@@ -4,6 +4,7 @@ import SmsOutlinedIcon from "@mui/icons-material/SmsOutlined";
 import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";
 import "./PostTop.scss";
 import { AlertCustom } from "../common/alert/Alerts";
+import copyUrl from "../../utils/copyUrl";
 
 export function PostTop({ user, time, commentsCnt }) {
   const [open, setOpen] = useState(false);
@@ -14,12 +15,7 @@ export function PostTop({ user, time, commentsCnt }) {
   };
 
   const handleCopy = () => {
-    const textarea = document.createElement("textarea");
-    document.body.appendChild(textarea);
-    textarea.value = window.document.location.href;
-    textarea.select();
-    document.execCommand("copy");
-    document.body.removeChild(textarea);
+    copyUrl();
     setOpen(true);
   };
 
