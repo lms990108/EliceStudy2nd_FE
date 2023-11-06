@@ -1,0 +1,22 @@
+.signup-in-container {
+  width: 100%;
+  
+  .signup_title {
+    font-size: 50px;
+    font-weight: 900;
+    color: #FFB400;
+    text-align: center;
+  }
+  .signup_description {
+    font-weight: 700;
+    margin-top: 20px;
+    text-align: center;
+  }
+}
+
+.inner {
+  max-width: 860px;
+  margin: 0 auto; 
+  position: relative;
+}
+
