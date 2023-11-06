@@ -2,7 +2,6 @@ import React from "react";
 import { Button } from "@mui/material";
 import KeyboardDoubleArrowLeftOutlinedIcon from "@mui/icons-material/KeyboardDoubleArrowLeftOutlined";
 import "./BoardHeader.scss";
-import { useNavigate } from "react-router-dom";
 
 export function BoardListHeader({ header, desc, onclick }) {
   return (
@@ -21,16 +20,10 @@ export function BoardListHeader({ header, desc, onclick }) {
   );
 }
 
-export function BoardSecondHeader({ header, path }) {
-  const nav = useNavigate();
-
-  const handleClick = () => {
-    nav(path);
-  };
-
+export function BoardSecondHeader({ header, onclick }) {
   return (
     <div className="board-second-header">
-      <div className="click-box pointer" onClick={handleClick}>
+      <div className="click-box pointer" onClick={onclick}>
         <KeyboardDoubleArrowLeftOutlinedIcon />
         <span className="header-title">{header}</span>
       </div>

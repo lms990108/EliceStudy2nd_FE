@@ -29,7 +29,6 @@ export function PRBoardListPage() {
 
   useEffect(() => {
     if (inView) {
-      console.log("scroll");
       getPage();
     }
   }, [inView]);
@@ -45,7 +44,7 @@ export function PRBoardListPage() {
   );
 
   return (
-    <div className="pr-board-page">
+    <div className="pr-board-page page-margin">
       <BoardListHeader header="홍보게시판" desc={desc} onclick={handleFormBtn} />
       <PRBoardList boardList={boardList} />
       <div className="scroll-ref" ref={scrollRef}></div>
