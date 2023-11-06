@@ -30,7 +30,7 @@ export function AlertCustom({ open, onclose, onclick, checkBtn, closeBtn, checkB
     <Snackbar open={open} onClose={onclose} autoHideDuration={time || null} anchorOrigin={{ vertical: "top", horizontal: "center" }}>
       <Alert
         variant="outlined"
-        sx={{ width, backgroundColor: "white" }}
+        sx={{ width, backgroundColor: "white", "& > :last-child": { alignItems: checkBtn ? "flex-end" : "flex-start" } }}
         severity={severity || "success"}
         color={color || null}
         action={

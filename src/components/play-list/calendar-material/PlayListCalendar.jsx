@@ -2,13 +2,10 @@ import React from "react";
 import "./PlayListCalendar.scss";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
+import interactionPlugin from "@fullcalendar/interaction";
 import MouseIcon from "@mui/icons-material/Mouse";
-import CalendarRegionBar from "./CalendarRegionBar";
 
-export default function PlayListCalendar({
-  regionAtCalendar,
-  changeRegionAtCalendar,
-}) {
+export default function PlayListCalendar() {
   return (
     <div className="play-list-calendar-container">
       <div className="calendar-guide-text">
@@ -17,16 +14,21 @@ export default function PlayListCalendar({
       </div>
       <div className="play-list-calendar-box">
         <FullCalendar
-          defaultView="dayGridMonth"
-          plugins={[dayGridPlugin]}
+          plugins={[dayGridPlugin, interactionPlugin]}
           events={[
             { title: "5개의 연극", date: "2023-11-03" },
             { title: "10개의 연극", date: "2023-11-04" },
           ]}
-        />
-        <CalendarRegionBar
-          regionAtCalendar={regionAtCalendar}
-          changeRegionAtCalendar={changeRegionAtCalendar}
+          dateClick={(info) => {
+            console.log(info.dateStr);
+            // console.log("Clicked on: " + info.dateStr);
+            // console.log(
+            //   "Coordinates: " + info.jsEvent.pageX + "," + info.jsEvent.pageY
+            // );
+            // console.log("Current view: " + info.view.type);
+
+            // 여기에 클릭한 날짜에 대한 추가 동작을 수행할 수 있습니다.
+          }}
         />
       </div>
     </div>

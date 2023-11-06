@@ -13,7 +13,6 @@ export default function PRBoardPost({ data }) {
 
   return (
     <div className="pr-board-post-box">
-      {console.log(post)}
       <div className="post-header">
         <span className="dot">
           <CircleIcon sx={{ color: "rgba(255, 255, 255, 1)", fontSize: "30px" }} />

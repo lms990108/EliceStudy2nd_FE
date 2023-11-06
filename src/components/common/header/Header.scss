@@ -14,7 +14,7 @@
 }   
 .vertical-box1 {
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
     height: 50px;
     background-color: #282828;
     color: white;
@@ -22,7 +22,7 @@
 .header-login-btn-box {
     display: flex;
     flex-direction: column;
-    justify-content: end;
+    justify-content: flex-end;
     text-align: center;
     cursor: pointer;
 }

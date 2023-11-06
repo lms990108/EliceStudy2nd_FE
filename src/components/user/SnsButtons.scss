@@ -1,0 +1,21 @@
+.social-buttons {
+  max-width: 280px;
+  margin: 30px auto 0px auto;
+  box-sizing: border-box;
+
+  .social-buttons button {
+    width: 260px;
+    margin-bottom: 20px;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    
+
+    button img {
+      display: block;
+      border-radius: 10px;
+    }
+
+  }
+  
+}
