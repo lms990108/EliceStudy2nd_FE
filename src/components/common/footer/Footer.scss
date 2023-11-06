@@ -1,40 +1,97 @@
-body {
-  margin: 0;
+@media (min-width: 769px) {
+  .footer-layout {
+    display: flex;
+    justify-content: center;
+    background-color: #eee;
+  }
+  .footer-container {
+    display: flex;
+    width: 1110px;
+    height: 150px;
+    justify-content: center;
+    align-items: center;
+    background-color: #eee;
+    border-top: 1px solid #bcbcbc;
+  }
+  .footer-box1 {
+    border-right: 1px solid #bcbcbc;
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    text-align: center;
+    color: rgb(74, 74, 74);
+    h3 {
+      margin: 0;
+      margin-bottom: 5px;
+    }
+    p {
+      margin: 0;
+    }
+  }
+  .footer-box2 {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    text-align: center;
+    color: rgb(74, 74, 74);
+    p {
+      margin: 0;
+    }
+  }
 }
-.footer-container {
-  display: flex;
-  width: 100%;
-  height: 150px;
-  justify-content: center;
-  align-items: center;
-  background-color: #eee;
-  border-top: 1px solid #bcbcbc;
-}
-.footer-box1 {
-  border-right: 1px solid #bcbcbc;
-  width: 50%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  height: 100%;
-  text-align: center;
-  color: #282828;
-}
-.footer-box2 {
-  width: 50%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  height: 100%;
-  text-align: center;
-  color: #282828;
-}
-p {
-  margin: 0;
-}
-h3 {
-  margin: 0;
-  margin-bottom: 5px;
+@media (max-width: 767px) {
+  .footer-layout {
+    display: flex;
+    justify-content: center;
+    background-color: #eee;
+  }
+  .footer-container {
+    display: flex;
+    width: 1110px;
+    height: 150px;
+    justify-content: center;
+    align-items: center;
+    background-color: #eee;
+    border-top: 1px solid #bcbcbc;
+  }
+  .footer-box1 {
+    border-right: 1px solid #bcbcbc;
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    text-align: center;
+    color: rgb(74, 74, 74);
+    h3 {
+      margin: 0;
+      margin-bottom: 5px;
+      font-size: 17px;
+    }
+    p {
+      font-size: 12px;
+      margin: 0;
+    }
+  }
+  .footer-box2 {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    text-align: center;
+    color: rgb(74, 74, 74);
+    p {
+      font-size: 12px;
+      margin: 0;
+    }
+  }
 }
