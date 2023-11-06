@@ -25,11 +25,21 @@ export default function PlayList() {
   const [statusCondition, setStatusCondition] = useState([]);
   // 조건 검색: 사용자가 선택한 가격
   const [priceCondition, setPriceCondition] = useState([]);
+  // 현재 화면 너비에 따라 다르게 UI가 보여져야 하므로 innerWidth 상태도 정의
+  const [innerWidth, setInnerWidth] = useState(window.innerWidth);
 
   // 처음에 전체 연극 데이터 한번만 쭉 받아오기
   useEffect(() => {
     setPlays(samplePlays);
   }, []);
+
+  // 화면 너비 조절 이벤트를 듣도록 하기
+  useEffect(() => {
+    const resizeListener = () => {
+      setInnerWidth(window.innerWidth);
+    };
+    window.addEventListener("resize", resizeListener);
+  });
 
   // 지역을 누를 경우 (캘린더가 보기가 아닐 경우) selectedRegion state를 변경
   const changeSelectedRegion = (e) => {
@@ -73,7 +83,7 @@ export default function PlayList() {
           <ConditionSearch setPlays={setPlays} />
         </ConditionContext.Provider>
       )}
-      {isCalendar && <PlayListCalendar />}
+      {isCalendar && <PlayListCalendar innerWidth={innerWidth} />}
       <PlayListHeader count={plays.length} />
       {!plays.length && (
         <div className="play-no-exsist">
@@ -97,7 +107,7 @@ export default function PlayList() {
           ))}
         </div>
       )}
-      <PaginationBox />
+      <PaginationBox innerWidth={innerWidth} />
     </div>
   );
 }

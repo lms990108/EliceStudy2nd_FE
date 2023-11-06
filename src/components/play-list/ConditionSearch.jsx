@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect, useRef } from "react";
 import { ConditionContext } from "../../pages/play-list/PlayList";
 import "./ConditionSearch.scss";
 import ConditionSearchFrame from "./condition-search-material/ConditionSearchFrame";
@@ -6,11 +6,14 @@ import DoneIcon from "@mui/icons-material/Done";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 
-export default function ConditionSearch() {
+export default function ConditionSearch({}) {
   // Context API로 조건 검색 상태들 받아오기
   const conditionContext = useContext(ConditionContext);
   const { selectedCondition } = conditionContext;
   const { seatCondition, statusCondition, priceCondition } = selectedCondition;
+
+  // 핸드폰에서 사용자가 펼치기를 눌렀는지 안눌렀는지를 나타내는 상태 정의
+  const [isExpandClicked, setIsExpandClicked] = useState(false);
 
   // 화면에 띄울 조건 검색 텍스트 (반복되어 배열로 뺌)
   const conditionTexts = [
@@ -39,6 +42,11 @@ export default function ConditionSearch() {
     },
   ];
 
+  // 핸드폰 사이즈에서 클릭에 따라 조건 검색 펼치기 접기 상태를 제어하는 함수
+  const handleConditionSearchExpand = () => {
+    setIsExpandClicked(!isExpandClicked);
+  };
+
   // 적용하기 버튼을 클릭했을 때
   const handleAdaptClick = () => {
     if (!seatCondition.length) alert("좌석 규모별 조건을 선택해 주세요.");
@@ -57,29 +65,74 @@ export default function ConditionSearch() {
         <span>조건 검색</span>
       </div>
       <div className="condition-search-main">
-        {conditionTexts.map((conditionText, idx) => {
-          return (
-            <ConditionSearchFrame
-              key={idx}
-              division={conditionText.division}
-              options={conditionText.options}
-            />
-          );
-        })}
-        <div className="adapt-button">
-          <Button
-            variant="contained"
-            color="secondary"
-            onClick={handleAdaptClick}
-          >
-            <Typography
-              fontFamily="Nanum Gothic, sans-serif"
-              className="adapt-button-text"
+        {innerWidth >= 481 && (
+          <>
+            {conditionTexts.map((conditionText, idx) => {
+              return (
+                <ConditionSearchFrame
+                  key={idx}
+                  division={conditionText.division}
+                  options={conditionText.options}
+                />
+              );
+            })}
+            <div className="adapt-button">
+              <Button
+                variant="contained"
+                color="secondary"
+                onClick={handleAdaptClick}
+              >
+                <Typography
+                  fontFamily="Nanum Gothic, sans-serif"
+                  className="adapt-button-text"
+                >
+                  적용하기
+                </Typography>
+              </Button>
+            </div>
+          </>
+        )}
+        {innerWidth <= 480 && (
+          <>
+            <div
+              className="condition-search-accordian"
+              onClick={handleConditionSearchExpand}
             >
-              적용하기
-            </Typography>
-          </Button>
-        </div>
+              <p>
+                {!isExpandClicked ? "조건 검색 펼치기 ▼" : "조건 검색 접기 ▲"}
+              </p>
+            </div>
+            <div
+              className={
+                isExpandClicked ? null : "condition-search-display-none"
+              }
+            >
+              {conditionTexts.map((conditionText, idx) => {
+                return (
+                  <ConditionSearchFrame
+                    key={idx}
+                    division={conditionText.division}
+                    options={conditionText.options}
+                  />
+                );
+              })}
+              <div className="adapt-button">
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  onClick={handleAdaptClick}
+                >
+                  <Typography
+                    fontFamily="Nanum Gothic, sans-serif"
+                    className="adapt-button-text"
+                  >
+                    적용하기
+                  </Typography>
+                </Button>
+              </div>
+            </div>
+          </>
+        )}
       </div>
     </>
   );

@@ -3,11 +3,7 @@ body {
 }
 
 /*(반응형) 컴퓨터 사이즈에서 적용될 CSS*/
-@media (min-width: 480px) {
-  play-region-select-big-container {
-    margin: 0 auto;
-  }
-
+@media (min-width: 1130px) {
   .play-list-container {
     display: flex;
     flex-direction: column;
@@ -19,7 +15,6 @@ body {
   .play-list-main {
     display: flex;
     flex-wrap: wrap;
-    // justify-content: space-between;
   }
 
   .play-no-exsist {
@@ -30,13 +25,9 @@ body {
   }
 }
 
-/*(반응형) 핸드폰 사이즈에서 적용될 CSS*/
-@media (max-width: 480px) {
+@media (min-width: 481px) and (max-width: 1129px) {
   .play-list-container {
-    display: flex;
-    flex-direction: column;
-    margin: 30px auto;
-    padding: 0 15px;
+    padding: 25px 20px;
     font-family: "Nanum Gothic", sans-serif;
   }
 
@@ -44,5 +35,32 @@ body {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
+  }
+}
+
+/*(반응형) 핸드폰 사이즈에서 적용될 CSS*/
+@media (max-width: 480px) {
+  .play-list-container {
+    display: flex;
+    flex-direction: column;
+    margin: 20px auto;
+    padding: 0 15px;
+    font-family: "Nanum Gothic", sans-serif;
+  }
+
+  .play-list-main {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .play-no-exsist {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 50px;
+
+    h2 {
+      font-size: 20px;
+    }
   }
 }

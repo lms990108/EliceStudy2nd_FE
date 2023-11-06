@@ -1,17 +1,17 @@
 /*(반응형) 컴퓨터 사이즈에서 적용될 CSS*/
-@media (min-width: 480px) {
+@media (min-width: 1130px) {
   .condition-search-header {
     display: flex;
     justify-content: flex-start;
     margin-bottom: 24px;
-  }
 
-  .condition-search-header span {
-    font-size: 26px;
-    font-weight: 700;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    span {
+      font-size: 26px;
+      font-weight: 700;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
   }
 
   .condition-search-main {
@@ -22,48 +22,50 @@
     border-radius: 8px;
   }
 
-  .condition-search-main .flex-layout {
+  .adapt-button {
     display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    padding: 5px 0;
-    border-bottom: 1px solid rgba(188, 188, 188, 0.5);
-  }
+    justify-content: flex-end;
+    padding: 10px 30px;
 
-  .condition-search-main .condition-label {
-    width: 100px;
+    .adapt-button-text {
+      font-weight: 700;
+      font-size: 14px;
+    }
+  }
+}
+
+@media (min-width: 481px) and (max-width: 1129px) {
+  .condition-search-header {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0 20px;
-    font-weight: 700;
-    border-right: 1.5px solid rgba(188, 188, 188, 0.5);
+    justify-content: flex-start;
+    margin: 40px 0 24px 0;
+
+    span {
+      font-size: 26px;
+      font-weight: 700;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
   }
 
-  .condition-search-main .condition-checkbox {
-    padding-left: 20px;
-    width: 85%;
+  .condition-search-main {
     display: flex;
-  }
-
-  .condition-checkbox condition-label {
-    margin: 0;
-    padding-right: 36px;
-  }
-
-  .condition-checkbox label {
-    margin-right: 45px;
+    flex-direction: column;
+    background-color: #ffffff;
+    border: 1px solid rgba(188, 188, 188, 0.5);
+    border-radius: 8px;
   }
 
   .adapt-button {
     display: flex;
     justify-content: flex-end;
     padding: 10px 30px;
-  }
 
-  .adapt-button .adapt-button-text {
-    font-weight: 700;
-    font-size: 14px;
+    .adapt-button-text {
+      font-weight: 700;
+      font-size: 14px;
+    }
   }
 }
 
@@ -73,14 +75,14 @@
     display: flex;
     justify-content: flex-start;
     margin-bottom: 24px;
-  }
 
-  .condition-search-header span {
-    font-size: 26px;
-    font-weight: 700;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    span {
+      font-size: 24px;
+      font-weight: 700;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
   }
 
   .condition-search-main {
@@ -90,46 +92,28 @@
     background-color: #ffffff;
     border: 1px solid rgba(188, 188, 188, 0.5);
     border-radius: 8px;
-  }
 
-  .condition-search-main .flex-layout {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    padding: 15px 0;
-    border-bottom: 1px solid rgba(188, 188, 188, 0.5);
-  }
+    .condition-search-accordian {
+      height: 50px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
 
-  .condition-search-main .condition-label {
-    width: 100px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding-bottom: 10px;
-    margin: 0 20px;
-    font-weight: 700;
-    border-bottom: 1.5px solid rgba(188, 188, 188, 0.5);
-  }
+      p {
+        font-weight: 700;
+        font-size: 18px;
+      }
+    }
 
-  .condition-search-main .condition-checkbox {
-    padding: 5px 0 0 20px;
-    width: 85%;
-    display: flex;
-    flex-wrap: wrap;
-  }
+    .adapt-button {
+      display: flex;
+      justify-content: center;
 
-  .condition-checkbox condition-label {
-    margin: 0;
-    padding-right: 5px;
-  }
-
-  .adapt-button {
-    display: flex;
-    justify-content: center;
-  }
-
-  .adapt-button .adapt-button-text {
-    font-weight: 700;
-    font-size: 15px;
+      .adapt-button-text {
+        font-weight: 700;
+        font-size: 15px;
+      }
+    }
   }
 }
