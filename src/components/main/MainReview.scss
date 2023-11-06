@@ -1,7 +1,14 @@
 .main-review-container {
     display: flex;
-    align-items: end;
+    align-items: flex-end;
     width: 1110px;
+    .review-title-box {
+        display: flex;
+        flex-direction: column;
+        width: 310px;
+        margin: 0 0 220px 50px;
+        color: #eee;
+    }
 }
 .review-box {
     height: 380px;
@@ -9,7 +16,7 @@
     margin-right: 25px;
     background-color: #eee;
     border-radius: 30px;
-    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.7);
     h3 {
         font-size: 20px;
         margin: 20px 0 10px 0;
@@ -28,13 +35,7 @@
     }
 
 }
-.review-title-box {
-    display: flex;
-    flex-direction: column;
-    width: 310px;
-    margin: 0 0 220px 50px;
-    color: #eee;
-}
+
 .review-h2 {
     font-size: 35px;
     color: white;

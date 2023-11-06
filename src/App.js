@@ -10,6 +10,7 @@ import PlayList from "./pages/play-list/PlayList";
 import PlayDetail from "./pages/play-detail/PlayDetail";
 import ScrollToTop from "./utils/ScrollToTop";
 import Main from "./pages/main/Main";
+import AdminUser from "./pages/admin/AdminUser";
 
 function App() {
   return (
@@ -20,6 +21,8 @@ function App() {
           <ScrollToTop />
           <Routes>
             <Route path="/" element={<Main />} />
+            
+            <Route path="/admin" element={<AdminUser />} />
 
             <Route path="/free-board" element={<FreeBoardListPage />} />
             <Route path="/free-board/:postId" element={<FreeBoardDetailPage />} />
