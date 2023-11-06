@@ -1,150 +1,103 @@
-import React from "react";
+import React, { useCallback } from "react";
 import "./PlayList.scss";
 import ConditionSearch from "../../components/play-list/ConditionSearch";
 import PlayListHeader from "../../components/play-list/PlayListHeader";
 import PlayBox from "../../components/play-list/PlayBox";
 import PaginationBox from "../../components/play-list/PaginationBox";
 import RegionSelectBar from "../../components/play-list/RegionSelectBar";
-import PlayListCalendar from "../../components/play-list/calendar-metrial/PlayListCalendar";
-import { useState, useEffect } from "react";
+import PlayListCalendar from "../../components/play-list/calendar-material/PlayListCalendar";
+import samplePlays from "../../apis/plays/plays";
+import { useState, useEffect, createContext } from "react";
 
-export default function ListMain() {
+// 조건 검색 시 사용할 context (컴포넌트 바깥에 따로 적어주어 export 해야지 undefined로 뜨지 않는다.)
+export const ConditionContext = createContext();
+
+export default function PlayList() {
+  // 보여져야 할 연극들
+  const [plays, setPlays] = useState([]);
+  // 선택된 지역
   const [selectedRegion, setSelectedRegion] = useState("전체");
-  const [regionAtCalendar, setRegionAtCalendar] = useState("전체");
+  // 캘린더로 보기 선택 여부 (false가 리스트, true가 캘린더)
+  const [isCalendar, setIsCalendar] = useState(false);
+  // 조건 검색: 사용자가 선택한 좌석 조건 (초깃값 빈배열로 둔 이유는 ConditionCheckBox.jsx에서 checked의 초깃값을 defaultCheck(전체)로 설정하여 setState 함수 실행하면 자동으로 처음에 배열에 '전체'가 채워지게 해 둠)
+  const [seatCondition, setSeatCondition] = useState([]);
+  // 조건 검색: 사용자가 선택한 공연 상태
+  const [statusCondition, setStatusCondition] = useState([]);
+  // 조건 검색: 사용자가 선택한 가격
+  const [priceCondition, setPriceCondition] = useState([]);
 
+  // 처음에 전체 연극 데이터 한번만 쭉 받아오기
+  useEffect(() => {
+    setPlays(samplePlays);
+  }, []);
+
+  // 지역을 누를 경우 (캘린더가 보기가 아닐 경우) selectedRegion state를 변경
   const changeSelectedRegion = (e) => {
-    setSelectedRegion(e.target.innerText);
+    setSelectedRegion((prevRegion) => {
+      if (e.target.innerText === "캘린더로 보기") {
+        return prevRegion;
+      }
+      return e.target.innerText;
+    });
   };
 
-  const changeRegionAtCalendar = (e) => {
-    setRegionAtCalendar(e.target.innerText);
+  // 캘린더로 보기를 누를 경우 isCalendar state를 변경
+  // 캘린더로 보기는 지역에 종속된 것이므로 selectedRegion state는 그대로여야 함!
+  const changeIsCalendar = () => {
+    setIsCalendar((prev) => !prev);
   };
-  // const [isLoading, setLoading] = useState(true);
-
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     setLoading(false);
-  //   }, 3000);
-  // }, []);
-
-  // if (isLoading) {
-  //   return <div>연극 리스트를 가져오는 중입니다.</div>;
-  // }
 
   return (
-    <>
-      <div className="play-region-select-big-container">
-        <RegionSelectBar
-          changeSelectedRegion={changeSelectedRegion}
-          selectedRegion={selectedRegion}
-        />
-      </div>
-      <div className="play-list-container">
-        {selectedRegion !== "캘린더로 보기" && <ConditionSearch />}
-        {selectedRegion === "캘린더로 보기" && (
-          <PlayListCalendar
-            regionAtCalendar={regionAtCalendar}
-            changeRegionAtCalendar={changeRegionAtCalendar}
-          />
-        )}
-        <PlayListHeader count="32" />
-        {/* <div className="play-no-exsist">
+    <div className="play-list-container">
+      <RegionSelectBar
+        changeSelectedRegion={changeSelectedRegion}
+        selectedRegion={selectedRegion}
+        changeIsCalendar={changeIsCalendar}
+        isCalendar={isCalendar}
+      />
+      {!isCalendar && (
+        <ConditionContext.Provider
+          value={{
+            selectedCondition: {
+              seatCondition,
+              statusCondition,
+              priceCondition,
+            },
+            setSelectedCondition: {
+              setSeatCondition,
+              setStatusCondition,
+              setPriceCondition,
+            },
+          }}
+        >
+          <ConditionSearch setPlays={setPlays} />
+        </ConditionContext.Provider>
+      )}
+      {isCalendar && <PlayListCalendar />}
+      <PlayListHeader count={plays.length} />
+      {!plays.length && (
+        <div className="play-no-exsist">
           <h2>연극이 존재하지 않습니다.</h2>
-        </div> */}
-        <div className="play-list-main">
-          <PlayBox
-            playInfo={{
-              imgSrc:
-                "https://timeticket.co.kr/wys2/file_attach_thumb/2023/03/13/1678681588-23-0_wonbon_N_7_255x357_70_2.jpg",
-              title: "진짜 나쁜 소녀",
-              place: "JTN아트홀 1관",
-              period: "2023.06.07 ~ 2023.12.07",
-              price: "13,800",
-            }}
-          />
-          <PlayBox
-            playInfo={{
-              imgSrc:
-                "https://timeticket.co.kr/wys2/file_attach_thumb/2021/05/21/1621549384-67-0_wonbon_N_7_255x357_70_2.jpg",
-              title: "옥탑방 고양이",
-              place: "틴틴홀",
-              period: "2019.08.04 ~ 2023.11.30",
-              price: "11,000",
-            }}
-          />
-          <PlayBox
-            playInfo={{
-              imgSrc:
-                "https://timeticket.co.kr/wys2/file_attach_thumb/2023/10/04/1696379359-92-3_wonbon_N_7_255x357_70_2.jpg",
-              title: "연애하기 좋은날",
-              place: "우리소극장 (구, 예술공간오르다)",
-              period: "2023.09.22 ~ 2023.11.05",
-              price: "17,000",
-            }}
-          />
-          <PlayBox
-            playInfo={{
-              imgSrc:
-                "https://ticketimage.interpark.com/Play/image/large/23/23010838_p.gif",
-              title: "카페 쥬에네스",
-              place: "대학로 TOM(티오엠) 2관",
-              period: "2023.09.25 ~ 2023.11.26",
-              price: "39,600",
-            }}
-          />
-          <PlayBox
-            playInfo={{
-              imgSrc:
-                "https://timeticket.co.kr/wys2/file_attach_thumb/2023/03/13/1678681588-23-0_wonbon_N_7_255x357_70_2.jpg",
-              title: "진짜 나쁜 소녀",
-              place: "JTN아트홀 1관",
-              period: "2023.06.07 ~ 2023.12.07",
-              price: "13,800",
-            }}
-          />
-          <PlayBox
-            playInfo={{
-              imgSrc:
-                "https://timeticket.co.kr/wys2/file_attach_thumb/2021/05/21/1621549384-67-0_wonbon_N_7_255x357_70_2.jpg",
-              title: "옥탑방 고양이",
-              place: "틴틴홀",
-              period: "2019.08.04 ~ 2023.11.30",
-              price: "11,000",
-            }}
-          />
-          <PlayBox
-            playInfo={{
-              imgSrc:
-                "https://timeticket.co.kr/wys2/file_attach_thumb/2023/10/04/1696379359-92-3_wonbon_N_7_255x357_70_2.jpg",
-              title: "연애하기 좋은날",
-              place: "우리소극장 (구, 예술공간오르다)",
-              period: "2023.09.22 ~ 2023.11.05",
-              price: "17,000",
-            }}
-          />
-          {/* <PlayBox
-              playInfo={{
-                imgSrc:
-                  "https://ticketimage.interpark.com/Play/image/large/23/23010838_p.gif",
-                title: "카페 쥬에네스",
-                place: "대학로 TOM(티오엠) 2관",
-                period: "2023.09.25 ~ 2023.11.26",
-                price: "39,600",
-              }}
-            /> */}
-          <PlayBox
-            playInfo={{
-              imgSrc:
-                "https://ticketimage.interpark.com/Play/image/large/23/23010838_p.gif",
-              title: "카페 쥬에네스",
-              place: "대학로 TOM(티오엠) 2관",
-              period: "2023.09.25 ~ 2023.11.26",
-              price: "39,600",
-            }}
-          />
         </div>
-        <PaginationBox />
-      </div>
-    </>
+      )}
+      {plays.length > 0 && (
+        <div className="play-list-main">
+          {plays.map((play) => (
+            <PlayBox
+              key={play.mt20id}
+              playInfo={{
+                playId: play.mt20id,
+                imgSrc: play.poster,
+                title: play.prfnm,
+                place: play.fcltynm,
+                period: play.prfpdfrom + " ~ " + play.prfpdto,
+                price: play.pcseguidance,
+              }}
+            />
+          ))}
+        </div>
+      )}
+      <PaginationBox />
+    </div>
   );
 }

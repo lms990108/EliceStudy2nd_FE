@@ -3,13 +3,17 @@
   .play-box {
     display: flex;
     flex-direction: column;
-    margin: 30px 0 50px 0;
+    margin: 30px 34.8px 50px 0;
     transition: margin 0.5s;
   }
 
   .play-box:hover {
     cursor: pointer;
-    margin: 22px 0 58px 0;
+    margin: 22px 34.8px 58px 0;
+  }
+
+  .play-box:nth-child(4n) {
+    margin-right: 0;
   }
 
   .play-img-box {
@@ -26,7 +30,7 @@
   }
 
   .play-title {
-    margin: 20px 0 10px 0;
+    margin: 20px 0 15px 0;
     font-size: 22px;
     font-weight: 700;
     width: 250px;
@@ -43,7 +47,7 @@
   }
 
   .play-period {
-    margin: 5px 0;
+    margin: 10px 0;
     width: 250px;
     display: flex;
     flex-wrap: wrap;
