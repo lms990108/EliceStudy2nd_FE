@@ -39,7 +39,7 @@
 .board-second-header {
   display: flex;
   align-items: center;
-  margin: 38px 0;
+  margin: 38px 0 20px 0;
 
   .click-box {
     display: flex;
@@ -47,8 +47,8 @@
   }
 
   .header-title {
-    margin: 0 8px 0 4px;
-    font-size: 20px;
+    margin: 0 8px 2px 4px;
+    font-size: 16px;
     font-weight: 600;
   }
 
@@ -57,9 +57,5 @@
     border: none;
     background-color: #000;
     height: 2px;
-  }
-
-  .pointer {
-    cursor: pointer;
   }
 }
