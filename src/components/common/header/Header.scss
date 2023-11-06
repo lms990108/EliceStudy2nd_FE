@@ -1,63 +1,60 @@
-@import url('https://fonts.cdnfonts.com/css/baloo-bhaina-2');
-
-.header-container {
+@import url("https://fonts.cdnfonts.com/css/baloo-bhaina-2");
+@media (min-width: 769px) {
+  .header-container {
     display: flex;
     justify-content: center;
     background-color: #282828;
     height: 200px;
-}
-.header-box {
+  }
+  .header-box {
     display: flex;
     flex-direction: column;
     width: 1110px;
-    height: 250px;
-}   
-.vertical-box1 {
+    height: 200px;
+  }
+  .vertical-box1 {
     display: flex;
     justify-content: flex-end;
     height: 25px;
     background-color: #282828;
     color: white;
     font-weight: 200;
-}
-.header-login-btn-box {
+  }
+  .header-login-btn-box {
     display: flex;
     flex-direction: column;
-    justify-content: end;
+    justify-content: flex-end;
     text-align: center;
     font-size: 15px;
     cursor: pointer;
-}
-.vertical-box2 {
+  }
+  .header-login-btn {
+    margin: 0;
+  }
+  .vertical-box2 {
     height: 125px;
     background-color: #282828;
     color: white;
     font-size: 50px;
     display: flex;
     justify-content: center;
-    font-family: 'Baloo Bhaina 2', sans-serif;
-}
-.logo {
+    font-family: "Baloo Bhaina 2", sans-serif;
+  }
+  .logo {
     height: 130px;
     width: 460px;
     margin-right: 30px;
-}
-.vertical-box3 {
+  }
+  .vertical-box3 {
     display: flex;
-}
-h1 {
-    margin: 0;
-}
-.highlight {
-    color: #ffb400;
-}
-.vertical-box3 {
+  }
+  .vertical-box3 {
     display: flex;
     justify-content: space-between;
     height: 50px;
     background-color: #282828;
-}
-.header-search-input {
+  }
+  .header-search-input {
     border: #ffb400 solid 2.5px;
     border-radius: 15px;
     padding-left: 20px;
@@ -65,18 +62,101 @@ h1 {
     color: #2f2f2f;
     width: 300px;
     height: 35px;
-}
-.header-search-input:focus {
+  }
+  .header-search-input:focus {
     outline: none;
-}
-.search-container {
+  }
+  .search-container {
     position: relative;
-}
-.search-icon {
+  }
+  .search-icon {
     color: #ffb400;
     position: absolute;
     right: 15px;
     top: 43%;
     transform: translateY(-50%);
     cursor: pointer;
+  }
+}
+@media (max-width: 767px) {
+  .header-container {
+    display: flex;
+    justify-content: center;
+    background-color: #282828;
+    height: 300px;
+  }
+  .header-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 1110px;
+    height: 300px;
+  }
+  .vertical-box1 {
+    display: flex;
+    justify-content: flex-end;
+    height: 25px;
+    background-color: #282828;
+    color: white;
+    font-weight: 200;
+  }
+  .header-login-btn-box {
+    display: flex;
+    margin-right: 10px;
+    flex-direction: column;
+    justify-content: flex-end;
+    text-align: center;
+    font-size: 15px;
+    cursor: pointer;
+  }
+  .header-login-btn {
+    margin: 0;
+  }
+  .vertical-box2 {
+    height: 125px;
+    background-color: #282828;
+    color: white;
+    font-size: 50px;
+    display: flex;
+    justify-content: center;
+    font-family: "Baloo Bhaina 2", sans-serif;
+  }
+  .logo {
+    height: 130px;
+    width: 460px;
+    margin-right: 30px;
+  }
+  .vertical-box3 {
+    display: flex;
+  }
+  .vertical-box3 {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    height: 100px;
+    background-color: #282828;
+  }
+  .header-search-input {
+    border: #ffb400 solid 2.5px;
+    border-radius: 15px;
+    padding-left: 20px;
+    font-size: 18px;
+    color: #2f2f2f;
+    width: 250px;
+    height: 35px;
+  }
+  .header-search-input:focus {
+    outline: none;
+  }
+  .search-container {
+    position: relative;
+  }
+  .search-icon {
+    color: #ffb400;
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+  }
 }
