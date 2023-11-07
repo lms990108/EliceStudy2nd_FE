@@ -16,7 +16,7 @@ const Header = () => {
         <div className="vertical-box2">
           <div>
           <Link to="/">
-            <img className="logo" src="/logo.png" alt="logo-image" component={Link} to="/Main"></img>
+            <img className="logo" src={process.env.PUBLIC_URL + "/logo.png"} alt="logo-image" component={Link} to="/Main"></img>
             </Link>
           </div>
         </div>
