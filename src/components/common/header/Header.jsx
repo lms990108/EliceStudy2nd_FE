@@ -2,6 +2,7 @@ import React from "react";
 import "./Header.scss";
 import ColorTabs from "./colored-tab";
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
+import { Link } from "react-router-dom";
 
 const Header = () => {
   return (
@@ -14,14 +15,16 @@ const Header = () => {
         </div>
         <div className="vertical-box2">
           <div>
-            <img className="logo" src="/logo.png" alt="logo-image"></img>
+          <Link to="/">
+            <img className="logo" src="/logo.png" alt="logo-image" component={Link} to="/Main"></img>
+            </Link>
           </div>
         </div>
         <div className="vertical-box3">
           <div>
             <ColorTabs />
           </div>
-          <div className="search-container">
+          <div className="search-container">  
             <input className="header-search-input" />
             <SearchRoundedIcon className="search-icon" />
           </div>

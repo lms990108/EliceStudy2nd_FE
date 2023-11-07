@@ -6,7 +6,7 @@ function MainPreferredRegion() {
   return (
     <div>
       <div>
-        <h1>지금 제주에서 상영중인 작품</h1>
+        <h1 className="main-title">지금 제주에서 상영중인 작품</h1>
       </div>
       <div className="main-region-container">
         <MainPlayBox

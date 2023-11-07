@@ -5,11 +5,11 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import MouseIcon from "@mui/icons-material/Mouse";
 
-export default function PlayListCalendar() {
+export default function PlayListCalendar({ innerWidth }) {
   return (
     <div className="play-list-calendar-container">
       <div className="calendar-guide-text">
-        <MouseIcon fontSize="large" />
+        <MouseIcon fontSize={innerWidth >= 481 ? "large" : "medium"} />
         <h2>연극을 보고 싶은 날짜를 클릭해 보세요!</h2>
       </div>
       <div className="play-list-calendar-box">

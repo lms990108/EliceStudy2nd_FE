@@ -12,18 +12,21 @@ import SignUpIn from "./pages/user/SignUp_In";
 import MyPage from "./pages/mypage/MyPage";
 import ScrollToTop from "./utils/ScrollToTop";
 import Main from "./pages/main/Main";
+import AdminUser from "./pages/admin/AdminUser";
 
 function App() {
   return (
     <div className="App">
       <ThemeProvider theme={theme}>
-        <Header />
         <BrowserRouter>
+        <Header />
           <ScrollToTop />
           <Routes>
             <Route path="/signup-in" element={<SignUpIn />} />
             <Route path="/mypages" element={<MyPage/>} />
             <Route path="/" element={<Main />} />
+            
+            <Route path="/admin" element={<AdminUser />} />
 
             <Route path="/community" element={<FreeBoardListPage />} />
             <Route path="/community/:postId" element={<FreeBoardDetailPage />} />

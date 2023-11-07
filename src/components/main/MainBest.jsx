@@ -6,7 +6,7 @@ function MainBest() {
   return (
     <div>
       <div>
-        <h1>보도 또 봐도👀 좋은 베스트 작품</h1>
+        <h1 className="main-title">보도 또 봐도👀 좋은 베스트 작품</h1>
       </div>
       <div className="main-best-container">
         <MainPlayBox

@@ -1,4 +1,4 @@
-@media (min-width: 480px) {
+@media (min-width: 1130px) {
   .play-list-calendar-container {
     .calendar-guide-text {
       display: flex;
@@ -13,5 +13,40 @@
   }
 }
 
+@media (min-width: 481px) and (max-width: 1129px) {
+  .play-list-calendar-container {
+    .calendar-guide-text {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 50px 0 30px 0;
+
+      h2 {
+        font-size: 22px;
+      }
+
+      svg {
+        margin-right: 10px;
+      }
+    }
+  }
+}
+
 @media (max-width: 480px) {
+  .play-list-calendar-container {
+    .calendar-guide-text {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 50px 0 30px 0;
+
+      h2 {
+        font-size: 16px;
+      }
+
+      svg {
+        margin-right: 10px;
+      }
+    }
+  }
 }

@@ -6,7 +6,7 @@ function MainChild() {
   return (
     <div>
       <div>
-        <h1>아이👶와 함께 즐기는 문화생활</h1>
+        <h1 className="main-title">아이👶와 함께 즐기는 문화생활</h1>
       </div>
       <div className="main-child-container">
         <MainPlayBox

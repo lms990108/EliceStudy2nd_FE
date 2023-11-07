@@ -1,4 +1,5 @@
 import React from "react";
+import "./ConditionSearchFrame.scss";
 import ConditionCheckBox from "./ConditionCheckBox";
 
 // 조건 검색 부분 반복되는 부분이 많아서 틀 컴포넌트 만듦!

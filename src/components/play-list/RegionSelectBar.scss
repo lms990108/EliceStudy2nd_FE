@@ -3,7 +3,7 @@
   border-bottom: 2px solid #ffb400;
 }
 
-@media (min-width: 480px) {
+@media (min-width: 1130px) {
   .play-region-select-container {
     display: flex;
     justify-content: space-between;
@@ -38,6 +38,74 @@
       svg {
         padding-right: 8px;
       }
+    }
+  }
+}
+
+@media (min-width: 480px) and (max-width: 1130px) {
+  .play-region-select-container {
+    .play-region-select {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+
+      span {
+        padding: 10px;
+        margin-right: 20px;
+        font-weight: 700;
+        font-size: 20px;
+        cursor: pointer;
+      }
+    }
+
+    .play-calendar-select {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      position: relative;
+      top: 38px;
+      cursor: pointer;
+
+      svg {
+        padding-right: 5px;
+      }
+
+      span {
+        font-weight: 700;
+        font-size: 20px;
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .play-region-select {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+
+    span {
+      font-weight: 700;
+      font-size: 18px;
+      margin: 0 20px 13px;
+    }
+  }
+
+  .play-calendar-select {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    position: relative;
+    top: 38px;
+    cursor: pointer;
+
+    svg {
+      padding-right: 5px;
+    }
+
+    span {
+      font-weight: 700;
+      font-size: 18px;
     }
   }
 }
