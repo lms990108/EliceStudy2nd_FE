@@ -10,9 +10,9 @@ export default function SnsButtons() {
   return (
     <>
       <div className="social-buttons">
-        <button><img src={ naverimg } alt=" 네이버로그인" /></button>
-        <button><img src={ kakaoimg } alt=" 카카오로그인" /></button>
-        <button><img src={ googleimg } alt=" 구글로그인" /></button>
+        <button><img className="btnimage"  src={ naverimg } alt=" 네이버로그인" /></button>
+        <button><img className="btnimage" src={ kakaoimg } alt=" 카카오로그인" /></button>
+        <button><img className='btnimage' src={ googleimg } alt=" 구글로그인" /></button>
       </div>
     </>
   )
