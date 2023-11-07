@@ -8,6 +8,8 @@ import Header from "./components/common/header/Header";
 import Footer from "./components/common/footer/Footer";
 import PlayList from "./pages/play-list/PlayList";
 import PlayDetail from "./pages/play-detail/PlayDetail";
+import SignUpIn from "./pages/user/SignUp_In";
+import MyPage from "./pages/mypage/MyPage";
 import ScrollToTop from "./utils/ScrollToTop";
 import Main from "./pages/main/Main";
 import AdminUser from "./pages/admin/AdminUser";
@@ -20,6 +22,8 @@ function App() {
         <Header />
           <ScrollToTop />
           <Routes>
+            <Route path="/signup-in" element={<SignUpIn />} />
+            <Route path="/mypages" element={<MyPage/>} />
             <Route path="/" element={<Main />} />
             
             <Route path="/admin" element={<AdminUser />} />

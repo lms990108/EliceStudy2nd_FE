@@ -14,6 +14,7 @@ export default function SignUp_In() {
         <div className="social-buttons">
           <SnsButtons/>
         </div>
+        
 
       </section>
     </>

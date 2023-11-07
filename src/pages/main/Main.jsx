@@ -8,6 +8,7 @@ import MainChild from "../../components/main/MainChild";
 import MainPublicity from "../../components/main/MainPublicity";
 import MainReview from "../../components/main/MainReview";
 
+//Main
 const Main = () => {
   return (
     <div className="main-container">
