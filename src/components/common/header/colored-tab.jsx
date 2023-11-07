@@ -36,7 +36,7 @@ export default function ColorTabs() {
           },
         }}
       >
-        <Tab value="one" label="공연" component={Link} to="/play-list"/>
+        <Tab value="one" label="공연" component={Link} to="/play"/>
         <Tab value="two" label="홍보" component={Link} to="/PR-board"/>
         <Tab value="three" label="게시판" component={Link} to="/free-board"/>
       </Tabs>
