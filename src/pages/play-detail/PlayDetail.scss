@@ -7,7 +7,7 @@ body {
   .play-detail-container {
     display: flex;
     flex-direction: column;
-    width: 1110px;
+    width: 75%;
     margin: 50px auto;
     font-family: "Nanum Gothic", sans-serif;
   }
@@ -22,6 +22,21 @@ body {
 }
 
 @media (min-width: 481px) and (max-width: 1129px) {
+  .play-detail-container {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    margin: 50px auto;
+    font-family: "Nanum Gothic", sans-serif;
+  }
+
+  .play-detail-main-box {
+    border-radius: 8px;
+    border: 1.5px solid rgba(188, 188, 188, 0.5);
+    padding: 0 20px 0;
+    margin-top: 30px;
+    background-color: #fff;
+  }
 }
 
 /*(반응형) 핸드폰 사이즈에서 적용될 CSS*/
@@ -32,5 +47,13 @@ body {
     margin: 30px auto;
     padding: 0 15px;
     font-family: "Nanum Gothic", sans-serif;
+    width: 90%;
+  }
+
+  .play-detail-main-box {
+    border-radius: 8px;
+    border: 1.5px solid rgba(188, 188, 188, 0.5);
+    padding: 0 20px 0;
+    background-color: #fff;
   }
 }

@@ -27,6 +27,19 @@ export default function PlayInfo() {
           생활은 어떻게 될까?
         </p>
       </div>
+      <div className="detail-poster">
+        <h3>소개 포스터</h3>
+        <div className="detail-poster-img">
+          <img
+            src="https://t-img1.wemep.co.kr/wmp-tproduct/02/202310/05/h53v8przsdec.jpg"
+            alt="굿닥터 소개 포스터"
+          />
+          <img
+            src="https://t-img1.wemep.co.kr/wmp-tproduct/02/202310/05/qqlw7m6s62zg.jpg"
+            alt="굿닥터 소개 포스터"
+          />
+        </div>
+      </div>
       <div className="crew-box">
         <div>
           <li>출연진</li>
@@ -50,19 +63,6 @@ export default function PlayInfo() {
         <div>
           <li>제작사</li>
           <p>(주) 알앤디웍스</p>
-        </div>
-      </div>
-      <div className="detail-poster">
-        <h3>소개 포스터</h3>
-        <div className="detail-poster-img">
-          <img
-            src="https://t-img1.wemep.co.kr/wmp-tproduct/02/202310/05/h53v8przsdec.jpg"
-            alt="굿닥터 소개 포스터"
-          />
-          <img
-            src="https://t-img1.wemep.co.kr/wmp-tproduct/02/202310/05/qqlw7m6s62zg.jpg"
-            alt="굿닥터 소개 포스터"
-          />
         </div>
       </div>
     </div>
