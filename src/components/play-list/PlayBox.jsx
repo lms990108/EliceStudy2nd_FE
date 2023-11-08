@@ -9,7 +9,7 @@ export default function PlayBox({ playInfo }) {
     <>
       <div className="play-box">
         <Link
-          to={`/play-detail/${playId}`}
+          to={`/play/${playId}`}
           style={{ textDecoration: "none", color: "#000000" }}
         >
           <div className="play-img-box">

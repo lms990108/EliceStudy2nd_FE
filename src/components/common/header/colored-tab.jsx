@@ -2,6 +2,7 @@ import * as React from "react";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
+import { Link } from "react-router-dom";
 
 export default function ColorTabs() {
   const [value, setValue] = React.useState("one");
@@ -20,8 +21,11 @@ export default function ColorTabs() {
         aria-label="secondary tabs example"
         sx={{
           ".MuiTab-root": {
-            width: '150px',
-            fontSize: '18px',
+            width: '130px',
+            padding: '0px',
+            fontWeight: "350",
+            fontSize: '17px',
+            letterSpacing: '5px',
             color: "white",
             "&.Mui-selected": {
               color: "#ffb400",
@@ -32,9 +36,9 @@ export default function ColorTabs() {
           },
         }}
       >
-        <Tab value="one" label="공연" />
-        <Tab value="two" label="홍보" />
-        <Tab value="three" label="게시판" />
+        <Tab value="one" label="공연" component={Link} to="/play"/>
+        <Tab value="two" label="홍보" component={Link} to="/promotion"/>
+        <Tab value="three" label="게시판" component={Link} to="/community"/>
       </Tabs>
     </Box>
   );

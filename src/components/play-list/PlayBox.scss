@@ -1,65 +1,122 @@
+@mixin play-box-flex-wrap {
+  display: flex;
+  flex-wrap: wrap;
+}
+
 /*(반응형) 컴퓨터 사이즈에서 적용될 CSS*/
-@media (min-width: 480px) {
+@media (min-width: 1130px) {
   .play-box {
     display: flex;
     flex-direction: column;
     margin: 30px 34.8px 50px 0;
     transition: margin 0.5s;
-  }
 
-  .play-box:hover {
-    cursor: pointer;
-    margin: 22px 34.8px 58px 0;
-  }
+    &:hover {
+      cursor: pointer;
+      margin: 22px 34.8px 58px 0;
+    }
 
-  .play-box:nth-child(4n) {
-    margin-right: 0;
-  }
+    &:nth-child(4n) {
+      margin-right: 0;
+    }
 
-  .play-img-box {
-    width: 250px;
-    height: 330px;
-    border: 1px solid rgba(188, 188, 188, 0.5);
-    border-radius: 8px;
-  }
+    .play-img-box {
+      width: 250px;
+      height: 330px;
+      border: 1px solid rgba(188, 188, 188, 0.5);
+      border-radius: 8px;
 
-  .play-img-box img {
-    width: 250px;
-    height: 330px;
-    border-radius: 8px;
-  }
+      img {
+        width: 250px;
+        height: 330px;
+        border-radius: 8px;
+      }
+    }
 
-  .play-title {
-    margin: 20px 0 15px 0;
-    font-size: 22px;
-    font-weight: 700;
-    width: 250px;
+    .play-title {
+      margin: 20px 0 15px 0;
+      font-size: 22px;
+      font-weight: 700;
+      width: 250px;
+      @include play-box-flex-wrap;
+    }
+
+    .play-place {
+      margin: 5px 0;
+      font-weight: 700;
+      width: 250px;
+      @include play-box-flex-wrap;
+    }
+
+    .play-period {
+      margin: 10px 0;
+      width: 250px;
+      @include play-box-flex-wrap;
+    }
+
+    .play-price {
+      margin: 5px 0;
+      font-size: 22px;
+      font-weight: 700;
+      width: 250px;
+      @include play-box-flex-wrap;
+    }
+  }
+}
+
+@media (min-width: 480px) and (max-width: 1130px) {
+  .play-box {
     display: flex;
-    flex-wrap: wrap;
-  }
+    flex-direction: column;
+    margin: 30px 20px;
+    transition: margin 0.5s;
 
-  .play-place {
-    margin: 5px 0;
-    font-weight: 700;
-    width: 250px;
-    display: flex;
-    flex-wrap: wrap;
-  }
+    &:hover {
+      cursor: pointer;
+      margin: 22px 20px 38px 20px;
+    }
 
-  .play-period {
-    margin: 10px 0;
-    width: 250px;
-    display: flex;
-    flex-wrap: wrap;
-  }
+    .play-img-box {
+      width: 250px;
+      height: 330px;
+      border: 1px solid rgba(188, 188, 188, 0.5);
+      border-radius: 8px;
 
-  .play-price {
-    margin: 5px 0;
-    font-size: 22px;
-    font-weight: 700;
-    width: 250px;
-    display: flex;
-    flex-wrap: wrap;
+      img {
+        width: 250px;
+        height: 330px;
+        border-radius: 8px;
+      }
+    }
+
+    .play-title {
+      margin: 20px 0 15px 0;
+      font-size: 22px;
+      font-weight: 700;
+      width: 250px;
+      @include play-box-flex-wrap;
+    }
+
+    .play-place {
+      margin: 5px 0;
+      font-weight: 700;
+      width: 250px;
+      @include play-box-flex-wrap;
+    }
+
+    .play-period {
+      margin: 10px 0;
+      width: 250px;
+      @include play-box-flex-wrap;
+    }
+
+    .play-price {
+      margin: 5px 0;
+      font-size: 22px;
+      font-weight: 700;
+      width: 250px;
+      @include play-box-flex-wrap;
+    }
   }
 }
 
@@ -68,60 +125,59 @@
   .play-box {
     display: flex;
     flex-direction: column;
-    margin: 30px 0 30px 0;
+    justify-content: center;
+    align-items: center;
+    margin: 30px 0;
     transition: margin 0.5s;
-  }
+    width: 50%;
 
-  .play-box:hover {
-    cursor: pointer;
-    margin: 22px 0 38px 0;
-  }
+    &:hover {
+      cursor: pointer;
+      margin: 22px 0 38px 0;
+    }
 
-  .play-img-box {
-    width: 150px;
-    height: 220px;
-    border: 1px solid rgba(188, 188, 188, 0.5);
-    border-radius: 8px;
-  }
+    .play-img-box {
+      width: 150px;
+      height: 220px;
+      border: 1px solid rgba(188, 188, 188, 0.5);
+      border-radius: 8px;
 
-  .play-img-box img {
-    width: 150px;
-    height: 220px;
-    border-radius: 8px;
-  }
+      img {
+        width: 150px;
+        height: 220px;
+        border-radius: 8px;
+      }
+    }
 
-  .play-title {
-    margin: 20px 0 10px 0;
-    font-size: 20px;
-    font-weight: 700;
-    width: 150px;
-    display: flex;
-    flex-wrap: wrap;
-  }
+    .play-title {
+      margin: 20px 0 10px 0;
+      font-size: 20px;
+      font-weight: 700;
+      width: 150px;
+      @include play-box-flex-wrap;
+    }
 
-  .play-place {
-    font-size: 16px;
-    margin: 5px 0;
-    font-weight: 700;
-    width: 150px;
-    display: flex;
-    flex-wrap: wrap;
-  }
+    .play-place {
+      font-size: 16px;
+      margin: 5px 0;
+      font-weight: 700;
+      width: 150px;
+      @include play-box-flex-wrap;
+    }
 
-  .play-period {
-    font-size: 16px;
-    margin: 5px 0;
-    width: 150px;
-    display: flex;
-    flex-wrap: wrap;
-  }
+    .play-period {
+      font-size: 16px;
+      margin: 5px 0;
+      width: 150px;
+      @include play-box-flex-wrap;
+    }
 
-  .play-price {
-    margin: 5px 0;
-    font-size: 20px;
-    font-weight: 700;
-    width: 150px;
-    display: flex;
-    flex-wrap: wrap;
+    .play-price {
+      margin: 5px 0;
+      font-size: 20px;
+      font-weight: 700;
+      width: 150px;
+      @include play-box-flex-wrap;
+    }
   }
 }
