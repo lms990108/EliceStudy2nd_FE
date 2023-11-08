@@ -12,7 +12,7 @@ export function PRBoardFormPage() {
 
   const handleCancle = (e) => {
     if (input) setOpen(true);
-    else nav("/pr-board");
+    else nav("/promotion");
   };
 
   return (
@@ -25,7 +25,7 @@ export function PRBoardFormPage() {
       <AlertCustom
         open={open}
         onclose={() => setOpen(false)}
-        onclick={() => nav("/pr-board")}
+        onclick={() => nav("/promotion")}
         closeBtn={"취소"}
         checkBtn={"확인"}
         checkBtnColor={"red"}

@@ -9,6 +9,9 @@ export const theme = createTheme({
     ourGrey: {
       main: "#BCBCBC",
     },
+    darkGray: {
+      main: "#898989",
+    },
   },
   typography: {
     fontFamily: "Noto Sans KR",

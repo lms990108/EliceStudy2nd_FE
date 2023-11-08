@@ -1,17 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./PRBoardList.scss";
 import SmsOutlinedIcon from "@mui/icons-material/SmsOutlined";
 import { useNavigate } from "react-router-dom";
+import { PRContext } from "../../pages";
 
-export default function PRBoardList({ boardList }) {
-  const [posts, setPosts] = useState([]);
+export default function PRBoardList({ newList }) {
   const [boardListLeft, setBoardListLeft] = useState([]);
   const [boardListRight, setBoardListRight] = useState([]);
+  const boardList = useContext(PRContext);
   const nav = useNavigate();
+  console.log(boardList);
 
   const handleClick = (e) => {
     const postEl = e.target.closest(".content-box");
-    const post = posts.filter((post) => parseInt(post._id) === parseInt(postEl.id));
+    const post = boardList.filter((post) => parseInt(post._id) === parseInt(postEl.id));
     console.log(post);
     nav(postEl.id, { state: { post: post[0] } });
   };
@@ -45,10 +47,10 @@ export default function PRBoardList({ boardList }) {
   }, [boardListLeft, boardListRight]);
 
   useEffect(() => {
-    setPosts(boardList);
-    setBoardListLeft(boardList.filter((b, idx) => idx % 2 == 0));
-    setBoardListRight(boardList.filter((b, idx) => idx % 2 == 1));
-  }, [boardList]);
+    console.log("newlist update");
+    setBoardListLeft((cur) => [...cur, ...newList.filter((b, idx) => idx % 2 == 0)]);
+    setBoardListRight((cur) => [...cur, ...newList.filter((b, idx) => idx % 2 == 1)]);
+  }, [boardList, newList]);
 
   const content = (post) => (
     <div className={`content-box pointer`} key={post._id} id={post._id} onClick={handleClick}>

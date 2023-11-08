@@ -23,11 +23,11 @@ function App() {
 
             <Route path="/community" element={<FreeBoardListPage />} />
             <Route path="/community/:postId" element={<FreeBoardDetailPage />} />
-            <Route path="/community/create-form" element={<FreeBoardFormPage />} />
+            <Route path="/community/write" element={<FreeBoardFormPage />} />
 
             <Route path="/promotion" element={<PRBoardListPage />} />
             <Route path="/promotion/:postId" element={<PRBoardDetailPage />} />
-            <Route path="/promotion/create-form" element={<PRBoardFormPage />} />
+            <Route path="/promotion/write" element={<PRBoardFormPage />} />
 
             <Route path="/play" element={<PlayList />} />
             <Route path="/play/:playId" element={<PlayDetail />} />

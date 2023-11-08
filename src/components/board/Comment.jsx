@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import "./Comment.scss";
 
 export function Comment({ data }) {
+  const [open, setOpen] = useState(false);
+
   return (
     <div className="comment-box">
       <div className="top">
@@ -16,7 +18,10 @@ export function Comment({ data }) {
           <button>삭제</button>
         </div>
       </div>
-      <div>{data.content}</div>
+      <div className="content pre-wrap">
+        <span>{data.content} </span>
+      </div>
+      더보기
     </div>
   );
 }

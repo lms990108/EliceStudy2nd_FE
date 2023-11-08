@@ -17,7 +17,7 @@ export function FreeBoardListPage() {
   };
 
   const handleFormBtn = () => {
-    nav("/free-board/create-form");
+    nav("/community/write");
   };
 
   useEffect(() => {
