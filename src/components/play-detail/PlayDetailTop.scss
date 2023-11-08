@@ -1,88 +1,453 @@
-@media (min-width: 480px) {
-  .play-detail-top {
-    display: flex;
-  }
+@media (min-width: 1130px) {
+  .play-detail-top-container {
+    .play-detail-top {
+      display: flex;
 
-  .play-poster {
-    display: flex;
-    flex-direction: column;
-  }
+      .play-poster {
+        display: flex;
+        // justify-content: center;
 
-  .poster-box {
-    width: 350px;
-    height: 450px;
-    border-radius: 8px;
-    box-shadow: -3px 3px 5px #bcbcbc;
-  }
+        .poster-box {
+          width: 350px;
+          height: 450px;
+          border-radius: 8px;
+          box-shadow: -3px 3px 5px #bcbcbc;
 
-  .poster-box img {
-    width: 350px;
-    height: 450px;
-    border-radius: 8px;
-  }
+          img {
+            width: 350px;
+            height: 450px;
+            border-radius: 8px;
+          }
+        }
+      }
 
-  .play-info {
-    margin-left: 100px;
-    width: 800px;
-  }
+      .play-info {
+        margin-left: 100px;
+        width: 800px;
 
-  .play-info h1 {
-    height: 45px;
-    padding-left: 10px;
-    display: flex;
-    flex-wrap: wrap;
-    font-family: "Noto Sans KR";
-    font-size: 42px;
-    line-height: 0.7;
-  }
+        h1 {
+          height: 45px;
+          padding-left: 10px;
+          display: flex;
+          flex-wrap: wrap;
+          font-family: "Noto Sans KR";
+          font-size: 42px;
+          height: auto;
+        }
 
-  .play-info div {
-    height: 45px;
-    padding-left: 10px;
-    display: flex;
-    flex-wrap: wrap;
-  }
+        div {
+          height: 45px;
+          padding-left: 10px;
+          display: flex;
+          flex-wrap: wrap;
+        }
 
-  .play-info p {
-    margin-left: 15px;
-    font-size: 18px;
-  }
+        p {
+          margin-left: 15px;
+          font-size: 18px;
+        }
 
-  .play-info hr {
-    margin: 15px 0 30px;
-  }
+        hr {
+          margin: 15px 0 30px;
+        }
+      }
+    }
 
-  .play-info .play-detail-buttons {
-    height: 60px;
-    margin-top: 25px;
-    display: flex;
-  }
+    .play-detail-buttons {
+      height: 60px;
+      margin-top: 40px;
+      display: flex;
+      justify-content: space-between;
 
-  .play-detail-buttons div {
-    padding: 0;
-    margin-right: 30px;
-    height: 60px;
-  }
+      /* mui 버튼에서의 text는 p tag 안에 담겨 있으므로 위 .play-info p 땜에 이상하게 css가 적용되었음!*/
+      /* 이 점 주의하기! */
+      p {
+        font-weight: 700;
+        font-size: 23px;
+        margin: 0;
+        padding: 5px;
+      }
 
-  /* mui 버튼에서의 text는 p tag 안에 담겨 있으므로 위 .play-info p 땜에 이상하게 css가 적용되었음!*/
-  /* 이 점 주의하기! */
-  .play-detail-buttons p {
-    font-weight: 700;
-    font-size: 23px;
-    margin: 0;
-    padding: 5px;
-  }
+      .share-btn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        bottom: 30px;
 
-  .share-btn {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+        p {
+          display: inline-block;
+          line-height: 1;
+          font-size: 18px;
+        }
 
-  .share-btn:hover {
-    cursor: pointer;
+        svg {
+          margin-right: 5px;
+        }
+
+        &:hover {
+          cursor: pointer;
+        }
+      }
+
+      .another-btn {
+        display: flex;
+
+        .dibs-btn,
+        .reserve-btn {
+          // padding: 0;
+          margin-right: 30px;
+          height: 60px;
+        }
+      }
+    }
   }
 }
 
-@media (max-width: 480px) {
+@media (min-width: 901px) and (max-width: 1130px) {
+  .play-detail-top-container {
+    .play-detail-top {
+      display: flex;
+
+      .play-poster {
+        display: flex;
+        flex-direction: column;
+
+        .poster-box {
+          width: 350px;
+          height: 450px;
+          border-radius: 8px;
+          box-shadow: -3px 3px 5px #bcbcbc;
+
+          img {
+            width: 350px;
+            height: 450px;
+            border-radius: 8px;
+          }
+        }
+      }
+
+      .play-info {
+        margin-left: 100px;
+        width: 800px;
+
+        h1 {
+          height: 45px;
+          padding-left: 10px;
+          display: flex;
+          flex-wrap: wrap;
+          font-family: "Noto Sans KR";
+          font-size: 42px;
+          height: auto;
+        }
+
+        div {
+          height: 45px;
+          padding-left: 10px;
+          height: auto;
+
+          h3,
+          p {
+            margin: 0;
+          }
+
+          h3 {
+            margin: 20px 0;
+          }
+        }
+
+        p {
+          margin-left: 15px;
+          font-size: 18px;
+        }
+
+        hr {
+          margin: 15px 0 30px;
+        }
+      }
+    }
+
+    .play-detail-buttons {
+      height: 60px;
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      bottom: 130px;
+
+      /* mui 버튼에서의 text는 p tag 안에 담겨 있으므로 위 .play-info p 땜에 이상하게 css가 적용되었음!*/
+      /* 이 점 주의하기! */
+      p {
+        font-weight: 700;
+        font-size: 23px;
+        margin: 0;
+        padding: 5px;
+      }
+
+      .share-btn {
+        display: flex;
+        align-items: center;
+        position: relative;
+        bottom: 30px;
+
+        p {
+          display: inline-block;
+          line-height: 1;
+          font-size: 18px;
+        }
+
+        svg {
+          margin-right: 5px;
+        }
+
+        &:hover {
+          cursor: pointer;
+        }
+      }
+
+      .another-btn {
+        display: flex;
+        flex-direction: column;
+
+        .dibs-btn,
+        .reserve-btn {
+          // padding: 0;
+          margin-bottom: 15px;
+          height: 60px;
+        }
+      }
+    }
+  }
+}
+
+@media (min-width: 402px) and (max-width: 900px) {
+  .play-detail-top-container {
+    .play-detail-top {
+      // display: flex;
+
+      .play-poster {
+        display: flex;
+        justify-content: center;
+
+        .poster-box {
+          width: auto;
+          height: auto;
+          border-radius: 8px;
+          box-shadow: -3px 3px 5px #bcbcbc;
+
+          img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+          }
+        }
+      }
+
+      .play-info {
+        width: 100%;
+
+        h1 {
+          height: 45px;
+          padding-left: 10px;
+          display: flex;
+          justify-content: center;
+          flex-wrap: wrap;
+          font-family: "Noto Sans KR";
+          font-size: 32px;
+          height: auto;
+          margin-top: 40px;
+        }
+
+        div {
+          height: 45px;
+          padding-left: 10px;
+          height: auto;
+          margin-bottom: 20px;
+          // display: flex;
+          // flex-wrap: wrap;
+
+          h3,
+          p {
+            margin: 10px 0;
+          }
+        }
+
+        p {
+          margin-left: 15px;
+          font-size: 18px;
+        }
+
+        hr {
+          margin: 15px 0 30px;
+        }
+      }
+    }
+
+    .play-detail-buttons {
+      height: 60px;
+      // margin-top: 40px;
+      // display: flex;
+      // justify-content: space-between;
+
+      /* mui 버튼에서의 text는 p tag 안에 담겨 있으므로 위 .play-info p 땜에 이상하게 css가 적용되었음!*/
+      /* 이 점 주의하기! */
+      p {
+        font-weight: 700;
+        font-size: 18px;
+        margin: 0;
+        padding: 5px;
+      }
+
+      .share-btn {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+        padding-left: 10px;
+
+        p {
+          display: inline-block;
+          line-height: 1;
+          font-size: 18px;
+        }
+
+        svg {
+          margin-right: 5px;
+        }
+
+        &:hover {
+          cursor: pointer;
+        }
+      }
+
+      .another-btn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .dibs-btn,
+        .reserve-btn {
+          // padding: 0;
+          margin-right: 30px;
+          height: 60px;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 402px) {
+  .play-detail-top-container {
+    .play-detail-top {
+      // display: flex;
+
+      .play-poster {
+        display: flex;
+        justify-content: center;
+
+        .poster-box {
+          width: auto;
+          height: auto;
+          border-radius: 8px;
+          box-shadow: -3px 3px 5px #bcbcbc;
+
+          img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+          }
+        }
+      }
+
+      .play-info {
+        width: 100%;
+
+        h1 {
+          height: 45px;
+          padding-left: 10px;
+          display: flex;
+          justify-content: center;
+          flex-wrap: wrap;
+          font-family: "Noto Sans KR";
+          font-size: 32px;
+          height: auto;
+          margin-top: 40px;
+        }
+
+        div {
+          height: 45px;
+          padding-left: 10px;
+          height: auto;
+          margin-bottom: 20px;
+          // display: flex;
+          // flex-wrap: wrap;
+
+          h3,
+          p {
+            margin: 10px 0;
+          }
+        }
+
+        p {
+          margin-left: 15px;
+          font-size: 18px;
+        }
+
+        hr {
+          margin: 15px 0 30px;
+        }
+      }
+    }
+
+    .play-detail-buttons {
+      height: 60px;
+      // margin-top: 40px;
+      // display: flex;
+      // justify-content: space-between;
+
+      /* mui 버튼에서의 text는 p tag 안에 담겨 있으므로 위 .play-info p 땜에 이상하게 css가 적용되었음!*/
+      /* 이 점 주의하기! */
+      p {
+        font-weight: 700;
+        font-size: 18px;
+        margin: 0;
+        padding: 5px;
+      }
+
+      .share-btn {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+        padding-left: 10px;
+
+        p {
+          display: inline-block;
+          line-height: 1;
+          font-size: 18px;
+        }
+
+        svg {
+          margin-right: 5px;
+        }
+
+        &:hover {
+          cursor: pointer;
+        }
+      }
+
+      .another-btn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .dibs-btn,
+        .reserve-btn {
+          // padding: 0;
+          margin-right: 30px;
+
+          p {
+            font-size: 15px;
+          }
+        }
+      }
+    }
+  }
 }
