@@ -10,6 +10,7 @@ export function CommentForm({ create }) {
   const handleClick = (e) => {
     if (!inputComment) return;
     const comment = {
+      _id: 4,
       user: "test",
       time: moment().format(),
       content: inputComment,

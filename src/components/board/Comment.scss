@@ -2,11 +2,11 @@
   display: flex;
   flex-direction: column;
   border-bottom: 1px solid #bcbcbc;
-  padding: 6px 4px;
-  margin-top: 30px;
+  padding: 16px 4px;
 
   .top {
     display: flex;
+    margin-bottom: 6px;
     .flex-box {
       flex-grow: 1;
       margin-left: 4px;
@@ -33,9 +33,36 @@
   }
 
   .content {
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
+    display: flex;
+    width: 100%;
+    position: relative;
+
+    .close {
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      width: fit-content;
+    }
+
+    .see-more-btn {
+      color: #d9d9d9;
+      display: flex;
+      align-items: flex-end;
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: calc(100% + 3px);
+    }
+
+    .close::before {
+      content: "▾더보기";
+      float: right;
+      display: flex;
+      align-items: flex-end;
+      height: 100%;
+      shape-outside: inset(calc(100% - 10px) 0 0 0);
+      color: #fcf9f5;
+    }
   }
 }
