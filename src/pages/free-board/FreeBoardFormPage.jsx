@@ -12,7 +12,7 @@ export function FreeBoardFormPage() {
 
   const handleCancle = (e) => {
     if (input) setOpen(true);
-    else nav("/free-board");
+    else nav("/community");
   };
 
   return (
@@ -26,7 +26,7 @@ export function FreeBoardFormPage() {
       <AlertCustom
         open={open}
         onclose={() => setOpen(false)}
-        onclick={() => nav("/free-board")}
+        onclick={() => nav("/community")}
         closeBtn={"취소"}
         checkBtn={"확인"}
         checkBtnColor={"red"}

@@ -32,12 +32,12 @@ export function PRBoardDetailPage() {
 
   return (
     <div className="pr-board-detail-page page-margin-bottom">
-      <BoardSecondHeader header="홍보게시판" onclick={() => nav("/pr-board")} />
+      <BoardSecondHeader header="홍보게시판" onclick={() => nav("/promotion")} />
       <div className="body">
         <PRBoardPost data={post} />
         <BoardNav point={`${post.comments}`} text="의 댓글" onclick={handleRefresh} />
-        <CommentForm />
-        <CommentsList comments={comments} path="/pr-board" />
+        <CommentForm create={() => {}} />
+        <CommentsList comments={comments} path="/promotion" />
       </div>
     </div>
   );

@@ -1,15 +1,18 @@
 const comments = [
   {
+    _id: 1,
     user: "김송재",
     time: "2023-10-31 22:32:09",
     content: "우왕 기대돼요! 댓글이에요!!!!!!",
   },
   {
+    _id: 2,
     user: "이섭섭",
     time: "2023-10-31 11:32:09",
     content: "우왕 기대돼요! 댓글이에요~~~",
   },
   {
+    _id: 3,
     user: "대유빈",
     time: "2023-10-31 04:32:45",
     content:
@@ -19,4 +22,8 @@ const comments = [
 
 export function getComments() {
   return comments;
+}
+
+export function addComment(comment) {
+  comments.push(comment);
 }

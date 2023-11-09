@@ -3,7 +3,7 @@ import FreeBoardPost from "../../components/board-free/FreeBoardPost";
 import "./FreeBoardDetailPage.scss";
 import { BoardSecondHeader, BoardNav, CommentForm, CommentsList } from "../../components/board";
 import { useLocation, useNavigate } from "react-router-dom";
-import { getComments } from "../../apis/comments/comments";
+import { addComment, getComments } from "../../apis/comments/comments";
 import { getPRBoardList } from "../../apis/board/prBoard";
 
 export function FreeBoardDetailPage() {
@@ -16,14 +16,18 @@ export function FreeBoardDetailPage() {
 
   const handleRefresh = () => {
     const commentsList = getComments(); //api 호출
-    setComments(commentsList);
+    console.log(commentsList);
+    setComments([...commentsList]);
+  };
+
+  const createComment = (comment) => {
+    addComment(comment);
+    handleRefresh();
   };
 
   useEffect(() => {
     const postId = getPath[getPath.length - 1];
-    console.log(postId);
     const foundPost = getPRBoardList().filter((post) => post._id == postId)[0];
-    console.log(foundPost);
     setPost(getPost || foundPost);
   }, []);
 
@@ -34,12 +38,12 @@ export function FreeBoardDetailPage() {
 
   return (
     <div className="free-board-detail page-margin-bottom">
-      <BoardSecondHeader header="자유게시판" onclick={() => nav("/free-board")} />
+      <BoardSecondHeader header="자유게시판" onclick={() => nav("/community")} />
       <div className="body">
         <FreeBoardPost data={post} />
         <BoardNav point={`${post.comments}`} text="의 댓글" onclick={handleRefresh} />
-        <CommentForm />
-        <CommentsList comments={comments} path="/free-board" />
+        <CommentForm create={createComment} />
+        <CommentsList comments={comments} path="/community" />
       </div>
     </div>
   );

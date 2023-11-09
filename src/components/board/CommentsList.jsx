@@ -13,6 +13,7 @@ export function CommentsList({ comments, path }) {
 
   return (
     <div className="comments-list-box">
+      {console.log(comments)}
       {comments.map((comment) => (
         <Comment data={comment} />
       ))}

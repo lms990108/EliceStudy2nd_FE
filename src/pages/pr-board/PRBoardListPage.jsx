@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import { BoardListHeader } from "../../components/board";
 import "./PRBoardListPage.scss";
 import PRBoardList from "../../components/board-pr/PRBoardList";
@@ -7,19 +7,27 @@ import { getPRBoardList } from "../../apis/board/prBoard";
 import { useInView } from "react-intersection-observer";
 import { useNavigate } from "react-router-dom";
 
+export const PRContext = createContext(getPRBoardList());
+
 export function PRBoardListPage() {
   const [boardList, setBoardList] = useState([]);
+  const [newList, setNewList] = useState([]);
   const [page, setPage] = useState(0);
   const [scrollRef, inView] = useInView();
   const nav = useNavigate();
 
+  const addBoardList = (newList) => {
+    setBoardList((cur) => [...cur, ...newList]);
+  };
+
   const getPage = () => {
     const list = getPRBoardList();
-    setBoardList((cur) => [...cur, ...list]);
+    setNewList(list);
+    addBoardList(list);
   };
 
   const handleFormBtn = () => {
-    nav("/pr-board/create-form");
+    nav("/promotion/write");
   };
 
   useEffect(() => {
@@ -45,10 +53,12 @@ export function PRBoardListPage() {
 
   return (
     <div className="pr-board-page page-margin">
-      <BoardListHeader header="홍보게시판" desc={desc} onclick={handleFormBtn} />
-      <PRBoardList boardList={boardList} />
-      <div className="scroll-ref" ref={scrollRef}></div>
-      <UpButton />
+      <PRContext.Provider value={boardList}>
+        <BoardListHeader header="홍보게시판" desc={desc} onclick={handleFormBtn} />
+        <PRBoardList newList={newList} />
+        <div className="scroll-ref" ref={scrollRef}></div>
+        <UpButton />
+      </PRContext.Provider>
     </div>
   );
 }
