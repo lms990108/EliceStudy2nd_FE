@@ -133,8 +133,10 @@ export default function PlayListCalendar({
 
   const handleDateClick = (info) => {
     setClickedDate(info.dateStr);
-    setConditionPlays(datePlays[info.dateStr]);
-    sortPlays();
+    if (datePlays[info.dateStr]) {
+      setConditionPlays(datePlays[info.dateStr]);
+      sortPlays();
+    }
   };
 
   return (

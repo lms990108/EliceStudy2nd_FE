@@ -1,7 +1,14 @@
 import React from "react";
 import "./PlayDetailInfo.scss";
 
-export default function PlayInfo() {
+export default function PlayInfo(
+  cast,
+  company,
+  creator,
+  description,
+  detail_images,
+  schedule
+) {
   return (
     <div className="play-detail-info">
       <div className="play-time-info">

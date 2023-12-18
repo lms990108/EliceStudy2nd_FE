@@ -15,7 +15,7 @@ export default function PaginationBox({
   const [currentPage, setCurrentPage] = useState(1);
 
   const handlePageNumberChange = (e, number) => {
-    setPaginationPlays(conditionPlays.slice(16 * number - 16, 16 * number));
+    setPaginationPlays(conditionPlays.slice(24 * number - 24, 24 * number));
     setCurrentPage(number);
   };
 
@@ -28,7 +28,7 @@ export default function PaginationBox({
     <div className="play-list-pagenation">
       <Stack spacing={2}>
         <Pagination
-          count={Math.ceil(playsCount / 16)}
+          count={Math.ceil(playsCount / 24)}
           color="secondary"
           page={currentPage}
           size={innerWidth >= 481 ? "large" : "small"}

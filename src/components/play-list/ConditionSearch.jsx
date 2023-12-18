@@ -31,7 +31,7 @@ export default function ConditionSearch({
     },
     {
       division: "공연 상태별",
-      options: ["전체", "공연중", "공연 예정"],
+      options: ["전체", "공연중", "공연예정"],
     },
     {
       division: "가격별",
@@ -85,11 +85,22 @@ export default function ConditionSearch({
       if (!conditions["가격별"].includes("전체")) {
         priceArray = stateArray.filter((play) => {
           const regex = /[^0-9]/g;
-          const arrayPrice = play.price.includes("전석")
-            ? [parseInt(play.price.replace(regex, ""))]
-            : play.price
-                .split(", ")
-                .map((price) => parseInt(price.replace(regex, "")));
+          let arrayPrice;
+
+          if (play.price.includes(", ")) {
+            arrayPrice = play.price.split(", ").map((price) => {
+              if (price.includes("층")) {
+                price = price.replace(regex, "");
+                price = price.substr(1);
+              }
+              price = price.replace(regex, "");
+              return parseInt(price);
+            });
+          } else if (play.price.includes("무료")) {
+            arrayPrice = [0];
+          } else {
+            arrayPrice = [parseInt(play.price.replace(regex, ""))];
+          }
 
           return conditions["가격별"].some((priceCondition) => {
             if (priceCondition === "1만원 ~ 3만원 미만") {
@@ -141,6 +152,7 @@ export default function ConditionSearch({
                     conditions,
                     setConditions,
                   }}
+                  key={idx}
                 >
                   <ConditionSearchFrame
                     key={idx}

@@ -6,7 +6,7 @@ import PlayBox from "../../components/play-list/PlayBox";
 import PaginationBox from "../../components/play-list/PaginationBox";
 import RegionSelectBar from "../../components/play-list/RegionSelectBar";
 import PlayListCalendar from "../../components/play-list/calendar-material/PlayListCalendar";
-import { samplePlays } from "../../apis/plays/plays";
+import { AlertCustom } from "../../../src/components/common/alert/Alerts";
 
 export default function PlayList() {
   // 전체 연극들
@@ -17,7 +17,6 @@ export default function PlayList() {
   const [conditionPlays, setConditionPlays] = useState([]);
   // 페이지네이션별 연극들 자르기
   const [paginationPlays, setPaginationPlays] = useState([]);
-  console.log(paginationPlays);
   // 날짜별로 연극들 담기
   const [datePlays, setDatePlays] = useState({});
   // 달력에서 사용자가 클릭한 날짜
@@ -30,18 +29,20 @@ export default function PlayList() {
   const [sortStandard, setSortStandard] = useState("");
   // 현재 화면 너비에 따라 다르게 UI가 보여져야 하므로 innerWidth 상태도 정의
   const [innerWidth, setInnerWidth] = useState(window.innerWidth);
+  // fetch시 에러 상태 저장
+  const [error, setError] = useState("");
+  // 에러 발생 시 창을 띄우기 위한 상태
+  const [isAlertOpen, setIsAlertOpen] = useState(false);
 
   // 처음에 전체 연극 데이터 한번만 쭉 받아오기
   useEffect(() => {
-    const fetchPlays = async () => {
-      try {
-        setPlays(samplePlays.shows);
-      } catch (err) {
-        alert(err);
-      }
-    };
-
-    fetchPlays();
+    fetch("https://dailytopia2.shop/api/show?page=1&limit=1000")
+      .then((res) => res.json())
+      .then((data) => setPlays(data.shows.filter((show) => show.price !== "")))
+      .catch(() => {
+        setError("연극 목록을 가져오는 데 실패하였습니다.");
+        setIsAlertOpen(true);
+      });
   }, []);
 
   // 처음에 필터링된 연극들은 전체 연극들로 설정
@@ -71,7 +72,7 @@ export default function PlayList() {
   // 처음에는 페이지가 1이므로 paginationPlays를 0번부터 15번까지 연극으로 설정
   // filteredPlays가 달라질 때마다 paginationPlays에서 보여져야 하는 연극들도 달라져야 함
   useEffect(() => {
-    setPaginationPlays(conditionPlays.slice(0, 16));
+    setPaginationPlays(conditionPlays.slice(0, 24));
   }, [filteredPlays, conditionPlays]);
 
   // 처음 정렬 기준을 최신순으로 설정
@@ -142,9 +143,14 @@ export default function PlayList() {
             const getAveragePrice = (price) => {
               const regex = /[^0-9]/g;
 
-              if (!price.includes("전석")) {
-                // 숫자가 아닌 것들을 모두 찾아 빈 문자열로 대체하는 로직
+              if (price.includes(", ")) {
                 const splitPrice = price.split(", ").map((price) => {
+                  // 숫자가 아닌 것들을 모두 찾아 빈 문자열로 대체하는 로직
+                  const regex = /[^0-9]/g;
+                  if (price.includes("층")) {
+                    price = price.replace(regex, "");
+                    price = price.substr(1);
+                  }
                   price = price.replace(regex, "");
                   return parseInt(price);
                 });
@@ -153,6 +159,9 @@ export default function PlayList() {
                   splitPrice.reduce((acc, cur) => acc + cur) / splitPrice.length
                 );
                 return averagePrice;
+                // 가격이 전석 무료일 경우 가격은 0이 됨.
+              } else if (price.includes("무료")) {
+                return 0;
               }
 
               // 전석 가격일 경우 그냥 그 가격에서 숫자만 반환
@@ -203,6 +212,15 @@ export default function PlayList() {
 
   return (
     <div className="play-list-container">
+      {error ? (
+        <AlertCustom
+          title={"Error"}
+          content={error}
+          open={isAlertOpen}
+          onclose={() => setIsAlertOpen(false)}
+          severity={"error"}
+        />
+      ) : null}
       <RegionSelectBar
         changeSelectedRegion={changeSelectedRegion}
         selectedRegion={selectedRegion}
