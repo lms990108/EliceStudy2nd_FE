@@ -40,11 +40,16 @@
           padding-left: 10px;
           display: flex;
           flex-wrap: wrap;
+
+          h3 {
+            margin: 0;
+          }
         }
 
         p {
           margin-left: 15px;
           font-size: 18px;
+          line-height: 1.2;
         }
 
         hr {

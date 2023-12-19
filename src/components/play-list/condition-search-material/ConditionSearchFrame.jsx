@@ -9,15 +9,8 @@ export default function ConditionSearchFrame({ division, options }) {
       <span className="condition-label">{division}</span>
       <div className="condition-checkbox">
         {options.map((option, idx) => {
-          // 연극 리스트 페이지에 접속했을 때 디폴트로 체크되어 있는 값은 '전체'
-          const defaultCheck = option === "전체" ? true : false;
           return (
-            <ConditionCheckBox
-              key={idx}
-              division={division}
-              option={option}
-              defaultCheck={defaultCheck}
-            />
+            <ConditionCheckBox key={idx} division={division} option={option} />
           );
         })}
       </div>

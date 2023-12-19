@@ -8,12 +8,12 @@
   .play-box {
     display: flex;
     flex-direction: column;
-    margin: 30px 34.8px 50px 0;
+    margin: 30px 34px 50px 0;
     transition: margin 0.5s;
 
     &:hover {
       cursor: pointer;
-      margin: 22px 34.8px 58px 0;
+      margin: 22px 34px 58px 0;
     }
 
     &:nth-child(4n) {
@@ -34,7 +34,7 @@
     }
 
     .play-title {
-      margin: 20px 0 15px 0;
+      margin: 15px 0 10px 0;
       font-size: 22px;
       font-weight: 700;
       width: 250px;
@@ -42,20 +42,18 @@
     }
 
     .play-place {
-      margin: 5px 0;
       font-weight: 700;
       width: 250px;
       @include play-box-flex-wrap;
     }
 
     .play-period {
-      margin: 10px 0;
+      margin: 5px 0;
       width: 250px;
       @include play-box-flex-wrap;
     }
 
     .play-price {
-      margin: 5px 0;
       font-size: 22px;
       font-weight: 700;
       width: 250px;
@@ -90,7 +88,7 @@
     }
 
     .play-title {
-      margin: 20px 0 15px 0;
+      margin: 15px 0 10px 0;
       font-size: 22px;
       font-weight: 700;
       width: 250px;
@@ -98,20 +96,18 @@
     }
 
     .play-place {
-      margin: 5px 0;
       font-weight: 700;
       width: 250px;
       @include play-box-flex-wrap;
     }
 
     .play-period {
-      margin: 10px 0;
+      margin: 5px 0;
       width: 250px;
       @include play-box-flex-wrap;
     }
 
     .play-price {
-      margin: 5px 0;
       font-size: 22px;
       font-weight: 700;
       width: 250px;
@@ -125,7 +121,6 @@
   .play-box {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
     margin: 30px 0;
     transition: margin 0.5s;
@@ -150,7 +145,7 @@
     }
 
     .play-title {
-      margin: 20px 0 10px 0;
+      margin: 15px 0 10px 0;
       font-size: 20px;
       font-weight: 700;
       width: 150px;
@@ -159,7 +154,6 @@
 
     .play-place {
       font-size: 16px;
-      margin: 5px 0;
       font-weight: 700;
       width: 150px;
       @include play-box-flex-wrap;
@@ -173,7 +167,6 @@
     }
 
     .play-price {
-      margin: 5px 0;
       font-size: 20px;
       font-weight: 700;
       width: 150px;

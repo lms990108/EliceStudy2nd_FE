@@ -19,6 +19,7 @@ export default function RegionSelectBar({
           "경기/인천",
           "충청",
           "강원",
+          "부산",
           "경상",
           "전라",
           "제주",
