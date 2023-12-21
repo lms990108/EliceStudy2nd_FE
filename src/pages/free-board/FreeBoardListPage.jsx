@@ -22,7 +22,7 @@ export function FreeBoardListPage() {
 
   useEffect(() => {
     getPage();
-  });
+  }, []);
 
   const desc = (
     <p>
@@ -34,7 +34,7 @@ export function FreeBoardListPage() {
   return (
     <div className="free-board-page page-margin">
       <BoardListHeader header="자유게시판" desc={desc} onclick={handleFormBtn} />
-      <BoardNav point="620개" text="의 글 목록" />
+      <BoardNav point="620개" text="의 글 목록" onclick={getPage} />
       <FreeBoardList boardList={boardList} />
       <div className="pagination">
         <Pagination count={20} color="secondary" siblingCount={2} />

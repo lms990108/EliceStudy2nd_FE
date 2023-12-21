@@ -4,7 +4,7 @@ import { BoardSecondHeader, BoardNav, CommentForm, CommentsList } from "../../co
 import "./PRBoardDetailPage.scss";
 import { useLocation, useNavigate } from "react-router-dom";
 import { getPRBoardList } from "../../apis/board/prBoard";
-import { getComments } from "../../apis/comments/comments";
+import { addComment, getComments } from "../../apis/comments/comments";
 
 export function PRBoardDetailPage() {
   const { state, pathname } = useLocation();
@@ -16,7 +16,12 @@ export function PRBoardDetailPage() {
 
   const handleRefresh = () => {
     const commentsList = getComments(); //api 호출
-    setComments(commentsList);
+    setComments([...commentsList]);
+  };
+
+  const createComment = (comment) => {
+    addComment(comment);
+    handleRefresh();
   };
 
   useEffect(() => {
@@ -36,7 +41,7 @@ export function PRBoardDetailPage() {
       <div className="body">
         <PRBoardPost data={post} />
         <BoardNav point={`${post.comments}`} text="의 댓글" onclick={handleRefresh} />
-        <CommentForm create={() => {}} />
+        <CommentForm create={createComment} />
         <CommentsList comments={comments} path="/promotion" />
       </div>
     </div>
