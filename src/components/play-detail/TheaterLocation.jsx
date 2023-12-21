@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import "./TheaterLocation.scss";
 
-export default function TheaterLoction({ theaterLocation }) {
+export default function TheaterLoction({ theaterLocation, locationName }) {
   const { lat, lng } = theaterLocation;
 
   useEffect(() => {
@@ -23,7 +23,7 @@ export default function TheaterLoction({ theaterLocation }) {
     });
     marker.setMap(map);
 
-    const iwContent = `<div style="padding:5px;">🚩 세종문화회관 S씨어터<br><a href="https://map.kakao.com/link/map/세종문화회관 S시어터,${lat},${lng}" style="color:blue" target="_blank">🗺️ 큰지도보기</a><br/><a href="https://map.kakao.com/link/to/세종문화회관 S씨어터,${lat},${lng}" style="color:blue" target="_blank">🚕 길찾기</a></div>`, // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+    const iwContent = `<div style="padding: 5px; display: flex; flex-direction: column; height: 120px;">🚩 ${locationName}<a href="https://map.kakao.com/link/map/${locationName},${lat},${lng}" style="color: blue;" target="_blank">🗺️ 큰지도보기</a><a href="https://map.kakao.com/link/to/${locationName},${lat},${lng}" style="color: blue;" target="_blank">🚕 길찾기</a></div>`, // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
       iwPosition = new kakao.maps.LatLng(lat, lng); //인포윈도우 표시 위치입니다
 
     // 인포윈도우를 생성합니다
