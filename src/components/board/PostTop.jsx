@@ -21,9 +21,9 @@ export function PostTop({ user, time, commentsCnt }) {
 
   return (
     <div className="board-post-top">
-      <AccountCircleIcon sx={{ fontSize: 50 }} />
+      {user.profile_url ? <img className="user-img" src={user.profile_url} /> : <AccountCircleIcon sx={{ fontSize: 50 }} />}
       <div className="flex-box">
-        <div className="user-id">{user}</div>
+        <div className="user-id">{user.nickname}</div>
         <div className="date">{time}</div>
       </div>
       <div className="icons">
