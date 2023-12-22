@@ -19,15 +19,14 @@ const Admin = () => {
         return <AdminUser />;
       case "후기":
         return <AdminReview />;
-        case "홍보":
+      case "홍보":
         return <AdminPR />;
-        case "pr":
+      case "pr":
         return <AdminPRComments />;
-        case "게시판":
+      case "게시판":
         return <AdminFree />;
-        case "free":
+      case "free":
         return <AdminFreeComments />;
-      // 다른 메뉴에 대한 케이스도 추가할 수 있습니다.
       default:
         return <AdminUser />;
     }
@@ -35,9 +34,7 @@ const Admin = () => {
 
   return (
     <div className="admin-user-layout">
-      {/* AdminNav 컴포넌트에 activeComponent 상태를 변경하는 함수를 props로 전달합니다. */}
       <AdminNav setActiveComponent={setActiveComponent} />
-      {/* 조건에 따라 다른 컴포넌트를 렌더링합니다. */}
       {renderComponent()}
     </div>
   );

@@ -70,7 +70,7 @@ const AdminNav = ({ setActiveComponent }) => {
       )}
       <div
         className={getClassName("후기")}
-        onClick={() => handleMenuClick("후기")}
+        onClick={() => handleMenuClick("후기")} 
       >
         후기
       </div>

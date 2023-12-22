@@ -27,13 +27,16 @@ function App() {
           <ScrollToTop />
           <Routes>
             <Route path="/signup-in" element={<SignUpIn />} />
-            <Route path="/mypages" element={<MyPage/>} />
+            <Route path="/mypages" element={<MyPage />} />
             <Route path="/" element={<Main />} />
 
             <Route path="/admin" element={<Admin />} />
 
             <Route path="/community" element={<FreeBoardListPage />} />
-            <Route path="/community/:postId" element={<FreeBoardDetailPage />} />
+            <Route
+              path="/community/:postId"
+              element={<FreeBoardDetailPage />}
+            />
             <Route path="/community/write" element={<FreeBoardFormPage />} />
 
             <Route path="/promotion" element={<PRBoardListPage />} />
