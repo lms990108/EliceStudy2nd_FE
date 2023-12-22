@@ -4,18 +4,18 @@
     display: flex;
     justify-content: center;
     background-color: #282828;
-    height: 200px;
+    height: 186px;
   }
   .header-box {
     display: flex;
     flex-direction: column;
     width: 1110px;
-    height: 200px;
+    height: 186px;
   }
   .vertical-box1 {
     display: flex;
     justify-content: flex-end;
-    height: 25px;
+    height: 36px;
     background-color: #282828;
     color: white;
     font-weight: 200;
@@ -29,26 +29,24 @@
     font-size: 15px;
     cursor: pointer;
   }
+  .header-login-btn-box:hover {
+    font-weight: 600;
+  }
   .header-login-btn {
     margin: 0;
     color: white;
   }
   .vertical-box2 {
-    height: 125px;
+    height: 100px;
     background-color: #282828;
     color: white;
     font-size: 50px;
     display: flex;
     justify-content: center;
-    font-family: "Baloo Bhaina 2", sans-serif;
   }
   .logo {
-    height: 130px;
-    width: 460px;
-    margin-right: 30px;
-  }
-  .vertical-box3 {
-    display: flex;
+    height: 100px;
+    width: 360px;
   }
   .vertical-box3 {
     display: flex;
@@ -56,17 +54,13 @@
     height: 50px;
     background-color: #282828;
   }
-  .header-search-input {
-    border: #ffb400 solid 2.5px;
+  .header-search-btn {
     border-radius: 15px;
     padding-left: 20px;
-    font-size: 18px;
-    color: #2f2f2f;
-    width: 300px;
-    height: 35px;
-  }
-  .header-search-input:focus {
-    outline: none;
+    background-color: white;
+    width: 280px;
+    height: 40px;
+    cursor: pointer;
   }
   .search-container {
     position: relative;
@@ -80,76 +74,69 @@
     cursor: pointer;
   }
 }
-@media (max-width: 767px) {
+@media (max-width: 768px) {
   .header-container {
     display: flex;
     justify-content: center;
     background-color: #282828;
-    height: 300px;
+    height: 186px;
   }
   .header-box {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     width: 1110px;
-    height: 300px;
+    height: 186px;
   }
   .vertical-box1 {
     display: flex;
     justify-content: flex-end;
-    height: 25px;
+    height: 36px;
     background-color: #282828;
     color: white;
     font-weight: 200;
   }
   .header-login-btn-box {
+    width: 92px;
     display: flex;
-    margin-right: 10px;
     flex-direction: column;
     justify-content: flex-end;
     text-align: center;
     font-size: 15px;
     cursor: pointer;
   }
+  .header-login-btn-box:hover {
+    font-weight: 600;
+  }
   .header-login-btn {
     margin: 0;
     color: white;
   }
   .vertical-box2 {
-    height: 125px;
+    height: 100px;
     background-color: #282828;
     color: white;
     font-size: 50px;
     display: flex;
     justify-content: center;
-    font-family: "Baloo Bhaina 2", sans-serif;
   }
   .logo {
-    height: 130px;
-    width: 460px;
-    margin-right: 30px;
-  }
-  .vertical-box3 {
-    display: flex;
-  }
-  .vertical-box3 {
-    display: flex;
-    flex-direction: column-reverse;
-    align-items: center;
     height: 100px;
+    width: 360px;
+  }
+  .vertical-box3 {
+    display: flex;
+    justify-content: space-between;
+    height: 50px;
     background-color: #282828;
   }
-  .header-search-input {
-    border: #ffb400 solid 2.5px;
+  .header-search-btn {
     border-radius: 15px;
     padding-left: 20px;
-    font-size: 18px;
-    color: #2f2f2f;
-    width: 250px;
-    height: 35px;
-  }
-  .header-search-input:focus {
-    outline: none;
+    background-color: white;
+    width: 280px;
+    height: 40px;
+    cursor: pointer;
   }
   .search-container {
     position: relative;
