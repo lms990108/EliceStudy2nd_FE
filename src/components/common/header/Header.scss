@@ -4,24 +4,25 @@
     display: flex;
     justify-content: center;
     background-color: #282828;
-    height: 186px;
+    height: 194x;
   }
   .header-box {
     display: flex;
     flex-direction: column;
     width: 1110px;
-    height: 186px;
+    height: 194px;
   }
   .vertical-box1 {
     display: flex;
+    align-items: flex-end;
     justify-content: flex-end;
-    height: 36px;
+    height: 44px;
     background-color: #282828;
     color: white;
     font-weight: 200;
   }
   .header-login-btn-box {
-    width: 120px;
+    width: 48px;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
@@ -62,11 +63,14 @@
     height: 40px;
     cursor: pointer;
   }
+  .header-search-btn:hover {
+    background-color: #ddd;
+  }
   .search-container {
     position: relative;
   }
   .search-icon {
-    color: #ffb400;
+    color: #282828;
     position: absolute;
     right: 15px;
     top: 43%;
@@ -79,25 +83,25 @@
     display: flex;
     justify-content: center;
     background-color: #282828;
-    height: 186px;
+    height: 194px;
   }
   .header-box {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     width: 1110px;
-    height: 186px;
+    height: 194px;
   }
   .vertical-box1 {
     display: flex;
     justify-content: flex-end;
-    height: 36px;
+    height: 44px;
     background-color: #282828;
     color: white;
     font-weight: 200;
   }
   .header-login-btn-box {
-    width: 92px;
+    width: 48px;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;

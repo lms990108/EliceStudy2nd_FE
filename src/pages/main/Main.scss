@@ -3,6 +3,13 @@
     display: flex;
     flex-direction: column;
 }
+.banner-container {
+    display: flex;
+    justify-content: center;
+    height: 300px;
+    background-repeat: repeat;
+    background-size: contain;
+}
 .best-container {
     display: flex;
     flex-direction: column;
