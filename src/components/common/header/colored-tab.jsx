@@ -6,7 +6,7 @@ import Box from "@mui/material/Box";
 import { Link } from "react-router-dom";
 
 export default function ColorTabs() {
-  const [value, setValue] = React.useState("null");
+  const [value, setValue] = React.useState(null);
   const location = useLocation(); // 현재 경로 가져오기
 
   React.useEffect(() => {
@@ -40,7 +40,7 @@ export default function ColorTabs() {
         aria-label="secondary tabs example"
         sx={{
           ".MuiTab-root": {
-            width: "130px",
+            width: "120px",
             padding: "0px",
             fontWeight: "300",
             fontSize: "17px",

@@ -12,7 +12,9 @@ import MainReview from "../../components/main/MainReview";
 const Main = () => {
   return (
     <div className="main-container">
-      <div className="banner-container">
+      <div className="banner-container" style={{
+	    backgroundImage: `url('/block.jpeg'`,
+		}}>
         <MainBanner />
       </div>
       <div className="best-container">

@@ -1,4 +1,13 @@
+@keyframes darker {
+  from {
+    background-color: rgba(0, 0, 0, 0);
+  }
+  to {
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+}
 .search-modal-backdrop {
+  animation: darker 0.4s ease-out forwards;
   position: fixed;
   top: 0;
   left: 0;
@@ -17,6 +26,16 @@
     opacity: 1;
   }
 }
+@keyframes slideUp {
+  from {
+    height: 300px;
+    opacity: 1;
+  }
+  to {
+    height: 0;
+    opacity: 0;
+  }
+}
 .search-modal-container {
   animation: slideDown 0.2s ease-out forwards;
   display: flex;
@@ -28,10 +47,24 @@
   top: 187px;
   z-index: 1000;
 }
+.search-modal-container.closing {
+  animation: slideUp 0.2s ease-out forwards;
+}
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
 .search-modal-box {
   width: 1110px;
   height: 100%;
   background-color: white;
+}
+.search-modal-box.hide-content {
+  animation: fadeOut 0.1s ease-out forwards;
 }
 .search-modal-search-icon {
   color: #898989;

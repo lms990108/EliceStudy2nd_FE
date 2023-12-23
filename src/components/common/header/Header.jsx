@@ -3,6 +3,10 @@ import "./Header.scss";
 import ColorTabs from "./colored-tab";
 import SearchModal from "./SearchModal";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
+import VpnKeyIcon from "@mui/icons-material/VpnKey";
+import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import { Link } from "react-router-dom";
 
 const Header = () => {
@@ -23,18 +27,29 @@ const Header = () => {
           <div className="vertical-box1">
             <div className="header-login-btn-box">
               <Link to="/mypages" style={{ textDecoration: "none" }}>
-                <p className="header-login-btn">마이페이지</p>
+                <p className="header-login-btn">
+                  <AccountCircleIcon />
+                </p>
               </Link>
             </div>
             <div className="header-login-btn-box">
               <Link to="/admin" style={{ textDecoration: "none" }}>
-                <p className="header-login-btn">관리자 페이지</p>
+                <p className="header-login-btn">
+                  <AdminPanelSettingsOutlinedIcon />
+                </p>
               </Link>
             </div>
             <div className="header-login-btn-box">
               <Link to="/signup-in" style={{ textDecoration: "none" }}>
-                <p className="header-login-btn">로그인</p>
+                <p className="header-login-btn">
+                  <VpnKeyIcon />
+                </p>
               </Link>
+            </div>
+            <div className="header-login-btn-box">
+              <p className="header-login-btn">
+                <LogoutOutlinedIcon />
+              </p>
             </div>
           </div>
           <div className="vertical-box2">
