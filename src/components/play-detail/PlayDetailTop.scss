@@ -73,12 +73,9 @@
         padding: 5px;
       }
 
-      .share-btn {
+      .copy-btn {
         display: flex;
-        justify-content: center;
-        align-items: center;
-        position: relative;
-        bottom: 30px;
+        margin-bottom: 10px;
 
         p {
           display: inline-block;
@@ -92,6 +89,27 @@
 
         &:hover {
           cursor: pointer;
+        }
+      }
+
+      .share-btn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        p {
+          margin: 0;
+          padding-right: 20px;
+          font-size: 18px;
+        }
+
+        svg {
+          padding-right: 10px;
+        }
+
+        img {
+          width: 30px;
+          height: 30px;
         }
       }
 
@@ -188,11 +206,11 @@
         padding: 5px;
       }
 
-      .share-btn {
+      .copy-btn {
         display: flex;
         align-items: center;
         position: relative;
-        bottom: 30px;
+        bottom: 15px;
 
         p {
           display: inline-block;
@@ -209,9 +227,31 @@
         }
       }
 
+      .share-btn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        p {
+          margin: 0;
+          padding-right: 20px;
+          font-size: 18px;
+        }
+
+        svg {
+          padding-right: 10px;
+        }
+
+        img {
+          width: 30px;
+          height: 30px;
+        }
+      }
+
       .another-btn {
         display: flex;
         flex-direction: column;
+        padding-top: 20px;
 
         .dibs-btn,
         .reserve-btn {
@@ -288,7 +328,7 @@
     }
 
     .play-detail-buttons {
-      height: 60px;
+      height: 80px;
       // margin-top: 40px;
       // display: flex;
       // justify-content: space-between;
@@ -302,7 +342,7 @@
         padding: 5px;
       }
 
-      .share-btn {
+      .copy-btn {
         display: flex;
         align-items: center;
         margin-bottom: 20px;
@@ -323,16 +363,46 @@
         }
       }
 
+      .share-btn {
+        display: flex;
+
+        p {
+          margin: 0;
+          padding-right: 20px;
+          font-size: 18px;
+        }
+
+        svg {
+          padding-right: 10px;
+        }
+
+        img {
+          width: 30px;
+          height: 30px;
+        }
+      }
+
       .another-btn {
         display: flex;
         justify-content: center;
         align-items: center;
+        margin-top: 15px;
 
         .dibs-btn,
         .reserve-btn {
           // padding: 0;
-          margin-right: 30px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
           height: 60px;
+        }
+
+        .dibs-btn {
+          margin-right: 20px;
+        }
+
+        .reserve-btn {
+          margin-left: 20px;
         }
       }
     }
@@ -403,7 +473,7 @@
     }
 
     .play-detail-buttons {
-      height: 60px;
+      height: 80px;
       // margin-top: 40px;
       // display: flex;
       // justify-content: space-between;
@@ -417,7 +487,7 @@
         padding: 5px;
       }
 
-      .share-btn {
+      .copy-btn {
         display: flex;
         align-items: center;
         margin-bottom: 20px;
@@ -438,15 +508,38 @@
         }
       }
 
+      .share-btn {
+        display: flex;
+
+        p {
+          margin: 0;
+          padding-right: 20px;
+          font-size: 18px;
+        }
+
+        svg {
+          padding-right: 10px;
+        }
+
+        img {
+          width: 30px;
+          height: 30px;
+        }
+      }
+
       .another-btn {
         display: flex;
-        justify-content: center;
+        justify-content: space-around;
         align-items: center;
+        margin-top: 20px;
 
         .dibs-btn,
         .reserve-btn {
           // padding: 0;
-          margin-right: 30px;
+          // margin-right: 30px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
 
           p {
             font-size: 15px;

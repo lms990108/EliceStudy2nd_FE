@@ -1,4 +1,5 @@
 import "./App.scss";
+import { Helmet } from "react-helmet";
 import { theme } from "./components/common/themes/theme";
 import { ThemeProvider } from "@mui/material";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
@@ -21,19 +22,29 @@ import Admin from "./pages/admin/Admin";
 function App() {
   return (
     <div className="App">
+      <Helmet>
+        <script
+          type="text/javascript"
+          defer
+          src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.REACT_APP_KAKAO_MAP_API_KEY}&autoload=false`}
+        />
+      </Helmet>
       <ThemeProvider theme={theme}>
         <BrowserRouter>
           <Header />
           <ScrollToTop />
           <Routes>
             <Route path="/signup-in" element={<SignUpIn />} />
-            <Route path="/mypages" element={<MyPage/>} />
+            <Route path="/mypages" element={<MyPage />} />
             <Route path="/" element={<Main />} />
 
             <Route path="/admin" element={<Admin />} />
 
             <Route path="/community" element={<FreeBoardListPage />} />
-            <Route path="/community/:postId" element={<FreeBoardDetailPage />} />
+            <Route
+              path="/community/:postId"
+              element={<FreeBoardDetailPage />}
+            />
             <Route path="/community/write" element={<FreeBoardFormPage />} />
 
             <Route path="/promotion" element={<PRBoardListPage />} />

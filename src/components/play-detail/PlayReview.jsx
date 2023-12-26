@@ -8,14 +8,22 @@ import PlayReviewListBox from "./play-review-metrials/PlayReviewListBox";
 import PlayReviewContentBox from "./play-review-metrials/PlayReviewContentBox";
 import PagenationBox from "../play-list/PaginationBox";
 
-export default function PlayReview() {
+export default function PlayReview({ reviews, isLoggedIn }) {
+  const [isReviewFormOpened, setIsReviewFormOpened] = useState(false);
+
   return (
     <div className="play-review-container">
-      <AverageRatingBox />
-      <ReviewForm purpose="작성" />
-      <ReviewErrorBox errorText="제목과 별점은 필수 입력값입니다." />
-      <ReviewForm purpose="수정" contents={{}} />
-      <ReviewErrorBox errorText="제목과 별점은 필수 입력값입니다." />
+      <AverageRatingBox
+        isLoggedIn={isLoggedIn}
+        setIsReviewFormOpened={setIsReviewFormOpened}
+      />
+      {isReviewFormOpened ? (
+        <ReviewForm
+          purpose="작성"
+          setIsReviewFormOpened={setIsReviewFormOpened}
+        />
+      ) : null}
+      {/* <ReviewForm purpose="수정" contents={{}} /> */}
       <PlayReviewHeader count="15" />
       <div className="play-review-list">
         {/* <div className="play-review-not-exsist">리뷰가 존재하지 않습니다.</div> */}
