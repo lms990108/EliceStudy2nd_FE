@@ -3,24 +3,47 @@ import "./ReviewForm.scss";
 import Rating from "@mui/material/Rating";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import Typography from "@mui/material/Typography";
+import ReviewErrorBox from "./ReviewErrorBox";
+import { AlertCustom } from "../../common/alert/Alerts";
 
-export default function ReviewForm({ purpose, contents }) {
+export default function ReviewForm({
+  purpose,
+  contents,
+  setIsReviewFormOpened,
+}) {
   const [ratingValue, setRatingValue] = useState(0);
-  // console.log(ratingValue);
+  // 알림을 띄우기 위한 상태
+  const [alert, setAlert] = useState(null);
+
+  const handleCancelBtnClick = () => {
+    setAlert("리뷰 작성을 취소하시겠습니까? 글 내용은 저장되지 않습니다.");
+  };
 
   return (
     <>
+      {alert && (
+        <AlertCustom
+          title={"리뷰 작성 취소"}
+          content={alert}
+          open={Boolean(alert)}
+          onclose={() => setAlert(null)}
+          onclick={() => setIsReviewFormOpened(false)}
+          severity={"info"}
+          checkBtn={"확인"}
+          closeBtn={"취소"}
+        />
+      )}
+      {/* <ReviewErrorBox errorText="제목과 별점은 필수 입력값입니다." /> */}
       <form className="review-form-container">
         {purpose === "작성" && <h2>관람 후기 작성</h2>}
         <div className="review-title-box">
-          <h3>* 후기 제목</h3>
+          <h3>* 제목</h3>
           <TextField
             variant="standard"
             minRows="false"
             maxRows="true"
             rows="8"
-            defaultValue="제목을 입력해주세요. 30자 제한입니다."
+            defaultValue="제목을 입력해주세요."
             sx={{ width: 550 }}
             inputProps={{ maxLength: 30 }}
           />
@@ -35,7 +58,7 @@ export default function ReviewForm({ purpose, contents }) {
             variant="outlined"
             multiline
             rows={10}
-            defaultValue="내용을 입력해주세요. 500자 제한입니다."
+            defaultValue="내용을 입력해주세요."
             sx={{ width: 1000, height: 280 }}
             inputProps={{ maxLength: 500 }}
           />
@@ -62,15 +85,21 @@ export default function ReviewForm({ purpose, contents }) {
             제목은 띄어쓰기 포함 30자, 내용은 띄어쓰기 포함 500자 제한입니다.
           </p>
         </div>
+        <ReviewErrorBox errorText="제목과 별점은 필수 입력값입니다. 입력 후 다시 제출해 주세요." />
+        <div className="play-review-btn">
+          <Button variant="contained" className="play-review-btn">
+            {purpose} 완료
+          </Button>
+          <Button
+            variant="outlined"
+            color="error"
+            className="play-review-btn"
+            onClick={handleCancelBtnClick}
+          >
+            {purpose} 취소
+          </Button>
+        </div>
       </form>
-      <div className="play-review-btn">
-        <Button variant="contained" className="play-review-btn">
-          {purpose} 완료
-        </Button>
-        <Button variant="outlined" color="error" className="play-review-btn">
-          {purpose} 취소
-        </Button>
-      </div>
     </>
   );
 }
