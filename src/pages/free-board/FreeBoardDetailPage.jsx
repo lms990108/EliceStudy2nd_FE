@@ -2,46 +2,40 @@ import React, { useEffect, useState } from "react";
 import FreeBoardPost from "../../components/board-free/FreeBoardPost";
 import "./FreeBoardDetailPage.scss";
 import { BoardSecondHeader, BoardNav, CommentForm, CommentsList } from "../../components/board";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { addComment, getComments } from "../../apis/comments/comments";
 import { getPRBoardList } from "../../apis/board/prBoard";
+import { postUrl } from "../../apis/apiURLs";
 
 export function FreeBoardDetailPage() {
-  const { state, pathname } = useLocation();
-  const getPost = state?.post;
-  const getPath = pathname?.split("/");
-  const [post, setPost] = useState(getPost);
+  const [post, setPost] = useState();
   const [comments, setComments] = useState([]);
   const nav = useNavigate();
+  const params = useParams();
 
-  const handleRefresh = () => {
-    const commentsList = getComments(); //api 호출
-    console.log(commentsList);
-    setComments([...commentsList]);
+  const getPost = async () => {
+    const postId = params.postId;
+    const res = await fetch(`${postUrl}/number/${postId}`);
+    const data = await res.json();
+    setPost(data);
+    setComments([...data.comments]);
   };
 
   const createComment = (comment) => {
     addComment(comment);
-    handleRefresh();
+    getPost();
   };
 
   useEffect(() => {
-    const postId = getPath[getPath.length - 1];
-    const foundPost = getPRBoardList().filter((post) => post._id == postId)[0];
-    setPost(getPost || foundPost);
+    getPost();
   }, []);
-
-  useEffect(() => {
-    const commentsList = getComments();
-    setComments(commentsList);
-  }, [post]);
 
   return (
     <div className="free-board-detail page-margin-bottom">
       <BoardSecondHeader header="자유게시판" onclick={() => nav("/community")} />
       <div className="body">
-        <FreeBoardPost data={post} />
-        <BoardNav point={`${post.comments}`} text="의 댓글" onclick={handleRefresh} />
+        {post && <FreeBoardPost data={post} />}
+        <BoardNav point={comments?.length || 0} text="의 댓글" onclick={getPost} />
         <CommentForm create={createComment} />
         <CommentsList comments={comments} path="/community" />
       </div>

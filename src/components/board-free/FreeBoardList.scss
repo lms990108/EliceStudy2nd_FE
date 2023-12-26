@@ -24,6 +24,12 @@
         span {
           margin-left: 6px;
         }
+        .user-img {
+          width: 24px;
+          height: 24px;
+          border-radius: 50px;
+          object-fit: cover;
+        }
       }
     }
     .title {

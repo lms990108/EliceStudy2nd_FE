@@ -2,9 +2,10 @@ import React, { useEffect, useState } from "react";
 import PRBoardPost from "../../components/board-pr/PRBoardPost";
 import { BoardSecondHeader, BoardNav, CommentForm, CommentsList } from "../../components/board";
 import "./PRBoardDetailPage.scss";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { getPRBoardList } from "../../apis/board/prBoard";
-import { getComments } from "../../apis/comments/comments";
+import { addComment, getComments } from "../../apis/comments/comments";
+import { promotionUrl } from "../../apis/apiURLs";
 
 export function PRBoardDetailPage() {
   const { state, pathname } = useLocation();
@@ -13,30 +14,32 @@ export function PRBoardDetailPage() {
   const [post, setPost] = useState(getPost);
   const [comments, setComments] = useState([]);
   const nav = useNavigate();
+  const params = useParams();
 
-  const handleRefresh = () => {
-    const commentsList = getComments(); //api 호출
-    setComments(commentsList);
+  const getPromotion = async () => {
+    const postId = params.postId;
+    const res = await fetch(`${promotionUrl}/number/${postId}`);
+    const data = await res.json();
+    setPost(data);
+    setComments([...data.comments]);
+  };
+
+  const createComment = (comment) => {
+    addComment(comment);
+    getPromotion();
   };
 
   useEffect(() => {
-    const postId = getPath[getPath.length - 1];
-    const foundPost = getPRBoardList().filter((post) => post._id == postId)[0];
-    setPost(getPost || foundPost);
+    getPromotion();
   }, []);
-
-  useEffect(() => {
-    const commentsList = getComments();
-    setComments(commentsList);
-  }, [post]);
 
   return (
     <div className="pr-board-detail-page page-margin-bottom">
       <BoardSecondHeader header="홍보게시판" onclick={() => nav("/promotion")} />
       <div className="body">
-        <PRBoardPost data={post} />
-        <BoardNav point={`${post.comments}`} text="의 댓글" onclick={handleRefresh} />
-        <CommentForm create={() => {}} />
+        {post && <PRBoardPost data={post} />}
+        <BoardNav point={`${comments?.length || 0}`} text="의 댓글" onclick={getPromotion} />
+        <CommentForm create={createComment} />
         <CommentsList comments={comments} path="/promotion" />
       </div>
     </div>

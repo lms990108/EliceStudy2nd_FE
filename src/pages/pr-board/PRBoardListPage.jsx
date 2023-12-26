@@ -6,6 +6,7 @@ import { UpButton } from "../../components/common/button/UpButton";
 import { getPRBoardList } from "../../apis/board/prBoard";
 import { useInView } from "react-intersection-observer";
 import { useNavigate } from "react-router-dom";
+import { promotionUrl } from "../../apis/apiURLs";
 
 export const PRContext = createContext(getPRBoardList());
 
@@ -20,8 +21,9 @@ export function PRBoardListPage() {
     setBoardList((cur) => [...cur, ...newList]);
   };
 
-  const getPage = () => {
-    const list = getPRBoardList();
+  const getPage = async () => {
+    const res = await fetch(`${promotionUrl}`);
+    const list = await res.json();
     setNewList(list);
     addBoardList(list);
   };

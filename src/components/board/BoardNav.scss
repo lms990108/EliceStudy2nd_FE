@@ -10,8 +10,15 @@
     font-weight: 600;
     font-size: 16px;
   }
-  .refresh:hover {
-    transition: all 300ms;
-    transform: rotate(-80deg);
+  .refresh {
+    transform: rotate(-90deg);
+    &.start {
+      transition: all 300ms;
+      transform: rotate(-270deg);
+    }
+
+    &:hover {
+      color: #ff9900;
+    }
   }
 }
