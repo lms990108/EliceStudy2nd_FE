@@ -22,7 +22,7 @@
     font-weight: 200;
   }
   .header-login-btn-box {
-    width: 48px;
+    width: 44px;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
@@ -30,12 +30,14 @@
     font-size: 15px;
     cursor: pointer;
   }
-  .header-login-btn-box:hover {
-    font-weight: 600;
-  }
   .header-login-btn {
+    display: flex;
+    justify-content: center;
     margin: 0;
     color: white;
+  }
+  .header-icon:hover {
+    font-size: 26px;
   }
   .vertical-box2 {
     height: 100px;
@@ -48,6 +50,7 @@
   .logo {
     height: 100px;
     width: 360px;
+    user-select: none;
   }
   .vertical-box3 {
     display: flex;

@@ -5,8 +5,9 @@ import SearchModal from "./SearchModal";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
-import VpnKeyIcon from "@mui/icons-material/VpnKey";
-import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
+import LoginIcon from "@mui/icons-material/Login";
+import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
+import Tooltip from "@mui/material/Tooltip";
 import { Link } from "react-router-dom";
 
 const Header = () => {
@@ -27,29 +28,37 @@ const Header = () => {
           <div className="vertical-box1">
             <div className="header-login-btn-box">
               <Link to="/mypages" style={{ textDecoration: "none" }}>
-                <p className="header-login-btn">
-                  <AccountCircleIcon />
-                </p>
+                <div className="header-login-btn">
+                  <Tooltip title="마이 페이지" arrow>
+                    <AccountCircleIcon className="header-icon" />
+                  </Tooltip>
+                </div>
               </Link>
             </div>
             <div className="header-login-btn-box">
               <Link to="/admin" style={{ textDecoration: "none" }}>
-                <p className="header-login-btn">
-                  <AdminPanelSettingsOutlinedIcon />
-                </p>
+                <div className="header-login-btn">
+                  <Tooltip title="관리자 페이지" arrow>
+                    <AdminPanelSettingsOutlinedIcon className="header-icon" />
+                  </Tooltip>
+                </div>
               </Link>
             </div>
             <div className="header-login-btn-box">
               <Link to="/signup-in" style={{ textDecoration: "none" }}>
-                <p className="header-login-btn">
-                  <VpnKeyIcon />
-                </p>
+                <div className="header-login-btn">
+                  <Tooltip title="로그인" arrow>
+                    <LoginIcon className="header-icon" />
+                  </Tooltip>
+                </div>
               </Link>
             </div>
             <div className="header-login-btn-box">
-              <p className="header-login-btn">
-                <LogoutOutlinedIcon />
-              </p>
+              <div className="header-login-btn">
+                <Tooltip title="로그아웃" arrow>
+                  <LogoutOutlinedIcon className="header-icon" />
+                </Tooltip>
+              </div>
             </div>
           </div>
           <div className="vertical-box2">

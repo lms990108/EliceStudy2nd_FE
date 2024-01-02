@@ -2,26 +2,22 @@
   .footer-layout {
     display: flex;
     justify-content: center;
-    background-color: #eee;
+    background-color: #ddd;
     border-top: 1px solid #bcbcbc;
   }
   .footer-container {
     display: flex;
     width: 1110px;
-    height: 150px;
-    justify-content: center;
+    height: 132px;
+    justify-content:space-between;
     align-items: center;
-    background-color: #eee;
+    background-color: #ddd;
   }
   .footer-box1 {
-    border-right: 1px solid #bcbcbc;
-    width: 50%;
-    height: 100%;
+    width: 30%;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    height: 100%;
-    text-align: center;
     color: rgb(74, 74, 74);
     h3 {
       margin: 0;
@@ -32,67 +28,75 @@
     }
   }
   .footer-box2 {
-    width: 50%;
-    height: 100%;
+    width: 30%;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    height: 100%;
-    text-align: center;
     color: rgb(74, 74, 74);
     p {
       font-size: 14px;
       margin: 0;
     }
   }
+  .footer-box3{
+    height: 104px;
+    display: flex;
+    justify-content: end;
+    align-items: flex-end;
+    width: 40%;
+  }
+  .footer-logo{
+    width: 240px;
+  }
 }
 @media (max-width: 767px) {
   .footer-layout {
     display: flex;
     justify-content: center;
-    background-color: #eee;
+    background-color: #ddd;
+    border-top: 1px solid #bcbcbc;
   }
   .footer-container {
     display: flex;
     width: 1110px;
-    height: 150px;
-    justify-content: center;
+    height: 132px;
+    justify-content:space-between;
     align-items: center;
-    background-color: #eee;
-    border-top: 1px solid #bcbcbc;
+    background-color: #ddd;
   }
   .footer-box1 {
-    border-right: 1px solid #bcbcbc;
-    width: 50%;
-    height: 100%;
+    width: 30%;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    height: 100%;
-    text-align: center;
     color: rgb(74, 74, 74);
     h3 {
       margin: 0;
       margin-bottom: 5px;
-      font-size: 17px;
     }
     p {
-      font-size: 12px;
       margin: 0;
     }
   }
   .footer-box2 {
-    width: 50%;
-    height: 100%;
+    width: 30%;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    height: 100%;
-    text-align: center;
     color: rgb(74, 74, 74);
     p {
-      font-size: 12px;
+      font-size: 14px;
       margin: 0;
     }
+  }
+  .footer-box3{
+    height: 104px;
+    display: flex;
+    justify-content: end;
+    align-items: flex-end;
+    width: 40%;
+  }
+  .footer-logo{
+    width: 240px;
   }
 }

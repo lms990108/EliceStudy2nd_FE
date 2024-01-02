@@ -46,8 +46,8 @@ function App() {
             <Route path="/play" element={<PlayList />} />
             <Route path="/play/:playId" element={<PlayDetail />} />
           </Routes>
+          <Footer />
         </BrowserRouter>
-        <Footer />
       </ThemeProvider>
     </div>
   );
