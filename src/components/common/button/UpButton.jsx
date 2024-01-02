@@ -14,7 +14,7 @@ export function UpButton({ y }) {
 
   useEffect(() => {
     const handleShowButton = () => {
-      if (window.scrollY > (y || 1500)) {
+      if (window.scrollY > (y || 1)) {
         setShowButton(true);
       } else {
         setShowButton(false);

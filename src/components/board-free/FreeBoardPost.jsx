@@ -1,19 +1,18 @@
 import React, { useEffect, useState } from "react";
 import "./FreeBoardPost.scss";
 import { PostTop } from "../board";
+import { postUrl } from "../../apis/apiURLs";
 
 export default function FreeBoardPost({ data }) {
-  const [post, setPost] = useState({});
-
   useEffect(() => {
-    setPost(data);
+    console.log(data);
   });
 
   return (
     <div className="free-board-post">
-      <PostTop user={post.user} time={post.time} commentsCnt={post.comments} />
-      <h2 className="title">{post.title}</h2>
-      <div>{post.content}</div>
+      <PostTop user={data.user_id || { nickname: "test nick" }} time={data.createdAt} commentsCnt={data.comments.length} />
+      <h2 className="title">{data.title}</h2>
+      <div>{data.content}</div>
     </div>
   );
 }

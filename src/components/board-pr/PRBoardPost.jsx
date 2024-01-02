@@ -5,12 +5,6 @@ import { PostTop } from "../board";
 import { useLocation } from "react-router-dom";
 
 export default function PRBoardPost({ data }) {
-  const [post, setPost] = useState({});
-
-  useEffect(() => {
-    setPost(data);
-  });
-
   return (
     <div className="pr-board-post-box">
       <div className="post-header">
@@ -25,11 +19,11 @@ export default function PRBoardPost({ data }) {
         </span>
       </div>
       <div className="post-content-box">
-        <PostTop user={post.user} time={post.time} commentsCnt={post.comments} />
-        <img className="post-image" src={post.img} alt="홍보 포스터" />
-        <h2 className="post-title">{post.title}</h2>
+        <PostTop user={data.user_id ? { nickname: data.user_id } : { nickname: "asd" }} time={data.createdAt} commentsCnt={data.comments.length} />
+        <img className="post-image" src={data.poster_url} alt="홍보 포스터" />
+        <h2 className="post-title">{data.title}</h2>
         <hr />
-        <div className="post-content">{post.content}</div>
+        <div className="post-content">{data.content}</div>
       </div>
     </div>
   );

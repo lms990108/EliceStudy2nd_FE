@@ -1,4 +1,5 @@
 import "./App.scss";
+import { Helmet } from "react-helmet";
 import { theme } from "./components/common/themes/theme";
 import { ThemeProvider } from "@mui/material";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
@@ -21,6 +22,13 @@ import Admin from "./pages/admin/Admin";
 function App() {
   return (
     <div className="App">
+      <Helmet>
+        <script
+          type="text/javascript"
+          defer
+          src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.REACT_APP_KAKAO_MAP_API_KEY}&autoload=false`}
+        />
+      </Helmet>
       <ThemeProvider theme={theme}>
         <BrowserRouter>
           <Header />

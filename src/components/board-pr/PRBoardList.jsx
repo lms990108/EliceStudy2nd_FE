@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import "./PRBoardList.scss";
 import SmsOutlinedIcon from "@mui/icons-material/SmsOutlined";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { PRContext } from "../../pages";
 
 export default function PRBoardList({ newList }) {
@@ -53,17 +53,17 @@ export default function PRBoardList({ newList }) {
   }, [boardList, newList]);
 
   const content = (post) => (
-    <div className={`content-box pointer`} key={post._id} id={post._id} onClick={handleClick}>
-      <img src={post.img} alt="" />
+    <Link className={`content-box pointer`} key={post._id} id={post._id} to={`${post.promotion_number}`}>
+      <img src={post.poster_url} alt="" />
       <div className="post-content-box">
         <div className="flex-box">
           <div className="title">{post.title}</div>
           <div className="flex-box comments">
             <SmsOutlinedIcon sx={{ fontSize: 20 }} />
-            <span>{post.comments}</span>
+            <span>{post.comments?.length || 0}</span>
           </div>
         </div>
-        {post.tags.length !== 0 && (
+        {post.tags && post.tags.length !== 0 && (
           <div className="tags">
             {post.tags.map((tag) => (
               <div># {tag}</div>
@@ -72,7 +72,7 @@ export default function PRBoardList({ newList }) {
         )}
         <div className="content">{post.content}</div>
       </div>
-    </div>
+    </Link>
   );
 
   return (

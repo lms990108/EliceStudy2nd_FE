@@ -4,7 +4,7 @@
   flex-direction: column;
   box-sizing: border-box;
   padding: 18px 14px;
-  border-radius: 30px;
+  border-radius: 20px;
 
   .flex-box {
     display: flex;
@@ -13,14 +13,19 @@
       margin-left: 10px;
       border-radius: 10px;
       flex-grow: 1;
-      min-height: 60px;
-      max-height: 100px;
+      height: 75px;
       padding: 10px;
       font-weight: 500;
       resize: none;
       font-family: "Noto Sans KR";
       outline: none;
       border: #bcbcbc solid 1px;
+
+      -ms-overflow-style: none; /* IE and Edge */
+      scrollbar-width: none; /* Firefox */
+      &::-webkit-scrollbar {
+        display: none;
+      }
     }
     textarea:focus {
       border-color: black;
