@@ -17,6 +17,7 @@ export default function PlayDetail() {
   const [isLoading, setIsLoading] = useState(true);
   // 연극 상세 정보
   const [playInfo, setPlayInfo] = useState({});
+  console.log(playInfo);
   // 현재 선택한 메뉴 (상세정보 / 관람후기 / 장소정보)
   const [detailNavMenu, setDetailNavMenu] = useState("상세정보");
   // lat: 위도, lng: 경도
@@ -27,7 +28,6 @@ export default function PlayDetail() {
   const [userInfo, setUserInfo] = useState(null);
   // 에러를 띄우기 위한 상태 정의
   const [error, setError] = useState(null);
-  console.log(error);
 
   // 현재 연극 하나 데이터 받아오기
   useEffect(() => {
@@ -46,7 +46,9 @@ export default function PlayDetail() {
 
   // 유저가 로그인되어 있는지 확인하기, 로그인되어 있는 유저 정보 받아오기
   useEffect(() => {
-    fetch(`https://dailytopia2.shop/api/user/check-login`)
+    fetch(`https://dailytopia2.shop/api/user/check-login`, {
+      withCredentials: true,
+    })
       .then((res) => res.json())
       .then((data) => {
         setIsLoggedIn(data.isLoggedIn);
@@ -112,6 +114,7 @@ export default function PlayDetail() {
                   description={playInfo.description}
                   detail_images={playInfo.detail_images}
                   schedule={playInfo.schedule}
+                  seat_cnt={playInfo.seat_cnt}
                 />
               )}
               {detailNavMenu === "관람후기" && (

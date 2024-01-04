@@ -6,9 +6,10 @@
 @media (min-width: 1130px) {
   .play-region-select-container {
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    padding-bottom: 80px;
+    padding-bottom: 50px;
     margin: 0 auto;
 
     .play-region-select {
@@ -32,8 +33,14 @@
       font-size: 20px;
       font-weight: 700;
       cursor: pointer;
+      align-self: flex-end;
       position: relative;
-      top: 65px;
+      top: 50px;
+
+      .calendar-menu-box {
+        display: flex;
+        flex-direction: flex-end;
+      }
 
       svg {
         padding-right: 8px;

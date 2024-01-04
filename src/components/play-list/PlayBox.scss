@@ -59,6 +59,33 @@
       width: 250px;
       @include play-box-flex-wrap;
     }
+
+    .end-show-design {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 250px;
+      height: 330px;
+      position: absolute;
+      background-color: rgb(0, 0, 0, 0.5);
+      font-family: "Noto Sans KR";
+      border-radius: 8px;
+
+      img {
+        width: 200px;
+        height: 200px;
+      }
+
+      .end-show-text {
+        position: absolute;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        color: #ffffff;
+        font-size: 45px;
+      }
+    }
   }
 }
 
@@ -112,6 +139,33 @@
       font-weight: 700;
       width: 250px;
       @include play-box-flex-wrap;
+    }
+
+    .end-show-design {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 250px;
+      height: 330px;
+      position: absolute;
+      background-color: rgb(0, 0, 0, 0.5);
+      font-family: "Noto Sans KR";
+      border-radius: 8px;
+
+      img {
+        width: 200px;
+        height: 200px;
+      }
+
+      .end-show-text {
+        position: absolute;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        color: #ffffff;
+        font-size: 45px;
+      }
     }
   }
 }
@@ -171,6 +225,33 @@
       font-weight: 700;
       width: 150px;
       @include play-box-flex-wrap;
+    }
+
+    .end-show-design {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 150px;
+      height: 220px;
+      position: absolute;
+      background-color: rgb(0, 0, 0, 0.5);
+      font-family: "Noto Sans KR";
+      border-radius: 8px;
+
+      img {
+        width: 100px;
+        height: 100px;
+      }
+
+      .end-show-text {
+        position: absolute;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        color: #ffffff;
+        font-size: 30px;
+      }
     }
   }
 }

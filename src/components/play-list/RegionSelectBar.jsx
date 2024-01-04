@@ -17,11 +17,11 @@ export default function RegionSelectBar({
           "전체",
           "서울",
           "경기/인천",
-          "충청",
+          "대전/충청",
           "강원",
-          "부산",
-          "경상",
-          "전라",
+          "부산/울산",
+          "대구/경상",
+          "광주/전라",
           "제주",
         ].map((region) => {
           return (
