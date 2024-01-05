@@ -17,7 +17,6 @@ export function FreeBoardFormPage() {
 
   return (
     <div className="free-board-form-page page-margin-bottom">
-      {console.log(input)}
       <BoardSecondHeader header="자유게시판" onclick={handleCancle} />
       <div className="body">
         <FreeBoardForm setInput={(boolean) => setInput(boolean)} handleCancle={handleCancle} />
