@@ -34,12 +34,7 @@ export function FreeBoardListPage() {
     getPage();
   }, [page]);
 
-  const desc = (
-    <p>
-      연극 및 다양한 공연에 대해 이야기 하는 곳입니다. <br /> 누구나 작성할 수 있으며,
-      <br /> 비방 및 욕설, 음란물은 작성 불가합니다.
-    </p>
-  );
+  const desc = <p>연극 및 다양한 공연에 대해 이야기 하는 곳입니다.</p>;
 
   return (
     <div className="free-board-page page-margin">

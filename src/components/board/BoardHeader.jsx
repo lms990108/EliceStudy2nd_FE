@@ -6,14 +6,14 @@ import "./BoardHeader.scss";
 export function BoardListHeader({ header, desc, onclick }) {
   return (
     <div className="board-list-header">
-      <div className="content">
-        <h2>{header}</h2>
-        <div className="flex-box">
+      <div className="content flex-box">
+        <div>
+          <h2>{header}</h2>
           <p>{desc}</p>
-          <Button onClick={onclick} variant="contained" color="secondary" sx={{ fontSize: 18 }}>
-            작성하기
-          </Button>
         </div>
+        <Button onClick={onclick} variant="contained" color="secondary" sx={{ fontSize: 18 }}>
+          작성하기
+        </Button>
       </div>
       <hr></hr>
     </div>
