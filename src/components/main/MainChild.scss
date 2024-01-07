@@ -1,12 +1,104 @@
-.main-child-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    height: 350px;
-    width: 1110px;
+.main-layout-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.main-title-box {
+  display: flex;
+  justify-content: space-between;
+  width: 1190px;
+}
+.slide-info-box {
+  display: flex;
+  align-items: flex-end;
+}
+.slide-info1 {
+  display: inline;
+  font-size: 28px;
+  margin-right: 2px;
+  color: #aaa;
+}
+.slide-info2 {
+  display: inline;
+  font-size: 28px;
+  margin-right: 2px;
+  color: #aaa;
+}
+.slide-info3 {
+  display: inline;
+  font-size: 28px;
+  margin-right: 12px;
+  color: #aaa;
+}
+.slide-info1.active,
+.slide-info2.active,
+.slide-info3.active {
+  font-weight: 900;
+  color: #ffb400;
+}
+.main-slide-container {
+  display: flex;
+  align-items: center;
+}
+.slide-left-icon {
+  color: #bbb;
+}
+.slide-right-icon {
+  margin-left: 10px;
+  color: #bbb;
+}
+.slide-left-icon:hover,
+.slide-right-icon:hover {
+  cursor: pointer;
+  color: white;
+  transform: scale(1.2);
+  transition: transform 0.1s ease;
+}
+.main-play-container {
+  display: flex;
+  align-items: flex-end;
+  height: 340px;
+  width: 1190px;
+  overflow: hidden;
+}
+.main-title {
+  color: white;
+  margin: 0 0 16px 0 !important;
+}
+.main-play-box {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+.main-play-box:hover {
+  cursor: pointer;
+}
+.main-play-img-box {
+  height: 250px;
+  width: 180px;
+  border: 0.5px solid black;
+  border-radius: 10px;
+  overflow: hidden;
+  img {
+    width: 100%;
+    height: 100%;
+    transition: transform 0.2s ease-in-out;
+
+    &:hover {
+      transform: scale(1.05);
+    }
   }
-  .main-title {
-      color: white;
-      margin-bottom: 10px;
-      font-size: 27px;
-  }
+}
+.main-play-title {
+  color: #eee;
+  margin: 16px 0 4px 0;
+  font-size: 18px;
+  font-weight: 300;
+}
+.main-child-play-period {
+  color: #40a86d;
+  font-size: 13px;
+  font-weight: 600;
+  margin: 0px;
+}

@@ -7,6 +7,8 @@ import MainRating from "../../components/main/MainRating";
 import MainChild from "../../components/main/MainChild";
 import MainPublicity from "../../components/main/MainPublicity";
 import MainReview from "../../components/main/MainReview";
+import MainTheater from "../../components/main/MainTheater";
+import { UpButton } from "../../components/common/button/UpButton";
 
 //Main
 const Main = () => {
@@ -23,18 +25,22 @@ const Main = () => {
       <div className="preferred-region-container">
         <MainPreferredRegion />
       </div>
-      <div className="publicity-container">
-        <MainPublicity />
+      <div className="review-container">
+        <MainReview />
       </div>
       <div className="rating-container">
         <MainRating />
       </div>
-      <div className="review-container">
-        <MainReview />
+      <div className="publicity-container">
+        <MainPublicity />
       </div>
       <div className="child-container">
         <MainChild />
       </div>
+      <div className="theater-container">
+        <MainTheater />
+      </div>
+      <UpButton />
     </div>
   );
 };

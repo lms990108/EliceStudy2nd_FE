@@ -178,15 +178,15 @@ export default function PlayDetailTop({
           </div>
           <div>
             <h3>평점</h3>
-            {!reviews.length ? (
-              <p>
-                <Rating value={0} readOnly />
-              </p>
+            {/* {!reviews.length ? (
+              <p> */}
+            <Rating value={0} readOnly />
+            {/* </p>
             ) : (
               <p>
                 <Rating value={4} readOnly />
               </p>
-            )}
+            )} */}
           </div>
         </div>
       </div>
