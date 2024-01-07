@@ -6,7 +6,7 @@ import ReviewErrorBox from "./play-review-metrials/ReviewErrorBox";
 import PlayReviewHeader from "./play-review-metrials/PlayReviewHeader";
 import PlayReviewListBox from "./play-review-metrials/PlayReviewListBox";
 import PlayReviewContentBox from "./play-review-metrials/PlayReviewContentBox";
-import PagenationBox from "../play-list/PaginationBox";
+import Pagination from "@mui/material/Pagination";
 
 export default function PlayReview({ reviews, isLoggedIn }) {
   const [isReviewFormOpened, setIsReviewFormOpened] = useState(false);
@@ -32,7 +32,7 @@ export default function PlayReview({ reviews, isLoggedIn }) {
             isAuthorLogined: true,
             author: "소유빈",
             date: "2023-11-02",
-            title: "연극 너무너무 재미있었어요~",
+            title: "환상적인 모험: 미지의 세계에서의 뜨거운 여정",
             isContentExsist: true,
             isPhotoExsist: true,
             rating: parseFloat("4.5"),
@@ -137,7 +137,20 @@ export default function PlayReview({ reviews, isLoggedIn }) {
             rating: parseFloat("4.5"),
           }}
         />
-        <PagenationBox />
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            paddingTop: "20px",
+          }}
+        >
+          <Pagination
+            count={1}
+            color="secondary"
+            size={innerWidth >= 481 ? "large" : "small"}
+          />
+        </div>
       </div>
     </div>
   );

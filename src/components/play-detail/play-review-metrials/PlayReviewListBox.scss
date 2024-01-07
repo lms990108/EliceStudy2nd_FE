@@ -1,4 +1,4 @@
-@media (min-width: 480px) {
+@media (min-width: 925px) {
   .play-review-list-box {
     border-bottom: 1px solid rgb(188, 188, 188, 0.5);
     padding: 0 20px;
@@ -6,7 +6,7 @@
     align-items: center;
 
     .review-author-and-date {
-      width: 12%;
+      width: 17%;
       p {
         margin: 10px;
         display: flex;
@@ -16,10 +16,11 @@
     }
 
     .play-review-title {
-      width: 60%;
+      width: 54%;
       display: flex;
       align-items: center;
       padding-left: 30px;
+      flex-wrap: wrap;
 
       svg {
         padding-right: 10px;
@@ -46,9 +47,72 @@
       justify-items: center;
       align-items: center;
       cursor: pointer;
+      padding-left: 20px;
     }
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 925px) {
+  .play-review-list-box {
+    border-bottom: 1px solid rgb(188, 188, 188, 0.5);
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+
+    .review-author-and-date {
+      grid-row: 1;
+      display: flex;
+      grid-column-start: 1;
+      grid-column-end: 4;
+
+      p {
+        margin: 15px 15px 5px;
+      }
+    }
+
+    .play-review-title {
+      display: flex;
+      align-items: center;
+      padding-left: 15px;
+      flex-wrap: wrap;
+      grid-column-start: 1;
+      grid-column-end: 3;
+
+      svg {
+        padding-right: 10px;
+        display: inline-block;
+      }
+    }
+
+    .play-review-accordion {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .play-review-rating {
+      display: flex;
+      justify-items: center;
+      align-items: center;
+      padding-left: 15px;
+      grid-column-start: 1;
+      margin: 5px 0 15px;
+    }
+
+    .play-review-remove {
+      display: flex;
+      cursor: pointer;
+      grid-column-start: 2;
+      grid-column-end: 4;
+      width: 100%;
+      justify-content: flex-end;
+      margin: 5px 0 15px;
+
+      svg {
+        padding-right: 5px;
+      }
+    }
+  }
 }

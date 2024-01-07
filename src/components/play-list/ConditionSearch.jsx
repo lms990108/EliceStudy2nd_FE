@@ -5,6 +5,9 @@ import ConditionSearchFrame from "./condition-search-material/ConditionSearchFra
 import DoneIcon from "@mui/icons-material/Done";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
+import Alert from "@mui/material/Alert";
+import Stack from "@mui/material/Stack";
+import CheckIcon from "@mui/icons-material/Check";
 
 // 조건 검색 시 사용할 context (컴포넌트 바깥에 따로 적어주어 export 해야지 undefined로 뜨지 않는다.)
 export const ConditionContext = createContext();
@@ -14,24 +17,27 @@ export default function ConditionSearch({
   filteredPlays,
   setConditionPlays,
   sortPlays,
+  innerWidth,
 }) {
   // 핸드폰에서 사용자가 펼치기를 눌렀는지 안눌렀는지를 나타내는 상태 정의
   const [isExpandClicked, setIsExpandClicked] = useState(false);
+  // 적용하기 버튼이 클릭되었는지를 나타내는 상태
+  const [isAdaptBtnClicked, setIsAdaptBtnClicked] = useState(false);
 
   // 화면에 띄울 조건 검색 텍스트 (반복되어 배열로 뺌)
   const conditionTexts = [
-    {
-      division: "좌석 규모별",
-      options: [
-        "전체",
-        "소극장 (300석 미만)",
-        "중극장 (300 ~ 1000석)",
-        "대극장 (1000석 이상)",
-      ],
-    },
+    // {
+    //   division: "좌석 규모별",
+    //   options: [
+    //     "전체",
+    //     "소극장 (300석 미만)",
+    //     "중극장 (300 ~ 1000석)",
+    //     "대극장 (1000석 이상)",
+    //   ],
+    // },
     {
       division: "공연 상태별",
-      options: ["전체", "공연중", "공연예정"],
+      options: ["전체", "공연중", "공연예정", "공연완료"],
     },
     {
       division: "가격별",
@@ -134,6 +140,7 @@ export default function ConditionSearch({
       return stateArray;
     });
     sortPlays();
+    setIsAdaptBtnClicked(true);
   };
 
   return (
@@ -143,7 +150,7 @@ export default function ConditionSearch({
         <span>조건 검색</span>
       </div>
       <div className="condition-search-main">
-        {innerWidth >= 481 && (
+        {innerWidth > 480 && (
           <>
             {conditionTexts.map((conditionText, idx) => {
               return (
@@ -151,6 +158,7 @@ export default function ConditionSearch({
                   value={{
                     conditions,
                     setConditions,
+                    setIsAdaptBtnClicked,
                   }}
                   key={idx}
                 >
@@ -163,57 +171,26 @@ export default function ConditionSearch({
               );
             })}
             <div className="adapt-button">
-              <Button
-                variant="contained"
-                color="secondary"
-                onClick={() => handleAdaptClick(conditions)}
-              >
-                <Typography
-                  fontFamily="Nanum Gothic, sans-serif"
-                  className="adapt-button-text"
+              {isAdaptBtnClicked &&
+              (conditions["공연 상태별"][0] !== "전체" ||
+                conditions["가격별"][0] !== "전체") ? (
+                <Button
+                  variant="contained"
+                  color="success"
+                  onClick={() => handleAdaptClick(conditions)}
                 >
-                  적용하기
-                </Typography>
-              </Button>
-            </div>
-          </>
-        )}
-        {innerWidth <= 480 && (
-          <>
-            <div
-              className="condition-search-accordian"
-              onClick={handleConditionSearchExpand}
-            >
-              <p>
-                {!isExpandClicked ? "조건 검색 펼치기 ▼" : "조건 검색 접기 ▲"}
-              </p>
-            </div>
-            <div
-              className={
-                isExpandClicked ? null : "condition-search-display-none"
-              }
-            >
-              {conditionTexts.map((conditionText, idx) => {
-                return (
-                  <ConditionContext.Provider
-                    value={{
-                      conditions: { conditions },
-                      setConditions: { setConditions },
-                    }}
+                  <Typography
+                    fontFamily="Nanum Gothic, sans-serif"
+                    className="adapt-button-text"
                   >
-                    <ConditionSearchFrame
-                      key={idx}
-                      division={conditionText.division}
-                      options={conditionText.options}
-                    />
-                  </ConditionContext.Provider>
-                );
-              })}
-              <div className="adapt-button">
+                    적용중
+                  </Typography>
+                </Button>
+              ) : (
                 <Button
                   variant="contained"
                   color="secondary"
-                  onClick={handleAdaptClick}
+                  onClick={() => handleAdaptClick(conditions)}
                 >
                   <Typography
                     fontFamily="Nanum Gothic, sans-serif"
@@ -222,8 +199,69 @@ export default function ConditionSearch({
                     적용하기
                   </Typography>
                 </Button>
-              </div>
+              )}
             </div>
+          </>
+        )}
+        {innerWidth <= 480 && (
+          <>
+            <div
+              className="condition-search-accordian"
+              onClick={() => handleConditionSearchExpand()}
+            >
+              <p>
+                {!isExpandClicked ? "조건 검색 펼치기 ▼" : "조건 검색 접기 ▲"}
+              </p>
+            </div>
+            {isExpandClicked ? (
+              <div
+              // className={
+              // isExpandClicked ? null : "condition-search-display-none"
+              // }
+              >
+                {conditionTexts.map((conditionText, idx) => {
+                  return (
+                    <ConditionContext.Provider
+                      value={{
+                        conditions,
+                        setConditions,
+                        setIsAdaptBtnClicked,
+                      }}
+                      key={idx}
+                    >
+                      <ConditionSearchFrame
+                        key={idx}
+                        division={conditionText.division}
+                        options={conditionText.options}
+                      />
+                    </ConditionContext.Provider>
+                  );
+                })}
+                <div className="adapt-button">
+                  {isAdaptBtnClicked &&
+                  (conditions["공연 상태별"][0] !== "전체" ||
+                    conditions["가격별"][0] !== "전체") ? (
+                    <Stack sx={{ width: "100%" }} spacing={2}>
+                      <Alert severity="success">
+                        This is a success alert — check it out!
+                      </Alert>
+                    </Stack>
+                  ) : null}
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    onClick={() => handleAdaptClick(conditions)}
+                  >
+                    <Typography
+                      fontFamily="Nanum Gothic, sans-serif"
+                      className="adapt-button-text"
+                    >
+                      적용하기
+                    </Typography>
+                  </Button>
+                </div>
+              </div>
+            ) : null}
           </>
         )}
       </div>

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation, Link, useNavigate } from "react-router-dom";
 import "./PlayDetailTop.scss";
 import kakaoTalkImg from "../../assets/img/SNSIcon/kakaoTalk.png";
+import XImg from "../../assets/img/SNSIcon/X.png";
 import LinkIcon from "@mui/icons-material/Link";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import TwitterIcon from "@mui/icons-material/Twitter";
@@ -33,6 +34,8 @@ export default function PlayDetailTop({
   const [isDibbed, setIsDibbed] = useState(false);
   // 로그인 필요 알람
   const [needLoginAlert, setNeedLoginAlert] = useState(null);
+  // 현재 마우스가 올라가 있는 공유 옵션
+  const [currentHoverOption, setCurrentHoverOption] = useState(null);
 
   // 찜한 연극인지를 확인하는 로직 (유저가 로그인 되어 있을시에만 로직 적용)
   useEffect(() => {
@@ -69,9 +72,6 @@ export default function PlayDetailTop({
     try {
       await navigator.clipboard.writeText(currentPath);
       setCopyAlert("현재 페이지의 링크가 복사되었습니다.");
-      setTimeout(() => {
-        setCopyAlert(null);
-      }, 5000);
     } catch (err) {
       console.log(err);
       setCopyAlert("현재 페이지 링크 복사에 실패하였습니다.");
@@ -108,15 +108,16 @@ export default function PlayDetailTop({
 
   return (
     <div className="play-detail-top-container">
-      {copyAlert === "현재 페이지의 링크가 복사되었습니다." ? (
+      {copyAlert === "현재 페이지의 링크가 복사되었습니다." && (
         <AlertCustom
-          title={"링크 복사 완료!"}
+          title={"링크 복사 완료"}
           content={copyAlert}
           open={Boolean(copyAlert)}
           onclose={() => setCopyAlert(null)}
           severity={"success"}
         />
-      ) : (
+      )}
+      {copyAlert === "현재 페이지 링크 복사에 실패하였습니다." && (
         <AlertCustom
           title={"링크 복사 실패!"}
           content={copyAlert}
@@ -132,7 +133,7 @@ export default function PlayDetailTop({
           open={Boolean(needLoginAlert)}
           onclose={() => setNeedLoginAlert(null)}
           onclick={() => navigate("/signup-in")}
-          severity={"info"}
+          severity={"warning"}
           checkBtn={"확인"}
           closeBtn={"취소"}
         />
@@ -140,6 +141,15 @@ export default function PlayDetailTop({
       <div className="play-detail-top">
         <div className="play-poster">
           <div className="poster-box">
+            {state === "공연완료" && (
+              <div className="end-show-design">
+                <img src="/banner.png" alt="공연 완료 이미지" />
+                <span className="end-show-text">
+                  연극 <br />
+                  종료
+                </span>
+              </div>
+            )}
             <img src={poster} alt={`${title} 포스터`} />
           </div>
         </div>
@@ -178,51 +188,108 @@ export default function PlayDetailTop({
           </div>
           <div>
             <h3>평점</h3>
-            {/* {!reviews.length ? (
-              <p> */}
-            <Rating value={0} readOnly />
-            {/* </p>
-            ) : (
-              <p>
-                <Rating value={4} readOnly />
-              </p>
-            )} */}
+            <p>
+              <Rating value={0} readOnly />
+            </p>
           </div>
         </div>
       </div>
       <div className="play-detail-buttons">
-        <div>
-          <div
-            className="copy-btn"
-            onClick={() =>
-              handleShareBtnClick(
-                `${process.env.REACT_APP_BASE_URL}${currentURL.pathname}`
-              )
-            }
-          >
-            <LinkIcon fontSize="medium" />
-            <p>링크 복사하기</p>
+        <div className="share-btn">
+          <p>공유</p>
+          <div className="share-option">
+            <LinkIcon
+              fontSize="medium"
+              onClick={() =>
+                handleShareBtnClick(
+                  `${process.env.REACT_APP_BASE_URL}${currentURL.pathname}`
+                )
+              }
+              onMouseOver={() => setCurrentHoverOption("링크 복사")}
+              onMouseOut={() => setCurrentHoverOption(null)}
+              style={{ cursor: "pointer" }}
+            />
+            <div className="share-option-text">
+              <span
+                style={
+                  currentHoverOption === "링크 복사"
+                    ? { visibility: "visible" }
+                    : { visibility: "hidden" }
+                }
+                className="share-tooltip"
+              >
+                링크 복사
+              </span>
+            </div>
           </div>
-          <div className="share-btn">
-            <p>공유하기</p>
+          <div className="share-option">
             <FacebookIcon
               fontSize="large"
               color="facebookBlue"
               onClick={shareFacebook}
+              onMouseOver={() => setCurrentHoverOption("페이스북 공유")}
+              onMouseOut={() => setCurrentHoverOption(null)}
               style={{ cursor: "pointer" }}
             />
-            <TwitterIcon
-              fontSize="large"
-              color="twitterBlue"
-              onClick={shareTwitter}
-              style={{ cursor: "pointer" }}
-            />
-            <img
-              id="btnKakaoShare"
-              src={kakaoTalkImg}
-              alt="kakaoTalk-icon"
-              style={{ cursor: "pointer" }}
-            />
+            <div className="share-option-text">
+              <span
+                style={
+                  currentHoverOption === "페이스북 공유"
+                    ? { visibility: "visible" }
+                    : { visibility: "hidden" }
+                }
+                className="share-tooltip"
+              >
+                페이스북
+              </span>
+            </div>
+          </div>
+          <div className="share-option">
+            <div className="SNS-img-box">
+              <img
+                src={XImg}
+                onMouseOver={() => setCurrentHoverOption("X 공유")}
+                onMouseOut={() => setCurrentHoverOption(null)}
+                alt="X-icon"
+                style={{ cursor: "pointer" }}
+              />
+            </div>
+            <div className="share-option-text">
+              <span
+                style={
+                  currentHoverOption === "X 공유"
+                    ? { visibility: "visible" }
+                    : { visibility: "hidden" }
+                }
+                className="share-tooltip"
+              >
+                X (트위터)
+              </span>
+            </div>
+          </div>
+          <div className="share-option">
+            <div className="SNS-img-box">
+              <img
+                id="btnKakaoShare"
+                src={kakaoTalkImg}
+                onMouseOver={() => setCurrentHoverOption("카카오톡 공유")}
+                onMouseOut={() => setCurrentHoverOption(null)}
+                alt="kakaoTalk-icon"
+                style={{ cursor: "pointer" }}
+              />
+            </div>
+            <div className="share-option-text">
+              <span
+                style={
+                  currentHoverOption === "카카오톡 공유"
+                    ? { visibility: "visible" }
+                    : { visibility: "hidden" }
+                }
+                className="share-tooltip"
+              >
+                카카오톡
+              </span>
+            </div>
           </div>
         </div>
         <div className="another-btn">
@@ -250,20 +317,48 @@ export default function PlayDetailTop({
             </Button> */}
           </div>
           <div className="reserve-btn">
-            <a
-              href={`https://tickets.interpark.com/contents/search?keyword=${title}&start=0&rows=20`}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Button variant="contained" color="secondary" size="large">
-                <Typography
-                  fontFamily="Nanum Gothic, sans-serif"
-                  className="button-text"
+            {state !== "공연완료" ? (
+              <a
+                href={`https://tickets.interpark.com/contents/search?keyword=${title}&start=0&rows=20`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Button variant="contained" color="secondary" size="large">
+                  <Typography
+                    fontFamily="Nanum Gothic, sans-serif"
+                    className="button-text"
+                  >
+                    예매하러 가기
+                  </Typography>
+                </Button>
+              </a>
+            ) : (
+              <>
+                <div
+                  onMouseOver={() => setCurrentHoverOption("종료된 연극")}
+                  onMouseOut={() => setCurrentHoverOption(null)}
                 >
-                  예매하러 가기
-                </Typography>
-              </Button>
-            </a>
+                  <Button variant="contained" disabled>
+                    <Typography
+                      fontFamily="Nanum Gothic, sans-serif"
+                      className="button-text"
+                    >
+                      예매하러 가기
+                    </Typography>
+                  </Button>
+                </div>
+                <span
+                  style={
+                    currentHoverOption === "종료된 연극"
+                      ? { visibility: "visible" }
+                      : { visibility: "hidden" }
+                  }
+                  className="end-show-tooltip"
+                >
+                  본 연극은 종료되어 예매 링크가 제공되지 않습니다.
+                </span>
+              </>
+            )}
           </div>
         </div>
       </div>
