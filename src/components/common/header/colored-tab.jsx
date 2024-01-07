@@ -6,7 +6,7 @@ import Box from "@mui/material/Box";
 import { Link } from "react-router-dom";
 
 export default function ColorTabs() {
-  const [value, setValue] = React.useState(null);
+  const [value, setValue] = React.useState("zero");
   const location = useLocation(); // 현재 경로 가져오기
 
   React.useEffect(() => {
@@ -22,10 +22,10 @@ export default function ColorTabs() {
         setValue("three");
         break;
       default:
-        setValue(null); // 다른 경로에 있을 때는 아무 탭도 선택되지 않도록
+        setValue("zero"); // 다른 경로에 있을 때는 아무 탭도 선택되지 않도록
     }
   }, [location.pathname]);
-  
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -42,16 +42,16 @@ export default function ColorTabs() {
           ".MuiTab-root": {
             width: "120px",
             padding: "0px",
-            fontWeight: "300",
-            fontSize: "17px",
-            letterSpacing: "5px",
+            fontWeight: "500",
+            fontSize: "18px",
+            letterSpacing: "8px",
             color: "white",
             "&.Mui-selected": {
               color: "#ffb400",
             },
             "&:hover": {
-              fontSize: "18px",
-              fontWeight: "400",
+              fontSize: "19px",
+              fontWeight: "600",
             },
           },
           ".MuiTabs-indicator": {
@@ -59,6 +59,14 @@ export default function ColorTabs() {
           },
         }}
       >
+        <Tab
+          value="zero"
+          disableRipple
+          sx={{
+            width: "0 !important", // 탭의 너비를 0으로 설정
+            minWidth: 0, // 최소 너비 제거
+          }}
+        />
         <Tab
           value="one"
           label="공연"

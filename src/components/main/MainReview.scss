@@ -1,7 +1,7 @@
 .main-review-container {
     display: flex;
     align-items: flex-end;
-    width: 1110px;
+    width: 1160px;
     .review-title-box {
         display: flex;
         flex-direction: column;
@@ -11,15 +11,18 @@
     }
 }
 .review-box {
-    height: 380px;
-    width: 240px;
-    margin-right: 25px;
+    height: 400px;
+    width: 280px;
+    padding: 10px;
+    margin-bottom: 24px;
+    margin-right: 20px;
     background-color: #eee;
+    border: black solid 1px;
     border-radius: 30px;
-    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.7);
+    box-shadow: 10px 10px 4px rgba(0, 0, 0, 0.7);
     h3 {
         font-size: 20px;
-        margin: 20px 0 10px 0;
+        margin: 28px 0 16px 0;
         text-align: center;
     }
 
@@ -27,7 +30,7 @@
         font-size: 12px;
         word-wrap: break-word;
         padding: 10px;
-        line-height: 23px;
+        line-height: 24px;
     }
     .stars {
         text-align: center;
@@ -37,14 +40,13 @@
 }
 
 .review-h2 {
-    font-size: 35px;
+    font-size: 36px;
     color: white;
     margin: 0px;
 }
 .review-h2-1 {
-    font-size: 29px;
+    font-size: 32px;
 }
 .review-p {
-    font-size: 20px;
-    margin-top: 10px;
+    font-size: 18px;
 }

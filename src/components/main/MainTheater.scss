@@ -1,0 +1,25 @@
+.main-theater-container {
+    display: flex;
+    flex-direction: column;
+    width: 1190px;
+}
+.main-theater-header {
+    display: flex;
+    justify-content: space-between;
+    color: white;
+}
+.theater-list-container {
+    display: flex;
+    align-items: center;
+}
+.theater-list-box {
+    display: flex;
+    gap: 12px;
+}
+.main-theater-body {
+    width: 1190px;
+    height: 400px;
+    margin-bottom: 32px;
+    background-color: #fcf9f5;
+    border-radius: 12px;
+}
