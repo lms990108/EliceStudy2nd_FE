@@ -35,7 +35,7 @@ export default function AverageRatingBox({
           open={Boolean(needLoginAlert)}
           onclose={() => setNeedLoginAlert(null)}
           onclick={() => navigate("/signup-in")}
-          severity={"info"}
+          severity={"warning"}
           checkBtn={"확인"}
           closeBtn={"취소"}
         />

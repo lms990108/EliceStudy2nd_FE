@@ -1,5 +1,6 @@
 import React from "react";
 import "./Footer.scss";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
@@ -11,16 +12,23 @@ const Footer = () => {
         </div>
         <div className="footer-box2">
           <p>
-            상호: curtain call
+            주소 : 서울 성동구 아차산로17길 48 성수낙낙 2층
             <br />
-            대표이사: 이민섭
+            전화 : 070-4633-2740
             <br />
-            전화: 070-4633-2740
-            <br />
-            주소: 서울 성동구 아차산로17길 48 성수낙낙 2층
-            <br />
-            채용문의: tjdwo787@naver.com
+            문의 : tjdwo787@naver.com
           </p>
+        </div>
+        <div className="footer-box3">
+          <Link to="/">
+            <img
+              className="footer-logo"
+              src={process.env.PUBLIC_URL + "/logo.png"}
+              alt="logo-image"
+              component={Link}
+              to="/Main"
+            ></img>
+          </Link>
         </div>
       </div>
     </div>

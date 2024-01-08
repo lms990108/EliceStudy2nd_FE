@@ -9,6 +9,8 @@ import PlayListCalendar from "../../components/play-list/calendar-material/PlayL
 import { AlertCustom } from "../../../src/components/common/alert/Alerts";
 
 export default function PlayList() {
+  // 로딩중 여부
+  const [isLoading, setIsLoading] = useState(true);
   // 전체 연극들
   const [plays, setPlays] = useState([]);
   // 지역별로 필터링 + 조건검색 필터링 + 정렬된 연극들 담기
@@ -38,10 +40,14 @@ export default function PlayList() {
   useEffect(() => {
     fetch("https://dailytopia2.shop/api/show?page=1&limit=1000")
       .then((res) => res.json())
-      .then((data) => setPlays(data.shows.filter((show) => show.price !== "")))
+      .then((data) => {
+        setPlays(data.shows.filter((show) => show.price !== ""));
+        setIsLoading(false);
+      })
       .catch(() => {
         setError("연극 목록을 가져오는 데 실패하였습니다.");
         setIsAlertOpen(true);
+        setIsLoading(false);
       });
   }, []);
 
@@ -50,16 +56,19 @@ export default function PlayList() {
     setFilteredPlays(plays);
   }, [plays]);
 
-  // 연극 필터링하기
+  // 연극 지역별로 필터링하기
   useEffect(() => {
     if (selectedRegion === "전체") {
       setFilteredPlays(plays);
       return;
     }
 
-    const filterByRegion = plays.filter(
-      (play) => play.region === selectedRegion
-    );
+    const filterByRegion = plays.filter((play) => {
+      if (selectedRegion.includes("/")) {
+        return selectedRegion.includes(play.region);
+      }
+      return play.region === selectedRegion;
+    });
     setFilteredPlays(filterByRegion);
     setConditionPlays(filterByRegion);
   }, [selectedRegion]);
@@ -221,110 +230,119 @@ export default function PlayList() {
           severity={"error"}
         />
       ) : null}
-      <RegionSelectBar
-        changeSelectedRegion={changeSelectedRegion}
-        selectedRegion={selectedRegion}
-        changeIsCalendar={changeIsCalendar}
-        isCalendar={isCalendar}
-      />
-      {!isCalendar && (
-        <ConditionSearch
-          selectedRegion={selectedRegion}
-          filteredPlays={filteredPlays}
-          setConditionPlays={setConditionPlays}
-          sortPlays={sortPlays}
-        />
-      )}
-      {isCalendar && (
-        <PlayListCalendar
-          innerWidth={innerWidth}
-          filteredPlays={filteredPlays}
-          datePlays={datePlays}
-          setDatePlays={setDatePlays}
-          setClickedDate={setClickedDate}
-          setPaginationPlays={setPaginationPlays}
-          setConditionPlays={setConditionPlays}
-          sortPlays={sortPlays}
-        />
-      )}
-      {((!isCalendar && !conditionPlays.length) ||
-        (isCalendar && clickedDate !== null && !datePlays[clickedDate])) && (
-        <div className="play-no-exsist">
-          <h2>연극이 존재하지 않습니다.</h2>
-        </div>
-      )}
-      {!isCalendar && conditionPlays.length > 0 && (
+      {isLoading && <div>로딩중</div>}
+      {!isLoading && (
         <>
-          <PlayListHeader
-            count={conditionPlays.length}
-            setSortStandard={setSortStandard}
-            sortStandard={sortStandard}
-          />
-          <div className="play-list-main">
-            {/* 보여져야 하는 것은 페이지네이션 된 연극이므로 filteredPlays 대신 paginationPlays 사용! */}
-            {paginationPlays.map((play) => (
-              <PlayBox
-                key={play.showId}
-                playInfo={{
-                  playId: play.showId,
-                  imgSrc: play.poster,
-                  title: play.title,
-                  place: play.location,
-                  period:
-                    play.start_date.split("T")[0] +
-                    " ~ " +
-                    play.end_date.split("T")[0],
-                  price: play.price,
-                }}
-              />
-            ))}
-          </div>
-          {conditionPlays.length ? (
-            <PaginationBox
-              innerWidth={innerWidth}
-              playsCount={conditionPlays.length}
-              conditionPlays={conditionPlays}
-              setPaginationPlays={setPaginationPlays}
-              selectedRegion={selectedRegion}
-              sortStandard={sortStandard}
-            />
-          ) : null}
-        </>
-      )}
-      {isCalendar && clickedDate !== null && datePlays[clickedDate] && (
-        <>
-          <PlayListHeader
-            count={datePlays[clickedDate].length}
-            setSortStandard={setSortStandard}
-            sortStandard={sortStandard}
-          />
-          <div className="play-list-main">
-            {/* 보여져야 하는 것은 페이지네이션 된 연극이므로 filteredPlays 대신 paginationPlays 사용! */}
-            {paginationPlays.map((play) => (
-              <PlayBox
-                key={play.showId}
-                playInfo={{
-                  playId: play.showId,
-                  imgSrc: play.poster,
-                  title: play.title,
-                  place: play.location,
-                  period:
-                    play.start_date.split("T")[0] +
-                    " ~ " +
-                    play.end_date.split("T")[0],
-                  price: play.price,
-                }}
-              />
-            ))}
-          </div>
-          <PaginationBox
-            innerWidth={innerWidth}
-            playsCount={conditionPlays.length}
-            conditionPlays={conditionPlays}
-            setPaginationPlays={setPaginationPlays}
+          <RegionSelectBar
+            changeSelectedRegion={changeSelectedRegion}
             selectedRegion={selectedRegion}
-            sortStandard={sortStandard}
+            changeIsCalendar={changeIsCalendar}
+            isCalendar={isCalendar}
           />
+          {!isCalendar && (
+            <ConditionSearch
+              selectedRegion={selectedRegion}
+              filteredPlays={filteredPlays}
+              setConditionPlays={setConditionPlays}
+              sortPlays={sortPlays}
+              innerWidth={innerWidth}
+            />
+          )}
+          {isCalendar && (
+            <PlayListCalendar
+              innerWidth={innerWidth}
+              filteredPlays={filteredPlays}
+              datePlays={datePlays}
+              setDatePlays={setDatePlays}
+              setClickedDate={setClickedDate}
+              setPaginationPlays={setPaginationPlays}
+              setConditionPlays={setConditionPlays}
+              sortPlays={sortPlays}
+            />
+          )}
+          {((!isCalendar && !conditionPlays.length) ||
+            (isCalendar &&
+              clickedDate !== null &&
+              !datePlays[clickedDate])) && (
+            <div className="play-no-exsist">
+              <h2>연극이 존재하지 않습니다.</h2>
+            </div>
+          )}
+          {!isCalendar && conditionPlays.length > 0 && (
+            <>
+              <PlayListHeader
+                count={conditionPlays.length}
+                setSortStandard={setSortStandard}
+                sortStandard={sortStandard}
+              />
+              <div className="play-list-main">
+                {/* 보여져야 하는 것은 페이지네이션 된 연극이므로 filteredPlays 대신 paginationPlays 사용! */}
+                {paginationPlays.map((play) => (
+                  <PlayBox
+                    key={play.showId}
+                    playInfo={{
+                      playId: play.showId,
+                      imgSrc: play.poster,
+                      title: play.title,
+                      place: play.location,
+                      period:
+                        play.start_date.split("T")[0] +
+                        " ~ " +
+                        play.end_date.split("T")[0],
+                      price: play.price,
+                      state: play.state,
+                    }}
+                  />
+                ))}
+              </div>
+              {conditionPlays.length ? (
+                <PaginationBox
+                  innerWidth={innerWidth}
+                  playsCount={conditionPlays.length}
+                  conditionPlays={conditionPlays}
+                  setPaginationPlays={setPaginationPlays}
+                  selectedRegion={selectedRegion}
+                  sortStandard={sortStandard}
+                />
+              ) : null}
+            </>
+          )}
+          {isCalendar && clickedDate !== null && datePlays[clickedDate] && (
+            <>
+              <PlayListHeader
+                count={datePlays[clickedDate].length}
+                setSortStandard={setSortStandard}
+                sortStandard={sortStandard}
+              />
+              <div className="play-list-main">
+                {/* 보여져야 하는 것은 페이지네이션 된 연극이므로 filteredPlays 대신 paginationPlays 사용! */}
+                {paginationPlays.map((play) => (
+                  <PlayBox
+                    key={play.showId}
+                    playInfo={{
+                      playId: play.showId,
+                      imgSrc: play.poster,
+                      title: play.title,
+                      place: play.location,
+                      period:
+                        play.start_date.split("T")[0] +
+                        " ~ " +
+                        play.end_date.split("T")[0],
+                      price: play.price,
+                    }}
+                  />
+                ))}
+              </div>
+              <PaginationBox
+                innerWidth={innerWidth}
+                playsCount={conditionPlays.length}
+                conditionPlays={conditionPlays}
+                setPaginationPlays={setPaginationPlays}
+                selectedRegion={selectedRegion}
+                sortStandard={sortStandard}
+              />
+            </>
+          )}
         </>
       )}
     </div>

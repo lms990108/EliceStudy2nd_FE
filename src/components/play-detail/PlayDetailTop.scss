@@ -1,3 +1,32 @@
+$tooltip-background-color: #ffffff;
+$tooltip-border-color: #ffb400;
+$tooltip-text-color: #282828;
+$tooltip-font-size: 12px;
+$tooltip-font-weight: 500;
+$tooltip-letter-spacing: -0.25px;
+$tooltip-margin-top: 6.8px;
+$tooltip-padding-y: 5px;
+$tooltip-padding-x: 11px;
+$tooltip-position: relative;
+$tooltip-width: fit-content;
+$tooltip-z-index: 100;
+
+@mixin tooltip {
+  background-color: $tooltip-background-color;
+  border: $tooltip-border-color solid 1px;
+  border-radius: 5px;
+  color: $tooltip-text-color;
+  font-size: $tooltip-font-size;
+  font-weight: $tooltip-font-weight;
+  height: auto;
+  letter-spacing: $tooltip-letter-spacing;
+  margin-top: $tooltip-margin-top;
+  padding: $tooltip-padding-y $tooltip-padding-x;
+  position: $tooltip-position;
+  width: $tooltip-width;
+  z-index: $tooltip-z-index;
+}
+
 @media (min-width: 1130px) {
   .play-detail-top-container {
     .play-detail-top {
@@ -12,6 +41,33 @@
           height: 450px;
           border-radius: 8px;
           box-shadow: -3px 3px 5px #bcbcbc;
+
+          .end-show-design {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 350px;
+            height: 450px;
+            position: absolute;
+            background-color: rgb(0, 0, 0, 0.5);
+            font-family: "Noto Sans KR";
+            border-radius: 8px;
+
+            img {
+              width: 250px;
+              height: 250px;
+            }
+
+            .end-show-text {
+              position: absolute;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              font-weight: bold;
+              color: #ffffff;
+              font-size: 50px;
+            }
+          }
 
           img {
             width: 350px;
@@ -83,9 +139,9 @@
           font-size: 18px;
         }
 
-        svg {
-          margin-right: 5px;
-        }
+        // svg {
+        //   margin-right: 5px;
+        // }
 
         &:hover {
           cursor: pointer;
@@ -101,17 +157,42 @@
           margin: 0;
           padding-right: 20px;
           font-size: 18px;
+          position: relative;
+          bottom: 13px;
         }
 
         svg {
-          padding-right: 10px;
+          // padding-right: 10px;
+          height: 50px;
         }
 
-        img {
-          width: 30px;
-          height: 30px;
+        .share-option {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+
+          .SNS-img-box {
+            height: 50px;
+            display: flex;
+            align-items: center;
+
+            img {
+              width: 30px;
+              height: 30px;
+            }
+          }
+
+          .share-tooltip {
+            @include tooltip;
+          }
         }
       }
+
+      // .tooltips {
+      //   position: absolute;
+      //   top: 91%;
+      // }
 
       .another-btn {
         display: flex;
@@ -121,6 +202,16 @@
           // padding: 0;
           margin-right: 30px;
           height: 60px;
+        }
+
+        .reserve-btn {
+          display: flex;
+          flex-direction: column;
+          width: 191px;
+        }
+
+        .end-show-tooltip {
+          @include tooltip;
         }
       }
     }
@@ -141,6 +232,33 @@
           height: 450px;
           border-radius: 8px;
           box-shadow: -3px 3px 5px #bcbcbc;
+
+          .end-show-design {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 350px;
+            height: 450px;
+            position: absolute;
+            background-color: rgb(0, 0, 0, 0.5);
+            font-family: "Noto Sans KR";
+            border-radius: 8px;
+
+            img {
+              width: 250px;
+              height: 250px;
+            }
+
+            .end-show-text {
+              position: absolute;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              font-weight: bold;
+              color: #ffffff;
+              font-size: 50px;
+            }
+          }
 
           img {
             width: 350px;
@@ -218,9 +336,9 @@
           font-size: 18px;
         }
 
-        svg {
-          margin-right: 5px;
-        }
+        // svg {
+        //   margin-right: 5px;
+        // }
 
         &:hover {
           cursor: pointer;
@@ -236,15 +354,34 @@
           margin: 0;
           padding-right: 20px;
           font-size: 18px;
+          position: relative;
+          bottom: 13px;
         }
 
-        svg {
-          padding-right: 10px;
-        }
+        // svg {
+        //   padding-right: 10px;
+        // }
 
-        img {
-          width: 30px;
-          height: 30px;
+        .share-option {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+
+          .SNS-img-box {
+            height: 50px;
+            display: flex;
+            align-items: center;
+
+            img {
+              width: 30px;
+              height: 30px;
+            }
+          }
+
+          .share-tooltip {
+            @include tooltip;
+          }
         }
       }
 
@@ -258,6 +395,11 @@
           // padding: 0;
           margin-bottom: 15px;
           height: 60px;
+        }
+
+        .end-show-tooltip {
+          @include tooltip;
+          top: 10px;
         }
       }
     }
@@ -278,6 +420,34 @@
           height: auto;
           border-radius: 8px;
           box-shadow: -3px 3px 5px #bcbcbc;
+          position: relative;
+
+          .end-show-design {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            background-color: rgb(0, 0, 0, 0.5);
+            font-family: "Noto Sans KR";
+            border-radius: 8px;
+
+            img {
+              width: 250px;
+              height: 250px;
+            }
+
+            .end-show-text {
+              position: absolute;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              font-weight: bold;
+              color: #ffffff;
+              font-size: 50px;
+            }
+          }
 
           img {
             width: 100%;
@@ -354,9 +524,9 @@
           font-size: 18px;
         }
 
-        svg {
-          margin-right: 5px;
-        }
+        // svg {
+        //   margin-right: 5px;
+        // }
 
         &:hover {
           cursor: pointer;
@@ -370,15 +540,34 @@
           margin: 0;
           padding-right: 20px;
           font-size: 18px;
+          position: relative;
+          top: 6px;
         }
 
-        svg {
-          padding-right: 10px;
-        }
+        // svg {
+        //   padding-right: 10px;
+        // }
 
-        img {
-          width: 30px;
-          height: 30px;
+        .share-option {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+
+          .SNS-img-box {
+            height: 50px;
+            display: flex;
+            align-items: center;
+
+            img {
+              width: 30px;
+              height: 30px;
+            }
+          }
+
+          .share-tooltip {
+            @include tooltip;
+          }
         }
       }
 
@@ -403,6 +592,15 @@
 
         .reserve-btn {
           margin-left: 20px;
+          display: flex;
+          flex-direction: column;
+          width: 180px;
+        }
+
+        .end-show-tooltip {
+          @include tooltip;
+          top: 171%;
+          position: absolute;
         }
       }
     }
@@ -423,6 +621,34 @@
           height: auto;
           border-radius: 8px;
           box-shadow: -3px 3px 5px #bcbcbc;
+          position: relative;
+
+          .end-show-design {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            background-color: rgb(0, 0, 0, 0.5);
+            font-family: "Noto Sans KR";
+            border-radius: 8px;
+
+            img {
+              width: 200px;
+              height: 200px;
+            }
+
+            .end-show-text {
+              position: absolute;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              font-weight: bold;
+              color: #ffffff;
+              font-size: 45px;
+            }
+          }
 
           img {
             width: 100%;
@@ -499,9 +725,9 @@
           font-size: 18px;
         }
 
-        svg {
-          margin-right: 5px;
-        }
+        // svg {
+        //   margin-right: 5px;
+        // }
 
         &:hover {
           cursor: pointer;
@@ -510,20 +736,46 @@
 
       .share-btn {
         display: flex;
+        flex-wrap: wrap;
 
         p {
           margin: 0;
           padding-right: 20px;
           font-size: 18px;
+          // position: relative;
+          // top: 6px;
+          width: 100%;
         }
 
-        svg {
-          padding-right: 10px;
-        }
+        // svg {
+        //   padding-right: 10px;
+        // }
 
-        img {
-          width: 30px;
-          height: 30px;
+        .share-option {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+
+          .SNS-img-box {
+            height: 50px;
+            display: flex;
+            align-items: center;
+
+            img {
+              width: 30px;
+              height: 30px;
+            }
+          }
+
+          .share-tooltip {
+            @include tooltip;
+          }
+
+          .share-option-text {
+            display: flex;
+            flex-wrap: wrap;
+          }
         }
       }
 
@@ -531,7 +783,8 @@
         display: flex;
         justify-content: space-around;
         align-items: center;
-        margin-top: 20px;
+        position: relative;
+        bottom: 15px;
 
         .dibs-btn,
         .reserve-btn {
@@ -544,6 +797,12 @@
           p {
             font-size: 15px;
           }
+        }
+
+        .end-show-tooltip {
+          @include tooltip;
+          top: 105%;
+          position: absolute;
         }
       }
     }

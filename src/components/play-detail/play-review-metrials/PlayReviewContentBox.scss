@@ -2,28 +2,29 @@
   display: none;
 }
 
-@media (min-width: 480px) {
+@media (min-width: 700px) {
   .play-review-content-container {
     background-color: #ffffff;
     border-radius: 8px;
     border: 1px solid rgba(188, 188, 188, 0.5);
     margin: 20px 0;
-    padding: 0 30px 10px 30px;
+    padding: 15px 30px;
+    display: flex;
+    flex-direction: column;
 
     .play-review-content {
       line-height: 160%;
     }
 
     .play-review-photo {
-      width: 400px;
-      height: 400px;
+      width: 200px;
+      height: 200px;
+      padding-top: 15px;
     }
 
     .play-review-modify-btn {
-      display: inline;
-      position: relative;
-      bottom: 15px;
-      left: 44%;
+      display: flex;
+      justify-content: flex-end;
 
       button {
         width: 130px;
@@ -34,5 +35,35 @@
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 700px) {
+  .play-review-content-container {
+    background-color: #ffffff;
+    border-radius: 8px;
+    border: 1px solid rgba(188, 188, 188, 0.5);
+    margin: 20px 0;
+    padding: 15px 30px;
+    display: flex;
+    flex-direction: column;
+
+    .play-review-content {
+      line-height: 160%;
+    }
+
+    .play-review-photo {
+      width: 200px;
+      height: 200px;
+      padding-top: 15px;
+    }
+
+    .play-review-modify-btn {
+      display: flex;
+      justify-content: flex-end;
+
+      button {
+        width: 130px;
+        height: 40px;
+        font-size: 16px;
+      }
+    }
+  }
 }
