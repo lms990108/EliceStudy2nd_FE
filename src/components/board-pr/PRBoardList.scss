@@ -19,6 +19,7 @@
     display: flex;
     flex-direction: column;
     box-shadow: 2px 4px 10px rgba(0, 0, 0, 25%);
+    transition: all 300ms ease-out;
 
     img {
       width: 100%;
@@ -120,6 +121,5 @@
   .content-box:hover {
     top: -6px;
     // box-shadow: 2px 4px 11px #858585;
-    transition: all 300ms;
   }
 }

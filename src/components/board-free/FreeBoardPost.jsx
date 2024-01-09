@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import "./FreeBoardPost.scss";
-import { PostTop } from "../board";
+import { Comment, CommentsList, PostTop } from "../board";
 import { postUrl } from "../../apis/apiURLs";
+import { getComments } from "../../apis/comments/comments";
 
 export default function FreeBoardPost({ data }) {
+  const [comments, setComments] = useState([]);
   useEffect(() => {
     console.log(data);
-  });
+    setComments(getComments);
+  }, []);
 
   return (
     <div className="free-board-post">
