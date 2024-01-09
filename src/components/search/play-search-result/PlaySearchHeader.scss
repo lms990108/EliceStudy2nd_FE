@@ -1,0 +1,19 @@
+.play-search-header {
+  display: flex;
+  justify-content: space-between;
+
+  span {
+    font-weight: bold;
+    font-size: 28px;
+  }
+
+  .sort-by {
+    width: 120px;
+    height: 40px;
+    font-size: 16px;
+    font-family: "Nanum Gothic", sans-serif;
+    text-align: center;
+    border: 1px solid rgba(188, 188, 188, 0.7);
+    border-radius: 8px;
+  }
+}

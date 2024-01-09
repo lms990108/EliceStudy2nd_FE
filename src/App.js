@@ -18,6 +18,7 @@ import MyPage from "./pages/mypage/MyPage";
 import ScrollToTop from "./utils/ScrollToTop";
 import Main from "./pages/main/Main";
 import Admin from "./pages/admin/Admin";
+import SearchResult from "./pages/search-result/SearchResultPage";
 
 function App() {
   return (
@@ -53,6 +54,8 @@ function App() {
 
             <Route path="/play" element={<PlayList />} />
             <Route path="/play/:playId" element={<PlayDetail />} />
+
+            <Route path="/search" element={<SearchResult />} />
           </Routes>
         </BrowserRouter>
         <Footer />
