@@ -1,0 +1,54 @@
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 35px;
+}
+
+@mixin common-menu-style {
+  font-weight: bold;
+  padding: 10px 20px;
+  font-size: 20px;
+  border: 1px solid #bcbcbc;
+  text-align: center;
+  cursor: pointer;
+}
+
+@media (min-width: 930px) {
+  .search-result-tab-container {
+    @include flex-center();
+
+    .menu {
+      @include common-menu-style();
+      width: 15%;
+    }
+
+    .menu:nth-child(2) {
+      border-right: none;
+      border-left: none;
+    }
+  }
+}
+
+@media (max-width: 930px) {
+  .search-result-tab-container {
+    @include flex-center();
+    flex-direction: column;
+
+    .menu {
+      @include common-menu-style();
+      width: 50%;
+    }
+
+    .menu:nth-child(2) {
+      border-top: none;
+      border-bottom: none;
+    }
+  }
+}
+
+// 탭을 클릭했을 때 클릭한 메뉴에 적용할 디자인
+.active-tab {
+  background-color: #282828;
+  color: #ffb400;
+}

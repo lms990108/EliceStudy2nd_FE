@@ -1,0 +1,12 @@
+.search-result-count {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  font-size: 28px;
+  margin-top: 50px;
+
+  span {
+    color: #ffb400;
+  }
+}
