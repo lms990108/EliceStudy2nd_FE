@@ -10,10 +10,28 @@ function MainBest() {
   const [shows, setShows] = useState([]); // API로부터 가져온 공연 데이터를 저장할 상태
   const navigate = useNavigate();
 
+  // 메인페이지에서 연극을 클릭하면 해당연극 상세페이지로 이동
   const handleShowClick = (showId) => {
     navigate(`/play/${showId}`);
   };
 
+  // 무한루프 슬라이드 구현을 위해 isAnimating 상태에 따라 다른 스타일을 적용
+  const wrapperStyles = isAnimating
+    ? {
+        display: "flex",
+        gap: "20px",
+        paddingLeft: "10px",
+        paddingRight: "10px",
+        transform: `translateX(-${sliderIndex * 1200}px)`,
+        transition: "transform 0.4s ease",
+      }
+    : {
+        display: "flex",
+        gap: "20px",
+        paddingLeft: "10px",
+        paddingRight: "10px",
+        transform: `translateX(-${sliderIndex * 1200}px)`,
+      };
   useEffect(() => {
     if (sliderIndex === 4) {
       setTimeout(() => {
@@ -28,29 +46,7 @@ function MainBest() {
     }
   }, [sliderIndex]);
 
-  function getTopLocations(data) {
-    const locationCounts = {};
-  
-    // 빈도 계산
-    data.forEach(show => {
-      const location = show.location;
-      if (location) {
-        locationCounts[location] = (locationCounts[location] || 0) + 1;
-      }
-    });
-  
-    // 객체를 배열로 변환하고 빈도에 따라 정렬
-    const sortedLocations = Object.entries(locationCounts)
-                                  .sort((a, b) => b[1] - a[1]);
-  
-    // 상위 10개 위치 추출
-    return sortedLocations.slice(0, 10).map(item => item[0]);
-  }
-  
-  // 예시 데이터 사용 (shows 변수에 저장된 데이터)
-  const topLocations = getTopLocations(shows);
-  console.log(topLocations);
-
+  // 슬라이드 좌 우 이동 헨들러
   const handleLeftClick = () => {
     setIsAnimating(true);
     setSliderIndex((prevIndex) => prevIndex - 1);
@@ -61,38 +57,29 @@ function MainBest() {
     setSliderIndex((prevIndex) => prevIndex + 1);
   };
 
-  // 스타일 결정: isAnimating 상태에 따라 다른 스타일을 적용
-  const wrapperStyles = isAnimating
-    ? {
-        display: "flex",
-        gap: "20px",
-        transform: `translateX(-${sliderIndex * 1205}px)`,
-        transition: "transform 0.4s ease",
-      }
-    : {
-        display: "flex",
-        gap: "20px",
-        transform: `translateX(-${sliderIndex * 1205}px)`,
-      };
-
   useEffect(() => {
     fetch("https://dailytopia2.shop/api/show?limit=1000")
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
-        // rank 키가 있고 값이 1~18인 항목들만 필터링
         const rankedShows = data.shows.filter(
-          (show) => show.rank && show.rank >= 1 && show.rank <= 18
+          (show) => show.rank && show.rank >= 1 && show.rank <= 30
         );
-        console.log(rankedShows);
-        // 원하는 순서대로 정렬
+        // 연극을 rank에 따라 정렬
         rankedShows.sort((a, b) => a.rank - b.rank);
+
+        // 상위 18개 항목 선택
+        const top18Shows = rankedShows.slice(0, 18);
+        
+        // 각 연극에 인덱스 기반 순위 부여
+        top18Shows.forEach((show, index) => {
+          show.newRank = index + 1;
+        });
 
         // 순서대로 재배열
         const reorderedShows = [
-          ...rankedShows.slice(12), // 13번부터 18번까지
-          ...rankedShows, // 1번부터 18번까지
-          ...rankedShows.slice(0, 6), // 1번부터 6번까지
+          ...top18Shows.slice(12), // 13번부터 18번까지
+          ...top18Shows, // 1번부터 18번까지
+          ...top18Shows.slice(0, 6), // 1번부터 6번까지
         ];
 
         setShows(reorderedShows);
@@ -107,7 +94,7 @@ function MainBest() {
   return (
     <div className="main-layout-container">
       <div className="main-title-box">
-        <h1 className="main-title">보도 또 봐도 좋은 베스트 👑 작품</h1>
+        <h1 className="main-title">보도 또 봐도 좋은 실시간 베스트 👑 연극</h1>
         <div className="slide-info-box">
           <p
             className={`slide-info1 ${
@@ -137,10 +124,18 @@ function MainBest() {
         <div className="main-play-container">
           <div style={wrapperStyles}>
             {shows.map((show, index) => (
-              <div key={index} className="main-play-box" onClick={() => handleShowClick(show.showId)}>
+              <div
+                key={index}
+                className="main-play-box"
+                onClick={() => handleShowClick(show.showId)}
+              >
                 <div className="main-play-img-box">
-                  <img src={show.poster} alt={show.title} style={{ opacity: 0.9 }} />
-                  <p className="best-overlay-rank">{show.rank}</p>
+                  <img
+                    src={show.poster}
+                    alt={show.title}
+                    style={{ opacity: 0.9 }}
+                  />
+                  <p className="best-overlay-rank">{show.newRank}</p>
                 </div>
                 <p className="main-play-title">{formatTitle(show.title)}</p>
                 <p className="main-play-period">{`${new Date(

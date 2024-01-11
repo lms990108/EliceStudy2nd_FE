@@ -29,26 +29,34 @@
   }
 }
 @keyframes letterSpacingAnimation {
-  from {
-    letter-spacing: 0px;
+  0%, 100% {
+    letter-spacing: 1px;
   }
-  to {
+  50% {
     letter-spacing: 3px;
   }
 }
 @keyframes gapAnimation {
-  from {
-    gap: 0px;
+  0%, 100% {
+    gap: 1px;
   }
-  to {
-    gap: 4px;
+  50% {
+    gap: 3px;
+  }
+}
+@keyframes scaleAnimation {
+  0%, 100% {
+    transform: scale(0.95);
+  }
+  50% {
+    transform: scale(1); /* 10% 더 커짐 */
   }
 }
 .banner-text-box {
   display: flex;
   flex-direction: column;
   gap: 4px;
-  animation: letterSpacingAnimation 2s ease, gapAnimation 2s ease;
+  animation: letterSpacingAnimation 4s ease infinite, gapAnimation 4s ease infinite, scaleAnimation 4s ease infinite;
   font-size: 40px;
   font-weight: 900;
   letter-spacing: 3px;
