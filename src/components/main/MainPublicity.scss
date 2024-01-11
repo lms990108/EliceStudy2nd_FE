@@ -26,11 +26,11 @@
   background-color: #282828;
   color: white;
 }
-.wrapper {
-  .slide_container {
+.publicit-wrapper {
+  .publicit-slide-container {
     overflow: hidden;
 
-    .slide_wrapper {
+    .publicit-slide-wrapper {
       display: flex;
       flex-wrap: nowrap;
     }
@@ -63,7 +63,7 @@
           object-fit: cover; /* 이미지가 li 박스를 꽉 채우도록 설정 */
           transition: 0.4s;
           &:hover {
-            border: 3px solid white;
+            border: 2px solid white;
             cursor: pointer;
             filter: brightness(70%);
           }

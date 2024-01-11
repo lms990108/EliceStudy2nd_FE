@@ -37,9 +37,9 @@ function MainPublicity() {
           </div>
         </Link>
       </div>
-      <div className="wrapper">
-        <div className="slide_container">
-          <ul className="slide_wrapper">
+      <div className="publicit-wrapper">
+        <div className="publicit-slide-container">
+          <ul className="publicit-slide-wrapper">
             <div className={"slide original".concat(animate ? "" : " stop")}>
               {promotions.map((promotion, i) => (
                 <li key={i}>
