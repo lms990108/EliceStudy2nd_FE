@@ -8,7 +8,7 @@ import { AlertCustom } from "../common/alert/Alerts";
 import { useNavigate } from "react-router-dom";
 import { promotionUrl } from "../../apis/apiURLs";
 
-export function PRBoardForm({ setInput, handleComplete, handleCancle }) {
+export function PRBoardEditForm({ setInput, promotionNumber, handleCancle }) {
   const [submit, setSubmit] = useState(false);
   const [openSubmit, setOpenSubmit] = useState(false);
   const [openComplete, setOpenComplete] = useState(false);
@@ -23,8 +23,8 @@ export function PRBoardForm({ setInput, handleComplete, handleCancle }) {
   const nav = useNavigate();
 
   const handleSubmit = async (e) => {
-    const res = await fetch(`${promotionUrl}/add_promotion`, {
-      method: "POST",
+    const res = await fetch(`${promotionUrl}/update_promotion/${promotionNumber}`, {
+      method: "PUT",
       headers: { "Content-Type": "application/json" },
       // body: form data 사용하기
     });

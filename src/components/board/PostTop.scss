@@ -26,9 +26,11 @@
     height: 24px;
     align-items: flex-start;
     font-size: 18px;
-    .share-icon {
-      margin-right: 14px;
+    > * {
+      margin-left: 10px;
+      cursor: pointer;
     }
+
     .comments-icon {
       display: flex;
     }

@@ -2,13 +2,12 @@ import { Button, IconButton } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
-import DriveFolderUploadIcon from "@mui/icons-material/DriveFolderUpload";
-import "./PRBoardForm.scss";
+import "./FreeBoardForm.scss";
 import { AlertCustom } from "../common/alert/Alerts";
 import { useNavigate } from "react-router-dom";
-import { promotionUrl } from "../../apis/apiURLs";
+import { postUrl } from "../../apis/apiURLs";
 
-export function PRBoardForm({ setInput, handleComplete, handleCancle }) {
+export function FreeBoardEditForm({ setInput, handleCancle }) {
   const [submit, setSubmit] = useState(false);
   const [openSubmit, setOpenSubmit] = useState(false);
   const [openComplete, setOpenComplete] = useState(false);
@@ -16,17 +15,16 @@ export function PRBoardForm({ setInput, handleComplete, handleCancle }) {
   const [errorTitle, setErrorTitle] = useState("제목을 최소 5자 이상 입력해주세요.");
   const [inputContent, setInputContent] = useState("");
   const [errorContent, setErrorContent] = useState("내용을 최소 5자 이상 입력해주세요.");
-  const [inputTag, setInputTag] = useState("");
-  const [imageURL, setImageURL] = useState("");
-  const [errorImage, setErrorImage] = useState("사진을 선택해주세요.");
-  const [tagList, setTagList] = useState([]);
   const nav = useNavigate();
 
   const handleSubmit = async (e) => {
-    const res = await fetch(`${promotionUrl}/add_promotion`, {
-      method: "POST",
+    const res = await fetch(`${postUrl}/update_post`, {
+      method: "PUT",
       headers: { "Content-Type": "application/json" },
-      // body: form data 사용하기
+      body: JSON.stringify({
+        title: inputTitle,
+        content: inputContent,
+      }),
     });
     const data = await res.json();
     console.log(data);
@@ -38,8 +36,6 @@ export function PRBoardForm({ setInput, handleComplete, handleCancle }) {
       document.querySelector("#title").focus();
     } else if (errorContent) {
       document.querySelector("#content").focus();
-    } else if (image && errorImage) {
-      document.querySelector("#imageBtn").focus();
     } else {
       setOpenSubmit(true);
     }
@@ -74,40 +70,10 @@ export function PRBoardForm({ setInput, handleComplete, handleCancle }) {
     }
   };
 
-  const handleImageChange = (e) => {
-    let imageSrc = "";
-    if (e.target.files[0]) {
-      imageSrc = URL.createObjectURL(e.target.files[0]);
-      setErrorImage("");
-    } else {
-      setErrorImage("사진을 선택해주세요.");
-    }
-    URL.revokeObjectURL(imageURL);
-    /* 동일한 파일 객체를 이용하여 URL을 생성한다고 해도 새로운 URL을 생성한다.
-    사용하지 않는 이미지 URL의 경우에는 반드시 revokeObjectURL을 사용하여 메모리에서 해제하자.
-    (물론 브라우저를 종료하면 생성한 URL도 함께 메모리에서 해제된다.) */
-    setImageURL(imageSrc);
-  };
-
-  const handleTagChange = (e) => {
-    if (e.keyCode === 13) {
-      if (!inputTag) return;
-      setTagList((cur) => [...cur, inputTag]);
-      setInputTag("");
-    }
-  };
-
-  const handleTagRemove = (e) => {
-    const tagId = e.target.closest(".tag-box").id;
-    let newList = [...tagList];
-    newList.splice(tagId, 1);
-    setTagList(newList);
-  };
-
   useEffect(() => {
-    if (inputTitle || inputContent || imageURL || inputTag) setInput(true);
+    if (inputTitle || inputContent) setInput(true);
     else setInput(false);
-  }, [inputTitle, imageURL, inputContent, inputTag]);
+  }, [inputTitle, inputContent]);
 
   return (
     <div className="post-form-box">
@@ -130,47 +96,6 @@ export function PRBoardForm({ setInput, handleComplete, handleCancle }) {
         <label htmlFor="content">*내용</label>
         <textarea id="content" name="content" value={inputContent} onChange={handleContentChange} placeholder="내용을 작성해 주세요." required></textarea>
         {handleError(errorContent)}
-      </div>
-
-      <div className="input tag flex-box">
-        <div>
-          <label htmlFor="tags">태그</label>
-          <input
-            type="text"
-            id="tags"
-            name="tags"
-            onKeyDown={handleTagChange}
-            value={inputTag}
-            onChange={(e) => setInputTag(e.target.value)}
-            placeholder="엔터를 입력하여 태그를 등록할 수 있습니다."
-          />
-        </div>
-        {tagList && (
-          <div className="tag-list flex">
-            {tagList.map((tag, idx) => (
-              <div id={idx} className="tag-box flex">
-                <span># {tag} </span>
-                <IconButton onClick={handleTagRemove} size="small" sx={{ padding: "2px", fontSize: 14, marginLeft: "4px" }}>
-                  <CloseIcon fontSize="inherit" />
-                </IconButton>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
-
-      <div className="input image">
-        <div>
-          <label htmlFor="image">*사진</label>
-          <Button id="imageBtn" color="darkGray" variant="outlined" size="small" startIcon={<DriveFolderUploadIcon />}>
-            <label className="pointer" htmlFor="image">
-              파일 찾기
-            </label>
-          </Button>
-          <input type="file" id="image" name="image" accept="image/*" onChange={handleImageChange} required />
-        </div>
-        {handleError(errorImage)}
-        {imageURL && <img src={imageURL} alt="?" />}
       </div>
 
       <div className="form-footer">
@@ -197,11 +122,11 @@ export function PRBoardForm({ setInput, handleComplete, handleCancle }) {
         open={openComplete}
         onclose={() => {
           setOpenComplete(false);
-          setTimeout(() => nav("/promotion"), 300);
+          setTimeout(() => nav("/community"), 300);
         }}
         onclick={() => {
           setOpenComplete(false);
-          setTimeout(() => nav("/promotion"), 300);
+          setTimeout(() => nav("/community"), 300);
         }}
         title={"teenybox.com 내용:"}
         content={"글 등록이 완료되었습니다!"}
