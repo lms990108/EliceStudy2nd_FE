@@ -13,7 +13,7 @@ export const PRContext = createContext(getPRBoardList());
 export function PRBoardListPage() {
   const [boardList, setBoardList] = useState([]);
   const [newList, setNewList] = useState([]);
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(1);
   const [scrollRef, inView] = useInView();
   const nav = useNavigate();
 
@@ -22,10 +22,11 @@ export function PRBoardListPage() {
   };
 
   const getPage = async () => {
-    const res = await fetch(`${promotionUrl}`);
+    const res = await fetch(`${promotionUrl}?page=${page}`);
     const list = await res.json();
     setNewList(list);
     addBoardList(list);
+    setPage(page + 1);
   };
 
   const handleFormBtn = () => {
