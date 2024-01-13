@@ -83,7 +83,7 @@ export default function ColorTabs() {
         />
         <Tab
           value="three"
-          label="게시판"
+          label="커뮤니티"
           component={Link}
           to="/community"
           disableRipple

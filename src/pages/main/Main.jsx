@@ -22,6 +22,9 @@ const Main = () => {
       <div className="best-container">
         <MainBest />
       </div>
+      <div className="publicity-container">
+        <MainPublicity />
+      </div>
       <div className="preferred-region-container">
         <MainPreferredRegion />
       </div>
@@ -31,14 +34,11 @@ const Main = () => {
       <div className="rating-container">
         <MainRating />
       </div>
-      <div className="publicity-container">
-        <MainPublicity />
+      <div className="theater-container">
+        <MainTheater />
       </div>
       <div className="child-container">
         <MainChild />
-      </div>
-      <div className="theater-container">
-        <MainTheater />
       </div>
       <UpButton />
     </div>
