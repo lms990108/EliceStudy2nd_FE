@@ -1,0 +1,97 @@
+.main-publicit-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 16px;
+  margin-bottom: 32px;
+}
+.main-publicity-title {
+  color: white;
+}
+.publicity-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  height: 40px;
+  font-weight: 600;
+  color: black;
+  background-color: white;
+  border: 1.5px solid white;
+  border-radius: 40px;
+  transition: 0.4s;
+}
+.publicity-btn:hover {
+  cursor: pointer;
+  background-color: #282828;
+  color: white;
+}
+.publicit-wrapper {
+  .publicit-slide-container {
+    overflow: hidden;
+
+    .publicit-slide-wrapper {
+      display: flex;
+      flex-wrap: nowrap;
+    }
+    .slide {
+      display: flex;
+      align-items: center;
+      flex-wrap: nowrap;
+      position: relative;
+      &.original {
+        animation: 60s linear infinite normal none running infiniteAnimation1;
+      }
+      &.clone {
+        animation: 60s linear infinite infiniteAnimation2;
+      }
+      &.stop {
+        animation-play-state: paused;
+      }
+      li {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0 40px;
+        width: 320px;
+        height: 280px;
+        img {
+          border: 1px solid black;
+          border-radius: 8px;
+          max-height: 100%; /* 이미지의 최대 높이를 li의 높이로 제한 */
+          max-width: 100%; /* 이미지의 최대 넓이를 li의 넓이로 제한 */
+          object-fit: cover; /* 이미지가 li 박스를 꽉 채우도록 설정 */
+          transition: 0.4s;
+          &:hover {
+            border: 2px solid white;
+            cursor: pointer;
+            filter: brightness(70%);
+          }
+        }
+      }
+    }
+  }
+}
+
+@keyframes infiniteAnimation1 {
+  0% {
+    transform: translateX(0%);
+  }
+  50% {
+    transform: translateX(-100%);
+  }
+  50.1% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+@keyframes infiniteAnimation2 {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-200%);
+  }
+}

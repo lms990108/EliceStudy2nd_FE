@@ -2,8 +2,8 @@
   .footer-layout {
     display: flex;
     justify-content: center;
-    background-color: #ddd;
-    border-top: 1px solid #bcbcbc;
+    background-color: #202020;
+    border-top: 0.5px solid black;
   }
   .footer-container {
     display: flex;
@@ -11,14 +11,14 @@
     height: 132px;
     justify-content:space-between;
     align-items: center;
-    background-color: #ddd;
+    background-color: #202020;
   }
   .footer-box1 {
     width: 30%;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    color: rgb(74, 74, 74);
+    color: white;
     h3 {
       margin: 0;
       margin-bottom: 5px;
@@ -32,14 +32,14 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    color: rgb(74, 74, 74);
+    color: white;
     p {
       font-size: 14px;
       margin: 0;
     }
   }
   .footer-box3{
-    height: 104px;
+    height: 80px;
     display: flex;
     justify-content: end;
     align-items: flex-end;

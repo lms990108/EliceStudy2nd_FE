@@ -56,7 +56,11 @@ export function PRBoardListPage() {
   return (
     <div className="pr-board-page page-margin">
       <PRContext.Provider value={boardList}>
-        <BoardListHeader header="홍보게시판" desc={desc} onclick={handleFormBtn} />
+        <BoardListHeader
+          header="홍보게시판"
+          desc={desc}
+          onclick={handleFormBtn}
+        />
         <PRBoardList newList={newList} />
         <div className="scroll-ref" ref={scrollRef}></div>
         <UpButton />

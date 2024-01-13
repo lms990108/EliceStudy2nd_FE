@@ -40,17 +40,20 @@ function MainChild() {
 
   // 스타일 결정: isAnimating 상태에 따라 다른 스타일을 적용
   const wrapperStyles = isAnimating
-    ? {
-        display: "flex",
-        gap: "20px",
-        transform: `translateX(-${sliderIndex * 1205}px)`,
-        transition: "transform 0.4s ease",
-      }
-    : {
-        display: "flex",
-        gap: "20px",
-        transform: `translateX(-${sliderIndex * 1205}px)`,
-      };
+  ? {
+      display: "flex",
+      gap: "20px",
+      paddingLeft: "10px",
+      paddingRight: "10px",
+      transform: `translateX(-${sliderIndex * 1200}px)`,
+      transition: "transform 0.4s ease",      }
+  : {
+      display: "flex",
+      gap: "20px",
+      paddingLeft: "10px",
+      paddingRight: "10px",
+      transform: `translateX(-${sliderIndex * 1200}px)`,
+    };
 
       useEffect(() => {
         const today = new Date();
@@ -76,7 +79,6 @@ function MainChild() {
               ...sortedShows,           // 1번부터 18번까지
               ...sortedShows.slice(0, 6) // 1번부터 6번까지
             ];
-            console.log(reorderedShows);
             setShows(reorderedShows);
           })
           .catch((err) => alert(err));

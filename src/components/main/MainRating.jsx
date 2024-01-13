@@ -34,28 +34,29 @@ function MainRating() {
 
   // 스타일 결정: isAnimating 상태에 따라 다른 스타일을 적용
   const wrapperStyles = isAnimating
-    ? {
-        display: "flex",
-        gap: "20px",
-        transform: `translateX(-${sliderIndex * 1205}px)`,
-        transition: "transform 0.4s ease",
-      }
-    : {
-        display: "flex",
-        gap: "20px",
-        transform: `translateX(-${sliderIndex * 1205}px)`,
-      };
+  ? {
+      display: "flex",
+      gap: "20px",
+      paddingLeft: "10px",
+      paddingRight: "10px",
+      transform: `translateX(-${sliderIndex * 1200}px)`,
+      transition: "transform 0.4s ease",      }
+  : {
+      display: "flex",
+      gap: "20px",
+      paddingLeft: "10px",
+      paddingRight: "10px",
+      transform: `translateX(-${sliderIndex * 1200}px)`,
+    };
 
   useEffect(() => {
     fetch("https://dailytopia2.shop/api/show?limit=1000")
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         // rank 키가 있고 값이 1~18인 항목들만 필터링
         const rankedShows = data.shows.filter(
           (show) => show.rank && show.rank >= 1 && show.rank <= 18
         );
-        console.log(rankedShows);
         // 원하는 순서대로 정렬
         rankedShows.sort((a, b) => a.rank - b.rank);
 
@@ -78,7 +79,7 @@ function MainRating() {
   return (
     <div className="main-layout-container">
       <div className="main-title-box">
-        <h1 className="main-title">믿고보는 별점 ⭐️ 높은 작품</h1>
+        <h1 className="main-title">믿고보는 별점 ⭐️ 높은 연극</h1>
         <div className="slide-info-box">
           <p className={`slide-info1 ${sliderIndex === 4 || sliderIndex === 1 ? "active" : ""}`}>
             ㅡ
@@ -109,7 +110,7 @@ function MainRating() {
                   <img src={show.poster} alt={show.title} />
                 </div>
                 <p className="main-play-title">{formatTitle(show.title)}</p>
-                <p className="main-play-period">⭐️⭐️⭐️⭐️⭐️</p>
+                <p className="main-play-rating">⭐️⭐️⭐️⭐️⭐️</p>
               </div>
             ))}
           </div>
