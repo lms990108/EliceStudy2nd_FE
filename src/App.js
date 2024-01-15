@@ -19,6 +19,10 @@ import ScrollToTop from "./utils/ScrollToTop";
 import Main from "./pages/main/Main";
 import Admin from "./pages/admin/Admin";
 import SearchResult from "./pages/search-result/SearchResultPage";
+import InputAdditionalInfo from "./pages/user/InputAdditionalInfo";
+import KakaoRedirection from "./pages/redirection/KakaoRedirection";
+import GoogleRedirection from "./pages/redirection/GoogleRedirection";
+import NaverRedirection from "./pages/redirection/NaverRedirection";
 
 function App() {
   return (
@@ -36,6 +40,10 @@ function App() {
           <ScrollToTop />
           <Routes>
             <Route path="/signup-in" element={<SignUpIn />} />
+            <Route
+              path="/additional-user-info"
+              element={<InputAdditionalInfo />}
+            />
             <Route path="/mypages" element={<MyPage />} />
             <Route path="/" element={<Main />} />
 
@@ -56,6 +64,10 @@ function App() {
             <Route path="/play/:playId" element={<PlayDetail />} />
 
             <Route path="/search" element={<SearchResult />} />
+
+            <Route path="/user/kakao-login" element={<KakaoRedirection />} />
+            <Route path="/user/google-login" element={<GoogleRedirection />} />
+            <Route path="/user/naver-login" element={<NaverRedirection />} />
           </Routes>
           <Footer />
         </BrowserRouter>

@@ -1,9 +1,11 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import "./PlaySearchContentBox.scss";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 
 export default function PlaySearchContentBox({
+  showId,
   imgSrc,
   location,
   title,
@@ -37,17 +39,21 @@ export default function PlaySearchContentBox({
   return (
     <div className="play-search-content-box">
       <div className="play-img-container">
-        <img src={imgSrc} />
+        <Link to={`/play/${showId}`} style={{ margin: 0 }}>
+          <img src={imgSrc} />
+        </Link>
       </div>
       <div className="play-info">
-        <h3>{title}</h3>
-        <p>
-          {location.length >= 30 ? `${location.slice(0, 28)}...` : location}
-        </p>
-        <p>
-          {startDate.split("T")[0]} ~ {endDate.split("T")[0]}
-        </p>
-        <h3>{price}</h3>
+        <Link to={`/play/${showId}`} style={{ margin: 0 }}>
+          <h3>{title}</h3>
+          <p>
+            {location.length >= 30 ? `${location.slice(0, 28)}...` : location}
+          </p>
+          <p>
+            {startDate.split("T")[0]} ~ {endDate.split("T")[0]}
+          </p>
+          <h3>{price}</h3>
+        </Link>
       </div>
       <div className="reservation-btn">
         {state !== "공연완료" ? (
@@ -67,6 +73,7 @@ export default function PlaySearchContentBox({
             <div
               onMouseOver={() => setIsDisabledBtn(true)}
               onMouseOut={() => setIsDisabledBtn(false)}
+              className="reservation-disabled"
             >
               <Button variant="contained" disabled>
                 <Typography

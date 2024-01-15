@@ -5,13 +5,13 @@ import kakaoTalkImg from "../../assets/img/SNSIcon/kakaoTalk.png";
 import XImg from "../../assets/img/SNSIcon/X.png";
 import LinkIcon from "@mui/icons-material/Link";
 import FacebookIcon from "@mui/icons-material/Facebook";
-import TwitterIcon from "@mui/icons-material/Twitter";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Rating from "@mui/material/Rating";
 import { AlertCustom } from "../common/alert/Alerts";
 
 export default function PlayDetailTop({
+  showId,
   age,
   start_date,
   end_date,
@@ -28,8 +28,8 @@ export default function PlayDetailTop({
   const navigate = useNavigate();
   // 현재 url 정보 객체
   const currentURL = useLocation();
-  // 링크 복사 클릭 시 알람
-  const [copyAlert, setCopyAlert] = useState(null);
+  // 알람
+  const [alert, setAlert] = useState(null);
   // 이 연극을 현재 로그인된 유저가 찜했는지 여부
   const [isDibbed, setIsDibbed] = useState(false);
   // 로그인 필요 알람
@@ -40,7 +40,13 @@ export default function PlayDetailTop({
   // 찜한 연극인지를 확인하는 로직 (유저가 로그인 되어 있을시에만 로직 적용)
   useEffect(() => {
     if (isLoggedIn) {
-      // 찜 확인 api 로직 작성
+      // 찜 여부 확인
+      fetch(`https://dailytopia2.shop/api/user/is-bookmarked/${showId}`, {
+        withCredentials: true,
+      })
+        .then((res) => res.json()) // res.json()을 반환하도록 수정
+        .then((data) => setIsDibbed(data.isBookmarked))
+        .catch((err) => {});
     }
   });
 
@@ -51,7 +57,7 @@ export default function PlayDetailTop({
       // Kakao.init이 되어 있지 않은 경우에만 초기화 진행
       Kakao.init(process.env.REACT_APP_KAKAO_SHARE_API_KEY);
     }
-    // 카카오링크 버튼 생성 (두 번 버튼을 클릭해야 생성되는 것을 막기 위해 useEffec에 작성!)
+    // 카카오링크 버튼 생성 (두 번 버튼을 클릭해야 생성되는 것을 막기 위해 useEffect에 작성!)
     Kakao.Link.createDefaultButton({
       container: "#btnKakaoShare", // 카카오공유버튼ID
       objectType: "feed",
@@ -71,10 +77,22 @@ export default function PlayDetailTop({
   const handleShareBtnClick = async (currentPath) => {
     try {
       await navigator.clipboard.writeText(currentPath);
-      setCopyAlert("현재 페이지의 링크가 복사되었습니다.");
+      setAlert({
+        title: "링크 복사 완료",
+        content: "현재 페이지의 링크가 복사되었습니다.",
+        open: true,
+        onclose: () => setAlert(null),
+        severity: "success",
+      });
     } catch (err) {
       console.log(err);
-      setCopyAlert("현재 페이지 링크 복사에 실패하였습니다.");
+      setAlert({
+        title: "링크 복사 실패",
+        content: "현재 페이지 링크 복사에 실패하였습니다.",
+        open: true,
+        onclose: () => setAlert(null),
+        severity: "error",
+      });
     }
   };
 
@@ -96,8 +114,48 @@ export default function PlayDetailTop({
   // 찜 버튼 클릭 시
   const handleDibBtnClick = () => {
     if (isLoggedIn) {
-      setIsDibbed(!isDibbed);
-      // 여기에 api 연결 로직
+      // 찜이 되어 있는 경우 찜 취소
+      if (isDibbed) {
+        fetch(`https://dailytopia2.shop/api/user/cancel/${showId}`, {
+          method: "PUT",
+          withCredentials: true,
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data);
+            setIsDibbed(false);
+          })
+          .catch((err) => {
+            console.log(err);
+            setAlert({
+              title: "찜 취소 실패",
+              content: "찜 취소에 실패하였습니다.",
+              open: true,
+              onclose: () => setAlert(null),
+              severity: "error",
+            });
+          });
+      } else {
+        // 찜이 되어 있지 않은 경우 찜 추가
+        fetch(`https://dailytopia2.shop/api/user/save/${showId}`, {
+          method: "PUT",
+          withCredentials: true,
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data);
+            setIsDibbed(true);
+          })
+          .catch((err) =>
+            setAlert({
+              title: "찜 실패",
+              content: "찜하기에 실패하였습니다.",
+              open: true,
+              onclose: () => setAlert(null),
+              severity: "error",
+            })
+          );
+      }
     } else {
       // 로그인이 되어 있지 않을 경우의 로직
       setNeedLoginAlert(
@@ -108,22 +166,13 @@ export default function PlayDetailTop({
 
   return (
     <div className="play-detail-top-container">
-      {copyAlert === "현재 페이지의 링크가 복사되었습니다." && (
+      {alert && (
         <AlertCustom
-          title={"링크 복사 완료"}
-          content={copyAlert}
-          open={Boolean(copyAlert)}
-          onclose={() => setCopyAlert(null)}
-          severity={"success"}
-        />
-      )}
-      {copyAlert === "현재 페이지 링크 복사에 실패하였습니다." && (
-        <AlertCustom
-          title={"링크 복사 실패!"}
-          content={copyAlert}
-          open={Boolean(copyAlert)}
-          onclose={() => setCopyAlert(null)}
-          severity={"error"}
+          title={alert.title}
+          content={alert.content}
+          open={alert.open}
+          onclose={alert.onclose}
+          severity={alert.severity}
         />
       )}
       {needLoginAlert && (
@@ -160,10 +209,6 @@ export default function PlayDetailTop({
             <h3>상영기간</h3>
             <p>{`${start_date.split("T")[0]} ~ ${end_date.split("T")[0]}`}</p>
           </div>
-          {/* <div>
-            <h3>예매기간</h3>
-            <p>2023.11.01 ~ 2023.11.12</p>
-          </div> */}
           <div>
             <h3>공연 상태</h3>
             <p>{state}</p>
@@ -183,8 +228,6 @@ export default function PlayDetailTop({
           <div>
             <h3>가격정보</h3>
             <p>{price}</p>
-            {/* <p>R석 - 45,000원</p>
-            <p>S석 - 35,000원</p> */}
           </div>
           <div>
             <h3>평점</h3>
@@ -226,7 +269,7 @@ export default function PlayDetailTop({
             <FacebookIcon
               fontSize="large"
               color="facebookBlue"
-              onClick={shareFacebook}
+              onClick={() => shareFacebook()}
               onMouseOver={() => setCurrentHoverOption("페이스북 공유")}
               onMouseOut={() => setCurrentHoverOption(null)}
               style={{ cursor: "pointer" }}
@@ -250,6 +293,7 @@ export default function PlayDetailTop({
                 src={XImg}
                 onMouseOver={() => setCurrentHoverOption("X 공유")}
                 onMouseOut={() => setCurrentHoverOption(null)}
+                onClick={() => shareTwitter()}
                 alt="X-icon"
                 style={{ cursor: "pointer" }}
               />
@@ -307,14 +351,6 @@ export default function PlayDetailTop({
                 {isDibbed ? "찜한 연극" : "♥️ 찜하기"}
               </Typography>
             </Button>
-            {/* <Button variant="outlined" color="error" size="large">
-              <Typography
-                fontFamily="Nanum Gothic, sans-serif"
-                className="button-text"
-              >
-                ♥️ 찜하기
-              </Typography>
-            </Button> */}
           </div>
           <div className="reserve-btn">
             {state !== "공연완료" ? (

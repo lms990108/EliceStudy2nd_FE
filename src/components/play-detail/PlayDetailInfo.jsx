@@ -9,7 +9,6 @@ export default function PlayInfo({
   description,
   detail_images,
   schedule,
-  seat_cnt,
 }) {
   return (
     <div className="play-detail-info">
@@ -17,18 +16,12 @@ export default function PlayInfo({
         <h3>공연 시간 정보</h3>
         <p>{schedule}</p>
       </div>
-      {Boolean(seat_cnt) && (
-        <div className="seat-info">
-          <h3>좌석 정보</h3>
-          <p>{seat_cnt}석</p>
-        </div>
-      )}
-      {/* {description && (
+      {description && (
         <div className="summary">
           <h3>줄거리</h3>
           <p>{description}</p>
         </div>
-      )} */}
+      )}
       {cast[0] && (
         <div className="summary">
           <h3>출연진</h3>

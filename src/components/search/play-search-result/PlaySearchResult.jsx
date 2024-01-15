@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import "./PlaySearchResult.scss";
 import PlaySearchHeader from "./PlaySearchHeader";
 import PlaySearchContentBox from "./PlaySearchContentBox";
@@ -25,17 +24,16 @@ export default function PlaySearchResult({
             <PlaySearchHeader setPlaySearchResult={setPlaySearchResult} />
             <div className="play-search-content">
               {paginationPlaySearch.map((play) => (
-                <Link to={`/play/${play.showId}`}>
-                  <PlaySearchContentBox
-                    imgSrc={play.poster}
-                    location={play.location}
-                    title={play.title}
-                    startDate={play.start_date}
-                    endDate={play.end_date}
-                    price={play.price}
-                    state={play.state}
-                  />
-                </Link>
+                <PlaySearchContentBox
+                  showId={play.showId}
+                  imgSrc={play.poster}
+                  location={play.location}
+                  title={play.title}
+                  startDate={play.start_date}
+                  endDate={play.end_date}
+                  price={play.price}
+                  state={play.state}
+                />
               ))}
             </div>
           </section>
