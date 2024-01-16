@@ -9,8 +9,10 @@ import TheaterLocation from "../../components/play-detail/TheaterLocation";
 import { UpButton } from "../../components/common/button/UpButton";
 import { AlertCustom } from "../../components/common/alert/Alerts";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
+import useCheckLogin from "../../hooks/authoriaztionHooks/useCheckLogin";
 
 export default function PlayDetail() {
+  useCheckLogin();
   // 현재 연극의 id
   const { playId } = useParams();
   // 데이터 가져올 때 로딩을 띄우기 (데이터가 다 가져와지기 전 파싱 작업이 이루어지지 않도록)

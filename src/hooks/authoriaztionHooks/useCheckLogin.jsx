@@ -15,9 +15,19 @@ export default function useCheckLogin() {
         console.log(data);
         localStorage.setItem("isLoggedIn", data.isLoggedIn);
         if (data.isLoggedIn) {
-          for (let info in data.user) {
-            localStorage.setItem(info, data.user[info]);
-          }
+          localStorage.setItem("profile_url", data.user.profile_url);
+          localStorage.setItem("createdAt", data.user.createdAt);
+          localStorage.setItem("role", data.user.role);
+          localStorage.setItem("updatedAt", data.user.updatedAt);
+          localStorage.setItem("nickname", data.user.nickname);
+          localStorage.setItem("interested_area", data.user.interested_area);
+        } else {
+          localStorage.removeItem("profile_url");
+          localStorage.removeItem("createdAt");
+          localStorage.removeItem("role");
+          localStorage.removeItem("updatedAt");
+          localStorage.removeItem("nickname");
+          localStorage.removeItem("interested_area");
         }
       })
       .catch((err) => {
