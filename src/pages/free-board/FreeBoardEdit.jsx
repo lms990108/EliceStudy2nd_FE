@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { BoardSecondHeader } from "../../components/board";
-import { FreeBoardForm } from "../../components/board-free/FreeBoardForm";
 import "./FreeBoardFormPage.scss";
 import { useNavigate } from "react-router-dom";
 import { AlertCustom } from "../../components/common/alert/Alerts";
+import { FreeBoardEditForm } from "../../components/board-free/FreeBoardEdit";
 
-export function FreeBoardFormPage() {
+export function FreeBoardEdit() {
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState(false);
   const nav = useNavigate();
@@ -19,7 +19,7 @@ export function FreeBoardFormPage() {
     <div className="free-board-form-page page-margin-bottom">
       <BoardSecondHeader header="자유게시판" onclick={handleCancle} />
       <div className="body">
-        <FreeBoardForm setInput={(boolean) => setInput(boolean)} handleCancle={handleCancle} />
+        <FreeBoardEditForm setInput={(boolean) => setInput(boolean)} handleCancle={handleCancle} />
       </div>
 
       <AlertCustom

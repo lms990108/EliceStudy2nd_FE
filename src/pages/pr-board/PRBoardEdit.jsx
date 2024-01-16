@@ -1,31 +1,31 @@
 import React, { useState } from "react";
 import { BoardSecondHeader } from "../../components/board";
-import { FreeBoardForm } from "../../components/board-free/FreeBoardForm";
-import "./FreeBoardFormPage.scss";
-import { useNavigate } from "react-router-dom";
+import "./PRBoardFormPage.scss";
 import { AlertCustom } from "../../components/common/alert/Alerts";
+import { useNavigate } from "react-router-dom";
+import { PRBoardEditForm } from "../../components/board-pr/PRBoardEdit";
 
-export function FreeBoardFormPage() {
+export function PRBoardEdit() {
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState(false);
   const nav = useNavigate();
 
   const handleCancle = (e) => {
     if (input) setOpen(true);
-    else nav("/community");
+    else nav("/promotion");
   };
 
   return (
-    <div className="free-board-form-page page-margin-bottom">
-      <BoardSecondHeader header="자유게시판" onclick={handleCancle} />
+    <div className="pr-board-form-page page-margin-bottom">
+      <BoardSecondHeader header="홍보게시판" onclick={handleCancle} />
       <div className="body">
-        <FreeBoardForm setInput={(boolean) => setInput(boolean)} handleCancle={handleCancle} />
+        <PRBoardEditForm setInput={(boolean) => setInput(boolean)} handleCancle={handleCancle} />
       </div>
 
       <AlertCustom
         open={open}
         onclose={() => setOpen(false)}
-        onclick={() => nav("/community")}
+        onclick={() => nav("/promotion")}
         closeBtn={"취소"}
         checkBtn={"확인"}
         checkBtnColor={"red"}

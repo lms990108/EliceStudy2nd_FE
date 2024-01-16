@@ -17,9 +17,7 @@ export function CommentsList({ comments, path }) {
       {comments.map((comment) => (
         <Comment data={comment} />
       ))}
-      <div className="pagination">
-        <Pagination />
-      </div>
+      {/* 더보기 버튼 추가 */}
       <Button className="back-btn" color="inherit" variant="contained" onClick={handleClick}>
         목록보기
       </Button>

@@ -7,7 +7,7 @@ import { AlertCustom } from "../common/alert/Alerts";
 import { useNavigate } from "react-router-dom";
 import { postUrl } from "../../apis/apiURLs";
 
-export function FreeBoardForm({ setInput, handleCancle }) {
+export function FreeBoardEditForm({ setInput, handleCancle }) {
   const [submit, setSubmit] = useState(false);
   const [openSubmit, setOpenSubmit] = useState(false);
   const [openComplete, setOpenComplete] = useState(false);
@@ -18,8 +18,8 @@ export function FreeBoardForm({ setInput, handleCancle }) {
   const nav = useNavigate();
 
   const handleSubmit = async (e) => {
-    const res = await fetch(`${postUrl}/add_post`, {
-      method: "POST",
+    const res = await fetch(`${postUrl}/update_post`, {
+      method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         title: inputTitle,

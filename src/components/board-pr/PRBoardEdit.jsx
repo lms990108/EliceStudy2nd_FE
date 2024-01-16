@@ -1,15 +1,14 @@
-import { Alert, Button, IconButton } from "@mui/material";
+import { Button, IconButton } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
-import ErrorIcon from "@mui/icons-material/Error";
-import WarningAmberIcon from "@mui/icons-material/WarningAmber";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import DriveFolderUploadIcon from "@mui/icons-material/DriveFolderUpload";
-import "./PostForm.scss";
+import "./PRBoardForm.scss";
 import { AlertCustom } from "../common/alert/Alerts";
 import { useNavigate } from "react-router-dom";
+import { promotionUrl } from "../../apis/apiURLs";
 
-export function PostForm({ tags, image, path = "/", setInput, handleCancle }) {
+export function PRBoardEditForm({ setInput, promotionNumber, handleCancle }) {
   const [submit, setSubmit] = useState(false);
   const [openSubmit, setOpenSubmit] = useState(false);
   const [openComplete, setOpenComplete] = useState(false);
@@ -23,7 +22,17 @@ export function PostForm({ tags, image, path = "/", setInput, handleCancle }) {
   const [tagList, setTagList] = useState([]);
   const nav = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
+    const res = await fetch(`${promotionUrl}/update_promotion/${promotionNumber}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      // body: form data 사용하기
+    });
+    const data = await res.json();
+    console.log(data);
+  };
+
+  const handleButtonClick = (e) => {
     setSubmit(true);
     if (errorTitle) {
       document.querySelector("#title").focus();
@@ -123,54 +132,50 @@ export function PostForm({ tags, image, path = "/", setInput, handleCancle }) {
         {handleError(errorContent)}
       </div>
 
-      {tags && (
-        <div className="input tag flex-box">
-          <div>
-            <label htmlFor="tags">태그</label>
-            <input
-              type="text"
-              id="tags"
-              name="tags"
-              onKeyDown={handleTagChange}
-              value={inputTag}
-              onChange={(e) => setInputTag(e.target.value)}
-              placeholder="엔터를 입력하여 태그를 등록할 수 있습니다."
-            />
-          </div>
-          {tagList && (
-            <div className="tag-list flex">
-              {tagList.map((tag, idx) => (
-                <div id={idx} className="tag-box flex">
-                  <span># {tag} </span>
-                  <IconButton onClick={handleTagRemove} size="small" sx={{ padding: "2px", fontSize: 14, marginLeft: "4px" }}>
-                    <CloseIcon fontSize="inherit" />
-                  </IconButton>
-                </div>
-              ))}
-            </div>
-          )}
+      <div className="input tag flex-box">
+        <div>
+          <label htmlFor="tags">태그</label>
+          <input
+            type="text"
+            id="tags"
+            name="tags"
+            onKeyDown={handleTagChange}
+            value={inputTag}
+            onChange={(e) => setInputTag(e.target.value)}
+            placeholder="엔터를 입력하여 태그를 등록할 수 있습니다."
+          />
         </div>
-      )}
+        {tagList && (
+          <div className="tag-list flex">
+            {tagList.map((tag, idx) => (
+              <div id={idx} className="tag-box flex">
+                <span># {tag} </span>
+                <IconButton onClick={handleTagRemove} size="small" sx={{ padding: "2px", fontSize: 14, marginLeft: "4px" }}>
+                  <CloseIcon fontSize="inherit" />
+                </IconButton>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
 
-      {image && (
-        <div className="input image">
-          <div>
-            <label htmlFor="image">*사진</label>
-            <Button id="imageBtn" color="darkGray" variant="outlined" size="small" startIcon={<DriveFolderUploadIcon />}>
-              <label className="pointer" htmlFor="image">
-                파일 찾기
-              </label>
-            </Button>
-            <input type="file" id="image" name="image" accept="image/*" onChange={handleImageChange} required />
-          </div>
-          {handleError(errorImage)}
-          {imageURL && <img src={imageURL} alt="?" />}
+      <div className="input image">
+        <div>
+          <label htmlFor="image">*사진</label>
+          <Button id="imageBtn" color="darkGray" variant="outlined" size="small" startIcon={<DriveFolderUploadIcon />}>
+            <label className="pointer" htmlFor="image">
+              파일 찾기
+            </label>
+          </Button>
+          <input type="file" id="image" name="image" accept="image/*" onChange={handleImageChange} required />
         </div>
-      )}
+        {handleError(errorImage)}
+        {imageURL && <img src={imageURL} alt="?" />}
+      </div>
 
       <div className="form-footer">
         <div className="notice">*표시가 되어 있는 항목은 필수 기재 항목입니다.</div>
-        <Button disabled={false} type="button" variant="contained" onClick={handleSubmit}>
+        <Button disabled={false} type="button" variant="contained" onClick={handleButtonClick}>
           작성완료
         </Button>
       </div>
@@ -180,7 +185,10 @@ export function PostForm({ tags, image, path = "/", setInput, handleCancle }) {
         onclose={() => setOpenSubmit(false)}
         title={"teenybox.com 내용:"}
         content={"게시글을 작성하시겠습니까?"}
-        onclick={() => setOpenComplete(true)}
+        onclick={() => {
+          setOpenComplete(true);
+          handleSubmit();
+        }}
         checkBtn={"등록"}
         closeBtn={"취소"}
         checkBtnColor={"#42BB48"}
@@ -189,11 +197,11 @@ export function PostForm({ tags, image, path = "/", setInput, handleCancle }) {
         open={openComplete}
         onclose={() => {
           setOpenComplete(false);
-          setTimeout(() => nav(path), 300);
+          setTimeout(() => nav("/promotion"), 300);
         }}
         onclick={() => {
           setOpenComplete(false);
-          setTimeout(() => nav(path), 300);
+          setTimeout(() => nav("/promotion"), 300);
         }}
         title={"teenybox.com 내용:"}
         content={"글 등록이 완료되었습니다!"}

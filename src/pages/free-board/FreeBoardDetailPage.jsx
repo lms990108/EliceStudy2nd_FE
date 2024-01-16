@@ -18,7 +18,8 @@ export function FreeBoardDetailPage() {
     const res = await fetch(`${postUrl}/number/${postId}`);
     const data = await res.json();
     setPost(data);
-    setComments([...data.comments]);
+    const data_comments = getComments();
+    setComments([...data_comments]);
   };
 
   const createComment = (comment) => {
