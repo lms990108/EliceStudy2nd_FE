@@ -23,8 +23,10 @@ import InputAdditionalInfo from "./pages/user/InputAdditionalInfo";
 import KakaoRedirection from "./pages/redirection/KakaoRedirection";
 import GoogleRedirection from "./pages/redirection/GoogleRedirection";
 import NaverRedirection from "./pages/redirection/NaverRedirection";
+import useCheckLogin from "./hooks/authoriaztionHooks/useCheckLogin";
 
 function App() {
+  useCheckLogin();
   return (
     <div className="App">
       <Helmet>

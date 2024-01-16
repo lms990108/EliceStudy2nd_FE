@@ -44,26 +44,6 @@ export default function PlayDetail() {
       });
   }, []);
 
-  // 유저가 로그인되어 있는지 확인하기, 로그인되어 있는 유저 정보 받아오기
-  useEffect(() => {
-    fetch(`https://dailytopia2.shop/api/user/check-login`, {
-      credentials: "include",
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        setIsLoggedIn(data.isLoggedIn);
-        if (data.isLoggedIn) {
-          setUserInfo(data.user);
-        }
-      })
-      .catch((err) => {
-        if (err.code !== "401") {
-          setError("연극 관련 사용자 정보를 가져오는 데 실패하였습니다.");
-        }
-      });
-  }, []);
-
   const handleDetailNavMenuClick = (e) => {
     console.log(e.target.innerText);
     setDetailNavMenu(e.target.innerText);
