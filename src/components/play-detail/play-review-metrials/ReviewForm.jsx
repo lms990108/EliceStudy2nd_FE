@@ -1,36 +1,91 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import "./ReviewForm.scss";
+import { AlertCustom } from "../../common/alert/Alerts";
 import Rating from "@mui/material/Rating";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import ReviewErrorBox from "./ReviewErrorBox";
-import { AlertCustom } from "../../common/alert/Alerts";
+import DriveFolderUploadIcon from "@mui/icons-material/DriveFolderUpload";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 export default function ReviewForm({
   purpose,
   contents,
   setIsReviewFormOpened,
 }) {
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
   const [ratingValue, setRatingValue] = useState(0);
-  // 알림을 띄우기 위한 상태
+  const [photo, setPhoto] = useState(null);
+  console.log(photo);
+  // fixed된 알림을 띄우기 위한 상태
   const [alert, setAlert] = useState(null);
+  // 리뷰 필수 기재 항목 검증
+  const [reviewValidation, setReviewValidation] = useState(true);
+
+  const titleField = useRef(null);
+  const ratingField = useRef(null);
+  const fileInput = useRef(null);
+
+  const handleImgUploadBtnClick = () => {
+    fileInput.current.click();
+  };
 
   const handleCancelBtnClick = () => {
-    setAlert("리뷰 작성을 취소하시겠습니까? 글 내용은 저장되지 않습니다.");
+    setAlert({
+      title: "리뷰 작성 취소",
+      content: `리뷰 ${purpose}을 취소하시겠습니까? 글 내용은 저장되지 않습니다.`,
+      open: true,
+      onclose: () => setAlert(null),
+      onclick: () => setIsReviewFormOpened(false),
+      severity: "warning",
+      checkBtn: "확인",
+      closeBtn: "취소",
+    });
+  };
+
+  const handleCompelteBtnClick = () => {
+    if (!title || !ratingValue) {
+      setReviewValidation(false);
+      if (!title) {
+        titleField.current.querySelector("input").focus();
+      }
+      if (!ratingValue) {
+      }
+
+      return;
+    }
+
+    setAlert({
+      title: `리뷰 ${purpose} 완료`,
+      content: `리뷰 ${purpose}이 완료되었습니다.`,
+      open: true,
+      onclose: () => {
+        setAlert(null);
+        setIsReviewFormOpened(false);
+      },
+      onclick: () => setIsReviewFormOpened(false),
+      severity: "success",
+      checkBtn: "확인",
+      btnCloseHidden: true,
+    });
+
+    console.log(title, content, ratingValue, photo);
   };
 
   return (
     <>
       {alert && (
         <AlertCustom
-          title={"리뷰 작성 취소"}
-          content={alert}
-          open={Boolean(alert)}
-          onclose={() => setAlert(null)}
-          onclick={() => setIsReviewFormOpened(false)}
-          severity={"info"}
-          checkBtn={"확인"}
-          closeBtn={"취소"}
+          title={alert.title}
+          content={alert.content}
+          open={alert.open}
+          onclose={alert.onclose}
+          onclick={alert.onclick}
+          severity={alert.severity}
+          checkBtn={alert.checkBtn}
+          closeBtn={alert.closeBtn}
+          btnCloseHidden={alert.btnCloseHidden}
         />
       )}
       {/* <ReviewErrorBox errorText="제목과 별점은 필수 입력값입니다." /> */}
@@ -43,9 +98,12 @@ export default function ReviewForm({
             minRows="false"
             maxRows="true"
             rows="8"
-            defaultValue="제목을 입력해주세요."
+            InputProps={{ placeholder: "제목을 입력해주세요." }}
             sx={{ width: 550 }}
             inputProps={{ maxLength: 30 }}
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            ref={titleField}
           />
         </div>
         <div className="review-author-box">
@@ -58,9 +116,11 @@ export default function ReviewForm({
             variant="outlined"
             multiline
             rows={10}
-            defaultValue="내용을 입력해주세요."
+            InputProps={{ placeholder: "내용을 입력해주세요." }}
             sx={{ width: 1000, height: 280 }}
             inputProps={{ maxLength: 500 }}
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
           />
         </div>
         <div className="review-rating-box">
@@ -76,25 +136,60 @@ export default function ReviewForm({
         </div>
         <div className="reivew-photo-upload-box">
           <h3>사진 첨부</h3>
-          <input type="file" className="file-upload-btn" />
-          <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fc62jaK%2FbtrR6FXheGZ%2F5hRmAFuxAopQCmEZ5C1TE1%2Fimg.jpg" />
+          <Button
+            className="file-upload-btn"
+            color="darkGray"
+            variant="outlined"
+            size="small"
+            startIcon={<DriveFolderUploadIcon />}
+            onClick={() => handleImgUploadBtnClick()}
+          >
+            <label htmlFor="image">파일 찾기</label>
+          </Button>
+          <input
+            type="file"
+            className="file-input"
+            ref={fileInput}
+            onChange={(e) => setPhoto(URL.createObjectURL(e.target.files[0]))}
+          />
         </div>
+        {photo && (
+          <div>
+            <img src={photo} alt="리뷰 첨부 이미지" />
+            <DeleteIcon
+              color="ourGrey"
+              sx={{
+                paddingLeft: "10px",
+                cursor: "pointer",
+                position: "absolute",
+              }}
+              onClick={() => setPhoto(null)}
+            />
+          </div>
+        )}
         <div className="review-guide-text">
-          <p>* 표시가 되어 있는 항목은 필수 기재 항목입니다.</p>
+          <p>- * 표시가 되어 있는 항목은 필수 기재 항목입니다.</p>
           <p>
-            제목은 띄어쓰기 포함 30자, 내용은 띄어쓰기 포함 500자 제한입니다.
+            - 제목은 띄어쓰기 포함 30자, 내용은 띄어쓰기 포함 500자 제한입니다.
           </p>
+          <p>- 사진은 1장만 업로드 가능합니다.</p>
         </div>
-        <ReviewErrorBox errorText="제목과 별점은 필수 입력값입니다. 입력 후 다시 제출해 주세요." />
+        {!reviewValidation && (
+          <ReviewErrorBox errorText="제목과 별점은 필수 입력값입니다. 입력 후 다시 제출해 주세요." />
+        )}
         <div className="play-review-btn">
-          <Button variant="contained" className="play-review-btn">
+          <Button
+            variant="contained"
+            className="play-review-btn"
+            onClick={() => handleCompelteBtnClick()}
+          >
             {purpose} 완료
           </Button>
           <Button
             variant="outlined"
             color="error"
             className="play-review-btn"
-            onClick={handleCancelBtnClick}
+            onClick={() => handleCancelBtnClick()}
           >
             {purpose} 취소
           </Button>

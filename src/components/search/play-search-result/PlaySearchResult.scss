@@ -8,6 +8,10 @@
   @include basic-margin-and-width();
   margin-bottom: 0;
 
+  @media (max-width: 1000px) {
+    width: 95%;
+  }
+
   .play-search-content {
     background-color: #ffffff;
     border: 1px solid #bcbcbc;

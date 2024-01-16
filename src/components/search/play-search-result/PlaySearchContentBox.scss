@@ -95,6 +95,18 @@ $tooltip-z-index: 100;
         }
       }
     }
+
+    .reservation-disabled {
+      button {
+        width: 160px;
+        height: 45px;
+
+        p {
+          font-weight: bold;
+          font-size: 19px;
+        }
+      }
+    }
   }
 
   .end-show-tooltip {

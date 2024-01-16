@@ -21,6 +21,9 @@ export const theme = createTheme({
     dibsRed: {
       main: "#CF2F11",
     },
+    orange: {
+      main: "#ff7f00",
+    },
   },
   typography: {
     fontFamily: "Noto Sans KR",

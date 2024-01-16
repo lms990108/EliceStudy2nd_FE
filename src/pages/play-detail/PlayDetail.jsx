@@ -34,32 +34,13 @@ export default function PlayDetail() {
     fetch(`https://dailytopia2.shop/api/show/${playId}`)
       .then((res) => res.json())
       .then((data) => {
-        setPlayInfo(data);
+        setPlayInfo(data.show);
         setTheaterLocation({ lat: data.latitude, lng: data.longitude });
         setIsLoading(false);
       })
       .catch(() => {
         setIsLoading(false);
         setPlayInfo(null);
-      });
-  }, []);
-
-  // 유저가 로그인되어 있는지 확인하기, 로그인되어 있는 유저 정보 받아오기
-  useEffect(() => {
-    fetch(`https://dailytopia2.shop/api/user/check-login`, {
-      withCredentials: true,
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setIsLoggedIn(data.isLoggedIn);
-        if (data.isLoggedIn) {
-          setUserInfo(data.user);
-        }
-      })
-      .catch((err) => {
-        if (err.code !== "401") {
-          setError("연극 관련 사용자 정보를 가져오는 데 실패하였습니다.");
-        }
       });
   }, []);
 
@@ -87,6 +68,7 @@ export default function PlayDetail() {
           <>
             <UpButton />
             <PlayDetailTop
+              showId={playInfo.showId}
               age={playInfo.age}
               start_date={playInfo.start_date}
               end_date={playInfo.end_date}
