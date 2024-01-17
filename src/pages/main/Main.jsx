@@ -9,14 +9,19 @@ import MainPublicity from "../../components/main/MainPublicity";
 import MainReview from "../../components/main/MainReview";
 import MainTheater from "../../components/main/MainTheater";
 import { UpButton } from "../../components/common/button/UpButton";
+import useCheckLogin from "../../hooks/authoriaztionHooks/useCheckLogin";
 
 //Main
 const Main = () => {
+  useCheckLogin();
   return (
     <div className="main-container">
-      <div className="banner-container" style={{
-	    backgroundImage: `url('/block.jpeg'`,
-		}}>
+      <div
+        className="banner-container"
+        style={{
+          backgroundImage: `url('/block.jpeg'`,
+        }}
+      >
         <MainBanner />
       </div>
       <div className="best-container">

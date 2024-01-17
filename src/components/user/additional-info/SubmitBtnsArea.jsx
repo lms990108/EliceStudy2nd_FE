@@ -25,25 +25,28 @@ export default function SubmitBtnsArea({ additionalUserInfo }) {
     }
 
     // 회원가입 로직
-    // const formData = new FormData();
-    // formData.append("user_id", String(id));
-    // formData.append("social_provider", localStorage.getItem("social_provider"));
-    // formData.append("nickname", nicknameInfo.nickname);
-    // formData.append("profile_url", selectedImg);
-    // formData.append("interested_area", selectedRegion);
+    const formData = new FormData();
+    formData.append("profile_url", selectedImg);
+    formData.append("user_id", String(id));
+    formData.append("social_provider", socialProvider);
+    formData.append("nickname", nicknameInfo.nickname);
+    formData.append("interested_area", selectedRegion);
+
+    // console.log({
+    //   profile_url: selectedImg,
+    //   user_id: String(id),
+    //   social_provider: socialProvider,
+    //   nickname: nicknameInfo.nickname,
+    //   interested_area: selectedRegion,
+    // });
+    console.log(Array.from(formData.entries()));
 
     fetch("https://dailytopia2.shop/api/user/register", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "multipart/form-data",
       },
-      body: JSON.stringify({
-        user_id: String(id),
-        social_provider: socialProvider,
-        nickname: nicknameInfo.nickname,
-        profile_url: selectedImg,
-        interested_area: selectedRegion,
-      }),
+      body: formData,
       credentials: "include",
     })
       .then((res) => {
