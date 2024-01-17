@@ -39,15 +39,11 @@ export default function SubmitBtnsArea({ additionalUserInfo }) {
     //   nickname: nicknameInfo.nickname,
     //   interested_area: selectedRegion,
     // });
-    console.log(Array.from(formData.entries()));
+    // console.log(Array.from(formData.entries()));
 
     fetch("https://dailytopia2.shop/api/user/register", {
       method: "POST",
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
       body: formData,
-      credentials: "include",
     })
       .then((res) => {
         console.log(res);

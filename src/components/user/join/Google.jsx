@@ -1,5 +1,5 @@
 import googleimg from "../../../assets/img/user/googlelogin.png";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import GoogleRedirection from "../../../pages/redirection/GoogleRedirection";
 
 export default function Google() {

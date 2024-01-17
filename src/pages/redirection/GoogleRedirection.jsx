@@ -21,7 +21,7 @@ export default function GoogleRedirection({ popup, setPopup }) {
       return;
     }
 
-    const kakaoOauthCodeListener = (e) => {
+    const googleOauthCodeListener = (e) => {
       if (e.origin !== window.location.origin) {
         console.log("hi");
         return;
@@ -29,10 +29,10 @@ export default function GoogleRedirection({ popup, setPopup }) {
 
       const { code } = e.data;
       const authorizationCode = code;
-      console.log(authorizationCode);
+      console.log({ authorizationCode });
 
       if (authorizationCode) {
-        popup.close();
+        // popup?.close();
         console.log(`The popup URL has URL code param = ${authorizationCode}`);
 
         // 가져온 code 로 다른 정보를 가져오는 API 호출
@@ -97,10 +97,10 @@ export default function GoogleRedirection({ popup, setPopup }) {
       setPopup(null);
     };
 
-    window.addEventListener("message", kakaoOauthCodeListener, false);
+    window.addEventListener("message", googleOauthCodeListener, false);
 
     return () => {
-      window.removeEventListener("message", kakaoOauthCodeListener);
+      window.removeEventListener("message", googleOauthCodeListener);
       popup?.close();
       setPopup(null);
     };
