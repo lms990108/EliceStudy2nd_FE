@@ -18,7 +18,7 @@ export function FreeBoardEditForm({ setInput, handleCancle }) {
   const nav = useNavigate();
 
   const handleSubmit = async (e) => {
-    const res = await fetch(`${postUrl}/update_post`, {
+    const res = await fetch(`${postUrl}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

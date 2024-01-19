@@ -23,9 +23,10 @@ export function PRBoardForm({ setInput, handleComplete, handleCancle }) {
   const nav = useNavigate();
 
   const handleSubmit = async (e) => {
-    const res = await fetch(`${promotionUrl}/add_promotion`, {
+    const res = await fetch(`${promotionUrl}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
+      credentials: "include",
       // body: form data 사용하기
     });
     const data = await res.json();

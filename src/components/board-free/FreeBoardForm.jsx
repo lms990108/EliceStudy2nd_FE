@@ -18,9 +18,10 @@ export function FreeBoardForm({ setInput, handleCancle }) {
   const nav = useNavigate();
 
   const handleSubmit = async (e) => {
-    const res = await fetch(`${postUrl}/add_post`, {
+    const res = await fetch(`${postUrl}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
+      credentials: "include",
       body: JSON.stringify({
         title: inputTitle,
         content: inputContent,

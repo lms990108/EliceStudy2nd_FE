@@ -18,7 +18,7 @@ export function PRBoardDetailPage() {
 
   const getPromotion = async () => {
     const postId = params.postId;
-    const res = await fetch(`${promotionUrl}/number/${postId}`);
+    const res = await fetch(`${promotionUrl}/${postId}`);
     const data = await res.json();
     setPost(data);
     setComments([...data.comments]);

@@ -23,7 +23,7 @@ export function PRBoardEditForm({ setInput, promotionNumber, handleCancle }) {
   const nav = useNavigate();
 
   const handleSubmit = async (e) => {
-    const res = await fetch(`${promotionUrl}/update_promotion/${promotionNumber}`, {
+    const res = await fetch(`${promotionUrl}/${promotionNumber}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       // body: form data 사용하기
