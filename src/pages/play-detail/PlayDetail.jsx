@@ -25,7 +25,9 @@ export default function PlayDetail() {
   // lat: 위도, lng: 경도
   const [theaterLoaction, setTheaterLocation] = useState({});
   // 현재 유저가 로그인되어 있는지 여부 (로그인 되어있을 시 회원정보가 들어가고, 그렇지 않을 시 false가 들어감)
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(
+    Boolean(localStorage.getItem("isLoggedIn"))
+  );
   // 로그인이 되어 있을 시 채워지게 되는 유저 정보
   const [userInfo, setUserInfo] = useState(null);
   // 에러를 띄우기 위한 상태 정의
@@ -33,7 +35,7 @@ export default function PlayDetail() {
 
   // 현재 연극 하나 데이터 받아오기
   useEffect(() => {
-    fetch(`https://dailytopia2.shop/api/show/${playId}`)
+    fetch(`https://dailytopia2.shop/api/shows/${playId}`)
       .then((res) => res.json())
       .then((data) => {
         setPlayInfo(data.show);

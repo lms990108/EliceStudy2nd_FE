@@ -38,7 +38,7 @@ export default function PlayList() {
 
   // 처음에 전체 연극 데이터 한번만 쭉 받아오기
   useEffect(() => {
-    fetch("https://dailytopia2.shop/api/show?page=1&limit=1000")
+    fetch("https://dailytopia2.shop/api/shows?page=1&limit=1000")
       .then((res) => res.json())
       .then((data) => {
         setPlays(data.shows.filter((show) => show.price !== ""));

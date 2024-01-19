@@ -32,6 +32,7 @@ export default function PlayDetailTop({
   const [alert, setAlert] = useState(null);
   // 이 연극을 현재 로그인된 유저가 찜했는지 여부
   const [isDibbed, setIsDibbed] = useState(false);
+  console.log(isDibbed);
   // 로그인 필요 알람
   const [needLoginAlert, setNeedLoginAlert] = useState(null);
   // 현재 마우스가 올라가 있는 공유 옵션
@@ -41,14 +42,16 @@ export default function PlayDetailTop({
   useEffect(() => {
     if (isLoggedIn) {
       // 찜 여부 확인
-      fetch(`https://dailytopia2.shop/api/user/is-bookmarked/${showId}`, {
-        withCredentials: true,
+      fetch(`https://dailytopia2.shop/api/users/bookmarks/${showId}`, {
+        credentials: "include",
       })
         .then((res) => res.json()) // res.json()을 반환하도록 수정
-        .then((data) => setIsDibbed(data.isBookmarked))
+        .then((data) => {
+          setIsDibbed(data.isBookmarked);
+        })
         .catch((err) => {});
     }
-  });
+  }, []);
 
   // 카카오 공유하기를 위한 로직
   useEffect(() => {

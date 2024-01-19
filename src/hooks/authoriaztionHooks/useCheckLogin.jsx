@@ -7,7 +7,7 @@ export default function useCheckLogin() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch(`https://dailytopia2.shop/api/user/check-login`, {
+    fetch(`https://dailytopia2.shop/api/users/login-status`, {
       credentials: "include",
     })
       .then((res) => res.json())

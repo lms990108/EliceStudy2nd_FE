@@ -5,7 +5,6 @@ import { AlertCustom } from "../../components/common/alert/Alerts";
 export default function GoogleRedirection({ popup, setPopup }) {
   const navigate = useNavigate();
   const [alert, setAlert] = useState(null);
-
   useEffect(() => {
     const currentUrl = window.location.href;
     const searchParams = new URL(currentUrl).searchParams;
@@ -14,29 +13,24 @@ export default function GoogleRedirection({ popup, setPopup }) {
       window.opener.postMessage({ code }, window.location.origin);
     }
   }, []);
-
   // 로그인 팝입이 열리면 로그인 로직을 처리합니다.
   useEffect(() => {
     if (!popup) {
       return;
     }
-
     const googleOauthCodeListener = (e) => {
       if (e.origin !== window.location.origin) {
         console.log("hi");
         return;
       }
-
       const { code } = e.data;
       const authorizationCode = code;
       console.log({ authorizationCode });
-
       if (authorizationCode) {
         // popup?.close();
         console.log(`The popup URL has URL code param = ${authorizationCode}`);
-
         // 가져온 code 로 다른 정보를 가져오는 API 호출
-        fetch(`https://dailytopia2.shop/api/user/google-login`, {
+        fetch(`https://dailytopia2.shop/api/users/login/google`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -96,16 +90,13 @@ export default function GoogleRedirection({ popup, setPopup }) {
       popup?.close();
       setPopup(null);
     };
-
     window.addEventListener("message", googleOauthCodeListener, false);
-
     return () => {
       window.removeEventListener("message", googleOauthCodeListener);
       popup?.close();
       setPopup(null);
     };
   }, [popup]);
-
   return (
     <div>
       {alert && (
