@@ -21,7 +21,7 @@ export function PRBoardDetailPage() {
     const res = await fetch(`${promotionUrl}/${postId}`);
     const data = await res.json();
     setPost(data);
-    setComments([...data.comments]);
+    setComments([]);
   };
 
   const createComment = (comment) => {

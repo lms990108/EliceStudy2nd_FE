@@ -3,6 +3,7 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import SmsOutlinedIcon from "@mui/icons-material/SmsOutlined";
 import "./FreeBoardList.scss";
 import { Link, useNavigate } from "react-router-dom";
+import { format } from "date-fns";
 
 export default function FreeBoardList({ boardList }) {
   const [posts, setPosts] = useState([]);
@@ -27,7 +28,7 @@ export default function FreeBoardList({ boardList }) {
               {post.user_id ? <img className="user-img" src={post.user_id.profile_url} /> : <AccountCircleIcon sx={{ fontSize: 24 }} />}
               <span>{post.user_id?.nickname || "test nickname"}</span>
             </div>
-            <div className="time">{post.createdAt}</div>
+            <div className="time">{format(new Date(post.createdAt), "yyyy-MM-dd")}</div>
           </div>
           <div>
             <div className="title">{post.title}</div>

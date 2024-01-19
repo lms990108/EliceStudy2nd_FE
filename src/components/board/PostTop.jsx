@@ -5,6 +5,7 @@ import copyUrl from "../../utils/copyUrl";
 import { AccountCircle, DeleteOutline, EditOutlined, ShareOutlined, SmsOutlined } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import { postUrl, promotionUrl } from "../../apis/apiURLs";
+import { format } from "date-fns";
 
 export function PostTop({ user, time, commentsCnt, type, postNumber }) {
   const [openURLCopyAlert, setOpenURLCopyAlert] = useState(false);
@@ -49,7 +50,7 @@ export function PostTop({ user, time, commentsCnt, type, postNumber }) {
       {user.profile_url ? <img className="user-img" src={user.profile_url} /> : <AccountCircle sx={{ fontSize: 50 }} />}
       <div className="flex-box">
         <div className="user-id">{user.nickname}</div>
-        <div className="date">{time}</div>
+        <div className="date">{format(new Date(time), "yyyy-MM-dd")}</div>
       </div>
       <div className="icons">
         <ShareOutlined className="share-icon" onClick={handleCopyButtonClick} />
