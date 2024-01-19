@@ -41,7 +41,7 @@ export default function SubmitBtnsArea({ additionalUserInfo }) {
     // });
     // console.log(Array.from(formData.entries()));
 
-    fetch("https://dailytopia2.shop/api/user/register", {
+    fetch("https://dailytopia2.shop/api/users", {
       method: "POST",
       body: formData,
     })

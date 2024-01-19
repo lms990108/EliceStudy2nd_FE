@@ -36,7 +36,7 @@ export default function KakaoRedirection({ popup, setPopup }) {
         console.log(`The popup URL has URL code param = ${authorizationCode}`);
 
         // 가져온 code 로 다른 정보를 가져오는 API 호출
-        fetch(`https://dailytopia2.shop/api/user/kakao-login`, {
+        fetch(`https://dailytopia2.shop/api/users/login/kakao`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
