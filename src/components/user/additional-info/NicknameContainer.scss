@@ -1,0 +1,27 @@
+.nickname-input-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+
+  label {
+    font-weight: 700;
+  }
+
+  .nickname-input {
+    width: 348.68px;
+  }
+
+  button {
+    margin-left: 15px;
+    height: 85%;
+  }
+
+  p {
+    margin-top: 10px;
+    font-size: 15px;
+    color: #808080;
+    margin-top: 10px;
+    font-size: 14px;
+  }
+}

@@ -45,24 +45,32 @@
     }
 
     .reivew-photo-upload-box {
+      display: flex;
+      align-items: center;
+
       .file-upload-btn {
+        margin-left: 20px;
+        cursor: pointer;
+        height: 32px;
         position: relative;
-        bottom: 171px;
-        left: 105px;
+        top: 2px;
+
+        label {
+          cursor: pointer;
+        }
       }
 
-      img {
-        position: relative;
-        right: 240px;
-        width: 150px;
-        height: 150px;
-        padding-top: 15px;
+      .file-input {
+        display: none;
       }
     }
 
-    .review-guide-text {
-      margin-bottom: 10px;
+    img {
+      width: 150px;
+      height: 150px;
+    }
 
+    .review-guide-text {
       p {
         margin: 10px 0;
         font-size: 15px;
@@ -133,18 +141,29 @@
     }
 
     .reivew-photo-upload-box {
+      display: flex;
+      align-items: center;
+
       .file-upload-btn {
+        margin-left: 20px;
+        cursor: pointer;
+        height: 32px;
         position: relative;
-        bottom: 171px;
-        left: 105px;
+        top: 2px;
+
+        label {
+          cursor: pointer;
+        }
       }
 
-      img {
-        position: relative;
-        right: 240px;
-        width: 150px;
-        height: 150px;
+      .file-input {
+        display: none;
       }
+    }
+
+    img {
+      width: 150px;
+      height: 150px;
     }
 
     .review-guide-text {
@@ -221,12 +240,10 @@
       }
     }
 
-    .reivew-photo-upload-box {
-      img {
-        width: 150px;
-        height: 150px;
-        padding: 20px 0;
-      }
+    img {
+      width: 150px;
+      height: 150px;
+      padding: 20px 0;
     }
 
     .review-guide-text {

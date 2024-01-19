@@ -1,0 +1,30 @@
+.profile-img-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  input {
+    display: none;
+  }
+
+  .profile-img {
+    width: 120px;
+    height: 120px;
+    border: 1px solid #bcbcbc;
+    border-radius: 63px;
+    cursor: pointer;
+
+    img {
+      width: 120px;
+      height: 120px;
+      border-radius: 63px;
+    }
+  }
+
+  p {
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 15px;
+  }
+}

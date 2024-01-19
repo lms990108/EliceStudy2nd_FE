@@ -1,0 +1,19 @@
+.input-additional-info-container {
+  width: 60%;
+  margin: 60px auto;
+  background-color: white;
+  border: 1px solid #bcbcbc;
+  border-radius: 10px;
+
+  @media screen and (min-width: 1100px) {
+    width: 60%;
+  }
+
+  @media screen and (max-width: 1100px) {
+    width: 85%;
+  }
+
+  main {
+    padding: 15px;
+  }
+}
