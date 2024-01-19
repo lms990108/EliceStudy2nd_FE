@@ -35,7 +35,7 @@ export default function NaverRedirection({ popup, setPopup }) {
         console.log(`The popup URL has URL code param = ${(code, state)}`);
 
         // 가져온 code 로 다른 정보를 가져오는 API 호출
-        fetch(`https://dailytopia2.shop/api/user/naver-login`, {
+        fetch(`https://dailytopia2.shop/api/users/login/naver`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

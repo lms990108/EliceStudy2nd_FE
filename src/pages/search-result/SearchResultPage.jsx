@@ -31,7 +31,7 @@ export default function SearchResultPage() {
     )
       .then((res) => res.json())
       .then((data) => {
-        setPlaySearchResult(data);
+        setPlaySearchResult(data.shows);
         setIsLoading(false);
       })
       .catch((err) => alert(err));
