@@ -31,7 +31,7 @@ export function PostTop({ user, time, commentsCnt, type, postNumber }) {
   };
 
   const deletePost = async () => {
-    const url = type === "community" ? `${postUrl}/delete_post/${postNumber}` : `${promotionUrl}/delete_promotion/${postNumber}`;
+    const url = type === "community" ? `${postUrl}/${postNumber}` : `${promotionUrl}/${postNumber}`;
     const res = await fetch(url, {
       method: "DELETE",
     });

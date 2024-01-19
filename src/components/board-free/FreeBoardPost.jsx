@@ -1,16 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import "./FreeBoardPost.scss";
-import { Comment, CommentsList, PostTop } from "../board";
-import { postUrl } from "../../apis/apiURLs";
-import { getComments } from "../../apis/comments/comments";
+import { PostTop } from "../board";
 
 export default function FreeBoardPost({ data }) {
-  const [comments, setComments] = useState([]);
-  useEffect(() => {
-    console.log(data);
-    setComments(getComments);
-  }, []);
-
   return (
     <div className="free-board-post">
       <PostTop user={data.user_id || { nickname: "test nick" }} type={"community"} time={data.createdAt} commentsCnt={data.comments.length} />
