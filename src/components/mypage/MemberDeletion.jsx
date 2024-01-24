@@ -13,7 +13,11 @@ function MemberDeletion() {
             회원 탈퇴시 회원정보는 삭제되며 복구가 불가능합니다.
           </p>
         </div>
-        <Button variant="contained" color= "red" sx={{ width: "180px", height: "48px" }}>
+        <Button
+          variant="contained"
+          color="red"
+          sx={{ width: "180px", height: "48px" }}
+        >
           <h4>티니박스 서비스 탈퇴</h4>
         </Button>
       </div>

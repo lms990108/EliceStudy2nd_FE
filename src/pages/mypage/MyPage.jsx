@@ -61,13 +61,13 @@ export default function MyPage() {
             <div className="my-nav-box">
               <h3>My 리뷰</h3>
               <p className={isSelected("MyPlayReview")} onClick={() => setSelectedComponent("MyPlayReview")}>
-                내가 작성한 연극 리뷰
+                나의 연극 리뷰
               </p>
             </div>
             <div className="my-nav-box">
-              <h3>내 게시판 작성글</h3>
+              <h3>My 작성글</h3>
               <p className={isSelected("MyPRBoard")} onClick={() => setSelectedComponent("MyPRBoard")}>홍보 게시판</p>
-              <p className={isSelected("MyFreeBoard")} onClick={() => setSelectedComponent("MyFreeBoard")}>자유 게시판</p>
+              <p className={isSelected("MyFreeBoard")} onClick={() => setSelectedComponent("MyFreeBoard")}>커뮤니티</p>
               <p className={isSelected("MyComments")} onClick={() => setSelectedComponent("MyComments")}>내 댓글</p>
             </div>
           </div>

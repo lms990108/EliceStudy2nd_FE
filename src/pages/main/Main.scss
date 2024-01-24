@@ -2,7 +2,6 @@
 .main-container {
     display: flex;
     flex-direction: column;
-    border-top: 0.5px solid black;
 }
 .banner-container {
     display: flex;
@@ -10,7 +9,6 @@
     height: 300px;
     background-repeat: repeat;
     background-size: contain;
-    border-top: 0.5px solid black;
 }
 .best-container {
     display: flex;
@@ -27,12 +25,10 @@
     justify-content: space-around;
     height: 550px;
     background-color: #282828;
-    border-top: 0.5px solid black;
 }
 .publicity-container {
     height: 500px;
     background-color: #202020;
-    border-top: 0.5px solid black;
 }
 .rating-container {
     display: flex;
@@ -47,7 +43,6 @@
     justify-content: center;
     height: 500px;
     background: linear-gradient(to bottom, #202020 90%, #282828 10%);
-    border-top: 0.5px solid black;
 }
 .child-container {  
     display: flex;
@@ -57,7 +52,6 @@
     height: 500px;
     padding-bottom: 20px;
     background-color: #282828;
-    border-top: 0.5px solid black;
 }
 .theater-container {
     display: flex;
@@ -66,5 +60,4 @@
     justify-content: center;
     height: 540px;
     background-color: #202020;
-    border-top: 0.5px solid black;
 }

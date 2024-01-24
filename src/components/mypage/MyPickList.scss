@@ -4,17 +4,22 @@
   align-items: center;
   margin: 48px 0 0 0;
   h1 {
-    padding-bottom: 20px;
     font-size: 24px;
+  }
+}
+.my-pick-list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     width: 800px;
     border-bottom: 4px solid #ccc;
-  }
+    padding-bottom: 4px;
 }
 .my-pick-list-content-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-end;
   width: 800px;
   height: 580px;
 }

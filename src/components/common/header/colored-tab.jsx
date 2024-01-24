@@ -44,7 +44,7 @@ export default function ColorTabs() {
             padding: "0px",
             fontWeight: "500",
             fontSize: "18px",
-            letterSpacing: "8px",
+            letterSpacing: "4px",
             color: "white",
             "&.Mui-selected": {
               color: "#ffb400",
