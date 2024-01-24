@@ -3,7 +3,6 @@ import "./SubmitBtnsArea.scss";
 import Button from "@mui/material/Button";
 import { AlertCustom } from "../../common/alert/Alerts";
 import { useNavigate } from "react-router-dom";
-import Loading from "../../common/loading/Loading";
 
 export default function SubmitBtnsArea({ additionalUserInfo }) {
   const navigate = useNavigate();
@@ -69,20 +68,17 @@ export default function SubmitBtnsArea({ additionalUserInfo }) {
   return (
     <>
       {alert && (
-        <>
-          <Loading />
-          <AlertCustom
-            severity={alert.severity}
-            title={alert.title}
-            content={alert.content}
-            open={Boolean(alert)}
-            checkBtn="확인"
-            onclick={alert.onclick}
-            closeBtn={alert.closeBtn ? "취소" : null}
-            onclose={alert.onclose}
-            btnCloseHidden={!alert.closeBtn}
-          />
-        </>
+        <AlertCustom
+          severity={alert.severity}
+          title={alert.title}
+          content={alert.content}
+          open={Boolean(alert)}
+          checkBtn="확인"
+          onclick={alert.onclick}
+          closeBtn={alert.closeBtn ? "취소" : null}
+          onclose={alert.onclose}
+          btnCloseHidden={!alert.closeBtn}
+        />
       )}
       <div className="submit-btns-area">
         <Button

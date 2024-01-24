@@ -48,9 +48,9 @@ export default function GoogleRedirection({ popup, setPopup, setAlert }) {
                 content: "Teeny Box에 로그인 되었습니다.",
                 severity: "success",
               });
-              // setTimeout(() => {
-              //   navigate("/");
-              // }, 1000);
+              setTimeout(() => {
+                navigate("/");
+              }, 1000);
             } else {
               res.json().then((data) => {
                 setAlert({

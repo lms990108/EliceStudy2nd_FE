@@ -33,7 +33,7 @@ export default function NicknameContainer({
     }
 
     // 중복 확인 로직
-    fetch("https://dailytopia2.shop/api/user/check-nickname", {
+    fetch("https://dailytopia2.shop/api/users/nickname", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
