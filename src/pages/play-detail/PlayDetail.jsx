@@ -9,24 +9,22 @@ import TheaterLocation from "../../components/play-detail/TheaterLocation";
 import { UpButton } from "../../components/common/button/UpButton";
 import { AlertCustom } from "../../components/common/alert/Alerts";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
-import useCheckLogin from "../../hooks/authoriaztionHooks/useCheckLogin";
+import Loading from "../../components/common/loading/Loading";
 
 export default function PlayDetail() {
-  useCheckLogin();
   // 현재 연극의 id
   const { playId } = useParams();
   // 데이터 가져올 때 로딩을 띄우기 (데이터가 다 가져와지기 전 파싱 작업이 이루어지지 않도록)
   const [isLoading, setIsLoading] = useState(true);
   // 연극 상세 정보
   const [playInfo, setPlayInfo] = useState({});
-  console.log(playInfo);
   // 현재 선택한 메뉴 (상세정보 / 관람후기 / 장소정보)
   const [detailNavMenu, setDetailNavMenu] = useState("상세정보");
   // lat: 위도, lng: 경도
   const [theaterLoaction, setTheaterLocation] = useState({});
   // 현재 유저가 로그인되어 있는지 여부 (로그인 되어있을 시 회원정보가 들어가고, 그렇지 않을 시 false가 들어감)
   const [isLoggedIn, setIsLoggedIn] = useState(
-    Boolean(localStorage.getItem("isLoggedIn"))
+    localStorage.getItem("isLoggedIn") === "true"
   );
   // 로그인이 되어 있을 시 채워지게 되는 유저 정보
   const [userInfo, setUserInfo] = useState(null);
@@ -40,7 +38,7 @@ export default function PlayDetail() {
       .then((data) => {
         setPlayInfo(data.show);
         setTheaterLocation({ lat: data.latitude, lng: data.longitude });
-        setIsLoading(false);
+        setTimeout(() => setIsLoading(false), 300);
       })
       .catch(() => {
         setIsLoading(false);
@@ -104,10 +102,7 @@ export default function PlayDetail() {
                 />
               )}
               {detailNavMenu === "관람후기" && (
-                <PlayReview
-                  reviews={playInfo.reviews}
-                  isLoggedIn={isLoggedIn}
-                />
+                <PlayReview showId={playInfo.showId} isLoggedIn={isLoggedIn} />
               )}
               {detailNavMenu === "장소정보" && (
                 <TheaterLocation
@@ -124,7 +119,7 @@ export default function PlayDetail() {
             <h2>연극 정보 가져오기에 실패했습니다.</h2>
           </div>
         )}
-        {!error && isLoading && <div>로딩중</div>}
+        {!error && isLoading && <Loading />}
       </div>
     </>
   );

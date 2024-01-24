@@ -19,7 +19,7 @@ export default function useSortPlays(sortStandard, setPlays) {
       setPlays((pre) => {
         const newPlays = [...pre];
         newPlays.sort((play1, play2) => {
-          // 가격이 전석 가격이 아닐 경우 평균 가격으로 비교하기
+          // 가격이 전석 가격이 아닐 경우 최저 가격으로 비교하기
           const getAveragePrice = (price) => {
             const regex = /[^0-9]/g;
 
@@ -34,11 +34,9 @@ export default function useSortPlays(sortStandard, setPlays) {
                 price = price.replace(regex, "");
                 return parseInt(price);
               });
-              // 평균 가격 구하기
-              const averagePrice = Math.floor(
-                splitPrice.reduce((acc, cur) => acc + cur) / splitPrice.length
-              );
-              return averagePrice;
+              // 최저 가격 구하기
+              const lowestPrice = Math.min(...splitPrice);
+              return lowestPrice;
               // 가격이 전석 무료일 경우 가격은 0이 됨.
             } else if (price.includes("무료")) {
               return 0;

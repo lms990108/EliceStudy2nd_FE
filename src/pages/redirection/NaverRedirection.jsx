@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { AlertCustom } from "../../components/common/alert/Alerts";
 
-export default function NaverRedirection({ popup, setPopup }) {
+export default function NaverRedirection({ popup, setPopup, setAlert }) {
   const navigate = useNavigate();
-  const [alert, setAlert] = useState(null);
 
   useEffect(() => {
     const currentUrl = window.location.href;
@@ -105,20 +103,5 @@ export default function NaverRedirection({ popup, setPopup }) {
     };
   }, [popup]);
 
-  return (
-    <div>
-      {alert && (
-        <AlertCustom
-          open={true}
-          title={alert.title}
-          content={alert.content}
-          severity={alert.severity}
-          btnCloseHidden={true}
-          onclose={alert.onclose}
-          onclick={alert.onclick}
-          checkBtn={alert.checkBtn}
-        />
-      )}
-    </div>
-  );
+  return <></>;
 }

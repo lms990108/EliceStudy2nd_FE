@@ -3,6 +3,7 @@ import "./SubmitBtnsArea.scss";
 import Button from "@mui/material/Button";
 import { AlertCustom } from "../../common/alert/Alerts";
 import { useNavigate } from "react-router-dom";
+import Loading from "../../common/loading/Loading";
 
 export default function SubmitBtnsArea({ additionalUserInfo }) {
   const navigate = useNavigate();
@@ -31,15 +32,6 @@ export default function SubmitBtnsArea({ additionalUserInfo }) {
     formData.append("social_provider", socialProvider);
     formData.append("nickname", nicknameInfo.nickname);
     formData.append("interested_area", selectedRegion);
-
-    // console.log({
-    //   profile_url: selectedImg,
-    //   user_id: String(id),
-    //   social_provider: socialProvider,
-    //   nickname: nicknameInfo.nickname,
-    //   interested_area: selectedRegion,
-    // });
-    // console.log(Array.from(formData.entries()));
 
     fetch("https://dailytopia2.shop/api/users", {
       method: "POST",
@@ -77,17 +69,20 @@ export default function SubmitBtnsArea({ additionalUserInfo }) {
   return (
     <>
       {alert && (
-        <AlertCustom
-          severity={alert.severity}
-          title={alert.title}
-          content={alert.content}
-          open={Boolean(alert)}
-          checkBtn="확인"
-          onclick={alert.onclick}
-          closeBtn={alert.closeBtn ? "취소" : null}
-          onclose={alert.onclose}
-          btnCloseHidden={!alert.closeBtn}
-        />
+        <>
+          <Loading />
+          <AlertCustom
+            severity={alert.severity}
+            title={alert.title}
+            content={alert.content}
+            open={Boolean(alert)}
+            checkBtn="확인"
+            onclick={alert.onclick}
+            closeBtn={alert.closeBtn ? "취소" : null}
+            onclose={alert.onclose}
+            btnCloseHidden={!alert.closeBtn}
+          />
+        </>
       )}
       <div className="submit-btns-area">
         <Button
@@ -97,22 +92,6 @@ export default function SubmitBtnsArea({ additionalUserInfo }) {
         >
           제출
         </Button>
-        {/* <Button
-          variant="contained"
-          color="error"
-          sx={{ marginLeft: "15px" }}
-          onClick={() =>
-            setAlert({
-              severity: "warning",
-              title: "추가정보 입력 건너뛰기",
-              content:
-                "회원정보 추가입력을 건너뛰시겠습니까? 지금까지 작성한 추가입력 정보는 저장되지 않고, 기본 정보로 가입이 완료됩니다.",
-              closeBtn: true,
-            })
-          }
-        >
-          취소
-        </Button> */}
       </div>
     </>
   );
