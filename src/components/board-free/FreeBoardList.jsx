@@ -37,7 +37,7 @@ export default function FreeBoardList({ boardList }) {
             <div className="content">{post.content}</div>
             <div className="comments">
               <SmsOutlinedIcon sx={{ fontSize: 16 }} />
-              <span>{post.comments.length}</span>
+              <span>{post.comments?.length || 10}</span>
             </div>
           </div>
         </Link>
