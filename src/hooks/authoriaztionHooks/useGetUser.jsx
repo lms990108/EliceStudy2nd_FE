@@ -1,5 +1,6 @@
 export default function useGetUser() {
   const user = {
+    isLoggedIn: JSON.parse(localStorage.getItem("isLoggedIn")),
     role: localStorage.getItem("role"),
     nickname: localStorage.getItem("nickname"),
     profile_url: localStorage.getItem("profile_url"),
@@ -7,5 +8,5 @@ export default function useGetUser() {
     social_provider: localStorage.getItem("social_provider"),
   };
 
-  return localStorage.getItem("isLoggedIn") ? user : null;
+  return user;
 }

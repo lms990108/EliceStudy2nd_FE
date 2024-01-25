@@ -12,7 +12,7 @@ export function BoardListHeader({ header, desc, onclick }) {
   const [open, setOpen] = useState(false);
 
   const handleClick = () => {
-    if (user) {
+    if (user.isLoggedIn) {
       onclick();
     } else {
       setOpen(true);
