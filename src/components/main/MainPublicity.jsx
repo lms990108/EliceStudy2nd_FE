@@ -17,7 +17,7 @@ function MainPublicity() {
   };
 
   useEffect(() => {
-    fetch("https://dailytopia2.shop/api/promotion")
+    fetch("https://dailytopia2.shop/api/promotions")
       .then((res) => res.json())
       .then((data) => {
         setPromotions(data);
@@ -29,7 +29,7 @@ function MainPublicity() {
     <>
       <div className="main-publicit-header">
         <h1 className="main-publicity-title">
-          숨소리까지 들리는 생생함! 소규모 연극
+          숨소리까지 들리는 생생함❗️ 소규모 연극 🎬
         </h1>
         <Link to="/promotion">
           <div className="publicity-btn">

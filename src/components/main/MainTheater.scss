@@ -1,25 +1,111 @@
+@import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap');
 .main-theater-container {
-    display: flex;
-    flex-direction: column;
-    width: 1190px;
+  display: flex;
+  flex-direction: column;
+  width: 1200px;
 }
 .main-theater-header {
-    display: flex;
-    justify-content: space-between;
-    color: white;
+  display: flex;
+  justify-content: space-between;
+  color: white;
 }
 .theater-list-container {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 .theater-list-box {
-    display: flex;
-    gap: 12px;
+  display: flex;
+  gap: 20px;
+}
+.theater-list {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  height: 32px;
+  padding: 0px 16px;
+  border-radius: 16px;
+}
+.theater-list:hover {
+  cursor: pointer;
+  transform: scale(1.1);
+  transition: transform 0.1s ease;
+}
+.theater-list.selected {
+  transform: scale(1.1);
+  background-color: #e3e3e3;
+  font-weight: 700;
+  color: black;
+  transition: transform 0.1s ease, background-color 0.2s ease;
 }
 .main-theater-body {
-    width: 1190px;
-    height: 400px;
-    margin-bottom: 32px;
-    background-color: #fcf9f5;
-    border-radius: 12px;
+  display: flex;
+  width: 1200px;
+  height: 380px;
+  margin-bottom: 32px;
+  background-color: #e3e3e3;
+  border-radius: 12px;
+}
+.theater-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-bottom: 30px;
+  gap: 12px;
+  padding-left: 44px;
+  width: 360px;
+  font-size: 28px;
+  font-weight: 100;
+  font-family: 'Black Han Sans', sans-serif;
+  color: #3e3e3e;
+}
+.theater-img {
+  width: 48px;
+  height: 48px;
+}
+.theater-play {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  width: 840px;
+  padding: 24px;
+}
+.theater-play-list {
+  display: flex;
+  align-items: center;
+}
+.theater-play-img-box {
+  height: 140px;
+  width: 112px;
+  margin-right: 16px;
+  border: #3e3e3e solid 0.1px;
+  border-radius: 10px;
+  overflow: hidden;
+  img {
+    border-radius: 10px;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.2s ease-in-out;
+
+    &:hover {
+      transform: scale(1.05);
+      cursor: pointer;
+    }
+  }
+}
+.theater-play-list-title {
+  margin-bottom: 12px;
+  color: #3e3e3e;
+  font-size: 20px;
+  font-weight: 600;
+}
+.theater-play-list-info {
+  color: #52514c;
+  font-size: 14px;
+  letter-spacing: -1px;
+}
+.theater-play-list-title:hover {
+  cursor: pointer;
+}
+.theater-play-list-info {
+  cursor: pointer;
 }

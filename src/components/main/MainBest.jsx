@@ -58,7 +58,7 @@ function MainBest() {
   };
 
   useEffect(() => {
-    fetch("https://dailytopia2.shop/api/show?limit=1000")
+    fetch("https://dailytopia2.shop/api/shows?limit=1000")
       .then((res) => res.json())
       .then((data) => {
         const rankedShows = data.shows.filter(
