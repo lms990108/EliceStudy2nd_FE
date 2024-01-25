@@ -24,9 +24,15 @@ export function FreeBoardEdit() {
     const res = await fetch(`${postUrl}/${params.postId}`);
     const data = await res.json();
     console.log(data);
+    if (!res.ok) {
+      console.log("페이지 없음");
+      // 404페이지
+      return;
+    }
     if (data.user_id.nickname !== user.nickname) {
       console.log("접근제한");
       // 403페이지로 리다이랙트
+      return;
     }
     setPost(data);
   };
@@ -39,7 +45,7 @@ export function FreeBoardEdit() {
     <div className="free-board-form-page page-margin-bottom">
       <BoardSecondHeader header="자유게시판" onclick={handleCancle} />
       <div className="body">
-        <FreeBoardEditForm setInput={(boolean) => setInput(boolean)} handleCancle={handleCancle} />
+        <FreeBoardEditForm setInput={(boolean) => setInput(boolean)} handleCancle={handleCancle} post={post} />
       </div>
 
       <AlertCustom
