@@ -9,6 +9,7 @@ import { AlertCustom } from "../../common/alert/Alerts";
 export default function AverageRatingBox({
   isLoggedIn,
   setIsReviewFormOpened,
+  reviews,
 }) {
   const navigate = useNavigate();
 
@@ -17,7 +18,7 @@ export default function AverageRatingBox({
 
   const handleReviewBtnClick = () => {
     // 로그인이 되어 있지 않은 경우 로그인 페이지로 이동 알람
-    if (false) {
+    if (!isLoggedIn) {
       setNeedLoginAlert(
         "로그인이 필요한 기능입니다. 로그인 페이지로 이동하시겠습니까?"
       );
@@ -47,8 +48,27 @@ export default function AverageRatingBox({
       <div className="average-rating-box">
         <div className="star-and-rating">
           <h2>평균 평점</h2>
-          <Rating value={4} readOnly size="large" />
-          <span className="rating">4.0 / 5</span>
+          <Rating
+            value={
+              !reviews.length
+                ? 0
+                : Math.round(
+                    (reviews.reduce((acc, cur) => acc + cur) / reviews.length) *
+                      10
+                  ) / 10
+            }
+            readOnly
+            size="large"
+          />
+          <span className="rating">
+            {!reviews.length
+              ? "0.0 "
+              : Math.round(
+                  (reviews.reduce((acc, cur) => acc + cur) / reviews.length) *
+                    10
+                ) / 10}
+            / 5
+          </span>
           <p className="rating-addtional-text">
             * 아래의 관람 후기들을 바탕으로 한 평균 평점입니다.
           </p>

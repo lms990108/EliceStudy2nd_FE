@@ -1,9 +1,12 @@
 import { useState } from "react";
 import naverimg from "../../../assets/img/user/naverlogin.png";
 import NaverRedirection from "../../../pages/redirection/NaverRedirection";
+import { AlertCustom } from "../../../components/common/alert/Alerts";
+import Loading from "../../../components/common/loading/Loading";
 
 export default function Naver() {
   const [popup, setPopup] = useState();
+  const [alert, setAlert] = useState(null);
 
   const NAVER_CALLBACK_URL = process.env.REACT_APP_NAVER_CALLBACK_URL;
   const NAVER_CLIENT_ID = process.env.REACT_APP_NAVER_CLIENT_ID;
@@ -24,11 +27,30 @@ export default function Naver() {
   };
 
   return (
-    <button onClick={() => naverLoginHandler()}>
-      <img className="btnimage" src={naverimg} alt=" 네이버로그인" />
-      <NaverRedirection popup={popup} setPopup={setPopup} />
-      <p className="last-account">마지막으로 로그인한 계정입니다.</p>
-      {/* <- style 확인을 위해 임시로 추가! */}
-    </button>
+    <>
+      {alert && (
+        <>
+          <Loading />
+          <AlertCustom
+            open={true}
+            title={alert.title}
+            content={alert.content}
+            severity={alert.severity}
+            btnCloseHidden={true}
+            onclose={alert.onclose}
+            onclick={alert.onclick}
+            checkBtn={alert.checkBtn}
+          />
+        </>
+      )}
+      <button onClick={() => naverLoginHandler()}>
+        <img className="btnimage" src={naverimg} alt=" 네이버로그인" />
+        <NaverRedirection
+          popup={popup}
+          setPopup={setPopup}
+          setAlert={setAlert}
+        />
+      </button>
+    </>
   );
 }

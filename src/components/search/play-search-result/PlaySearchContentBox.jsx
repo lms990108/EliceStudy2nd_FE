@@ -1,8 +1,8 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import "./PlaySearchContentBox.scss";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
+import Tooltip from "@mui/material/Tooltip";
 
 export default function PlaySearchContentBox({
   showId,
@@ -14,9 +14,6 @@ export default function PlaySearchContentBox({
   price,
   state,
 }) {
-  // 공연이 종료되어 예매가 불가해 disabled된 버튼에 마우스가 위치해 있는지 여부
-  const [isDisabledBtn, setIsDisabledBtn] = useState(false);
-
   // 가격이 전석 가격이 아닐 경우 최저 가격으로 기재하기 (전석 가격은 그대로 전석 얼마 이렇게 기재)
   if (price.includes(", ")) {
     const splitPrice = price.split(", ").map((price) => {
@@ -69,12 +66,11 @@ export default function PlaySearchContentBox({
             </Button>
           </a>
         ) : (
-          <>
-            <div
-              onMouseOver={() => setIsDisabledBtn(true)}
-              onMouseOut={() => setIsDisabledBtn(false)}
-              className="reservation-disabled"
-            >
+          <Tooltip
+            title="본 연극은 종료되어 예매 링크가 제공되지 않습니다."
+            arrow
+          >
+            <div className="reservation-disabled">
               <Button variant="contained" disabled>
                 <Typography
                   fontFamily="Nanum Gothic, sans-serif"
@@ -83,18 +79,8 @@ export default function PlaySearchContentBox({
                   예매하러 가기
                 </Typography>
               </Button>
-              <span
-                style={
-                  isDisabledBtn
-                    ? { visibility: "visible" }
-                    : { visibility: "hidden" }
-                }
-                className="end-show-tooltip"
-              >
-                본 연극은 종료되어 예매 링크가 제공되지 않습니다.
-              </span>
             </div>
-          </>
+          </Tooltip>
         )}
       </div>
     </div>

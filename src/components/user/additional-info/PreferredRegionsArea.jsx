@@ -33,6 +33,7 @@ export default function PreferredRegionsArea({
               "대전/충청",
               "강원",
               "부산/울산",
+              "대구/경상",
               "광주/전라",
               "제주",
             ].map((region) => (

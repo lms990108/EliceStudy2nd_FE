@@ -8,23 +8,16 @@ import ReviewErrorBox from "./ReviewErrorBox";
 import DriveFolderUploadIcon from "@mui/icons-material/DriveFolderUpload";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-export default function ReviewForm({
-  purpose,
-  contents,
-  setIsReviewFormOpened,
-}) {
+export default function ReviewForm({ purpose, setIsReviewFormOpened, showId }) {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [ratingValue, setRatingValue] = useState(0);
   const [photo, setPhoto] = useState(null);
-  console.log(photo);
   // fixed된 알림을 띄우기 위한 상태
   const [alert, setAlert] = useState(null);
   // 리뷰 필수 기재 항목 검증
   const [reviewValidation, setReviewValidation] = useState(true);
 
-  const titleField = useRef(null);
-  const ratingField = useRef(null);
   const fileInput = useRef(null);
 
   const handleImgUploadBtnClick = () => {
@@ -47,30 +40,46 @@ export default function ReviewForm({
   const handleCompelteBtnClick = () => {
     if (!title || !ratingValue) {
       setReviewValidation(false);
-      if (!title) {
-        titleField.current.querySelector("input").focus();
-      }
-      if (!ratingValue) {
-      }
-
       return;
     }
 
-    setAlert({
-      title: `리뷰 ${purpose} 완료`,
-      content: `리뷰 ${purpose}이 완료되었습니다.`,
-      open: true,
-      onclose: () => {
-        setAlert(null);
-        setIsReviewFormOpened(false);
-      },
-      onclick: () => setIsReviewFormOpened(false),
-      severity: "success",
-      checkBtn: "확인",
-      btnCloseHidden: true,
-    });
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("content", content);
+    formData.append("rate", ratingValue);
+    formData.append("photo", photo);
 
     console.log(title, content, ratingValue, photo);
+
+    // fetch(`https://dailytopia2.shop/api/reviews/${showId}`, {
+    //   credentials: "include",
+    // })
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     console.log(data);
+    //     setAlert({
+    //       title: `리뷰 ${purpose} 완료`,
+    //       content: `리뷰 ${purpose}이 완료되었습니다.`,
+    //       open: true,
+    //       onclose: () => {
+    //         setAlert(null);
+    //         setIsReviewFormOpened(false);
+    //       },
+    //       onclick: () => setIsReviewFormOpened(false),
+    //       severity: "success",
+    //       checkBtn: "확인",
+    //       btnCloseHidden: true,
+    //     });
+    //   })
+    //   .catch(() => {
+    //     setAlert({
+    //       title: "리뷰 업로드 실패",
+    //       content: "리뷰 업로드에 실패하였습니다.",
+    //       open: true,
+    //       onclose: () => setAlert(null),
+    //       severity: "error",
+    //     });
+    //   });
   };
 
   return (
@@ -103,12 +112,11 @@ export default function ReviewForm({
             inputProps={{ maxLength: 30 }}
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            ref={titleField}
           />
         </div>
         <div className="review-author-box">
           <h3>작성자</h3>
-          <p>작성자 닉네임</p>
+          <p>{localStorage.getItem("nickname")}</p>
         </div>
         <div className="review-content-box">
           <h3>후기 내용</h3>
@@ -150,12 +158,12 @@ export default function ReviewForm({
             type="file"
             className="file-input"
             ref={fileInput}
-            onChange={(e) => setPhoto(URL.createObjectURL(e.target.files[0]))}
+            onChange={(e) => setPhoto(e.target.files[0])}
           />
         </div>
         {photo && (
           <div>
-            <img src={photo} alt="리뷰 첨부 이미지" />
+            <img src={URL.createObjectURL(photo)} alt="리뷰 첨부 이미지" />
             <DeleteIcon
               color="ourGrey"
               sx={{

@@ -14,7 +14,7 @@ export default function PlayListCalendar({
   setDatePlays,
   setClickedDate,
   setConditionPlays,
-  sortPlays,
+  sortStandard,
 }) {
   const [event, setEvent] = useState(null);
 
@@ -135,7 +135,7 @@ export default function PlayListCalendar({
     setClickedDate(info.dateStr);
     if (datePlays[info.dateStr]) {
       setConditionPlays(datePlays[info.dateStr]);
-      sortPlays();
+      useSortPlays(sortStandard, setConditionPlays);
     }
   };
 
