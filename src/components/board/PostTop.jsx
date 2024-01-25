@@ -6,11 +6,13 @@ import { AccountCircle, DeleteOutline, EditOutlined, ShareOutlined, SmsOutlined 
 import { useNavigate } from "react-router-dom";
 import { postUrl, promotionUrl } from "../../apis/apiURLs";
 import { format } from "date-fns";
+import useGetUser from "../../hooks/authoriaztionHooks/useGetUser";
 
 export function PostTop({ user, time, commentsCnt, type, postNumber }) {
   const [openURLCopyAlert, setOpenURLCopyAlert] = useState(false);
   const [openDeleteAlert, setOpenDeleteAlert] = useState(false);
-  const [isWriter, setIsWriter] = useState(true); // false로 바꾸기
+  const [isWriter, setIsWriter] = useState(false); // false로 바꾸기
+  const _user = useGetUser();
   const nav = useNavigate();
 
   const handleCommentsButtonClick = () => {
@@ -24,7 +26,7 @@ export function PostTop({ user, time, commentsCnt, type, postNumber }) {
   };
 
   const handleEditButtonClick = () => {
-    nav(`/${type}/edit/${postId}`);
+    nav(`/${type}/edit/${postNumber}`);
   };
 
   const handleDeleteButtonClick = () => {
@@ -35,14 +37,17 @@ export function PostTop({ user, time, commentsCnt, type, postNumber }) {
     const url = type === "community" ? `${postUrl}/${postNumber}` : `${promotionUrl}/${postNumber}`;
     const res = await fetch(url, {
       method: "DELETE",
+      credentials: "include",
     });
     const data = await res.json();
     console.log(data);
+    nav(`/${type}`);
   };
 
   useEffect(() => {
-    // 로그인 한 사용자가 글쓴이인지 확인 후
-    //setIsWriter(true);
+    if (_user.nickname === user.nickname) {
+      setIsWriter(true);
+    }
   }, []);
 
   return (
