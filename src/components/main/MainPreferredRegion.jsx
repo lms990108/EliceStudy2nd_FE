@@ -17,7 +17,7 @@ function MainPreferredRegion() {
   };
 
   useEffect(() => {
-    fetch("https://dailytopia2.shop/api/show?limit=1000")
+    fetch("https://dailytopia2.shop/api/shows?limit=1000")
       .then((res) => res.json())
       .then((data) => {
         // 오늘 날짜와 1년 전 날짜 계산

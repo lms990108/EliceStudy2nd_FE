@@ -12,6 +12,9 @@ export const theme = createTheme({
     darkGray: {
       main: "#898989",
     },
+    moreDarkGray: {
+      main: "#282828",
+    },
     facebookBlue: {
       main: "#3b5998",
     },
@@ -20,6 +23,9 @@ export const theme = createTheme({
     },
     dibsRed: {
       main: "#CF2F11",
+    },
+    red: {
+      main: "#fa2828",
     },
     orange: {
       main: "#ff7f00",

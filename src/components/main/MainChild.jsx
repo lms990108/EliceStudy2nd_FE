@@ -59,7 +59,7 @@ function MainChild() {
         const today = new Date();
         today.setHours(0, 0, 0, 0); // 오늘 날짜만 고려 (시간은 무시)
       
-        fetch("https://dailytopia2.shop/api/show?limit=1000")
+        fetch("https://dailytopia2.shop/api/shows?limit=1000")
           .then((res) => res.json())
           .then((data) => {
             const validAges = ["전체 관람가", "만 5세 이상", "만 6세 이상", "만 7세 이상"];

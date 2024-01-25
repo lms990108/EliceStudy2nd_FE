@@ -1,104 +1,55 @@
-// 마이페이지 화면
-
-.mypageContainer {
-  display: flex;
-  width: 1200px;
-  margin: 30px auto;
-  font-family: "Noto Sans KR";
-
-
-  .mypage-left-wrap {
-    width: 250px;
-    margin: 10px;
-    background-color: #fff;
-    border-radius: 10px;
-
-    .left-user-title {
-      position: relative;
-      height: 140px;
-      background: #FFB400;
-      border-radius: 10px 10px 0 0;
-      overflow: hidden;
-  
-      span {
-        display: inline-block;
-        padding-top: 20px;
-        padding-left: 15px;
-        box-sizing: border-box;
-        font-size: 32px;
-        font-weight: 900;
-        color: #fff;
+.mypage-template {
+    display: flex;
+    justify-content: center;
+}
+.mypage-container {
+    display: flex;
+    justify-content: center;
+    margin: 30px 0;
+    width: 1110px;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
+}
+.mypage-nav {
+    width: 210px;
+    height: 800px;
+    background-color: #eee;
+}
+.nav-header {
+    height: 190px;
+    padding-top: 20px;
+    padding-left: 24px;
+    background-color: #FFB400;
+    color: white;
+    font-size: 24px;
+    font-weight: 600;
+}
+.nav-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.my-nav-box {
+    width: 160px;
+    padding: 12px 0;
+    h3 {
+        font-size: 16px;
+        font-weight: 600;
+    }
+    p {
+        font-size: 14px;
+        margin-bottom: 4px;
+        font-weight: 600;
+        color: #878d95;
+    }
+    p:hover {
+        cursor: pointer;
+    }
+    .selected {
+        color: #FFB400;
       }
-  
-      .dotarea {
-        float: right;
-        margin-top: 22px;
-        margin-right: 15px;
-  
-        .dot1,
-        .dot2,
-        .dot3 {
-          width: 18px;
-          height: 18px;
-          background: #fff;
-          margin-bottom: 12px;
-          border-radius: 10px;
-        }
-  
-      }
-  
-      .usernickname {
-        position: absolute;
-        left: 15px;
-        bottom: 10px;
-        font-weight: 700;
-      }
-      
-    }
-  }
-
-  .left-mypage-menus {
-    width: 200px;
-    
-    line-height: 2.1;
-    padding: 20px;
-
-    ul {
-      margin: 20px 0;
-    }
-    ul:nth-child(3) {
-      border-top: 1px solid #000;
-      padding-top: 15px;
-    }
-
-    .left-menutitle {
-      font-weight: 700;
-    }
-    li a {
-      color: #000;
-      text-decoration: none;
-    }
-    
-  }
-
-
-  // 마이페이지 오른쪽 영역
-  .mypage-right-wrap {
-    margin: 10px auto;
-    border-radius: 10px;
-    background-color: #fff;
-
-    .menu-title {
-      width: 800px;
-      height: 85px;
-      border-radius: 10px 10px 0 0;
-      background: #FFB400;
-      font-size: 40px;
-      font-weight: 700;
-      padding: 20px 0 20px 30px;
-      box-sizing: border-box;
-    }
-  }
-
-
+}
+.mypage-content-area {
+    width: 900px;
+    height: 800px;
+    background-color: white;
 }
