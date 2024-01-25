@@ -7,6 +7,8 @@ import PaginationBox from "../../components/play-list/PaginationBox";
 import RegionSelectBar from "../../components/play-list/RegionSelectBar";
 import PlayListCalendar from "../../components/play-list/calendar-material/PlayListCalendar";
 import { AlertCustom } from "../../../src/components/common/alert/Alerts";
+import Loading from "../../components/common/loading/Loading";
+import useSortPlays from "../../hooks/playCustomHooks/useSortPlays";
 
 export default function PlayList() {
   // 로딩중 여부
@@ -42,7 +44,7 @@ export default function PlayList() {
       .then((res) => res.json())
       .then((data) => {
         setPlays(data.shows.filter((show) => show.price !== ""));
-        setIsLoading(false);
+        setTimeout(() => setIsLoading(false), 300);
       })
       .catch(() => {
         setError("연극 목록을 가져오는 데 실패하였습니다.");
@@ -91,7 +93,7 @@ export default function PlayList() {
 
   // 연극을 정렬하기 (처음 정렬 기준은 최신순으로 되어 있음. 정렬 기준을 바꿀 때마다 달라져야 하고, 지역이 바뀔 때 filteredPlays가 달라지므로 지역이 바뀌는지도 listen해야 함.)
   useEffect(() => {
-    sortPlays();
+    useSortPlays(sortStandard, setConditionPlays);
   }, [sortStandard, selectedRegion, filteredPlays]);
 
   // 지역이 바뀌면 클릭되어 있는 날짜 상태를 null로 다시 초기화하기
@@ -124,99 +126,7 @@ export default function PlayList() {
     setConditionPlays(filteredPlays);
     setSortStandard("new");
     setClickedDate(null);
-    sortPlays();
-  };
-
-  // 연극 정렬 함수
-  const sortPlays = () => {
-    switch (sortStandard) {
-      // 최신순으로 정렬
-      case "new":
-        setConditionPlays((pre) => {
-          const newFilteredPlays = [...pre];
-          newFilteredPlays.sort((play1, play2) => {
-            // 최신순을 비교할 두 연극을 1970년 1월 1일로부터 경과한 시간(ms 단위)으로 바꾸어 더 많이 경과한 연극이 앞 순서에 위치할 수 있도록 하기
-            const play1MS = new Date(play1.start_date).getTime();
-            const play2MS = new Date(play2.start_date).getTime();
-            return play2MS - play1MS;
-          });
-          return newFilteredPlays;
-        });
-        break;
-      // 낮은 가격 순으로 정렬
-      case "cheap":
-        setConditionPlays((pre) => {
-          const newFilteredPlays = [...pre];
-          newFilteredPlays.sort((play1, play2) => {
-            // 가격이 전석 가격이 아닐 경우 평균 가격으로 비교하기
-            const getAveragePrice = (price) => {
-              const regex = /[^0-9]/g;
-
-              if (price.includes(", ")) {
-                const splitPrice = price.split(", ").map((price) => {
-                  // 숫자가 아닌 것들을 모두 찾아 빈 문자열로 대체하는 로직
-                  const regex = /[^0-9]/g;
-                  if (price.includes("층")) {
-                    price = price.replace(regex, "");
-                    price = price.substr(1);
-                  }
-                  price = price.replace(regex, "");
-                  return parseInt(price);
-                });
-                // 평균 가격 구하기
-                const averagePrice = Math.floor(
-                  splitPrice.reduce((acc, cur) => acc + cur) / splitPrice.length
-                );
-                return averagePrice;
-                // 가격이 전석 무료일 경우 가격은 0이 됨.
-              } else if (price.includes("무료")) {
-                return 0;
-              }
-
-              // 전석 가격일 경우 그냥 그 가격에서 숫자만 반환
-              price = parseInt(price.replace(regex, ""));
-              return price;
-            };
-
-            const play1Price = getAveragePrice(play1.price);
-            const play2Price = getAveragePrice(play2.price);
-
-            return play1Price - play2Price;
-          });
-          return newFilteredPlays;
-        });
-        break;
-      // 종료 임박순으로 정렬 (이 부분은 나중에 실제 api 연결 후 잘 돌아가는지 확인하기)
-      case "near-end":
-        setConditionPlays((prevPlays) => {
-          const currentDate = new Date().getTime();
-
-          // 이미 끝난 연극과 끝나지 않은 연극을 나누기
-          const filterEndPlays = prevPlays.filter(
-            (play) => new Date(play.end_date).getTime() < currentDate
-          );
-          const filterNotEndPlays = prevPlays.filter(
-            (play) => new Date(play.end_date).getTime() >= currentDate
-          );
-
-          // 끝나지 않은 연극을 종료 임박순으로 정렬
-          filterNotEndPlays.sort((play1, play2) => {
-            const play1MSGap = new Date(play1.end_date).getTime() - currentDate;
-            const play2MSGap = new Date(play2.end_date).getTime() - currentDate;
-            return play1MSGap - play2MSGap;
-          });
-
-          // 이미 끝난 연극과 끝나지 않은 연극을 합치고 상태로 설정
-          const sortedPlays = [...filterNotEndPlays, ...filterEndPlays];
-          return sortedPlays;
-        });
-        break;
-      // 높은 평점순으로 정렬
-      case "popular":
-        break;
-      default:
-        break;
-    }
+    useSortPlays(sortStandard, setConditionPlays);
   };
 
   return (
@@ -230,7 +140,7 @@ export default function PlayList() {
           severity={"error"}
         />
       ) : null}
-      {isLoading && <div>로딩중</div>}
+      {isLoading && <Loading />}
       {!isLoading && (
         <>
           <RegionSelectBar
@@ -241,10 +151,10 @@ export default function PlayList() {
           />
           {!isCalendar && (
             <ConditionSearch
+              sortStandard={sortStandard}
               selectedRegion={selectedRegion}
               filteredPlays={filteredPlays}
               setConditionPlays={setConditionPlays}
-              sortPlays={sortPlays}
               innerWidth={innerWidth}
             />
           )}
@@ -257,7 +167,7 @@ export default function PlayList() {
               setClickedDate={setClickedDate}
               setPaginationPlays={setPaginationPlays}
               setConditionPlays={setConditionPlays}
-              sortPlays={sortPlays}
+              sortStandard={sortStandard}
             />
           )}
           {((!isCalendar && !conditionPlays.length) ||

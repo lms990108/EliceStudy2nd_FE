@@ -1,32 +1,3 @@
-$tooltip-background-color: #ffffff;
-$tooltip-border-color: #ffb400;
-$tooltip-text-color: #282828;
-$tooltip-font-size: 12px;
-$tooltip-font-weight: 500;
-$tooltip-letter-spacing: -0.25px;
-$tooltip-margin-top: 6.8px;
-$tooltip-padding-y: 5px;
-$tooltip-padding-x: 11px;
-$tooltip-position: relative;
-$tooltip-width: fit-content;
-$tooltip-z-index: 100;
-
-@mixin tooltip {
-  background-color: $tooltip-background-color;
-  border: $tooltip-border-color solid 1px;
-  border-radius: 5px;
-  color: $tooltip-text-color;
-  font-size: $tooltip-font-size;
-  font-weight: $tooltip-font-weight;
-  height: auto;
-  letter-spacing: $tooltip-letter-spacing;
-  margin-top: $tooltip-margin-top;
-  padding: $tooltip-padding-y $tooltip-padding-x;
-  position: $tooltip-position;
-  width: $tooltip-width;
-  z-index: $tooltip-z-index;
-}
-
 .play-search-content-box {
   display: flex;
   border-bottom: 1px solid #bcbcbc;
@@ -107,11 +78,5 @@ $tooltip-z-index: 100;
         }
       }
     }
-  }
-
-  .end-show-tooltip {
-    @include tooltip();
-    position: absolute;
-    margin-left: 20px;
   }
 }

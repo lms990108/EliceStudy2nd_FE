@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useLocation, Link, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import "./PlayDetailTop.scss";
 import kakaoTalkImg from "../../assets/img/SNSIcon/kakaoTalk.png";
 import XImg from "../../assets/img/SNSIcon/X.png";
@@ -9,6 +9,8 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Rating from "@mui/material/Rating";
 import { AlertCustom } from "../common/alert/Alerts";
+import Tooltip from "@mui/material/Tooltip";
+import { Toll } from "@mui/icons-material";
 
 export default function PlayDetailTop({
   showId,
@@ -116,12 +118,13 @@ export default function PlayDetailTop({
 
   // 찜 버튼 클릭 시
   const handleDibBtnClick = () => {
+    console.log(isLoggedIn);
     if (isLoggedIn) {
       // 찜이 되어 있는 경우 찜 취소
       if (isDibbed) {
-        fetch(`https://dailytopia2.shop/api/user/cancel/${showId}`, {
-          method: "PUT",
-          withCredentials: true,
+        fetch(`https://dailytopia2.shop/api/users/bookmarks/${showId}`, {
+          method: "DELETE",
+          credentials: "include",
         })
           .then((res) => res.json())
           .then((data) => {
@@ -140,9 +143,9 @@ export default function PlayDetailTop({
           });
       } else {
         // 찜이 되어 있지 않은 경우 찜 추가
-        fetch(`https://dailytopia2.shop/api/user/save/${showId}`, {
-          method: "PUT",
-          withCredentials: true,
+        fetch(`https://dailytopia2.shop/api/users/bookmarks/${showId}`, {
+          method: "POST",
+          credentials: "include",
         })
           .then((res) => res.json())
           .then((data) => {
@@ -220,10 +223,12 @@ export default function PlayDetailTop({
             <h3>상영장소</h3>
             <p>{location}</p>
           </div>
-          <div>
-            <h3>관람시간</h3>
-            <p>{runtime}</p>
-          </div>
+          {runtime && (
+            <div>
+              <h3>관람시간</h3>
+              <p>{runtime}</p>
+            </div>
+          )}
           <div>
             <h3>관람등급</h3>
             <p>{age}</p>
@@ -244,99 +249,59 @@ export default function PlayDetailTop({
         <div className="share-btn">
           <p>공유</p>
           <div className="share-option">
-            <LinkIcon
-              fontSize="medium"
-              onClick={() =>
-                handleShareBtnClick(
-                  `${process.env.REACT_APP_BASE_URL}${currentURL.pathname}`
-                )
-              }
-              onMouseOver={() => setCurrentHoverOption("링크 복사")}
-              onMouseOut={() => setCurrentHoverOption(null)}
-              style={{ cursor: "pointer" }}
-            />
-            <div className="share-option-text">
-              <span
-                style={
-                  currentHoverOption === "링크 복사"
-                    ? { visibility: "visible" }
-                    : { visibility: "hidden" }
+            <Tooltip title="링크 복사" arrow>
+              <LinkIcon
+                fontSize="medium"
+                onClick={() =>
+                  handleShareBtnClick(
+                    `${process.env.REACT_APP_BASE_URL}${currentURL.pathname}`
+                  )
                 }
-                className="share-tooltip"
-              >
-                링크 복사
-              </span>
-            </div>
-          </div>
-          <div className="share-option">
-            <FacebookIcon
-              fontSize="large"
-              color="facebookBlue"
-              onClick={() => shareFacebook()}
-              onMouseOver={() => setCurrentHoverOption("페이스북 공유")}
-              onMouseOut={() => setCurrentHoverOption(null)}
-              style={{ cursor: "pointer" }}
-            />
-            <div className="share-option-text">
-              <span
-                style={
-                  currentHoverOption === "페이스북 공유"
-                    ? { visibility: "visible" }
-                    : { visibility: "hidden" }
-                }
-                className="share-tooltip"
-              >
-                페이스북
-              </span>
-            </div>
-          </div>
-          <div className="share-option">
-            <div className="SNS-img-box">
-              <img
-                src={XImg}
-                onMouseOver={() => setCurrentHoverOption("X 공유")}
+                onMouseOver={() => setCurrentHoverOption("링크 복사")}
                 onMouseOut={() => setCurrentHoverOption(null)}
-                onClick={() => shareTwitter()}
-                alt="X-icon"
                 style={{ cursor: "pointer" }}
               />
-            </div>
-            <div className="share-option-text">
-              <span
-                style={
-                  currentHoverOption === "X 공유"
-                    ? { visibility: "visible" }
-                    : { visibility: "hidden" }
-                }
-                className="share-tooltip"
-              >
-                X (트위터)
-              </span>
-            </div>
+            </Tooltip>
           </div>
           <div className="share-option">
-            <div className="SNS-img-box">
-              <img
-                id="btnKakaoShare"
-                src={kakaoTalkImg}
-                onMouseOver={() => setCurrentHoverOption("카카오톡 공유")}
+            <Tooltip title="페이스북" arrow>
+              <FacebookIcon
+                fontSize="large"
+                color="facebookBlue"
+                onClick={() => shareFacebook()}
+                onMouseOver={() => setCurrentHoverOption("페이스북 공유")}
                 onMouseOut={() => setCurrentHoverOption(null)}
-                alt="kakaoTalk-icon"
                 style={{ cursor: "pointer" }}
               />
-            </div>
-            <div className="share-option-text">
-              <span
-                style={
-                  currentHoverOption === "카카오톡 공유"
-                    ? { visibility: "visible" }
-                    : { visibility: "hidden" }
-                }
-                className="share-tooltip"
-              >
-                카카오톡
-              </span>
-            </div>
+            </Tooltip>
+          </div>
+          <div className="share-option">
+            <Tooltip title="X" arrow>
+              <div className="SNS-img-box">
+                <img
+                  src={XImg}
+                  onMouseOver={() => setCurrentHoverOption("X 공유")}
+                  onMouseOut={() => setCurrentHoverOption(null)}
+                  onClick={() => shareTwitter()}
+                  alt="X-icon"
+                  style={{ cursor: "pointer" }}
+                />
+              </div>
+            </Tooltip>
+          </div>
+          <div className="share-option">
+            <Tooltip title="카카오톡" arrow>
+              <div className="SNS-img-box">
+                <img
+                  id="btnKakaoShare"
+                  src={kakaoTalkImg}
+                  onMouseOver={() => setCurrentHoverOption("카카오톡 공유")}
+                  onMouseOut={() => setCurrentHoverOption(null)}
+                  alt="kakaoTalk-icon"
+                  style={{ cursor: "pointer" }}
+                />
+              </div>
+            </Tooltip>
           </div>
         </div>
         <div className="another-btn">
@@ -372,7 +337,10 @@ export default function PlayDetailTop({
                 </Button>
               </a>
             ) : (
-              <>
+              <Tooltip
+                title="본 연극은 종료되어 예매 링크가 제공되지 않습니다."
+                arrow
+              >
                 <div
                   onMouseOver={() => setCurrentHoverOption("종료된 연극")}
                   onMouseOut={() => setCurrentHoverOption(null)}
@@ -386,17 +354,7 @@ export default function PlayDetailTop({
                     </Typography>
                   </Button>
                 </div>
-                <span
-                  style={
-                    currentHoverOption === "종료된 연극"
-                      ? { visibility: "visible" }
-                      : { visibility: "hidden" }
-                  }
-                  className="end-show-tooltip"
-                >
-                  본 연극은 종료되어 예매 링크가 제공되지 않습니다.
-                </span>
-              </>
+              </Tooltip>
             )}
           </div>
         </div>

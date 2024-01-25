@@ -1,9 +1,12 @@
 import googleimg from "../../../assets/img/user/googlelogin.png";
 import { useState, useEffect } from "react";
 import GoogleRedirection from "../../../pages/redirection/GoogleRedirection";
+import { AlertCustom } from "../../../components/common/alert/Alerts";
+import Loading from "../../../components/common/loading/Loading";
 
 export default function Google() {
   const [popup, setPopup] = useState();
+  const [alert, setAlert] = useState(null);
 
   const GOOGLE_REDIRECT_URL = process.env.REACT_APP_GOOGLE_REDIRECT_URL;
   const GOOGLE_CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID;
@@ -23,9 +26,30 @@ export default function Google() {
   };
 
   return (
-    <button onClick={() => googleLoginHandler()}>
-      <img className="btnimage" src={googleimg} alt=" 구글로그인" />
-      <GoogleRedirection popup={popup} setPopup={setPopup} />
-    </button>
+    <>
+      {alert && (
+        <>
+          <Loading />
+          <AlertCustom
+            open={true}
+            title={alert.title}
+            content={alert.content}
+            severity={alert.severity}
+            btnCloseHidden={true}
+            onclose={alert.onclose}
+            onclick={alert.onclick}
+            checkBtn={alert.checkBtn}
+          />
+        </>
+      )}
+      <button onClick={() => googleLoginHandler()}>
+        <img className="btnimage" src={googleimg} alt=" 구글로그인" />
+        <GoogleRedirection
+          popup={popup}
+          setPopup={setPopup}
+          setAlert={setAlert}
+        />
+      </button>
+    </>
   );
 }

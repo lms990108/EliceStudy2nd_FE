@@ -27,7 +27,7 @@ export default function SearchResultPage() {
   // 검색 결과 받아오기
   useEffect(() => {
     fetch(
-      `https://dailytopia2.shop/api/show/search/query?title=${searchKeyword}&limit=1000`
+      `https://dailytopia2.shop/api/shows?title=${searchKeyword}&limit=1000`
     )
       .then((res) => res.json())
       .then((data) => {

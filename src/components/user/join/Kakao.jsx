@@ -1,9 +1,12 @@
 import kakaoimg from "../../../assets/img/user/kakaologin.png";
 import { useState } from "react";
 import KakaoRedirection from "../../../pages/redirection/KakaoRedirection";
+import { AlertCustom } from "../../../components/common/alert/Alerts";
+import Loading from "../../../components/common/loading/Loading";
 
 export default function Kakao() {
   const [popup, setPopup] = useState();
+  const [alert, setAlert] = useState(null);
 
   const KAKAO_REDIRECT_URL = process.env.REACT_APP_KAKAO_REDIRECT_URL;
   const KAKAO_REST_API_KEY = process.env.REACT_APP_KAKAO_REST_API_KEY;
@@ -23,9 +26,30 @@ export default function Kakao() {
   };
 
   return (
-    <button onClick={() => kakaoLoginHandler()}>
-      <img className="btnimage" src={kakaoimg} alt=" 카카오로그인" />
-      <KakaoRedirection popup={popup} setPopup={setPopup} />
-    </button>
+    <>
+      {alert && (
+        <>
+          <Loading />
+          <AlertCustom
+            open={true}
+            title={alert.title}
+            content={alert.content}
+            severity={alert.severity}
+            btnCloseHidden={true}
+            onclose={alert.onclose}
+            onclick={alert.onclick}
+            checkBtn={alert.checkBtn}
+          />
+        </>
+      )}
+      <button onClick={() => kakaoLoginHandler()}>
+        <img className="btnimage" src={kakaoimg} alt=" 카카오로그인" />
+        <KakaoRedirection
+          popup={popup}
+          setPopup={setPopup}
+          setAlert={setAlert}
+        />
+      </button>
+    </>
   );
 }

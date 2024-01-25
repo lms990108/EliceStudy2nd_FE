@@ -7,16 +7,16 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Alert from "@mui/material/Alert";
 import Stack from "@mui/material/Stack";
-import CheckIcon from "@mui/icons-material/Check";
+import useSortPlays from "../../hooks/playCustomHooks/useSortPlays";
 
 // 조건 검색 시 사용할 context (컴포넌트 바깥에 따로 적어주어 export 해야지 undefined로 뜨지 않는다.)
 export const ConditionContext = createContext();
 
 export default function ConditionSearch({
+  sortStandard,
   selectedRegion,
   filteredPlays,
   setConditionPlays,
-  sortPlays,
   innerWidth,
 }) {
   // 핸드폰에서 사용자가 펼치기를 눌렀는지 안눌렀는지를 나타내는 상태 정의
@@ -26,15 +26,6 @@ export default function ConditionSearch({
 
   // 화면에 띄울 조건 검색 텍스트 (반복되어 배열로 뺌)
   const conditionTexts = [
-    // {
-    //   division: "좌석 규모별",
-    //   options: [
-    //     "전체",
-    //     "소극장 (300석 미만)",
-    //     "중극장 (300 ~ 1000석)",
-    //     "대극장 (1000석 이상)",
-    //   ],
-    // },
     {
       division: "공연 상태별",
       options: ["전체", "공연중", "공연예정", "공연완료"],
@@ -139,7 +130,7 @@ export default function ConditionSearch({
       // 가격이 '전체' 일 경우 필터링을 거치지 않아도 되므로 이전의 stateArray가 반환됨.
       return stateArray;
     });
-    sortPlays();
+    useSortPlays(sortStandard, setConditionPlays);
     setIsAdaptBtnClicked(true);
   };
 
