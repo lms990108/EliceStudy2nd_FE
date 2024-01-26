@@ -7,19 +7,20 @@ import { AlertCustom } from "../common/alert/Alerts";
 import { useNavigate } from "react-router-dom";
 import { postUrl } from "../../apis/apiURLs";
 
-export function FreeBoardEditForm({ setInput, handleCancle }) {
+export function FreeBoardEditForm({ setInput, handleCancle, post }) {
   const [submit, setSubmit] = useState(false);
   const [openSubmit, setOpenSubmit] = useState(false);
   const [openComplete, setOpenComplete] = useState(false);
   const [inputTitle, setInputTitle] = useState("");
-  const [errorTitle, setErrorTitle] = useState("제목을 최소 5자 이상 입력해주세요.");
+  const [errorTitle, setErrorTitle] = useState("");
   const [inputContent, setInputContent] = useState("");
-  const [errorContent, setErrorContent] = useState("내용을 최소 5자 이상 입력해주세요.");
+  const [errorContent, setErrorContent] = useState("");
   const nav = useNavigate();
 
   const handleSubmit = async (e) => {
-    const res = await fetch(`${postUrl}/update_post`, {
+    const res = await fetch(`${postUrl}/${post.post_number}`, {
       method: "PUT",
+      credentials: "include",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         title: inputTitle,
@@ -28,6 +29,10 @@ export function FreeBoardEditForm({ setInput, handleCancle }) {
     });
     const data = await res.json();
     console.log(data);
+
+    if (res.ok) {
+      setOpenComplete(true);
+    }
   };
 
   const handleButtonClick = (e) => {
@@ -75,6 +80,14 @@ export function FreeBoardEditForm({ setInput, handleCancle }) {
     else setInput(false);
   }, [inputTitle, inputContent]);
 
+  useEffect(() => {
+    console.log(post);
+    if (post) {
+      setInputTitle(post.title);
+      setInputContent(post.content);
+    }
+  }, [post]);
+
   return (
     <div className="post-form-box">
       <div className="form-header">
@@ -109,12 +122,9 @@ export function FreeBoardEditForm({ setInput, handleCancle }) {
         open={openSubmit}
         onclose={() => setOpenSubmit(false)}
         title={"teenybox.com 내용:"}
-        content={"게시글을 작성하시겠습니까?"}
-        onclick={() => {
-          setOpenComplete(true);
-          handleSubmit();
-        }}
-        checkBtn={"등록"}
+        content={"게시글을 수정하시겠습니까?"}
+        onclick={handleSubmit}
+        checkBtn={"수정"}
         closeBtn={"취소"}
         checkBtnColor={"#42BB48"}
       />
@@ -129,9 +139,9 @@ export function FreeBoardEditForm({ setInput, handleCancle }) {
           setTimeout(() => nav("/community"), 300);
         }}
         title={"teenybox.com 내용:"}
-        content={"글 등록이 완료되었습니다!"}
+        content={"글 수정이 완료되었습니다!"}
         btnCloseHidden={true}
-        time={2000}
+        time={1000}
       />
     </div>
   );

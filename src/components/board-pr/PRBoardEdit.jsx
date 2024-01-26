@@ -6,30 +6,41 @@ import DriveFolderUploadIcon from "@mui/icons-material/DriveFolderUpload";
 import "./PRBoardForm.scss";
 import { AlertCustom } from "../common/alert/Alerts";
 import { useNavigate } from "react-router-dom";
-import { promotionUrl } from "../../apis/apiURLs";
+import { promotionUrl, uploadImgUrl } from "../../apis/apiURLs";
 
-export function PRBoardEditForm({ setInput, promotionNumber, handleCancle }) {
+export function PRBoardEditForm({ setInput, handleCancle, post }) {
   const [submit, setSubmit] = useState(false);
   const [openSubmit, setOpenSubmit] = useState(false);
   const [openComplete, setOpenComplete] = useState(false);
   const [inputTitle, setInputTitle] = useState("");
-  const [errorTitle, setErrorTitle] = useState("제목을 최소 5자 이상 입력해주세요.");
+  const [errorTitle, setErrorTitle] = useState("");
   const [inputContent, setInputContent] = useState("");
-  const [errorContent, setErrorContent] = useState("내용을 최소 5자 이상 입력해주세요.");
+  const [errorContent, setErrorContent] = useState("");
   const [inputTag, setInputTag] = useState("");
   const [imageURL, setImageURL] = useState("");
-  const [errorImage, setErrorImage] = useState("사진을 선택해주세요.");
+  const [errorImage, setErrorImage] = useState("");
   const [tagList, setTagList] = useState([]);
   const nav = useNavigate();
 
   const handleSubmit = async (e) => {
-    const res = await fetch(`${promotionUrl}/update_promotion/${promotionNumber}`, {
+    console.log(post);
+    const res = await fetch(`${promotionUrl}/${post.promotion_number}`, {
       method: "PUT",
+      credentials: "include",
       headers: { "Content-Type": "application/json" },
-      // body: form data 사용하기
+      body: JSON.stringify({
+        title: inputTitle,
+        content: inputContent,
+        tags: tagList,
+        image_url: imageURL,
+      }),
     });
     const data = await res.json();
     console.log(data);
+
+    if (res.ok) {
+      setOpenComplete(true);
+    }
   };
 
   const handleButtonClick = (e) => {
@@ -74,19 +85,29 @@ export function PRBoardEditForm({ setInput, promotionNumber, handleCancle }) {
     }
   };
 
-  const handleImageChange = (e) => {
-    let imageSrc = "";
+  const handleImageChange = async (e) => {
     if (e.target.files[0]) {
-      imageSrc = URL.createObjectURL(e.target.files[0]);
-      setErrorImage("");
+      let formData = new FormData();
+      formData.append("promotion_poster", e.target.files[0]);
+
+      const res = await fetch(`${uploadImgUrl}`, {
+        method: "POST",
+        credentials: "include",
+        body: formData,
+      });
+      const data = await res.json();
+      console.log(data);
+
+      if (res.ok) {
+        setImageURL(data.imageUrl);
+        setErrorImage("");
+      } else {
+        console.log(data);
+        setErrorImage("사진을 선택해주세요.");
+      }
     } else {
       setErrorImage("사진을 선택해주세요.");
     }
-    URL.revokeObjectURL(imageURL);
-    /* 동일한 파일 객체를 이용하여 URL을 생성한다고 해도 새로운 URL을 생성한다.
-    사용하지 않는 이미지 URL의 경우에는 반드시 revokeObjectURL을 사용하여 메모리에서 해제하자.
-    (물론 브라우저를 종료하면 생성한 URL도 함께 메모리에서 해제된다.) */
-    setImageURL(imageSrc);
   };
 
   const handleTagChange = (e) => {
@@ -108,6 +129,16 @@ export function PRBoardEditForm({ setInput, promotionNumber, handleCancle }) {
     if (inputTitle || inputContent || imageURL || inputTag) setInput(true);
     else setInput(false);
   }, [inputTitle, imageURL, inputContent, inputTag]);
+
+  useEffect(() => {
+    console.log(post);
+    if (post) {
+      setInputTitle(post.title);
+      setInputContent(post.content);
+      setTagList([...post.tags]);
+      setImageURL(post.image_url);
+    }
+  }, [post]);
 
   return (
     <div className="post-form-box">
@@ -184,12 +215,9 @@ export function PRBoardEditForm({ setInput, promotionNumber, handleCancle }) {
         open={openSubmit}
         onclose={() => setOpenSubmit(false)}
         title={"teenybox.com 내용:"}
-        content={"게시글을 작성하시겠습니까?"}
-        onclick={() => {
-          setOpenComplete(true);
-          handleSubmit();
-        }}
-        checkBtn={"등록"}
+        content={"게시글을 수정하시겠습니까?"}
+        onclick={handleSubmit}
+        checkBtn={"수정"}
         closeBtn={"취소"}
         checkBtnColor={"#42BB48"}
       />
@@ -204,9 +232,9 @@ export function PRBoardEditForm({ setInput, promotionNumber, handleCancle }) {
           setTimeout(() => nav("/promotion"), 300);
         }}
         title={"teenybox.com 내용:"}
-        content={"글 등록이 완료되었습니다!"}
+        content={"글 수정이 완료되었습니다!"}
         btnCloseHidden={true}
-        time={2000}
+        time={1000}
       />
     </div>
   );
