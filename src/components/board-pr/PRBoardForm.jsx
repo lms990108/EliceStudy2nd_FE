@@ -87,7 +87,7 @@ export function PRBoardForm({ setInput, handleComplete, handleCancle }) {
   const handleImageChange = async (e) => {
     if (e.target.files[0]) {
       let formData = new FormData();
-      formData.append("promotion_poster", e.target.files[0]);
+      formData.append("image_url", e.target.files[0]);
 
       const res = await fetch(`${uploadImgUrl}`, {
         method: "POST",

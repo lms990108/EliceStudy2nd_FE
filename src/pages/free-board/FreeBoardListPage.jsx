@@ -38,10 +38,12 @@ export function FreeBoardListPage() {
   return (
     <div className="free-board-page page-margin">
       <BoardListHeader header="자유게시판" desc={desc} onclick={handleFormBtn} />
-      <BoardNav point="620개" text="의 글 목록" onclick={getPage} />
-      <FreeBoardList boardList={boardList} />
-      <div className="pagination">
-        <Pagination page={page} onChange={handleChange} count={Math.ceil(boardList.length / 10)} color="secondary" siblingCount={2} />
+      <div className="main">
+        <BoardNav point="620개" text="의 글 목록" onclick={getPage} />
+        <FreeBoardList boardList={boardList} />
+        <div className="pagination">
+          <Pagination page={page} onChange={handleChange} count={Math.ceil(boardList.length / 10)} color="secondary" siblingCount={2} />
+        </div>
       </div>
     </div>
   );
