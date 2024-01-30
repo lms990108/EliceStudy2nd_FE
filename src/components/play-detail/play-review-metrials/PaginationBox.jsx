@@ -1,12 +1,14 @@
+import { useState } from "react";
 import "./PaginationBox.scss";
 import Pagination from "@mui/material/Pagination";
 
 export default function PaginationBox({
-  reviews,
+  showId,
   curPage,
   setCurPage,
   setAlert,
   setReviews,
+  totalCount,
 }) {
   const handlePageNumberChange = (e, number) => {
     setCurPage(number);
@@ -15,7 +17,7 @@ export default function PaginationBox({
       `https://dailytopia2.shop/api/reviews?showId=${showId}&page=${number}&limit=10`
     )
       .then((res) => res.json())
-      .then((data) => setReviews(data.reivews))
+      .then((data) => setReviews(data.data))
       .catch(() => {
         setAlert({
           title: "오류",
@@ -30,10 +32,10 @@ export default function PaginationBox({
   return (
     <div className="pagination-box-container">
       <Pagination
-        count={7}
+        count={Math.ceil(totalCount / 10)}
         page={curPage}
         color="secondary"
-        size={innerWidth >= 481 ? "large" : "small"}
+        // size={innerWidth >= 481 ? "large" : "small"}
         onChange={handlePageNumberChange}
       />
     </div>

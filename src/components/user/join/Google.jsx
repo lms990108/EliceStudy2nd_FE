@@ -1,6 +1,6 @@
 import googleimg from "../../../assets/img/user/googlelogin.png";
 import { useState, useEffect } from "react";
-import GoogleRedirection from "../../../pages/redirection/GoogleRedirection";
+import { GoogleRedirection } from "../../../pages/redirection/GoogleRedirection";
 import { AlertCustom } from "../../../components/common/alert/Alerts";
 import Loading from "../../../components/common/loading/Loading";
 

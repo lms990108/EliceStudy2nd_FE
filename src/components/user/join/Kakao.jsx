@@ -1,6 +1,6 @@
 import kakaoimg from "../../../assets/img/user/kakaologin.png";
 import { useState } from "react";
-import KakaoRedirection from "../../../pages/redirection/KakaoRedirection";
+import { KakaoRedirection } from "../../../pages/redirection/KakaoRedirection";
 import { AlertCustom } from "../../../components/common/alert/Alerts";
 import Loading from "../../../components/common/loading/Loading";
 

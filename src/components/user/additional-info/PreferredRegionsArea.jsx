@@ -36,7 +36,7 @@ export default function PreferredRegionsArea({
               "대구/경상",
               "광주/전라",
               "제주",
-            ].map((region) => (
+            ].map((region, idx) => (
               <FormControlLabel
                 control={
                   <Checkbox
@@ -45,6 +45,7 @@ export default function PreferredRegionsArea({
                     checked={region === selectedRegion}
                     onClick={() => setSelectedRegion(region)}
                     color="secondary"
+                    key={idx}
                   />
                 }
                 sx={{ marginRight: "50px" }}

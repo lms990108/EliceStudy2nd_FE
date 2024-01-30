@@ -8,7 +8,7 @@ export default function TheaterLoction({ theaterLocation, locationName }) {
     // kakao.maps.load(callback)를 써주면 v3가 모두 로드된 후 콜백 함수가 실행되어 kakao.maps.LatLng is not a constructor 오류가 뜨지 않는다!
     kakao.maps.load(function () {
       // 지도를 표시할 div
-      const container = document.getElementById("map");
+      const container = document.getElementById("play-detail-kakao-map");
       const options = {
         // 지도의 중심좌표
         center: new kakao.maps.LatLng(lat, lng),
@@ -40,9 +40,9 @@ export default function TheaterLoction({ theaterLocation, locationName }) {
   }, []);
 
   return (
-    <div className="kakao-map-container">
+    <div className="play-detail-kakao-map-container">
       <h3>극장 위치</h3>
-      <div id="map" className="kakao-map"></div>
+      <div id="play-detail-kakao-map" className="play-detail-kakao-map"></div>
     </div>
   );
 }

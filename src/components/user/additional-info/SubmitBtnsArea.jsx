@@ -8,8 +8,8 @@ export default function SubmitBtnsArea({ additionalUserInfo }) {
   const navigate = useNavigate();
   const { id, nicknameInfo, selectedImg, selectedRegion, socialProvider } =
     additionalUserInfo;
+
   const [alert, setAlert] = useState(null);
-  console.log(selectedImg);
 
   const submitAdditionUserInfo = () => {
     if (!nicknameInfo.isDuplicationChecked) {

@@ -1,0 +1,23 @@
+.not-found-page-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  min-height: 100vh;
+  font-family: "Noto Sans KR", sans-serif;
+
+  img {
+    width: 150px;
+    height: 150px;
+  }
+
+  h1 {
+    margin-top: 50px;
+  }
+
+  button {
+    margin-top: 50px;
+    font-size: 18px;
+  }
+}

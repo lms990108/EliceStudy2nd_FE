@@ -10,7 +10,7 @@ import { AlertCustom } from "../../../src/components/common/alert/Alerts";
 import Loading from "../../components/common/loading/Loading";
 import useSortPlays from "../../hooks/playCustomHooks/useSortPlays";
 
-export default function PlayList() {
+export function PlayList() {
   // 로딩중 여부
   const [isLoading, setIsLoading] = useState(true);
   // 전체 연극들
@@ -168,6 +168,7 @@ export default function PlayList() {
               setPaginationPlays={setPaginationPlays}
               setConditionPlays={setConditionPlays}
               sortStandard={sortStandard}
+              clickedDate={clickedDate}
             />
           )}
           {((!isCalendar && !conditionPlays.length) ||

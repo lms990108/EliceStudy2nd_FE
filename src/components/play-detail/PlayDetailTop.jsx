@@ -10,7 +10,6 @@ import Typography from "@mui/material/Typography";
 import Rating from "@mui/material/Rating";
 import { AlertCustom } from "../common/alert/Alerts";
 import Tooltip from "@mui/material/Tooltip";
-import { Toll } from "@mui/icons-material";
 
 export default function PlayDetailTop({
   showId,
@@ -25,7 +24,7 @@ export default function PlayDetailTop({
   title,
   reviews,
   isLoggedIn,
-  userInfo,
+  averageRate,
 }) {
   const navigate = useNavigate();
   // 현재 url 정보 객체
@@ -34,11 +33,8 @@ export default function PlayDetailTop({
   const [alert, setAlert] = useState(null);
   // 이 연극을 현재 로그인된 유저가 찜했는지 여부
   const [isDibbed, setIsDibbed] = useState(false);
-  console.log(isDibbed);
   // 로그인 필요 알람
   const [needLoginAlert, setNeedLoginAlert] = useState(null);
-  // 현재 마우스가 올라가 있는 공유 옵션
-  const [currentHoverOption, setCurrentHoverOption] = useState(null);
 
   // 찜한 연극인지를 확인하는 로직 (유저가 로그인 되어 있을시에만 로직 적용)
   useEffect(() => {
@@ -50,8 +46,7 @@ export default function PlayDetailTop({
         .then((res) => res.json()) // res.json()을 반환하도록 수정
         .then((data) => {
           setIsDibbed(data.isBookmarked);
-        })
-        .catch((err) => {});
+        });
     }
   }, []);
 
@@ -118,7 +113,6 @@ export default function PlayDetailTop({
 
   // 찜 버튼 클릭 시
   const handleDibBtnClick = () => {
-    console.log(isLoggedIn);
     if (isLoggedIn) {
       // 찜이 되어 있는 경우 찜 취소
       if (isDibbed) {
@@ -126,13 +120,16 @@ export default function PlayDetailTop({
           method: "DELETE",
           credentials: "include",
         })
-          .then((res) => res.json())
-          .then((data) => {
-            console.log(data);
-            setIsDibbed(false);
+          .then((res) => {
+            if (res.ok) {
+              setIsDibbed(false);
+            } else if (res.status === 401) {
+              setNeedLoginAlert(
+                "로그인이 필요한 기능입니다. 로그인 페이지로 이동하시겠습니까?"
+              );
+            }
           })
           .catch((err) => {
-            console.log(err);
             setAlert({
               title: "찜 취소 실패",
               content: "찜 취소에 실패하였습니다.",
@@ -147,10 +144,14 @@ export default function PlayDetailTop({
           method: "POST",
           credentials: "include",
         })
-          .then((res) => res.json())
-          .then((data) => {
-            console.log(data);
-            setIsDibbed(true);
+          .then((res) => {
+            if (res.ok) {
+              setIsDibbed(true);
+            } else if (res.status === 401 || res.status === 403) {
+              setNeedLoginAlert(
+                "로그인이 필요한 기능입니다. 로그인 페이지로 이동하시겠습니까?"
+              );
+            }
           })
           .catch((err) =>
             setAlert({
@@ -187,7 +188,11 @@ export default function PlayDetailTop({
           content={needLoginAlert}
           open={Boolean(needLoginAlert)}
           onclose={() => setNeedLoginAlert(null)}
-          onclick={() => navigate("/signup-in")}
+          onclick={() =>
+            navigate("/signup-in", {
+              state: { from: `${currentURL.pathname}${currentURL.search}` },
+            })
+          }
           severity={"warning"}
           checkBtn={"확인"}
           closeBtn={"취소"}
@@ -240,7 +245,7 @@ export default function PlayDetailTop({
           <div>
             <h3>평점</h3>
             <p>
-              <Rating value={0} readOnly />
+              <Rating value={averageRate} readOnly precision={0.5} />
             </p>
           </div>
         </div>
@@ -257,8 +262,6 @@ export default function PlayDetailTop({
                     `${process.env.REACT_APP_BASE_URL}${currentURL.pathname}`
                   )
                 }
-                onMouseOver={() => setCurrentHoverOption("링크 복사")}
-                onMouseOut={() => setCurrentHoverOption(null)}
                 style={{ cursor: "pointer" }}
               />
             </Tooltip>
@@ -269,8 +272,6 @@ export default function PlayDetailTop({
                 fontSize="large"
                 color="facebookBlue"
                 onClick={() => shareFacebook()}
-                onMouseOver={() => setCurrentHoverOption("페이스북 공유")}
-                onMouseOut={() => setCurrentHoverOption(null)}
                 style={{ cursor: "pointer" }}
               />
             </Tooltip>
@@ -280,8 +281,6 @@ export default function PlayDetailTop({
               <div className="SNS-img-box">
                 <img
                   src={XImg}
-                  onMouseOver={() => setCurrentHoverOption("X 공유")}
-                  onMouseOut={() => setCurrentHoverOption(null)}
                   onClick={() => shareTwitter()}
                   alt="X-icon"
                   style={{ cursor: "pointer" }}
@@ -295,8 +294,6 @@ export default function PlayDetailTop({
                 <img
                   id="btnKakaoShare"
                   src={kakaoTalkImg}
-                  onMouseOver={() => setCurrentHoverOption("카카오톡 공유")}
-                  onMouseOut={() => setCurrentHoverOption(null)}
                   alt="kakaoTalk-icon"
                   style={{ cursor: "pointer" }}
                 />
@@ -341,10 +338,7 @@ export default function PlayDetailTop({
                 title="본 연극은 종료되어 예매 링크가 제공되지 않습니다."
                 arrow
               >
-                <div
-                  onMouseOver={() => setCurrentHoverOption("종료된 연극")}
-                  onMouseOut={() => setCurrentHoverOption(null)}
-                >
+                <div>
                   <Button variant="contained" disabled>
                     <Typography
                       fontFamily="Nanum Gothic, sans-serif"

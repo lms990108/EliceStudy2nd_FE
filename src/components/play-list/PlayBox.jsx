@@ -20,7 +20,6 @@ export default function PlayBox({ playInfo }) {
     });
     // 최저 가격 구하기
     const minPrice = Math.min(...splitPrice);
-    console.log(minPrice);
     // 최저 가격으로 가격 바꾸기
     price = `최저 ${minPrice.toLocaleString()}원`;
   }
@@ -29,7 +28,7 @@ export default function PlayBox({ playInfo }) {
     <>
       <div className="play-box">
         <Link
-          to={`/play/${playId}`}
+          to={`/play/${playId}?tab=detail-info`}
           style={{ textDecoration: "none", color: "#000000" }}
         >
           <div className="play-img-box">
