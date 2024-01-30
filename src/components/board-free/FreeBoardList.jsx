@@ -12,7 +12,7 @@ export default function FreeBoardList({ boardList }) {
   const handleClick = (e) => {
     const postId = e.currentTarget.id;
     console.log(postId);
-    nav(postId);
+    nav(`/community/${postId}`);
   };
 
   useEffect(() => {
@@ -22,7 +22,7 @@ export default function FreeBoardList({ boardList }) {
   return (
     <div className="free-board-list-box">
       {boardList.map((post) => (
-        <Link className="content-box pointer" key={post._id} id={post.post_number} to={`${post.post_number}`}>
+        <Link className="content-box pointer" key={post._id} id={post.post_number} to={`/community/${post.post_number}`}>
           <div className="flex-box top">
             <div className="user">
               {post.user_id ? <img className="user-img" src={post.user_id.profile_url} /> : <AccountCircleIcon sx={{ fontSize: 24 }} />}
