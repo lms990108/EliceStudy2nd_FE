@@ -4,11 +4,7 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import Button from "@mui/material/Button";
 import Alert from "@mui/material/Alert";
 
-export default function NicknameContainer({
-  nicknameInfo,
-  setNicknameInfo,
-  user_id,
-}) {
+export default function NicknameContainer({ nicknameInfo, setNicknameInfo, user_id }) {
   const [alert, setAlert] = useState(null);
 
   // 닉네임 중복 확인
@@ -76,9 +72,7 @@ export default function NicknameContainer({
           sx={{ height: "50px" }}
           inputProps={{ maxLength: 10 }}
           value={nicknameInfo.nickname}
-          onChange={(e) =>
-            setNicknameInfo((pre) => ({ ...pre, nickname: e.target.value }))
-          }
+          onChange={(e) => setNicknameInfo((pre) => ({ ...pre, nickname: e.target.value }))}
           disabled={alert && alert.severity === "success"}
         />
         {alert && alert.severity === "success" ? (
@@ -93,22 +87,14 @@ export default function NicknameContainer({
             재설정
           </Button>
         ) : (
-          <Button
-            variant="outlined"
-            color="orange"
-            onClick={() => duplicationCheck()}
-          >
+          <Button variant="outlined" color="orange" onClick={() => duplicationCheck()}>
             중복 확인
           </Button>
         )}
       </div>
       <p>* 특수문자/숫자 제외 영문 or 한글로 1 ~ 10자리 입력</p>
       {alert && (
-        <Alert
-          severity={alert.severity}
-          sx={{ padding: 0, border: "none" }}
-          variant="outlined"
-        >
+        <Alert severity={alert.severity} sx={{ padding: 0, border: "none" }} variant="outlined">
           {alert.message}
         </Alert>
       )}

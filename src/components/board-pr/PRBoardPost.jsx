@@ -19,8 +19,8 @@ export default function PRBoardPost({ data }) {
         </span>
       </div>
       <div className="post-content-box">
-        <PostTop user={data.user_id ? { nickname: data.user_id } : { nickname: "asd" }} type={"promotion"} time={data.createdAt} commentsCnt={data.comments.length} />
-        <img className="post-image" src={data.poster_url} alt="홍보 포스터" />
+        <PostTop user={data.user_id || { nickname: "asd" }} type={"promotion"} time={data.createdAt} commentsCnt={0} postNumber={data.promotion_number} />
+        <img className="post-image" src={data.image_url} alt="홍보 포스터" />
         <h2 className="post-title">{data.title}</h2>
         <hr />
         <div className="post-content">{data.content}</div>

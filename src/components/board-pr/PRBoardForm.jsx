@@ -6,7 +6,7 @@ import DriveFolderUploadIcon from "@mui/icons-material/DriveFolderUpload";
 import "./PRBoardForm.scss";
 import { AlertCustom } from "../common/alert/Alerts";
 import { useNavigate } from "react-router-dom";
-import { promotionUrl } from "../../apis/apiURLs";
+import { promotionUrl, uploadImgUrl } from "../../apis/apiURLs";
 
 export function PRBoardForm({ setInput, handleComplete, handleCancle }) {
   const [submit, setSubmit] = useState(false);
@@ -23,13 +23,23 @@ export function PRBoardForm({ setInput, handleComplete, handleCancle }) {
   const nav = useNavigate();
 
   const handleSubmit = async (e) => {
-    const res = await fetch(`${promotionUrl}/add_promotion`, {
+    const res = await fetch(`${promotionUrl}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      // body: form data 사용하기
+      credentials: "include",
+      body: JSON.stringify({
+        title: inputTitle,
+        content: inputContent,
+        tags: tagList,
+        image_url: imageURL,
+      }),
     });
     const data = await res.json();
     console.log(data);
+
+    if (res.ok) {
+      setOpenComplete(true);
+    }
   };
 
   const handleButtonClick = (e) => {
@@ -74,19 +84,29 @@ export function PRBoardForm({ setInput, handleComplete, handleCancle }) {
     }
   };
 
-  const handleImageChange = (e) => {
-    let imageSrc = "";
+  const handleImageChange = async (e) => {
     if (e.target.files[0]) {
-      imageSrc = URL.createObjectURL(e.target.files[0]);
-      setErrorImage("");
+      let formData = new FormData();
+      formData.append("image_url", e.target.files[0]);
+
+      const res = await fetch(`${uploadImgUrl}`, {
+        method: "POST",
+        credentials: "include",
+        body: formData,
+      });
+      const data = await res.json();
+      console.log(data);
+
+      if (res.ok) {
+        setImageURL(data.imageUrl);
+        setErrorImage("");
+      } else {
+        console.log(data);
+        setErrorImage("사진을 선택해주세요.");
+      }
     } else {
       setErrorImage("사진을 선택해주세요.");
     }
-    URL.revokeObjectURL(imageURL);
-    /* 동일한 파일 객체를 이용하여 URL을 생성한다고 해도 새로운 URL을 생성한다.
-    사용하지 않는 이미지 URL의 경우에는 반드시 revokeObjectURL을 사용하여 메모리에서 해제하자.
-    (물론 브라우저를 종료하면 생성한 URL도 함께 메모리에서 해제된다.) */
-    setImageURL(imageSrc);
   };
 
   const handleTagChange = (e) => {
@@ -186,7 +206,6 @@ export function PRBoardForm({ setInput, handleComplete, handleCancle }) {
         title={"teenybox.com 내용:"}
         content={"게시글을 작성하시겠습니까?"}
         onclick={() => {
-          setOpenComplete(true);
           handleSubmit();
         }}
         checkBtn={"등록"}

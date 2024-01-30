@@ -8,15 +8,6 @@ export default function PRBoardList({ newList }) {
   const [boardListLeft, setBoardListLeft] = useState([]);
   const [boardListRight, setBoardListRight] = useState([]);
   const boardList = useContext(PRContext);
-  const nav = useNavigate();
-  console.log(boardList);
-
-  const handleClick = (e) => {
-    const postEl = e.target.closest(".content-box");
-    const post = boardList.filter((post) => parseInt(post._id) === parseInt(postEl.id));
-    console.log(post);
-    nav(postEl.id, { state: { post: post[0] } });
-  };
 
   useEffect(() => {
     const left = document.querySelectorAll(".left > *");
@@ -54,7 +45,7 @@ export default function PRBoardList({ newList }) {
 
   const content = (post) => (
     <Link className={`content-box pointer`} key={post._id} id={post._id} to={`${post.promotion_number}`}>
-      <img src={post.poster_url} alt="" />
+      <img src={post.image_url} alt="" />
       <div className="post-content-box">
         <div className="flex-box">
           <div className="title">{post.title}</div>
@@ -65,8 +56,8 @@ export default function PRBoardList({ newList }) {
         </div>
         {post.tags && post.tags.length !== 0 && (
           <div className="tags">
-            {post.tags.map((tag) => (
-              <div># {tag}</div>
+            {post.tags.map((tag, idx) => (
+              <div key={idx}># {tag}</div>
             ))}
           </div>
         )}

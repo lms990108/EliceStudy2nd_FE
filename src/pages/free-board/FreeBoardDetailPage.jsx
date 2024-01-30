@@ -2,9 +2,8 @@ import React, { useEffect, useState } from "react";
 import FreeBoardPost from "../../components/board-free/FreeBoardPost";
 import "./FreeBoardDetailPage.scss";
 import { BoardSecondHeader, BoardNav, CommentForm, CommentsList } from "../../components/board";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { addComment, getComments } from "../../apis/comments/comments";
-import { getPRBoardList } from "../../apis/board/prBoard";
 import { postUrl } from "../../apis/apiURLs";
 
 export function FreeBoardDetailPage() {
@@ -15,7 +14,7 @@ export function FreeBoardDetailPage() {
 
   const getPost = async () => {
     const postId = params.postId;
-    const res = await fetch(`${postUrl}/number/${postId}`);
+    const res = await fetch(`${postUrl}/${postId}`);
     const data = await res.json();
     setPost(data);
     const data_comments = getComments();

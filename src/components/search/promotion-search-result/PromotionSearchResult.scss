@@ -1,0 +1,41 @@
+.promotion-search-result-container {
+  margin: 20px auto;
+  margin-top: 80px;
+  width: 70%;
+
+  .search-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+
+    span {
+      font-weight: bold;
+      font-size: 28px;
+    }
+
+    .sort-by {
+      width: 120px;
+      height: 40px;
+      font-size: 16px;
+      font-family: "Nanum Gothic", sans-serif;
+      text-align: center;
+      border: 1px solid rgba(188, 188, 188, 0.7);
+      border-radius: 8px;
+    }
+  }
+
+  .play-search-content {
+    background-color: #ffffff;
+    border: 1px solid #bcbcbc;
+    border-radius: 8px;
+    margin-top: 30px;
+    padding: 30px 50px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+
+    a {
+      margin-bottom: 20px;
+    }
+  }
+}
