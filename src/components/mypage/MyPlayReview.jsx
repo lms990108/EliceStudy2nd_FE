@@ -10,11 +10,10 @@ const columns = [
   {
     field: "show_title",
     headerName: "연극",
-    width: 200,
+    width: 180,
     renderCell: (data) => (
-      //`/play/${data.id}?tab=reviews`
-      <Link to={"/play/PF231931?tab=reviews"}>
-        {console.log(data)}
+      //`/play/${data.row.showId}?tab=reviews`
+      <Link className="link" to={"/play/PF231931?tab=reviews"}>
         {data.value}
       </Link>
     ),
@@ -27,6 +26,7 @@ const columns = [
 
 function MyPlayReview({ user }) {
   const [reviews, setReviews] = useState([]);
+  const [checkedList, setCheckedList] = useState([]);
 
   const getReviews = async () => {
     console.log(user.user_id);
@@ -37,9 +37,32 @@ function MyPlayReview({ user }) {
     if (res.ok) {
       setReviews(
         data.data.map((review) => {
-          return { ...review, id: review._id }; // id: review.showId
+          return { ...review, id: review._id };
         })
       );
+    }
+  };
+
+  const handleClickDeleteBtn = async () => {
+    const res = await fetch(`${reviewUrl}`, {
+      method: "DELETE",
+      credentials: "include",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        reviewIds: checkedList,
+      }),
+    });
+    const data = await res.json();
+    console.log(data);
+
+    if (res.ok) {
+      let newReviews = [...reviews];
+      checkedList.map((id) => {
+        let index = reviews.findIndex((review) => review.id === id);
+        newReviews.splice(index, 1);
+      });
+
+      setReviews(newReviews);
     }
   };
 
@@ -52,7 +75,7 @@ function MyPlayReview({ user }) {
       <div className="my-play-review-container">
         <div className="my-play-review-header">
           <h1>내가 작성한 연극 리뷰</h1>
-          <Button variant="contained" color="orange" sx={{ width: "80px", height: "40px", color: "white" }}>
+          <Button onClick={handleClickDeleteBtn} disabled={!checkedList.length} variant="contained" color="orange" sx={{ width: "80px", height: "40px", color: "white" }}>
             <h4>삭제</h4>
           </Button>
         </div>
@@ -67,6 +90,8 @@ function MyPlayReview({ user }) {
             }}
             checkboxSelection
             disableRowSelectionOnClick
+            rowSelectionModel={checkedList}
+            onRowSelectionModelChange={(e) => setCheckedList(e)}
             // unstable_cellSelection
             // unstable_onCellSelectionModelChange={(selected) => console.log("ss")}
           />
