@@ -8,6 +8,7 @@ const SearchModal = ({ onCloseModal }) => {
   const inputRef = useRef(null);
   const [isClosing, setIsClosing] = useState(false);
   const [contentVisible, setContentVisible] = useState(true);
+  const [recentSearches, setRecentSearches] = useState([]);
 
   useEffect(() => {
     if (inputRef.current) {
@@ -27,7 +28,19 @@ const SearchModal = ({ onCloseModal }) => {
       const searchQuery = inputRef.current.value;
       const encodedQuery = encodeURIComponent(searchQuery);
       window.location.href = `/search?query=${encodedQuery}`;
+
+      // 최근 검색어 목록에 추가
+      setRecentSearches((prevSearches) => {
+        if (prevSearches.includes(searchQuery)) {
+          return prevSearches;
+        }
+        return [searchQuery, ...prevSearches.slice(0, 4)];
+      });
     }
+  };
+
+  const handleDeleteRecentSearches = () => {
+    setRecentSearches([]);
   };
 
   return (
@@ -51,10 +64,18 @@ const SearchModal = ({ onCloseModal }) => {
           <div className="last-search-header-box">
             <div className="last-search-title">&nbsp;&nbsp;최근 검색어</div>
             <div className="last-search-delete">
-              <DeleteOutlineIcon className="last-search-delete-icon" />
+              <DeleteOutlineIcon
+                className="last-search-delete-icon"
+                onClick={handleDeleteRecentSearches}
+              />
               비우기&nbsp;&nbsp;
             </div>
           </div>
+          {recentSearches.slice(0, 5).map((search, index) => (
+            <div key={index} className="recent-search-item">
+              <p>{search}</p>
+            </div>
+          ))}
         </div>
       </div>
     </>
