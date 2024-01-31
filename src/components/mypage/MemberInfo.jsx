@@ -14,30 +14,14 @@ import { AlertCustom } from "../common/alert/Alerts";
 
 const regex = /[!@#$%^&*(),.?":{}|<>0-9]/;
 
-function MemberInfo() {
-  const [user, setUser] = useState();
-  const [inputNickname, setInputNickname] = useState("");
-  const [profileURL, setProfileURL] = useState("");
-  const [selectedRegion, setSelectedRegion] = useState("");
+function MemberInfo({ user, setUserData }) {
+  const [inputNickname, setInputNickname] = useState(user?.nickname);
+  const [profileURL, setProfileURL] = useState(user?.profile_url);
+  const [selectedRegion, setSelectedRegion] = useState(user?.interested_area);
   const [errorNickname, setErrorNickname] = useState("");
   const [isUnique, setIsUnique] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [openComplete, setOpenComplete] = useState(false);
-
-  const getUserInfo = async () => {
-    const res = await fetch(`${userUrl}`, { credentials: "include" });
-    const data = await res.json();
-    console.log(data);
-
-    if (res.ok) {
-      setUser(data.user);
-      setInputNickname(data.user.nickname);
-      setProfileURL(data.user.profile_url);
-      setSelectedRegion(data.user.interested_area);
-    } else {
-      // 404
-    }
-  };
 
   const handleChangeProfile = async (e) => {
     if (e.target.files?.[0]) {
@@ -111,8 +95,9 @@ function MemberInfo() {
 
     console.log(data);
     if (res.ok) {
-      setUser({ ...user, ...bodyData });
+      setUserData({ isLoggedIn: true, user: { ...user, ...bodyData } });
       setOpenComplete(true);
+      setIsUnique(false);
     }
   };
 
@@ -124,15 +109,13 @@ function MemberInfo() {
     return false;
   };
 
-  useEffect(() => {
-    getUserInfo();
-  }, []);
-
   return (
     <>
       {user && (
         <div className="member-info-container">
-          <h1>회원정보 수정</h1>
+          <div className="header">
+            <h1>회원정보 수정</h1>
+          </div>
           <div className="member-info-profile-box">
             <div className="profile-photo" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
               {user && <img src={profileURL} />}
@@ -149,15 +132,16 @@ function MemberInfo() {
           </div>
           <div className="member-info-box">
             <div className="member-id-box">
-              <p>아이디</p>
-              <div className="member-id">{user?.user_id}</div>
+              <p>연동 계정</p>
+              <div className="member-id">{user?.social_provider}</div>
             </div>
             <div className="member-nickname-box">
               <p>닉네임</p>
               <span>
                 <TextField
+                  className="textfield"
                   size="small"
-                  error={errorNickname}
+                  error={Boolean(errorNickname)}
                   helperText={errorNickname}
                   value={inputNickname}
                   onChange={handleChangeNickname}
@@ -199,15 +183,7 @@ function MemberInfo() {
                     {["서울", "경기/인천", "대전/충청", "강원", "대구/경상", "부산/울산", "광주/전라", "제주"].map((region, idx) => (
                       <FormControlLabel
                         key={idx}
-                        control={
-                          <Checkbox
-                            defaultChecked={region === selectedRegion}
-                            name={region}
-                            checked={region === selectedRegion}
-                            onClick={() => setSelectedRegion(region)}
-                            color="secondary"
-                          />
-                        }
+                        control={<Checkbox name={region} checked={region === selectedRegion} onClick={() => setSelectedRegion(region)} color="secondary" />}
                         sx={{ marginRight: "16px" }}
                         label={region}
                       />

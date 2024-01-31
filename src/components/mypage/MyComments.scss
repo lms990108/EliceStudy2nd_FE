@@ -1,17 +1,20 @@
 .my-comments-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 48px 0 0 0;
-    h1 {
-      font-size: 24px;
-    }
-}
-.my-comments-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 780px;
+  margin: 10px 0;
+
+  .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 800px;
+    height: 40px;
     border-bottom: 4px solid #ccc;
-    padding-bottom: 4px;
+    padding: 34px 0 16px;
+    h1 {
+      margin: 0;
+    }
+  }
 }

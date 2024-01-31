@@ -1,18 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { Button } from "@mui/material";
 import KeyboardDoubleArrowLeftOutlinedIcon from "@mui/icons-material/KeyboardDoubleArrowLeftOutlined";
 import "./BoardHeader.scss";
-import useGetUser from "../../hooks/authoriaztionHooks/useGetUser";
 import { AlertCustom } from "../common/alert/Alerts";
 import { useNavigate } from "react-router-dom";
+import { AppContext } from "../../App";
 
 export function BoardListHeader({ header, desc, onclick }) {
-  const user = useGetUser();
+  const { userData } = useContext(AppContext);
   const nav = useNavigate();
   const [open, setOpen] = useState(false);
 
   const handleClick = () => {
-    if (user.isLoggedIn) {
+    if (userData.isLoggedIn) {
       onclick();
     } else {
       setOpen(true);
