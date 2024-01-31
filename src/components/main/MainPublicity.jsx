@@ -22,7 +22,7 @@ function MainPublicity() {
       .then((data) => {
         setPromotions(data);
       })
-      .catch((err) => alert(err));
+      .catch((err) => console.error(err));
   }, []);
 
   return (
@@ -44,7 +44,7 @@ function MainPublicity() {
               {promotions.map((promotion, i) => (
                 <li key={i}>
                   <img
-                    src={promotion.poster_url}
+                    src={promotion.image_url}
                     onMouseEnter={onStop} // 슬라이드 멈춤
                     onMouseLeave={onRun} // 슬라이드 재개
                     onClick={() => handlePromotionClick(promotion.promotion_number)}
@@ -56,7 +56,7 @@ function MainPublicity() {
               {promotions.map((promotion, i) => (
                 <li key={i}>
                   <img
-                    src={promotion.poster_url}
+                    src={promotion.image_url}
                     onMouseEnter={onStop} // 슬라이드 멈춤
                     onMouseLeave={onRun} // 슬라이드 재개
                     onClick={() => handlePromotionClick(promotion.promotion_number)}
