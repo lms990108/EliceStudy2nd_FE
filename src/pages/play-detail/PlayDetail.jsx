@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import React, { useState, useEffect, useContext } from "react";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import "./PlayDetail.scss";
 import PlayDetailTop from "../../components/play-detail/PlayDetailTop";
 import PlayDetailNav from "../../components/play-detail/PlayDetailNav";
@@ -10,25 +10,23 @@ import { UpButton } from "../../components/common/button/UpButton";
 import { AlertCustom } from "../../components/common/alert/Alerts";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import Loading from "../../components/common/loading/Loading";
+import { AppContext } from "../../App";
 
-export default function PlayDetail() {
+export function PlayDetail() {
+  // 유저 로그인 여부 + 정보 확인
+  const { userData } = useContext(AppContext);
+  console.log(userData);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const queryParams = new URLSearchParams(location.search);
+  const detailNavMenu = queryParams.get("tab") || "detail-info";
   // 현재 연극의 id
   const { playId } = useParams();
   // 데이터 가져올 때 로딩을 띄우기 (데이터가 다 가져와지기 전 파싱 작업이 이루어지지 않도록)
   const [isLoading, setIsLoading] = useState(true);
   // 연극 상세 정보
   const [playInfo, setPlayInfo] = useState({});
-  // 현재 선택한 메뉴 (상세정보 / 관람후기 / 장소정보)
-  const [detailNavMenu, setDetailNavMenu] = useState("상세정보");
-  // lat: 위도, lng: 경도
-  const [theaterLoaction, setTheaterLocation] = useState({});
-  // 현재 유저가 로그인되어 있는지 여부 (로그인 되어있을 시 회원정보가 들어가고, 그렇지 않을 시 false가 들어감)
-  const [isLoggedIn, setIsLoggedIn] = useState(
-    localStorage.getItem("isLoggedIn") === "true"
-  );
-  // 로그인이 되어 있을 시 채워지게 되는 유저 정보
-  const [userInfo, setUserInfo] = useState(null);
-  // 에러를 띄우기 위한 상태 정의
+  // 에러 메시지 상태
   const [error, setError] = useState(null);
 
   // 현재 연극 하나 데이터 받아오기
@@ -37,7 +35,6 @@ export default function PlayDetail() {
       .then((res) => res.json())
       .then((data) => {
         setPlayInfo(data.show);
-        setTheaterLocation({ lat: data.latitude, lng: data.longitude });
         setTimeout(() => setIsLoading(false), 300);
       })
       .catch(() => {
@@ -47,8 +44,15 @@ export default function PlayDetail() {
   }, []);
 
   const handleDetailNavMenuClick = (e) => {
-    console.log(e.target.innerText);
-    setDetailNavMenu(e.target.innerText);
+    const queryParams = new URLSearchParams(location.search);
+    if (e.target.innerText === "상세정보") {
+      queryParams.set("tab", "detail-info");
+    } else if (e.target.innerText === "관람후기") {
+      queryParams.set("tab", "reviews");
+    } else if (e.target.innerText === "장소정보") {
+      queryParams.set("tab", "location-info");
+    }
+    navigate(`?${queryParams.toString()}`);
   };
 
   return (
@@ -66,7 +70,7 @@ export default function PlayDetail() {
             severity={"error"}
           />
         )}
-        {!isLoading && playInfo && (
+        {!isLoading && playInfo && userData && (
           <>
             <UpButton />
             <PlayDetailTop
@@ -81,15 +85,15 @@ export default function PlayDetail() {
               state={playInfo.state}
               title={playInfo.title}
               reviews={playInfo.reviews}
-              isLoggedIn={isLoggedIn}
-              userInfo={userInfo}
+              isLoggedIn={userData.isLoggedIn}
+              averageRate={playInfo.avg_rating}
             />
             <PlayDetailNav
               selected={detailNavMenu}
               handleClick={handleDetailNavMenuClick}
             />
             <div className="play-detail-main-box">
-              {detailNavMenu === "상세정보" && (
+              {detailNavMenu === "detail-info" && (
                 <PlayDetailInfo
                   title={playInfo.title}
                   cast={playInfo.cast}
@@ -101,12 +105,22 @@ export default function PlayDetail() {
                   seat_cnt={playInfo.seat_cnt}
                 />
               )}
-              {detailNavMenu === "관람후기" && (
-                <PlayReview showId={playInfo.showId} isLoggedIn={isLoggedIn} />
+              {detailNavMenu === "reviews" && (
+                <PlayReview
+                  showId={playInfo.showId}
+                  isLoggedIn={userData.isLoggedIn}
+                  author={userData.user?.nickname}
+                  averageRate={playInfo.avg_rating}
+                  state={playInfo.state}
+                  userId={userData.user?.user_id}
+                />
               )}
-              {detailNavMenu === "장소정보" && (
+              {detailNavMenu === "location-info" && (
                 <TheaterLocation
-                  theaterLocation={theaterLoaction}
+                  theaterLocation={{
+                    lat: playInfo.latitude,
+                    lng: playInfo.longitude,
+                  }}
                   locationName={playInfo.location}
                 />
               )}
@@ -116,7 +130,7 @@ export default function PlayDetail() {
         {!isLoading && !playInfo && (
           <div className="get-playInfo-error">
             <ErrorOutlineIcon fontSize="large" />
-            <h2>연극 정보 가져오기에 실패했습니다.</h2>
+            <h2>연극 정보 가져오기에 실패하였거나 존재하지 않는 연극입니다.</h2>
           </div>
         )}
         {!error && isLoading && <Loading />}

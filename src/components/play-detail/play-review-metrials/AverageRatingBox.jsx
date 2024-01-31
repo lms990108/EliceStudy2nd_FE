@@ -1,17 +1,21 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import "./AverageRatingBox.scss";
 import Rating from "@mui/material/Rating";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { AlertCustom } from "../../common/alert/Alerts";
+import Tooltip from "@mui/material/Tooltip";
 
 export default function AverageRatingBox({
   isLoggedIn,
   setIsReviewFormOpened,
-  reviews,
+  count,
+  averageRate,
+  state,
 }) {
   const navigate = useNavigate();
+  const location = useLocation();
 
   // 로그인 필요 알람
   const [needLoginAlert, setNeedLoginAlert] = useState(null);
@@ -37,7 +41,7 @@ export default function AverageRatingBox({
           onclose={() => setNeedLoginAlert(null)}
           onclick={() =>
             navigate("/signup-in", {
-              state: { previousPage: window.location.href },
+              state: { from: `${location.pathname}${location.search}` },
             })
           }
           severity={"warning"}
@@ -49,46 +53,58 @@ export default function AverageRatingBox({
         <div className="star-and-rating">
           <h2>평균 평점</h2>
           <Rating
-            value={
-              !reviews.length
-                ? 0
-                : Math.round(
-                    (reviews.reduce((acc, cur) => acc + cur) / reviews.length) *
-                      10
-                  ) / 10
-            }
+            value={count ? averageRate : 0}
             readOnly
             size="large"
+            precision={0.5}
           />
           <span className="rating">
-            {!reviews.length
-              ? "0.0 "
-              : Math.round(
-                  (reviews.reduce((acc, cur) => acc + cur) / reviews.length) *
-                    10
-                ) / 10}
-            / 5
+            {count ? `${averageRate.toFixed(1)} ` : "0.0 "}/ 5
           </span>
           <p className="rating-addtional-text">
             * 아래의 관람 후기들을 바탕으로 한 평균 평점입니다.
           </p>
         </div>
-        <div className="review-button">
-          <Button
-            color="inherit"
-            state="focused"
-            variant="outlined"
-            size="large"
-            onClick={handleReviewBtnClick}
+        {state === "공연예정" ? (
+          <Tooltip
+            title="공연 예정인 연극에는 리뷰를 작성할 수 없습니다."
+            arrow
           >
-            <Typography
-              fontFamily="Nanum Gothic, sans-serif"
-              className="review-button-text"
+            <div className="review-button">
+              <Button
+                color="inherit"
+                state="focused"
+                variant="outlined"
+                size="large"
+                disabled
+              >
+                <Typography
+                  fontFamily="Nanum Gothic, sans-serif"
+                  className="review-button-text"
+                >
+                  관람 후기 작성하기
+                </Typography>
+              </Button>
+            </div>
+          </Tooltip>
+        ) : (
+          <div className="review-button">
+            <Button
+              color="inherit"
+              state="focused"
+              variant="outlined"
+              size="large"
+              onClick={handleReviewBtnClick}
             >
-              관람 후기 작성하기
-            </Typography>
-          </Button>
-        </div>
+              <Typography
+                fontFamily="Nanum Gothic, sans-serif"
+                className="review-button-text"
+              >
+                관람 후기 작성하기
+              </Typography>
+            </Button>
+          </div>
+        )}
       </div>
     </>
   );

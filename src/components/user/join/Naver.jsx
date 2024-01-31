@@ -1,6 +1,6 @@
 import { useState } from "react";
 import naverimg from "../../../assets/img/user/naverlogin.png";
-import NaverRedirection from "../../../pages/redirection/NaverRedirection";
+import { NaverRedirection } from "../../../pages/redirection/NaverRedirection";
 import { AlertCustom } from "../../../components/common/alert/Alerts";
 import Loading from "../../../components/common/loading/Loading";
 

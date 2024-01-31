@@ -27,7 +27,7 @@ export default function ConditionSearch({
   // 화면에 띄울 조건 검색 텍스트 (반복되어 배열로 뺌)
   const conditionTexts = [
     {
-      division: "공연 상태별",
+      division: "상태별",
       options: ["전체", "공연중", "공연예정", "공연완료"],
     },
     {
@@ -71,9 +71,9 @@ export default function ConditionSearch({
       let priceArray = [];
 
       // 공연 상태별로 필터링
-      if (!conditions["공연 상태별"].includes("전체")) {
+      if (!conditions["상태별"].includes("전체")) {
         stateArray = stateArray.filter((play) =>
-          conditions["공연 상태별"].includes(play.state)
+          conditions["상태별"].includes(play.state)
         );
       }
 
@@ -163,7 +163,7 @@ export default function ConditionSearch({
             })}
             <div className="adapt-button">
               {isAdaptBtnClicked &&
-              (conditions["공연 상태별"][0] !== "전체" ||
+              (conditions["상태별"][0] !== "전체" ||
                 conditions["가격별"][0] !== "전체") ? (
                 <Button
                   variant="contained"
@@ -230,7 +230,7 @@ export default function ConditionSearch({
                 })}
                 <div className="adapt-button">
                   {isAdaptBtnClicked &&
-                  (conditions["공연 상태별"][0] !== "전체" ||
+                  (conditions["상태별"][0] !== "전체" ||
                     conditions["가격별"][0] !== "전체") ? (
                     <Stack sx={{ width: "100%" }} spacing={2}>
                       <Alert severity="success">

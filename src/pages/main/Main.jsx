@@ -9,11 +9,9 @@ import MainPublicity from "../../components/main/MainPublicity";
 import MainReview from "../../components/main/MainReview";
 import MainTheater from "../../components/main/MainTheater";
 import { UpButton } from "../../components/common/button/UpButton";
-import useCheckLogin from "../../hooks/authoriaztionHooks/useCheckLogin";
 
 //Main
 const Main = () => {
-  useCheckLogin();
   return (
     <div className="main-container">
       <div

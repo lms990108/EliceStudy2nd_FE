@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { eachDayOfInterval, format } from "date-fns";
 import "./PlayListCalendar.scss";
 import "../../../pages/play-list/PlayList.scss";
@@ -6,6 +6,7 @@ import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import MouseIcon from "@mui/icons-material/Mouse";
+import useSortPlays from "../../../hooks/playCustomHooks/useSortPlays";
 
 export default function PlayListCalendar({
   innerWidth,
@@ -15,8 +16,11 @@ export default function PlayListCalendar({
   setClickedDate,
   setConditionPlays,
   sortStandard,
+  clickedDate,
 }) {
   const [event, setEvent] = useState(null);
+  // 배경색 제어를 위한 클릭한 부분 정보 저장
+  const selectedDate = useRef(null);
 
   useEffect(() => {
     const calendarPlays = {};
@@ -58,8 +62,10 @@ export default function PlayListCalendar({
     // full calendar에 넣을 이벤트들
     const events = [];
     for (let date in calendarPlays) {
+      const count = calendarPlays[date].length;
+
       events.push({
-        title: `${calendarPlays[date].length}개의 연극`,
+        title: [`${count}개의 연극`],
         date: date,
       });
     }
@@ -131,10 +137,44 @@ export default function PlayListCalendar({
     return uniqueDays;
   };
 
+  // 날짜 박스 클릭 시
   const handleDateClick = (info) => {
+    // 이미 선택된 날짜가 있다면 배경색 초기화
+    if (selectedDate.current) {
+      selectedDate.current.style.backgroundColor = "";
+    }
+
+    selectedDate.current = info.dayEl;
+    info.dayEl.style.backgroundColor = "#e5edff"; // 배경색 설정
     setClickedDate(info.dateStr);
+
     if (datePlays[info.dateStr]) {
       setConditionPlays(datePlays[info.dateStr]);
+      useSortPlays(sortStandard, setConditionPlays);
+    }
+  };
+
+  // 이벤트 띠를 클릭 시
+  const handleEventClick = (info) => {
+    // 이미 선택된 날짜가 있다면 배경색 초기화
+    if (selectedDate.current) {
+      selectedDate.current.style.backgroundColor = "";
+    }
+
+    const eventDate = info.event.start;
+    // YYYY-MM-DD 형태로 포맷
+    const year = eventDate.getFullYear();
+    const month = String(eventDate.getMonth() + 1).padStart(2, "0"); // 월은 0부터 시작하므로 +1, 두 자리로 맞춤
+    const day = String(eventDate.getDate()).padStart(2, "0"); // 두 자리로 맞춤
+    const date = `${year}-${month}-${day}`;
+
+    const targetDateElement = document.querySelector(`[data-date="${date}"]`);
+    selectedDate.current = targetDateElement;
+    targetDateElement.style.backgroundColor = "#e5edff"; // 배경색 설정
+
+    setClickedDate(date);
+    if (datePlays[date]) {
+      setConditionPlays(datePlays[date]);
       useSortPlays(sortStandard, setConditionPlays);
     }
   };
@@ -152,6 +192,15 @@ export default function PlayListCalendar({
           dateClick={(info) => {
             handleDateClick(info);
           }}
+          eventClick={(info) => {
+            handleEventClick(info);
+          }}
+          headerToolbar={{
+            left: "prev",
+            center: "title",
+            right: "next",
+          }}
+          locale={"kr"}
         />
       </div>
     </div>

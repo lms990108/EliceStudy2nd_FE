@@ -1,8 +1,54 @@
-import { useEffect, useState } from "react";
+import { useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { fromPageContext } from "../user/SignUp_In";
+import { AppContext } from "../../App";
 
-export default function GoogleRedirection({ popup, setPopup, setAlert }) {
+export function GoogleRedirection({ popup, setPopup, setAlert }) {
+  const pageFrom = useContext(fromPageContext);
+  const { setUserData } = useContext(AppContext);
   const navigate = useNavigate();
+
+  const getLoggedInUserInfo = () => {
+    fetch(`https://dailytopia2.shop/api/users/login-status`, {
+      credentials: "include",
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        } else {
+          setAlert({
+            title: "오류",
+            content: "사용자 정보를 가져오는 중 오류가 발생하였습니다.",
+            severity: "error",
+            onclose: () => setAlert(null),
+            onclick: () => setAlert(null),
+            checkBtn: "확인",
+          });
+        }
+      })
+      .then((data) => {
+        setUserData(data);
+      })
+      .then(() => {
+        setTimeout(() => {
+          if (pageFrom) {
+            navigate(pageFrom);
+            return;
+          }
+          navigate("/");
+        }, 1000);
+      })
+      .catch(() => {
+        setAlert({
+          title: "오류",
+          content: "사용자 정보를 가져오는 중 오류가 발생하였습니다.",
+          severity: "error",
+          onclose: () => setAlert(null),
+          onclick: () => setAlert(null),
+          checkBtn: "확인",
+        });
+      });
+  };
 
   useEffect(() => {
     const currentUrl = window.location.href;
@@ -48,9 +94,8 @@ export default function GoogleRedirection({ popup, setPopup, setAlert }) {
                 content: "Teeny Box에 로그인 되었습니다.",
                 severity: "success",
               });
-              setTimeout(() => {
-                navigate("/");
-              }, 1000);
+
+              getLoggedInUserInfo();
             } else {
               res.json().then((data) => {
                 setAlert({

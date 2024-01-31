@@ -1,9 +1,15 @@
 // 소셜 로그인 및 회원가입 페이지
-import React from "react";
+import { createContext } from "react";
+import { useLocation } from "react-router-dom";
 import "./SignUp_In.scss";
 import SnsButtons from "../../components/user/join/SnsButtons";
 
-export default function SignUp_In() {
+export const fromPageContext = createContext();
+
+export function SignUp_In() {
+  const location = useLocation();
+  const pageFrom = location.state?.from;
+
   return (
     <>
       <section className="signupInContainer inner">
@@ -13,7 +19,9 @@ export default function SignUp_In() {
         </p>
 
         <div className="social-buttons">
-          <SnsButtons />
+          <fromPageContext.Provider value={pageFrom}>
+            <SnsButtons />
+          </fromPageContext.Provider>
         </div>
       </section>
     </>

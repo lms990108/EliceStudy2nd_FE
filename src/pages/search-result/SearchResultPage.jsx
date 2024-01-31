@@ -9,6 +9,7 @@ import SearchResultTab from "../../components/search/common/SearchResultTab";
 // 연극 검색 결과 띄우기 위한 컴포넌트 (여기서부터는 개별로)
 import PlaySearchResult from "../../components/search/play-search-result/PlaySearchResult";
 import "./SearchResultPage.scss";
+import Loading from "../../components/common/loading/Loading";
 import FreeBoardList from "../../components/board-free/FreeBoardList";
 import { postUrl, promotionUrl } from "../../apis/apiURLs";
 import PromotionSearchResult from "../../components/search/promotion-search-result/PromotionSearchResult";
@@ -60,7 +61,7 @@ export default function SearchResultPage() {
   return (
     <>
       {isLoading ? (
-        <div>로딩중</div>
+        <Loading />
       ) : (
         <div className="search-result-container">
           <SearchResultHeader searchKeyword={searchKeyword} />

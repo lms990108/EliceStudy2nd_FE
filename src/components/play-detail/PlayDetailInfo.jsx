@@ -25,8 +25,8 @@ export default function PlayInfo({
       {cast[0] && (
         <div className="summary">
           <h3>출연진</h3>
-          {cast.map((actor) => (
-            <p>{actor}</p>
+          {cast.map((actor, idx) => (
+            <p key={idx}>{actor}</p>
           ))}
         </div>
       )}
@@ -48,7 +48,11 @@ export default function PlayInfo({
           <div className="detail-poster-img">
             {detail_images.map((image, idx) => {
               return (
-                <img src={image} alt={`${title} 소개 포스터 ${idx + 1}`} />
+                <img
+                  src={image}
+                  alt={`${title} 소개 포스터 ${idx + 1}`}
+                  key={idx}
+                />
               );
             })}
           </div>
