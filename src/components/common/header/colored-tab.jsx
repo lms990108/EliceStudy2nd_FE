@@ -69,7 +69,7 @@ export default function ColorTabs() {
         />
         <Tab
           value="one"
-          label="공연"
+          label="연극"
           component={Link}
           to="/play"
           disableRipple

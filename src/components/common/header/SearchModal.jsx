@@ -1,13 +1,14 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./SearchModal.scss";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
-import HighlightOffIcon from '@mui/icons-material/HighlightOff';
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import HighlightOffIcon from "@mui/icons-material/HighlightOff";
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 
 const SearchModal = ({ onCloseModal }) => {
   const inputRef = useRef(null);
   const [isClosing, setIsClosing] = useState(false);
   const [contentVisible, setContentVisible] = useState(true);
+  const [recentSearches, setRecentSearches] = useState([]);
 
   useEffect(() => {
     if (inputRef.current) {
@@ -21,23 +22,60 @@ const SearchModal = ({ onCloseModal }) => {
     setTimeout(onCloseModal, 200); // 애니메이션 시간에 맞추어 모달을 닫습니다.
   };
 
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      // 엔터 키를 누르면 검색어를 URL 쿼리로 전달
+      const searchQuery = inputRef.current.value;
+      const encodedQuery = encodeURIComponent(searchQuery);
+      window.location.href = `/search?query=${encodedQuery}`;
+
+      // 최근 검색어 목록에 추가
+      setRecentSearches((prevSearches) => {
+        if (prevSearches.includes(searchQuery)) {
+          return prevSearches;
+        }
+        return [searchQuery, ...prevSearches.slice(0, 4)];
+      });
+    }
+  };
+
+  const handleDeleteRecentSearches = () => {
+    setRecentSearches([]);
+  };
 
   return (
     <>
       <div className="search-modal-backdrop" onClick={handleCloseStart}></div>
       <div className={`search-modal-container ${isClosing ? "closing" : ""}`}>
-        <div className={`search-modal-box ${contentVisible ? "" : "hide-content"}`}>
+        <div
+          className={`search-modal-box ${contentVisible ? "" : "hide-content"}`}
+        >
           <SearchRoundedIcon className="search-modal-search-icon" />
           <input
             className="search-modal-input"
             ref={inputRef}
             placeholder="Teeny-Box.com 검색하기"
+            onKeyDown={handleKeyDown}
           ></input>
-          <HighlightOffIcon className="search-modal-exit-icon" onClick={handleCloseStart}/>
+          <HighlightOffIcon
+            className="search-modal-exit-icon"
+            onClick={handleCloseStart}
+          />
           <div className="last-search-header-box">
             <div className="last-search-title">&nbsp;&nbsp;최근 검색어</div>
-            <div className="last-search-delete"><DeleteOutlineIcon className="last-search-delete-icon"/>비우기&nbsp;&nbsp;</div>
+            <div className="last-search-delete">
+              <DeleteOutlineIcon
+                className="last-search-delete-icon"
+                onClick={handleDeleteRecentSearches}
+              />
+              비우기&nbsp;&nbsp;
+            </div>
           </div>
+          {recentSearches.slice(0, 5).map((search, index) => (
+            <div key={index} className="recent-search-item">
+              <p>{search}</p>
+            </div>
+          ))}
         </div>
       </div>
     </>
