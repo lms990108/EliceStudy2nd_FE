@@ -1,7 +1,8 @@
-import * as React from "react";
+import React, { useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import "./MyPRBoard.scss";
 import Button from "@mui/material/Button";
+import { promotionUrl } from "../../apis/apiURLs";
 
 const columns = [
   { field: "id", headerName: "번호", hide: true },
@@ -22,23 +23,36 @@ const rows = [
   { id: 9, tilte: "Roxie", comments: "Harvey", createdAt: 65 },
 ];
 
-function MyPRBoard() {
+function MyPRBoard({ user }) {
+  const [posts, setPosts] = useState([]);
+
+  const getPosts = async () => {
+    console.log(user.user_id);
+    const res = await fetch(`${promotionUrl}/user/${user.user_id}`);
+    const data = await res.json();
+    console.log(data);
+
+    if (res.ok) {
+      setPosts(data);
+    }
+  };
+
+  useEffect(() => {
+    getPosts();
+  }, []);
+
   return (
     <>
       <div className="my-pr-board-container">
         <div className="my-pr-board-header">
           <h1>홍보 게시판 작성글</h1>
-          <Button
-            variant="contained"
-            color="orange"
-            sx={{ width: "80px", height: "40px", color: "white" }}
-          >
+          <Button variant="contained" color="orange" sx={{ width: "80px", height: "40px", color: "white" }}>
             <h4>삭제</h4>
           </Button>
         </div>
         <div style={{ height: "628px", width: "800px" }}>
           <DataGrid
-            rows={rows}
+            rows={posts}
             columns={columns}
             initialState={{
               pagination: {

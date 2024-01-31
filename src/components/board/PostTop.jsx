@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./PostTop.scss";
 import { AlertCustom } from "../common/alert/Alerts";
 import copyUrl from "../../utils/copyUrl";
@@ -6,13 +6,13 @@ import { AccountCircle, DeleteOutline, EditOutlined, ShareOutlined, SmsOutlined 
 import { useNavigate } from "react-router-dom";
 import { postUrl, promotionUrl } from "../../apis/apiURLs";
 import { format } from "date-fns";
-import useGetUser from "../../hooks/authoriaztionHooks/useGetUser";
+import { AppContext } from "../../App";
 
 export function PostTop({ user, time, commentsCnt, type, postNumber }) {
   const [openURLCopyAlert, setOpenURLCopyAlert] = useState(false);
   const [openDeleteAlert, setOpenDeleteAlert] = useState(false);
   const [isWriter, setIsWriter] = useState(false); // false로 바꾸기
-  const _user = useGetUser();
+  const { userData } = useContext(AppContext);
   const nav = useNavigate();
 
   const handleCommentsButtonClick = () => {
@@ -45,7 +45,7 @@ export function PostTop({ user, time, commentsCnt, type, postNumber }) {
   };
 
   useEffect(() => {
-    if (_user.nickname === user.nickname) {
+    if (userData.nickname === user.nickname) {
       setIsWriter(true);
     }
   }, []);
