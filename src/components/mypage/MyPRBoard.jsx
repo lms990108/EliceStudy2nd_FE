@@ -5,10 +5,10 @@ import Button from "@mui/material/Button";
 import { promotionUrl } from "../../apis/apiURLs";
 
 const columns = [
-  { field: "id", headerName: "번호", hide: true },
-  { field: "tilte", headerName: "홍보 글 제목", width: 250 },
-  { field: "createdAt", headerName: "작성 시기", width: 250 },
-  { field: "comments", headerName: "댓글", width: 150 },
+  { field: "id", headerName: "번호" },
+  { field: "tilte", headerName: "제목", width: 248 },
+  { field: "content", headerName: "내용", width: 250 },
+  { field: "createdAt", headerName: "작성 시기", width: 150 },
 ];
 
 const rows = [

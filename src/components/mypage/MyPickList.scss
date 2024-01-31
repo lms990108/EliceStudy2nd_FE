@@ -62,11 +62,11 @@
         flex-direction: column;
         margin: 12px 14px;
         flex-grow: 0;
-        overflow: hidden;
 
         .title {
           @include ellipsis(2, 22px);
           margin: 4px 0 10px;
+          width: fit-content;
         }
 
         h3 {

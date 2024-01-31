@@ -37,6 +37,23 @@ function MyPickList({ user }) {
     }
   };
 
+  const handleClickDeleteBtn = async (e) => {
+    const res = await fetch(`${userUrl}/bookmarks`, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify({
+        showIds: checkedList,
+      }),
+    });
+    const data = await res.json();
+    console.log(data);
+
+    if (res.ok) {
+      setCheckedList([]);
+      getBookmarks();
+    }
+  };
   useEffect(() => {
     getBookmarks();
     setCheckedList([]);
@@ -51,8 +68,14 @@ function MyPickList({ user }) {
       <div className="my-pick-list-container">
         <div className="header">
           <h1>찜한 연극 LIST</h1>
-          <Button variant="contained" color="orange" sx={{ width: "80px", height: "40px", color: "white" }}>
-            <h4>삭제</h4>
+          <Button
+            disabled={!checkedList.length}
+            onClick={handleClickDeleteBtn}
+            variant="contained"
+            color="orange"
+            sx={{ width: "80px", height: "40px", color: "white", fontWeight: "600" }}
+          >
+            삭제
           </Button>
         </div>
         <div className="body">

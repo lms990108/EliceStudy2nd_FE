@@ -5,8 +5,8 @@ import "./MyComments.scss";
 import Button from "@mui/material/Button";
 
 const columns = [
-  { field: "id", headerName: "번호", hide: true },
-  { field: "tilte", headerName: "댓글 내용", width: 500 },
+  { field: "id", headerName: "번호" },
+  { field: "tilte", headerName: "내용", width: 500 },
   { field: "createdAt", headerName: "작성 시기", width: 150 },
 ];
 
@@ -28,11 +28,7 @@ function MyComments() {
       <div className="my-comments-container">
         <div className="my-comments-header">
           <h1>내 댓글</h1>
-          <Button
-            variant="contained"
-            color="orange"
-            sx={{ width: "80px", height: "40px", color: "white" }}
-          >
+          <Button variant="contained" color="orange" sx={{ width: "80px", height: "40px", color: "white" }}>
             <h4>삭제</h4>
           </Button>
         </div>
