@@ -97,6 +97,7 @@ function MemberInfo({ user, setUserData }) {
     if (res.ok) {
       setUserData({ isLoggedIn: true, user: { ...user, ...bodyData } });
       setOpenComplete(true);
+      setIsUnique(false);
     }
   };
 
@@ -112,7 +113,9 @@ function MemberInfo({ user, setUserData }) {
     <>
       {user && (
         <div className="member-info-container">
-          <h1>회원정보 수정</h1>
+          <div className="header">
+            <h1>회원정보 수정</h1>
+          </div>
           <div className="member-info-profile-box">
             <div className="profile-photo" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
               {user && <img src={profileURL} />}
@@ -136,6 +139,7 @@ function MemberInfo({ user, setUserData }) {
               <p>닉네임</p>
               <span>
                 <TextField
+                  className="textfield"
                   size="small"
                   error={Boolean(errorNickname)}
                   helperText={errorNickname}

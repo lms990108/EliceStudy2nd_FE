@@ -2,21 +2,44 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 48px 0 0 0;
-  h1 {
-    font-size: 24px;
+  height: 780px;
+  margin: 10px 0;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 800px;
+    height: 40px;
+    border-bottom: 4px solid #ccc;
+    padding: 34px 0 16px;
+    h1 {
+      margin: 0;
+    }
   }
 
-  .link:hover {
-    color: #0062b2;
-    text-decoration: underline;
+  .body {
+    height: 632px;
+    width: 800px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .MuiDataGrid-root .link:hover {
+      color: #0062b2;
+      text-decoration: underline;
+    }
   }
-}
-.my-play-review-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 800px;
-  border-bottom: 4px solid #ccc;
-  padding-bottom: 4px;
+
+  .reservation-btn {
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-start;
+    flex: 1;
+
+    button p {
+      font-weight: 700;
+      font-family: "Noto Sans KR";
+    }
+  }
 }

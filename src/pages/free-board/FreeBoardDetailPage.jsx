@@ -32,7 +32,7 @@ export function FreeBoardDetailPage() {
 
   return (
     <div className="free-board-detail page-margin-bottom">
-      <BoardSecondHeader header="자유게시판" onclick={() => nav("/community")} />
+      <BoardSecondHeader header="커뮤니티" onclick={() => nav("/community")} />
       <div className="body">
         {post && <FreeBoardPost data={post} />}
         <BoardNav point={comments?.length || 0} text="의 댓글" onclick={getPost} />

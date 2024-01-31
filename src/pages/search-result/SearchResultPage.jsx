@@ -9,7 +9,7 @@ import SearchResultTab from "../../components/search/common/SearchResultTab";
 // 연극 검색 결과 띄우기 위한 컴포넌트 (여기서부터는 개별로)
 import PlaySearchResult from "../../components/search/play-search-result/PlaySearchResult";
 import "./SearchResultPage.scss";
-import Loading from "../../components/common/loading/Loading";
+import Loading from "../../components/common/state/Loading";
 import FreeBoardList from "../../components/board-free/FreeBoardList";
 import { postUrl, promotionUrl } from "../../apis/apiURLs";
 import PromotionSearchResult from "../../components/search/promotion-search-result/PromotionSearchResult";
@@ -92,25 +92,13 @@ export default function SearchResultPage() {
 
   return (
     <>
-      {alert && (
-        <AlertCustom
-          title={alert.title}
-          content={alert.content}
-          open={alert.open}
-          onclose={alert.onclose}
-          severity={alert.severity}
-        />
-      )}
+      {alert && <AlertCustom title={alert.title} content={alert.content} open={alert.open} onclose={alert.onclose} severity={alert.severity} />}
       {isLoading && !playSearchResult && <Loading />}
       {!isLoading && playSearchResult && (
         <div className="search-result-container">
           <SearchResultHeader searchKeyword={searchKeyword} />
           <SearchResultCount />
-          <SearchResultTab
-            playSearchCnt={playSearchResult.length}
-            selectedTabMenu={selectedTabMenu}
-            setSelectedTabMenu={setSelectedTabMenu}
-          />
+          <SearchResultTab playSearchCnt={playSearchResult.length} selectedTabMenu={selectedTabMenu} setSelectedTabMenu={setSelectedTabMenu} />
           {selectedTabMenu === "연극" && (
             <PlaySearchResult
               playSearchResult={playSearchResult}
@@ -119,12 +107,8 @@ export default function SearchResultPage() {
               // setCurPage={setPlayCurPage}
             />
           )}
-          {selectedTabMenu === "홍보게시글" && (
-            <PromotionSearchResult searchResult={promotionSearchResult} />
-          )}
-          {selectedTabMenu === "자유게시글" && (
-            <CommunitySearchResult searchResult={communitySearchResult} />
-          )}
+          {selectedTabMenu === "홍보게시글" && <PromotionSearchResult searchResult={promotionSearchResult} />}
+          {selectedTabMenu === "커뮤니티" && <CommunitySearchResult searchResult={communitySearchResult} />}
         </div>
       )}
     </>

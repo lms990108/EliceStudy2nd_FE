@@ -1,0 +1,53 @@
+.state-layout {
+  width: 340px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .icon {
+    width: 86px;
+    height: 86px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    &.error {
+      background-color: #d32f2f18;
+    }
+
+    &.empty {
+      background-color: #00000018;
+    }
+
+    svg {
+      font-size: 56px;
+    }
+  }
+
+  h3 {
+    margin: 30px 0 10px;
+  }
+
+  p {
+    font-size: 14px;
+    text-align: center;
+    word-break: keep-all;
+    color: #505050;
+  }
+
+  button {
+    margin-top: 20px;
+    width: 140px;
+  }
+
+  .link {
+    margin-top: 20px;
+    color: #1976d2;
+    font-size: 14px;
+    text-align: center;
+    line-height: 1.2;
+    border-bottom: #1976d2 1px solid;
+    font-weight: 600;
+  }
+}

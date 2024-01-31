@@ -9,7 +9,7 @@ import TheaterLocation from "../../components/play-detail/TheaterLocation";
 import { UpButton } from "../../components/common/button/UpButton";
 import { AlertCustom } from "../../components/common/alert/Alerts";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
-import Loading from "../../components/common/loading/Loading";
+import Loading from "../../components/common/state/Loading";
 import { AppContext } from "../../App";
 
 export function PlayDetail() {
@@ -88,10 +88,7 @@ export function PlayDetail() {
               isLoggedIn={userData.isLoggedIn}
               averageRate={playInfo.avg_rating}
             />
-            <PlayDetailNav
-              selected={detailNavMenu}
-              handleClick={handleDetailNavMenuClick}
-            />
+            <PlayDetailNav selected={detailNavMenu} handleClick={handleDetailNavMenuClick} />
             <div className="play-detail-main-box">
               {detailNavMenu === "detail-info" && (
                 <PlayDetailInfo

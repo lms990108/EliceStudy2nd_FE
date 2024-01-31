@@ -4,7 +4,10 @@ import "./MyPlayReview.scss";
 import Button from "@mui/material/Button";
 import { reviewUrl } from "../../apis/apiURLs";
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { CircularProgress } from "@mui/material";
+import ServerError from "../common/state/ServerError";
+import Empty from "../common/state/Empty";
 
 const columns = [
   {
@@ -27,10 +30,12 @@ const columns = [
 function MyPlayReview({ user }) {
   const [reviews, setReviews] = useState([]);
   const [checkedList, setCheckedList] = useState([]);
+  const [state, setState] = useState("loading");
 
   const getReviews = async () => {
+    setState("loading");
     console.log(user.user_id);
-    const res = await fetch(`${reviewUrl}?userId=${user.user_id}&page=1&limit=100`);
+    const res = await fetch(`${reviewUrl}?userId=${user.user_id}`);
     const data = await res.json();
     console.log(data);
 
@@ -40,6 +45,9 @@ function MyPlayReview({ user }) {
           return { ...review, id: review._id };
         })
       );
+      setState("hasValue");
+    } else {
+      setState("hasError");
     }
   };
 
@@ -73,28 +81,36 @@ function MyPlayReview({ user }) {
   return (
     <>
       <div className="my-play-review-container">
-        <div className="my-play-review-header">
-          <h1>내가 작성한 연극 리뷰</h1>
-          <Button onClick={handleClickDeleteBtn} disabled={!checkedList.length} variant="contained" color="orange" sx={{ width: "80px", height: "40px", color: "white" }}>
-            <h4>삭제</h4>
-          </Button>
+        <div className="header">
+          <h1>MY 연극 리뷰</h1>
+          {!reviews.length || (
+            <Button onClick={handleClickDeleteBtn} disabled={!checkedList.length} variant="contained" color="orange" sx={{ width: "80px", height: "40px", color: "white" }}>
+              삭제
+            </Button>
+          )}
         </div>
-        <div style={{ height: "631px", width: "800px" }}>
-          <DataGrid
-            rows={reviews}
-            columns={columns}
-            initialState={{
-              pagination: {
-                paginationModel: { page: 0, pageSize: 10 },
-              },
-            }}
-            checkboxSelection
-            disableRowSelectionOnClick
-            rowSelectionModel={checkedList}
-            onRowSelectionModelChange={(e) => setCheckedList(e)}
-            // unstable_cellSelection
-            // unstable_onCellSelectionModelChange={(selected) => console.log("ss")}
-          />
+        <div className="body">
+          {state === "loading" ? (
+            <CircularProgress className="loading" />
+          ) : state === "hasError" ? (
+            <ServerError onClickBtn={() => getReviews()} />
+          ) : reviews.length ? (
+            <DataGrid
+              rows={reviews}
+              columns={columns}
+              initialState={{
+                pagination: {
+                  paginationModel: { page: 0, pageSize: 10 },
+                },
+              }}
+              checkboxSelection
+              disableRowSelectionOnClick
+              rowSelectionModel={checkedList}
+              onRowSelectionModelChange={(e) => setCheckedList(e)}
+            />
+          ) : (
+            <Empty />
+          )}
         </div>
       </div>
     </>

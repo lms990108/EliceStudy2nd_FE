@@ -3,14 +3,15 @@
 
   .content {
     padding: 0 10px;
+
+    h2 {
+      margin: 0;
+      padding: 10px 0 30px;
+      font-size: 48px;
+      font-weight: bold;
+    }
   }
 
-  h2 {
-    margin: 0;
-    padding: 10px 0;
-    font-size: 48px;
-    font-weight: bold;
-  }
   .flex-box {
     display: flex;
     justify-content: space-between;

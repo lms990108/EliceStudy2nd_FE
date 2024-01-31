@@ -43,7 +43,7 @@ export function FreeBoardEdit() {
 
   return (
     <div className="free-board-form-page page-margin-bottom">
-      <BoardSecondHeader header="자유게시판" onclick={handleCancle} />
+      <BoardSecondHeader header="커뮤니티" onclick={handleCancle} />
       <div className="body">
         <FreeBoardEditForm setInput={(boolean) => setInput(boolean)} handleCancle={handleCancle} post={post} />
       </div>
