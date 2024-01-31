@@ -55,6 +55,11 @@ export function KakaoRedirection({ popup, setPopup, setAlert }) {
     const currentUrl = window.location.href;
     const searchParams = new URL(currentUrl).searchParams;
     const code = searchParams.get("code");
+    const error = searchParams.get("error");
+    if (error === "access_denied") {
+      window.opener.postMessage({ error }, window.location.origin);
+      return;
+    }
     if (code) {
       window.opener.postMessage({ code }, window.location.origin);
     }
@@ -68,6 +73,20 @@ export function KakaoRedirection({ popup, setPopup, setAlert }) {
 
     const kakaoOauthCodeListener = (e) => {
       if (e.origin !== window.location.origin) {
+        return;
+      }
+
+      const { error } = e.data;
+      if (error) {
+        popup?.close();
+        setAlert({
+          title: "정보 제공 동의 필수",
+          content: "정보 제공 동의는 필수입니다.",
+          severity: "error",
+          onclose: () => setAlert(null),
+          onclick: () => setAlert(null),
+          checkBtn: "확인",
+        });
         return;
       }
 

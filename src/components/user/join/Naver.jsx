@@ -30,7 +30,7 @@ export default function Naver() {
     <>
       {alert && (
         <>
-          <Loading />
+          {alert.title !== "정보 제공 동의 필수" ? <Loading /> : null}
           <AlertCustom
             open={true}
             title={alert.title}
