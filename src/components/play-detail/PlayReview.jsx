@@ -60,27 +60,29 @@ export default function PlayReview({
 
   // 현재 로그인한 유저가 작성한 리뷰 가져오기
   const getUserReview = () => {
-    fetch(
-      `https://dailytopia2.shop/api/reviews?showId=${showId}&userId=${userId}`
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        let userReviewData = null;
-        if (data.data.length) {
-          userReviewData = {
-            isUserReviewed: true,
-            review: data.data[0],
-          };
-        } else {
-          userReviewData = {
-            isUserReviewed: false,
-          };
-        }
-        setUserReview(userReviewData);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    if (userId) {
+      fetch(
+        `https://dailytopia2.shop/api/reviews?showId=${showId}&userId=${userId}`
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          let userReviewData = null;
+          if (data.data.length) {
+            userReviewData = {
+              isUserReviewed: true,
+              review: data.data[0],
+            };
+          } else {
+            userReviewData = {
+              isUserReviewed: false,
+            };
+          }
+          setUserReview(userReviewData);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   };
 
   useEffect(() => {

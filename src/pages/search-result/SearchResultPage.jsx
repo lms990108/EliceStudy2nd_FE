@@ -14,6 +14,7 @@ import FreeBoardList from "../../components/board-free/FreeBoardList";
 import { postUrl, promotionUrl } from "../../apis/apiURLs";
 import PromotionSearchResult from "../../components/search/promotion-search-result/PromotionSearchResult";
 import CommunitySearchResult from "../../components/search/community-search-result/CommunitySearchResult";
+import { AlertCustom } from "../../components/common/alert/Alerts";
 
 export default function SearchResultPage() {
   const location = useLocation();
@@ -29,6 +30,44 @@ export default function SearchResultPage() {
   const [playSearchResult, setPlaySearchResult] = useState(null);
   const [promotionSearchResult, setPromotionSearchResult] = useState(null);
   const [communitySearchResult, setCommunitySearchResult] = useState(null);
+
+  // 연극 검색 결과 현재 페이지
+  const [playCurPage, setPlayCurPage] = useState(1);
+
+  // alert
+  const [alert, setAlert] = useState(null);
+
+  const getPlaySearchResult = async () => {
+    try {
+      const res = await fetch(
+        `https://dailytopia2.shop/api/shows?title=${searchKeyword}&limit=1000`
+        // `https://dailytopia2.shop/api/shows?title=${searchKeyword}&page=${playCurPage}&limit=10`
+      );
+      const data = await res.json();
+      if (res.ok) {
+        setPlaySearchResult(data.shows);
+        setIsLoading(false);
+      } else {
+        setAlert({
+          title: "오류",
+          content: "연극 데이터를 가져오는 중 오류가 발생하였습니다.",
+          open: true,
+          onclose: () => setAlert(null),
+          severity: "error",
+        });
+        setIsLoading(false);
+      }
+    } catch (err) {
+      setAlert({
+        title: "오류",
+        content: "연극 데이터를 가져오는 중 오류가 발생하였습니다.",
+        open: true,
+        onclose: () => setAlert(null),
+        severity: "error",
+      });
+      setIsLoading(false);
+    }
+  };
 
   const getPromotionSearchResult = async () => {
     const res = await fetch(`${promotionUrl}`);
@@ -46,30 +85,46 @@ export default function SearchResultPage() {
 
   // 검색 결과 받아오기
   useEffect(() => {
-    fetch(`https://dailytopia2.shop/api/shows?title=${searchKeyword}&limit=1000`)
-      .then((res) => res.json())
-      .then((data) => {
-        setPlaySearchResult(data.shows);
-        setIsLoading(false);
-      })
-      .catch((err) => alert(err));
-
+    getPlaySearchResult();
     getPromotionSearchResult();
     getCommunitySearchResult();
   }, []);
 
   return (
     <>
-      {isLoading ? (
-        <Loading />
-      ) : (
+      {alert && (
+        <AlertCustom
+          title={alert.title}
+          content={alert.content}
+          open={alert.open}
+          onclose={alert.onclose}
+          severity={alert.severity}
+        />
+      )}
+      {isLoading && !playSearchResult && <Loading />}
+      {!isLoading && playSearchResult && (
         <div className="search-result-container">
           <SearchResultHeader searchKeyword={searchKeyword} />
           <SearchResultCount />
-          <SearchResultTab playSearchCnt={playSearchResult.length} selectedTabMenu={selectedTabMenu} setSelectedTabMenu={setSelectedTabMenu} />
-          {selectedTabMenu === "연극" && <PlaySearchResult playSearchResult={playSearchResult} setPlaySearchResult={setPlaySearchResult} />}
-          {selectedTabMenu === "홍보게시글" && <PromotionSearchResult searchResult={promotionSearchResult} />}
-          {selectedTabMenu === "자유게시글" && <CommunitySearchResult searchResult={communitySearchResult} />}
+          <SearchResultTab
+            playSearchCnt={playSearchResult.length}
+            selectedTabMenu={selectedTabMenu}
+            setSelectedTabMenu={setSelectedTabMenu}
+          />
+          {selectedTabMenu === "연극" && (
+            <PlaySearchResult
+              playSearchResult={playSearchResult}
+              setPlaySearchResult={setPlaySearchResult}
+              // curPage={playCurPage}
+              // setCurPage={setPlayCurPage}
+            />
+          )}
+          {selectedTabMenu === "홍보게시글" && (
+            <PromotionSearchResult searchResult={promotionSearchResult} />
+          )}
+          {selectedTabMenu === "자유게시글" && (
+            <CommunitySearchResult searchResult={communitySearchResult} />
+          )}
         </div>
       )}
     </>

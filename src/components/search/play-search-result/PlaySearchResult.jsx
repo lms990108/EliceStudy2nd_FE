@@ -7,6 +7,8 @@ import PlaySearchPagination from "./PlaySearchPagination";
 export default function PlaySearchResult({
   playSearchResult,
   setPlaySearchResult,
+  curPage,
+  setCurPage,
 }) {
   const [paginationPlaySearch, setPaginationPlaySearch] = useState(
     playSearchResult.slice(0, 10)
@@ -23,7 +25,7 @@ export default function PlaySearchResult({
           <section className="play-search-result-container">
             <PlaySearchHeader setPlaySearchResult={setPlaySearchResult} />
             <div className="play-search-content">
-              {paginationPlaySearch.map((play) => (
+              {paginationPlaySearch.map((play, idx) => (
                 <PlaySearchContentBox
                   showId={play.showId}
                   imgSrc={play.poster}
@@ -33,6 +35,7 @@ export default function PlaySearchResult({
                   endDate={play.end_date}
                   price={play.price}
                   state={play.state}
+                  key={idx}
                 />
               ))}
             </div>
