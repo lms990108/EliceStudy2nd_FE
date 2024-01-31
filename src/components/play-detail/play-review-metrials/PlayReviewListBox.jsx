@@ -65,6 +65,21 @@ export default function PlayReviewListBox({
             checkBtn: "확인",
             btnCloseHidden: true,
           });
+        } else if (res.status === 401 || res.status === 403) {
+          setAlert({
+            title: "로그인 필요",
+            content:
+              "로그인이 필요한 기능입니다. 로그인 페이지로 이동하시겠습니까?",
+            open: true,
+            onclose: () => setAlert(null),
+            onclick: () =>
+              navigate("/signup-in", {
+                state: { from: `${location.pathname}${location.search}` },
+              }),
+            severity: "warning",
+            checkBtn: "확인",
+            closeBtn: "취소",
+          });
         } else {
           setAlert({
             title: `삭제 실패`,

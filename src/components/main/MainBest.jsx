@@ -69,7 +69,7 @@ function MainBest() {
 
         // 상위 18개 항목 선택
         const top18Shows = rankedShows.slice(0, 18);
-        
+
         // 각 연극에 인덱스 기반 순위 부여
         top18Shows.forEach((show, index) => {
           show.newRank = index + 1;
@@ -84,7 +84,7 @@ function MainBest() {
 
         setShows(reorderedShows);
       })
-      .catch((err) => alert(err));
+      .catch((err) => console.error(err));
   }, []);
 
   const formatTitle = (title) => {

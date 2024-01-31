@@ -61,7 +61,7 @@ function MainPreferredRegion() {
 
         setShows(filteredShows.slice(0, 6));
       })
-      .catch((err) => alert(err));
+      .catch((err) => console.error(err));
   }, [selectedRegion]);
 
   const formatTitle = (title) => {

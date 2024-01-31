@@ -79,7 +79,7 @@ function MyPlayReview({ user }) {
             <h4>삭제</h4>
           </Button>
         </div>
-        <div style={{ height: "628px", width: "800px" }}>
+        <div style={{ height: "631px", width: "800px" }}>
           <DataGrid
             rows={reviews}
             columns={columns}
