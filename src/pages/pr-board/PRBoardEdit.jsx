@@ -1,18 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { BoardSecondHeader } from "../../components/board";
 import "./PRBoardFormPage.scss";
 import { AlertCustom } from "../../components/common/alert/Alerts";
 import { useNavigate, useParams } from "react-router-dom";
 import { PRBoardEditForm } from "../../components/board-pr/PRBoardEdit";
-import useGetUser from "../../hooks/authoriaztionHooks/useGetUser";
 import { promotionUrl } from "../../apis/apiURLs";
+import { AppContext } from "../../App";
 
 export function PRBoardEdit() {
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState(false);
   const [post, setPost] = useState();
   const params = useParams();
-  const user = useGetUser();
+  const { userData } = useContext(AppContext);
   const nav = useNavigate();
 
   const handleCancle = (e) => {
@@ -29,7 +29,7 @@ export function PRBoardEdit() {
       // 404페이지
       return;
     }
-    if (data.user_id.nickname !== user.nickname) {
+    if (data.user_id.nickname !== userData.nickname) {
       console.log("접근제한");
       // 403페이지로 리다이랙트
       return;

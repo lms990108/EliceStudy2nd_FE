@@ -156,24 +156,11 @@ export function PlayList() {
 
   return (
     <div className="play-list-container">
-      {error ? (
-        <AlertCustom
-          title={"Error"}
-          content={error}
-          open={isAlertOpen}
-          onclose={() => setIsAlertOpen(false)}
-          severity={"error"}
-        />
-      ) : null}
+      {error ? <AlertCustom title={"Error"} content={error} open={isAlertOpen} onclose={() => setIsAlertOpen(false)} severity={"error"} /> : null}
       {isLoading && <Loading />}
       {!isLoading && (
         <>
-          <RegionSelectBar
-            changeSelectedRegion={changeSelectedRegion}
-            selectedRegion={selectedRegion}
-            changeIsCalendar={changeIsCalendar}
-            isCalendar={isCalendar}
-          />
+          <RegionSelectBar changeSelectedRegion={changeSelectedRegion} selectedRegion={selectedRegion} changeIsCalendar={changeIsCalendar} isCalendar={isCalendar} />
           {!isCalendar && (
             <ConditionSearch
               sortStandard={sortStandard}
@@ -226,10 +213,7 @@ export function PlayList() {
                       imgSrc: play.poster,
                       title: play.title,
                       place: play.location,
-                      period:
-                        play.start_date.split("T")[0] +
-                        " ~ " +
-                        play.end_date.split("T")[0],
+                      period: play.start_date.split("T")[0] + " ~ " + play.end_date.split("T")[0],
                       price: play.price,
                       state: play.state,
                     }}
@@ -251,11 +235,7 @@ export function PlayList() {
           )}
           {isCalendar && clickedDate !== null && datePlays[clickedDate] && (
             <>
-              <PlayListHeader
-                count={datePlays[clickedDate].length}
-                setSortStandard={setSortStandard}
-                sortStandard={sortStandard}
-              />
+              <PlayListHeader count={datePlays[clickedDate].length} setSortStandard={setSortStandard} sortStandard={sortStandard} />
               <div className="play-list-main">
                 {/* 보여져야 하는 것은 페이지네이션 된 연극이므로 filteredPlays 대신 paginationPlays 사용! */}
                 {plays.map((play) => (
@@ -266,10 +246,7 @@ export function PlayList() {
                       imgSrc: play.poster,
                       title: play.title,
                       place: play.location,
-                      period:
-                        play.start_date.split("T")[0] +
-                        " ~ " +
-                        play.end_date.split("T")[0],
+                      period: play.start_date.split("T")[0] + " ~ " + play.end_date.split("T")[0],
                       price: play.price,
                     }}
                   />

@@ -1,5 +1,5 @@
 // 마이페이지 화면
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./MyPage.scss";
 import MemberInfo from "../../components/mypage/MemberInfo";
 import MemberDeletion from "../../components/mypage/MemberDeletion";
@@ -8,12 +8,13 @@ import MyPlayReview from "../../components/mypage/MyPlayReview";
 import MyPRBoard from "../../components/mypage/MyPRBoard";
 import MyFreeBoard from "../../components/mypage/MyFreeBoard";
 import MyComments from "../../components/mypage/MyComments";
-import useGetUser from "../../hooks/authoriaztionHooks/useGetUser";
 import { useNavigate } from "react-router";
+import { AppContext } from "../../App";
+import { CircularProgress } from "@mui/material";
 
 export default function MyPage() {
   const [selectedComponent, setSelectedComponent] = useState("MemberInfo");
-  const user = useGetUser();
+  const { userData, setUserData } = useContext(AppContext);
   const nav = useNavigate();
 
   const isSelected = (componentName) => {
@@ -23,17 +24,17 @@ export default function MyPage() {
   const renderComponent = () => {
     switch (selectedComponent) {
       case "MemberInfo":
-        return <MemberInfo />;
+        return <MemberInfo user={userData.user} setUserData={setUserData} />;
       case "MemberDeletion":
         return <MemberDeletion />;
       case "MyPickList":
-        return <MyPickList />;
+        return <MyPickList user={userData.user} />;
       case "MyPlayReview":
-        return <MyPlayReview />;
+        return <MyPlayReview user={userData.user} />;
       case "MyPRBoard":
-        return <MyPRBoard />;
+        return <MyPRBoard user={userData.user} />;
       case "MyFreeBoard":
-        return <MyFreeBoard />;
+        return <MyFreeBoard user={userData.user} />;
       case "MyComments":
         return <MyComments />;
       default:
@@ -42,14 +43,15 @@ export default function MyPage() {
   };
 
   useEffect(() => {
-    if (!user.isLoggedIn) {
+    console.log(userData);
+    if (userData && !userData.isLoggedIn) {
       nav("/signup-in");
     }
-  }, []);
+  }, [userData]);
 
   return (
     <>
-      {user.isLoggedIn && (
+      {userData ? (
         <div className="mypage-template">
           <div className="mypage-container">
             <div className="mypage-nav">
@@ -95,6 +97,8 @@ export default function MyPage() {
             <div className="mypage-content-area">{renderComponent()}</div>
           </div>
         </div>
+      ) : (
+        <CircularProgress color="inherit" />
       )}
     </>
   );

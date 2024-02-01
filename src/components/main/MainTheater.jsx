@@ -36,7 +36,7 @@ function MainTheater() {
 
         setShows(filteredAndSortedShows);
       })
-      .catch((err) => alert(err));
+      .catch((err) => console.error(err));
   }, [selectedTheater]);
 
   const theaterArray = [
@@ -114,16 +114,19 @@ function MainTheater() {
             alt="theater-image"
           />
           <div>
-          <p>{theaterInfo.text1}</p>
-          <p>{theaterInfo.text2}</p>
-          <p>{theaterInfo.text3}</p>
+            <p>{theaterInfo.text1}</p>
+            <p>{theaterInfo.text2}</p>
+            <p>{theaterInfo.text3}</p>
           </div>
           <span></span>
         </div>
         <div className="theater-play">
           {shows.map((show, index) => (
             <div key={index} className="theater-play-list">
-              <div className="theater-play-img-box" onClick={() => handleShowClick(show.showId)}>
+              <div
+                className="theater-play-img-box"
+                onClick={() => handleShowClick(show.showId)}
+              >
                 <img src={show.poster} alt={show.title} />
               </div>
               <div onClick={() => handleShowClick(show.showId)}>

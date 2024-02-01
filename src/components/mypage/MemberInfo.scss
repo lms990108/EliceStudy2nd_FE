@@ -1,115 +1,130 @@
 .member-info-container {
-  h1 {
-    margin: 64px 0 0 50px;
-    padding-bottom: 20px;
-    font-size: 24px;
-    width: 800px;
-    border-bottom: 4px solid #ccc;
-  }
-}
-.member-info-profile-box {
   display: flex;
-  justify-content: center;
-  width: 800px;
+  flex-direction: column;
   align-items: center;
-  gap: 28px;
-  margin: 40px 0 0 50px;
+  height: 780px;
+  margin: 10px 0;
 
-  .profile-photo {
-    width: 112px;
-    height: 112px;
-    background-color: #d3d3d3;
-    border-radius: 50%;
-    overflow: hidden;
-    position: relative;
-
-    img {
-      position: absolute;
-      width: 100%;
-      height: 100%;
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 800px;
+    height: 40px;
+    border-bottom: 4px solid #ccc;
+    padding: 34px 0 16px;
+    h1 {
+      margin: 0;
     }
+  }
 
-    input {
-      display: none;
-    }
+  .member-info-profile-box {
+    display: flex;
+    justify-content: center;
+    width: 800px;
+    align-items: center;
+    gap: 28px;
+    padding: 40px 0;
 
-    .profile-edit {
-      width: 100%;
-      height: 100%;
-      background-color: #0000006e;
-      position: absolute;
-      align-items: center;
-      display: flex;
-      cursor: pointer;
+    .profile-photo {
+      width: 112px;
+      height: 112px;
+      background-color: #d3d3d3;
+      border-radius: 50%;
+      overflow: hidden;
+      position: relative;
 
-      .icon {
-        margin: 0 auto;
+      img {
+        position: absolute;
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
+      }
+
+      input {
+        display: none;
+      }
+
+      .profile-edit {
+        width: 100%;
+        height: 100%;
+        background-color: #0000006e;
+        position: absolute;
+        align-items: center;
+        display: flex;
+        cursor: pointer;
+
+        .icon {
+          margin: 0 auto;
+        }
       }
     }
   }
-}
 
-.profile-nickname {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100px;
-  width: 600px;
-  background-color: #d3d3d3;
-  border-radius: 10px;
-  p {
-    font-size: 20px;
-    font-weight: 500;
+  .profile-nickname {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+    width: 600px;
+    background-color: #d3d3d3;
+    border-radius: 10px;
+    p {
+      font-size: 20px;
+      font-weight: 500;
+    }
   }
-}
-.member-info-box {
-  display: flex;
-  flex-direction: column;
-  width: 800px;
-  margin: 40px 0 0 50px;
-  p {
-    font-weight: 600;
-  }
-  border-top: 0.5px solid black;
-  border-bottom: 0.5px solid black;
-}
-.member-id-box {
-  display: flex;
-  align-items: center;
-  padding: 20px 0;
-  gap: 40px;
-  border-bottom: 0.5px dotted black;
-}
-.member-id {
-  display: flex;
-  align-items: center;
-  width: 192px;
-  height: 48px;
-  background-color: #bcbcbc;
-  border-radius: 4px;
-  padding-left: 8px;
-}
-.member-nickname-box {
-  display: flex;
-  align-items: center;
-  padding: 20px 0;
-  gap: 40px;
-  border-bottom: 0.5px dotted black;
+  .member-info-box {
+    display: flex;
+    flex-direction: column;
+    width: 800px;
+    p {
+      font-weight: 600;
+    }
+    border-top: 0.5px solid black;
+    border-bottom: 0.5px solid black;
 
-  * {
-    line-height: 1;
+    .member-nickname-box {
+      .textfield * {
+        line-height: 1;
+      }
+      display: flex;
+      align-items: center;
+      padding: 20px 0;
+      gap: 40px;
+      border-bottom: 0.5px dotted black;
+    }
   }
-}
-.member-preferred-region-box {
-  padding: 20px 0;
-}
-.member-preferred-region-check-list {
-  margin-top: 8px;
-  width: 800px;
-}
-.member-info-btn-box {
-  display: flex;
-  justify-content: center;
-  width: 800px;
-  margin: 40px 0 0 50px;
+
+  .member-id-box {
+    display: flex;
+    align-items: center;
+    padding: 20px 0;
+    gap: 20px;
+    border-bottom: 0.5px dotted black;
+  }
+
+  .member-id {
+    display: flex;
+    align-items: center;
+    min-width: 150px;
+    height: 40px;
+    background-color: #d3d3d3;
+    border-radius: 4px;
+    padding-left: 14px;
+  }
+
+  .member-preferred-region-box {
+    padding: 20px 0;
+  }
+  .member-preferred-region-check-list {
+    margin-top: 8px;
+    width: 800px;
+  }
+  .member-info-btn-box {
+    display: flex;
+    justify-content: center;
+    width: 800px;
+    margin: 40px 0 0 50px;
+  }
 }

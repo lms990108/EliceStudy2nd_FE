@@ -2,6 +2,20 @@
   font-family: "Noto Sans KR";
   max-width: 1040px;
   width: 100%;
+
+  .state {
+    width: calc(100% - 32px);
+    padding: 40px 0;
+    margin: 40px 16px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &.box {
+      height: calc(100vh - 500px);
+      background-color: #0000000c;
+    }
+  }
 }
 
 .scroll-ref {

@@ -52,7 +52,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        margin: 0 40px;
+        margin: 0 12px;
         width: 320px;
         height: 280px;
         img {
@@ -63,7 +63,6 @@
           object-fit: cover; /* 이미지가 li 박스를 꽉 채우도록 설정 */
           transition: 0.4s;
           &:hover {
-            border: 2px solid white;
             cursor: pointer;
             filter: brightness(70%);
           }

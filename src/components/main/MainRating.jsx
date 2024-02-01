@@ -69,7 +69,7 @@ function MainRating() {
 
         setShows(reorderedShows);
       })
-      .catch((err) => alert(err));
+      .catch((err) => console.error(err));
   }, []);
 
   const formatTitle = (title) => {

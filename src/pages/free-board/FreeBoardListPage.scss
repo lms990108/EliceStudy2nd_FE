@@ -6,6 +6,16 @@
   .main {
     margin: 0 3%;
   }
+
+  .state {
+    width: 100%;
+    height: calc(100vh - 500px);
+    margin: 20px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #0000000c;
+  }
 }
 
 .pagination {
