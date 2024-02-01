@@ -8,7 +8,7 @@ import PaginationBox from "../../components/play-list/PaginationBox";
 import RegionSelectBar from "../../components/play-list/RegionSelectBar";
 import PlayListCalendar from "../../components/play-list/calendar-material/PlayListCalendar";
 import { AlertCustom } from "../../../src/components/common/alert/Alerts";
-import Loading from "../../components/common/loading/Loading";
+import Loading from "../../components/common/state/Loading";
 
 // 지역, 상태별, 가격별, 정렬 기준, 캘린더 여부 띄워야 함!
 
