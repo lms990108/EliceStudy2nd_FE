@@ -3,14 +3,18 @@
   .play-list-header {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     margin-top: 80px;
 
     .number-of-plays {
       font-weight: 700;
       font-size: 28px;
+      margin-bottom: 10px;
 
-      span {
-        color: #ffb400;
+      .play-count {
+        span {
+          color: #ffb400;
+        }
       }
     }
 
@@ -18,7 +22,6 @@
       width: 120px;
       height: 40px;
       font-size: 16px;
-      font-family: "Nanum Gothic", sans-serif;
       text-align: center;
       border: 1px solid rgba(188, 188, 188, 0.7);
       border-radius: 8px;

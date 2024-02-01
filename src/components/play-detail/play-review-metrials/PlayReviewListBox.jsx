@@ -13,6 +13,7 @@ export default function PlayReviewListBox({
   reviewInfo,
   setIsReviewFormOpened,
   review_id,
+  scrollRef,
 }) {
   const {
     isAuthorLogined,
@@ -43,6 +44,7 @@ export default function PlayReviewListBox({
   };
 
   const deleteReview = (review_id) => {
+    console.log(review_id);
     fetch(`https://dailytopia2.shop/api/reviews/${review_id}`, {
       method: "DELETE",
       credentials: "include",
@@ -90,7 +92,8 @@ export default function PlayReviewListBox({
           });
         }
       })
-      .catch(() => {
+      .catch((err) => {
+        console.log(err);
         setAlert({
           title: `삭제 실패`,
           content: `리뷰 삭제에 실패하였습니다.`,
@@ -170,6 +173,7 @@ export default function PlayReviewListBox({
             isAuthorLogined,
           }}
           setIsReviewFormOpened={setIsReviewFormOpened}
+          scrollRef={scrollRef}
         />
       ) : null}
     </>

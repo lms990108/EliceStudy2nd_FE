@@ -105,7 +105,14 @@
     }
 
     .play-list-calendar-box {
+      display: flex;
+      justify-content: center;
+      padding-bottom: 30px;
+
       @include full-calendar-custom();
+      .fc {
+        width: 800px;
+      }
     }
   }
 }

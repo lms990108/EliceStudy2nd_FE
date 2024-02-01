@@ -1,15 +1,37 @@
 import "./PlayListHeader.scss";
+import Chip from "@mui/material/Chip";
+import Stack from "@mui/material/Stack";
+import TodayIcon from "@mui/icons-material/Today";
 
 // 연극 개수와 정렬 기준
 export default function PlayListHeader({
   count,
   setSortStandard,
   sortStandard,
+  clickedDate,
 }) {
   return (
     <div className="play-list-header">
+      {!clickedDate ? (
+        ""
+      ) : (
+        <Stack
+          direction="row"
+          spacing={2}
+          className="adapted-conditions"
+          sx={{ margin: 0 }}
+        >
+          <Chip
+            icon={<TodayIcon />}
+            label={clickedDate}
+            sx={{ fontSize: "20px", fontWeight: "bold" }}
+          />
+        </Stack>
+      )}
       <div className="number-of-plays">
-        <span>{count}개</span>의 연극
+        <div className="play-count">
+          <span>{count}개</span>의 연극
+        </div>
       </div>
       <select
         className="sort-by"

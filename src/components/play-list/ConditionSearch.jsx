@@ -41,6 +41,7 @@ export default function ConditionSearch({
                   division={conditionText.division}
                   options={conditionText.options}
                   selectedRegion={selectedRegion}
+                  innerWidth={innerWidth}
                 />
               </ConditionContext.Provider>
             ))}
