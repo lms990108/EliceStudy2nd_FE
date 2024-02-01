@@ -28,7 +28,7 @@ export function PRBoardFormPage() {
         onclick={() => nav("/promotion")}
         closeBtn={"취소"}
         checkBtn={"확인"}
-        checkBtnColor={"red"}
+        checkBtnColor={"#ff9800"}
         severity={"warning"}
         title={"teenybox.com 내용:"}
         content={

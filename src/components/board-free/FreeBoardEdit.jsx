@@ -11,9 +11,9 @@ export function FreeBoardEditForm({ setInput, handleCancle, post }) {
   const [submit, setSubmit] = useState(false);
   const [openSubmit, setOpenSubmit] = useState(false);
   const [openComplete, setOpenComplete] = useState(false);
-  const [inputTitle, setInputTitle] = useState("");
+  const [inputTitle, setInputTitle] = useState(post?.title || "");
   const [errorTitle, setErrorTitle] = useState("");
-  const [inputContent, setInputContent] = useState("");
+  const [inputContent, setInputContent] = useState(post?.content || "");
   const [errorContent, setErrorContent] = useState("");
   const nav = useNavigate();
 

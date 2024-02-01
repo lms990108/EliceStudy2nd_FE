@@ -25,21 +25,21 @@ export function PRBoardEdit() {
     const data = await res.json();
     console.log(data);
     if (!res.ok) {
-      console.log("페이지 없음");
-      // 404페이지
+      nav("/not-found");
       return;
     }
     if (data.user_id.nickname !== userData.user.nickname) {
-      console.log("접근제한");
-      // 403페이지로 리다이랙트
+      nav("/forbidden");
       return;
     }
     setPost(data);
   };
 
   useEffect(() => {
-    getPost();
-  }, []);
+    if (userData?.user?.nickname) {
+      getPost();
+    }
+  }, [userData]);
 
   return (
     <div className="pr-board-form-page page-margin-bottom">
@@ -54,7 +54,7 @@ export function PRBoardEdit() {
         onclick={() => nav("/promotion")}
         closeBtn={"취소"}
         checkBtn={"확인"}
-        checkBtnColor={"red"}
+        checkBtnColor={"#ff9800"}
         severity={"warning"}
         title={"teenybox.com 내용:"}
         content={
