@@ -10,7 +10,7 @@ export function KakaoRedirection({ popup, setPopup, setAlert }) {
   const navigate = useNavigate();
 
   const getLoggedInUserInfo = () => {
-    fetch(`https://dailytopia2.shop/api/users/login-status`, {
+    fetch(`https://dailytopia2.shop/api/users`, {
       credentials: "include",
     })
       .then((res) => {
@@ -28,7 +28,7 @@ export function KakaoRedirection({ popup, setPopup, setAlert }) {
         }
       })
       .then((data) => {
-        setUserData(data);
+        setUserData({ isLoggedIn: true, user: data.user });
       })
       .then(() => {
         setTimeout(() => {
