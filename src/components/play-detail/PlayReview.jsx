@@ -44,10 +44,11 @@ export default function PlayReview({
       .then((data) => {
         console.log(data);
         setReviews(data.data);
-        setTotalCount(data.meta.total);
+        setTotalCount(data.total);
         setIsLoading(false);
       })
-      .catch(() => {
+      .catch((err) => {
+        console.log(err);
         setAlert({
           title: "오류",
           content: "리뷰 데이터를 받아오는 데 실패했습니다.",

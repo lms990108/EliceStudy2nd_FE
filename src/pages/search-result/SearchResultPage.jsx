@@ -28,11 +28,16 @@ export default function SearchResultPage() {
   const [selectedTabMenu, setSelectedTabMenu] = useState("연극");
   // 연극 검색 결과
   const [playSearchResult, setPlaySearchResult] = useState(null);
+  console.log(playSearchResult);
   const [promotionSearchResult, setPromotionSearchResult] = useState(null);
   const [communitySearchResult, setCommunitySearchResult] = useState(null);
 
+  // 연극 검색 결과 정렬 기준
+  const [sortStandard, setSortStandard] = useState("recent");
   // 연극 검색 결과 현재 페이지
   const [playCurPage, setPlayCurPage] = useState(1);
+  // 연극 검색 결과 총 개수
+  const [playTotalCnt, setPlayTotalCnt] = useState(0);
 
   // alert
   const [alert, setAlert] = useState(null);
@@ -40,12 +45,12 @@ export default function SearchResultPage() {
   const getPlaySearchResult = async () => {
     try {
       const res = await fetch(
-        `https://dailytopia2.shop/api/shows?title=${searchKeyword}&limit=1000`
-        // `https://dailytopia2.shop/api/shows?title=${searchKeyword}&page=${playCurPage}&limit=10`
+        `https://dailytopia2.shop/api/shows?title=${searchKeyword}&order=${sortStandard}&page=${playCurPage}&limit=10`
       );
       const data = await res.json();
       if (res.ok) {
-        setPlaySearchResult(data.shows);
+        setPlaySearchResult(data.data);
+        setPlayTotalCnt(data.total);
         setIsLoading(false);
       } else {
         setAlert({
@@ -85,10 +90,14 @@ export default function SearchResultPage() {
 
   // 검색 결과 받아오기
   useEffect(() => {
-    getPlaySearchResult();
     getPromotionSearchResult();
     getCommunitySearchResult();
   }, []);
+
+  // 연극 검색 결과 받아오기
+  useEffect(() => {
+    getPlaySearchResult();
+  }, [sortStandard, playCurPage]);
 
   return (
     <>
@@ -107,7 +116,7 @@ export default function SearchResultPage() {
           <SearchResultHeader searchKeyword={searchKeyword} />
           <SearchResultCount />
           <SearchResultTab
-            playSearchCnt={playSearchResult.length}
+            playSearchCnt={playTotalCnt}
             selectedTabMenu={selectedTabMenu}
             setSelectedTabMenu={setSelectedTabMenu}
           />
@@ -115,8 +124,12 @@ export default function SearchResultPage() {
             <PlaySearchResult
               playSearchResult={playSearchResult}
               setPlaySearchResult={setPlaySearchResult}
-              // curPage={playCurPage}
-              // setCurPage={setPlayCurPage}
+              curPage={playCurPage}
+              setCurPage={setPlayCurPage}
+              playTotalCnt={playTotalCnt}
+              searchKeyword={searchKeyword}
+              setAlert={setAlert}
+              setSortStandard={setSortStandard}
             />
           )}
           {selectedTabMenu === "홍보게시글" && (

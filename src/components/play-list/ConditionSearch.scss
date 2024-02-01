@@ -21,17 +21,6 @@
     border: 1px solid rgba(188, 188, 188, 0.5);
     border-radius: 8px;
   }
-
-  .adapt-button {
-    display: flex;
-    justify-content: flex-end;
-    padding: 10px 30px;
-
-    .adapt-button-text {
-      font-weight: 700;
-      font-size: 14px;
-    }
-  }
 }
 
 @media (min-width: 481px) and (max-width: 1129px) {
@@ -55,17 +44,6 @@
     background-color: #ffffff;
     border: 1px solid rgba(188, 188, 188, 0.5);
     border-radius: 8px;
-  }
-
-  .adapt-button {
-    display: flex;
-    justify-content: flex-end;
-    padding: 10px 30px;
-
-    .adapt-button-text {
-      font-weight: 700;
-      font-size: 14px;
-    }
   }
 }
 
@@ -103,16 +81,6 @@
       p {
         font-weight: 700;
         font-size: 18px;
-      }
-    }
-
-    .adapt-button {
-      display: flex;
-      justify-content: center;
-
-      .adapt-button-text {
-        font-weight: 700;
-        font-size: 15px;
       }
     }
   }

@@ -9,23 +9,22 @@ export default function PlaySearchResult({
   setPlaySearchResult,
   curPage,
   setCurPage,
+  playTotalCnt,
+  searchKeyword,
+  setAlert,
+  setSortStandard,
 }) {
-  const [paginationPlaySearch, setPaginationPlaySearch] = useState(
-    playSearchResult.slice(0, 10)
-  );
-
-  useEffect(() => {
-    setPaginationPlaySearch(playSearchResult.slice(0, 10));
-  }, [playSearchResult]);
-
   return (
     <>
       {playSearchResult.length ? (
         <>
           <section className="play-search-result-container">
-            <PlaySearchHeader setPlaySearchResult={setPlaySearchResult} />
+            <PlaySearchHeader
+              setSortStandard={setSortStandard}
+              setCurPage={setCurPage}
+            />
             <div className="play-search-content">
-              {paginationPlaySearch.map((play, idx) => (
+              {playSearchResult.map((play, idx) => (
                 <PlaySearchContentBox
                   showId={play.showId}
                   imgSrc={play.poster}
@@ -41,9 +40,12 @@ export default function PlaySearchResult({
             </div>
           </section>
           <PlaySearchPagination
-            playSearchResultCnt={playSearchResult.length}
-            playSearchResult={playSearchResult}
-            setPaginationPlaySearch={setPaginationPlaySearch}
+            curPage={curPage}
+            setCurPage={setCurPage}
+            playTotalCnt={playTotalCnt}
+            keyword={searchKeyword}
+            setPlaySearchResult={setPlaySearchResult}
+            setAlert={setAlert}
           />
         </>
       ) : (

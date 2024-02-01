@@ -7,7 +7,7 @@ import Typography from "@mui/material/Typography";
 export default function ConditionCheckBox({ division, option }) {
   // 체크박스를 클릭하면 조건 객체에 들어있는 상태가 바뀌어야 하므로 ContextAPI로 상태 변경을 위한 함수를 가져옴.
   const conditionContext = useContext(ConditionContext);
-  const { conditions, setConditions, setIsAdaptBtnClicked } = conditionContext;
+  const { conditions, setConditions } = conditionContext;
 
   const handleCheckboxChange = (division, option) => {
     setConditions((prevConditions) => {
@@ -45,7 +45,6 @@ export default function ConditionCheckBox({ division, option }) {
 
       return updatedConditions;
     });
-    setIsAdaptBtnClicked(false);
   };
 
   const handleCheckAll = (division) => {
@@ -55,7 +54,6 @@ export default function ConditionCheckBox({ division, option }) {
         [division]: ["전체"],
       };
     });
-    setIsAdaptBtnClicked(false);
   };
 
   return (
@@ -76,9 +74,7 @@ export default function ConditionCheckBox({ division, option }) {
           }
         />
       }
-      label={
-        <Typography fontFamily="Nanum Gothic, sans-serif">{option}</Typography>
-      }
+      label={<Typography>{option}</Typography>}
     />
   );
 }
