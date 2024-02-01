@@ -4,32 +4,52 @@ import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 
 export default function PlaySearchPagination({
-  playSearchResultCnt,
-  playSearchResult,
-  setPaginationPlaySearch,
+  curPage,
+  setCurPage,
+  playTotalCnt,
+  keyword,
+  setPlaySearchResult,
+  setAlert,
 }) {
-  // 현재 페이지 숫자를 나타내기 위한 상태
-  const [currentPage, setCurrentPage] = useState(1);
-
+  // console.log();
   const handlePageNumberChange = (e, number) => {
-    setPaginationPlaySearch(
-      playSearchResult.slice(10 * number - 10, 10 * number)
-    );
-    setCurrentPage(number);
-  };
+    setCurPage(number);
 
-  // 정렬 조건이 변할 때 1로 되돌아오는 코드 추가
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [playSearchResult]);
+    // fetch(
+    //   `https://dailytopia2.shop/api/shows?title=${keyword}&page=${number}&limit=10`
+    // )
+    //   .then((res) => {
+    //     if (res.ok) {
+    //       return res.json();
+    //     } else {
+    //       setAlert({
+    //         title: "오류",
+    //         content: "연극 데이터를 가져오는 중 오류가 발생하였습니다.",
+    //         open: true,
+    //         onclose: () => setAlert(null),
+    //         severity: "error",
+    //       });
+    //     }
+    //   })
+    //   .then((data) => setPlaySearchResult(data.data))
+    //   .catch(() => {
+    //     setAlert({
+    //       title: "오류",
+    //       content: "리뷰 데이터를 받아오는 데 실패했습니다.",
+    //       severity: "error",
+    //       open: true,
+    //       onclose: () => setAlert(null),
+    //     });
+    //   });
+  };
 
   return (
     <div className="play-search-pagination">
       <Stack spacing={2}>
         <Pagination
-          count={Math.ceil(playSearchResultCnt / 10)}
+          count={Math.ceil(playTotalCnt / 10)}
           color="secondary"
-          page={currentPage}
+          page={curPage}
           size="large"
           onChange={handlePageNumberChange}
         />

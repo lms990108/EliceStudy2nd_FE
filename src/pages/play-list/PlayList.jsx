@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import "./PlayList.scss";
 import ConditionSearch from "../../components/play-list/ConditionSearch";
 import PlayListHeader from "../../components/play-list/PlayListHeader";
@@ -8,29 +9,31 @@ import RegionSelectBar from "../../components/play-list/RegionSelectBar";
 import PlayListCalendar from "../../components/play-list/calendar-material/PlayListCalendar";
 import { AlertCustom } from "../../../src/components/common/alert/Alerts";
 import Loading from "../../components/common/state/Loading";
-import useSortPlays from "../../hooks/playCustomHooks/useSortPlays";
+
+// 지역, 상태별, 가격별, 정렬 기준, 캘린더 여부 띄워야 함!
 
 export function PlayList() {
+  const location = useLocation();
+
   // 로딩중 여부
   const [isLoading, setIsLoading] = useState(true);
   // 전체 연극들
   const [plays, setPlays] = useState([]);
-  // 지역별로 필터링 + 조건검색 필터링 + 정렬된 연극들 담기
-  const [filteredPlays, setFilteredPlays] = useState([]);
-  // 조건검색으로 필터링된 연극들 담기
-  const [conditionPlays, setConditionPlays] = useState([]);
-  // 페이지네이션별 연극들 자르기
-  const [paginationPlays, setPaginationPlays] = useState([]);
+  console.log(plays);
   // 날짜별로 연극들 담기
   const [datePlays, setDatePlays] = useState({});
   // 달력에서 사용자가 클릭한 날짜
   const [clickedDate, setClickedDate] = useState(null);
   // 선택된 지역
-  const [selectedRegion, setSelectedRegion] = useState("전체");
+  const [selectedRegion, setSelectedRegion] = useState(["전체"]);
   // 캘린더로 보기 선택 여부 (false가 리스트, true가 캘린더)
   const [isCalendar, setIsCalendar] = useState(false);
   // 선택된 정렬 기준 (최신순, 낮은 가격순, 종료 임박순, 인기순)
-  const [sortStandard, setSortStandard] = useState("");
+  const [sortStandard, setSortStandard] = useState("recent");
+  // 현재 페이지
+  const [curPage, setCurPage] = useState(1);
+  // 가져와지는 총 연극 개수
+  const [playTotalCnt, setPlayTotalCnt] = useState(0);
   // 현재 화면 너비에 따라 다르게 UI가 보여져야 하므로 innerWidth 상태도 정의
   const [innerWidth, setInnerWidth] = useState(window.innerWidth);
   // fetch시 에러 상태 저장
@@ -38,12 +41,68 @@ export function PlayList() {
   // 에러 발생 시 창을 띄우기 위한 상태
   const [isAlertOpen, setIsAlertOpen] = useState(false);
 
-  // 처음에 전체 연극 데이터 한번만 쭉 받아오기
+  // 화면에 띄울 조건 검색 텍스트
+  const conditionTexts = [
+    {
+      division: "상태별",
+      options: ["전체", "공연중", "공연예정", "공연완료"],
+    },
+    { division: "가격별" },
+  ];
+
+  // 조건 검색 상태 정의
+  const [conditions, setConditions] = useState({
+    가격별: [0, 100000],
+    상태별: ["전체"],
+  });
+  console.log(conditions);
+
+  // 지역이 바뀌면 조건 검색 부분 초기화
   useEffect(() => {
-    fetch("https://dailytopia2.shop/api/shows?page=1&limit=1000")
+    setConditions({ 가격별: [0, 100000], 상태별: ["전체"] });
+  }, [selectedRegion]);
+
+  // 연극 데이터 받아오기
+  useEffect(() => {
+    const regionQuery =
+      selectedRegion[0] === "전체"
+        ? ""
+        : selectedRegion.length === 1
+        ? `region=${selectedRegion}&`
+        : selectedRegion
+            .map((region) => `region=${region}&`)
+            .reduce((acc, cur) => acc + cur);
+
+    const stateQuery =
+      conditions["상태별"][0] === "전체"
+        ? ""
+        : conditions["상태별"].length === 1
+        ? `state=${conditions["상태별"][0]}&`
+        : conditions["상태별"]
+            .map((state) => `state=${state}&`)
+            .reduce((acc, cur) => acc + cur);
+
+    const lowPriceQuery =
+      conditions["가격별"][0] === 0
+        ? ""
+        : `lowPrice=${conditions["가격별"][0]}&`;
+
+    const highPriceQuery =
+      conditions["가격별"][1] === 100000
+        ? ""
+        : `highPrice=${conditions["가격별"][1]}&`;
+
+    console.log(
+      `https://dailytopia2.shop/api/shows?${regionQuery}${stateQuery}${lowPriceQuery}${highPriceQuery}order=${sortStandard}&page=${curPage}&limit=24`
+    );
+
+    fetch(
+      `https://dailytopia2.shop/api/shows?${regionQuery}${stateQuery}${lowPriceQuery}${highPriceQuery}order=${sortStandard}&page=${curPage}&limit=24`
+    )
       .then((res) => res.json())
       .then((data) => {
-        setPlays(data.shows.filter((show) => show.price !== ""));
+        setPlays(data.data);
+        setPlayTotalCnt(data.total);
         setTimeout(() => setIsLoading(false), 300);
       })
       .catch(() => {
@@ -51,55 +110,22 @@ export function PlayList() {
         setIsAlertOpen(true);
         setIsLoading(false);
       });
-  }, []);
+  }, [selectedRegion, sortStandard, curPage, conditions]);
 
-  // 처음에 필터링된 연극들은 전체 연극들로 설정
-  useEffect(() => {
-    setFilteredPlays(plays);
-  }, [plays]);
-
-  // 연극 지역별로 필터링하기
-  useEffect(() => {
-    if (selectedRegion === "전체") {
-      setFilteredPlays(plays);
-      return;
-    }
-
-    const filterByRegion = plays.filter((play) => {
-      if (selectedRegion.includes("/")) {
-        return selectedRegion.includes(play.region);
-      }
-      return play.region === selectedRegion;
-    });
-    setFilteredPlays(filterByRegion);
-    setConditionPlays(filterByRegion);
-  }, [selectedRegion]);
-
-  // filteredPlays가 바뀌면 conditionPlays도 따라가야 함.
-  useEffect(() => {
-    setConditionPlays(filteredPlays);
-  }, [filteredPlays]);
-
-  // 처음에는 페이지가 1이므로 paginationPlays를 0번부터 15번까지 연극으로 설정
-  // filteredPlays가 달라질 때마다 paginationPlays에서 보여져야 하는 연극들도 달라져야 함
-  useEffect(() => {
-    setPaginationPlays(conditionPlays.slice(0, 24));
-  }, [filteredPlays, conditionPlays]);
-
-  // 처음 정렬 기준을 최신순으로 설정
-  useEffect(() => {
-    setSortStandard("new");
-  }, [selectedRegion]);
-
-  // 연극을 정렬하기 (처음 정렬 기준은 최신순으로 되어 있음. 정렬 기준을 바꿀 때마다 달라져야 하고, 지역이 바뀔 때 filteredPlays가 달라지므로 지역이 바뀌는지도 listen해야 함.)
-  useEffect(() => {
-    useSortPlays(sortStandard, setConditionPlays);
-  }, [sortStandard, selectedRegion, filteredPlays]);
-
-  // 지역이 바뀌면 클릭되어 있는 날짜 상태를 null로 다시 초기화하기
+  // 지역이 바뀌면 클릭되어 있는 날짜 상태를 null로 다시 초기화하기 + 정렬 기준 초기화 + 조건검색 초기화
   useEffect(() => {
     setClickedDate(null);
+    setSortStandard("recent");
+    setConditions({
+      가격별: [0, 100000],
+      상태별: ["전체"],
+    });
   }, [selectedRegion]);
+
+  // 페이지네이션 초기화
+  useEffect(() => {
+    setCurPage(1);
+  }, [selectedRegion, conditions, sortStandard]);
 
   // 화면 너비 조절 이벤트를 듣도록 하기
   useEffect(() => {
@@ -110,12 +136,12 @@ export function PlayList() {
   });
 
   // 지역을 누를 경우 (캘린더가 보기가 아닐 경우) selectedRegion state를 변경
-  const changeSelectedRegion = (e) => {
+  const changeSelectedRegion = (e, region) => {
     setSelectedRegion((prevRegion) => {
       if (e.target.innerText === "캘린더로 보기") {
         return prevRegion;
       }
-      return e.target.innerText;
+      return region;
     });
   };
 
@@ -123,10 +149,9 @@ export function PlayList() {
   // 캘린더로 보기는 지역에 종속된 것이므로 selectedRegion state는 그대로여야 함!
   const changeIsCalendar = () => {
     setIsCalendar((prev) => !prev);
-    setConditionPlays(filteredPlays);
     setSortStandard("new");
     setClickedDate(null);
-    useSortPlays(sortStandard, setConditionPlays);
+    setCurPage(1);
   };
 
   return (
@@ -139,36 +164,48 @@ export function PlayList() {
           {!isCalendar && (
             <ConditionSearch
               sortStandard={sortStandard}
-              selectedRegion={selectedRegion}
-              filteredPlays={filteredPlays}
-              setConditionPlays={setConditionPlays}
+              conditionTexts={conditionTexts}
               innerWidth={innerWidth}
+              conditions={conditions}
+              setConditions={setConditions}
+              selectedRegion={selectedRegion}
             />
           )}
           {isCalendar && (
             <PlayListCalendar
               innerWidth={innerWidth}
-              filteredPlays={filteredPlays}
               datePlays={datePlays}
               setDatePlays={setDatePlays}
               setClickedDate={setClickedDate}
-              setPaginationPlays={setPaginationPlays}
-              setConditionPlays={setConditionPlays}
               sortStandard={sortStandard}
               clickedDate={clickedDate}
             />
           )}
-          {((!isCalendar && !conditionPlays.length) || (isCalendar && clickedDate !== null && !datePlays[clickedDate])) && (
-            <div className="play-no-exsist">
-              <h2>연극이 존재하지 않습니다.</h2>
-            </div>
-          )}
-          {!isCalendar && conditionPlays.length > 0 && (
+          {((!isCalendar && !plays.length) ||
+            (isCalendar &&
+              clickedDate !== null &&
+              !datePlays[clickedDate])) && (
             <>
-              <PlayListHeader count={conditionPlays.length} setSortStandard={setSortStandard} sortStandard={sortStandard} />
+              {" "}
+              <PlayListHeader
+                count={playTotalCnt}
+                setSortStandard={setSortStandard}
+                sortStandard={sortStandard}
+              />
+              <div className="play-no-exsist">
+                <h2>연극이 존재하지 않습니다.</h2>
+              </div>
+            </>
+          )}
+          {!isCalendar && plays.length > 0 && (
+            <>
+              <PlayListHeader
+                count={playTotalCnt}
+                setSortStandard={setSortStandard}
+                sortStandard={sortStandard}
+              />
               <div className="play-list-main">
-                {/* 보여져야 하는 것은 페이지네이션 된 연극이므로 filteredPlays 대신 paginationPlays 사용! */}
-                {paginationPlays.map((play) => (
+                {plays.map((play) => (
                   <PlayBox
                     key={play.showId}
                     playInfo={{
@@ -183,14 +220,15 @@ export function PlayList() {
                   />
                 ))}
               </div>
-              {conditionPlays.length ? (
+              {plays.length ? (
                 <PaginationBox
                   innerWidth={innerWidth}
-                  playsCount={conditionPlays.length}
-                  conditionPlays={conditionPlays}
-                  setPaginationPlays={setPaginationPlays}
+                  playsCount={playTotalCnt}
+                  plays={plays}
                   selectedRegion={selectedRegion}
                   sortStandard={sortStandard}
+                  setCurPage={setCurPage}
+                  curPage={curPage}
                 />
               ) : null}
             </>
@@ -200,7 +238,7 @@ export function PlayList() {
               <PlayListHeader count={datePlays[clickedDate].length} setSortStandard={setSortStandard} sortStandard={sortStandard} />
               <div className="play-list-main">
                 {/* 보여져야 하는 것은 페이지네이션 된 연극이므로 filteredPlays 대신 paginationPlays 사용! */}
-                {paginationPlays.map((play) => (
+                {plays.map((play) => (
                   <PlayBox
                     key={play.showId}
                     playInfo={{
@@ -216,9 +254,8 @@ export function PlayList() {
               </div>
               <PaginationBox
                 innerWidth={innerWidth}
-                playsCount={conditionPlays.length}
-                conditionPlays={conditionPlays}
-                setPaginationPlays={setPaginationPlays}
+                playsCount={plays.length}
+                plays={plays}
                 selectedRegion={selectedRegion}
                 sortStandard={sortStandard}
               />
