@@ -10,6 +10,7 @@ import Typography from "@mui/material/Typography";
 import Rating from "@mui/material/Rating";
 import { AlertCustom } from "../common/alert/Alerts";
 import Tooltip from "@mui/material/Tooltip";
+import CircularProgress from "@mui/material/CircularProgress";
 
 export default function PlayDetailTop({
   showId,
@@ -33,6 +34,8 @@ export default function PlayDetailTop({
   const [alert, setAlert] = useState(null);
   // 이 연극을 현재 로그인된 유저가 찜했는지 여부
   const [isDibbed, setIsDibbed] = useState(false);
+  // 찜 여부 받아올때까지 버튼 로딩시키기
+  const [loadingBtn, setLoadingBtn] = useState(true);
   // 로그인 필요 알람
   const [needLoginAlert, setNeedLoginAlert] = useState(null);
 
@@ -43,10 +46,18 @@ export default function PlayDetailTop({
       fetch(`https://dailytopia2.shop/api/users/bookmarks/${showId}`, {
         credentials: "include",
       })
-        .then((res) => res.json()) // res.json()을 반환하도록 수정
+        .then((res) => {
+          if (res.ok) {
+            return res.json();
+          }
+        }) // res.json()을 반환하도록 수정
         .then((data) => {
           setIsDibbed(data.isBookmarked);
-        });
+          setLoadingBtn(false);
+        })
+        .catch((err) => console.error(err));
+    } else {
+      setLoadingBtn(false);
     }
   }, []);
 
@@ -123,10 +134,18 @@ export default function PlayDetailTop({
           .then((res) => {
             if (res.ok) {
               setIsDibbed(false);
-            } else if (res.status === 401) {
+            } else if (res.status === 401 || res.status === 403) {
               setNeedLoginAlert(
                 "로그인이 필요한 기능입니다. 로그인 페이지로 이동하시겠습니까?"
               );
+            } else {
+              setAlert({
+                title: "찜 취소 실패",
+                content: "찜 취소에 실패하였습니다.",
+                open: true,
+                onclose: () => setAlert(null),
+                severity: "error",
+              });
             }
           })
           .catch((err) => {
@@ -151,6 +170,14 @@ export default function PlayDetailTop({
               setNeedLoginAlert(
                 "로그인이 필요한 기능입니다. 로그인 페이지로 이동하시겠습니까?"
               );
+            } else {
+              setAlert({
+                title: "찜 실패",
+                content: "찜하기에 실패하였습니다.",
+                open: true,
+                onclose: () => setAlert(null),
+                severity: "error",
+              });
             }
           })
           .catch((err) =>
@@ -303,19 +330,36 @@ export default function PlayDetailTop({
         </div>
         <div className="another-btn">
           <div className="dibs-btn">
-            <Button
-              variant={isDibbed ? "contained" : "outlined"}
-              color="error"
-              size="large"
-              onClick={handleDibBtnClick}
-            >
-              <Typography
-                fontFamily="Nanum Gothic, sans-serif"
-                className="button-text"
+            {loadingBtn ? (
+              <Button
+                variant="outlined"
+                color="error"
+                size="large"
+                loading="true"
+                sx={{ height: "60px" }}
               >
-                {isDibbed ? "찜한 연극" : "♥️ 찜하기"}
-              </Typography>
-            </Button>
+                <CircularProgress
+                  color="error"
+                  className="dib-btn-loading"
+                  sx={{
+                    position: "relative",
+                    left: "29px",
+                  }}
+                />
+                <span style={{ visibility: "hidden" }}>♥️ 찜하기</span>
+              </Button>
+            ) : (
+              <Button
+                variant={isDibbed ? "contained" : "outlined"}
+                color="error"
+                size="large"
+                onClick={handleDibBtnClick}
+              >
+                <Typography className="button-text">
+                  {isDibbed ? "찜한 연극" : "♥️ 찜하기"}
+                </Typography>
+              </Button>
+            )}
           </div>
           <div className="reserve-btn">
             {state !== "공연완료" ? (
@@ -325,12 +369,7 @@ export default function PlayDetailTop({
                 rel="noopener noreferrer"
               >
                 <Button variant="contained" color="secondary" size="large">
-                  <Typography
-                    fontFamily="Nanum Gothic, sans-serif"
-                    className="button-text"
-                  >
-                    예매하러 가기
-                  </Typography>
+                  <Typography className="button-text">예매하러 가기</Typography>
                 </Button>
               </a>
             ) : (

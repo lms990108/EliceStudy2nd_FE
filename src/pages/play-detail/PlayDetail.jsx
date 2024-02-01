@@ -11,13 +11,14 @@ import { AlertCustom } from "../../components/common/alert/Alerts";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import Loading from "../../components/common/state/Loading";
 import { AppContext } from "../../App";
+import { BackButton } from "../../components/common/button/BackButton";
 
-export function PlayDetail() {
+export function PlayDetail(props) {
   // 유저 로그인 여부 + 정보 확인
   const { userData } = useContext(AppContext);
-  console.log(userData);
   const location = useLocation();
   const navigate = useNavigate();
+
   const queryParams = new URLSearchParams(location.search);
   const detailNavMenu = queryParams.get("tab") || "detail-info";
   // 현재 연극의 id
@@ -73,6 +74,7 @@ export function PlayDetail() {
         {!isLoading && playInfo && userData && (
           <>
             <UpButton />
+            {/* <BackButton state={location.state} /> */}
             <PlayDetailTop
               showId={playInfo.showId}
               age={playInfo.age}
@@ -88,7 +90,10 @@ export function PlayDetail() {
               isLoggedIn={userData.isLoggedIn}
               averageRate={playInfo.avg_rating}
             />
-            <PlayDetailNav selected={detailNavMenu} handleClick={handleDetailNavMenuClick} />
+            <PlayDetailNav
+              selected={detailNavMenu}
+              handleClick={handleDetailNavMenuClick}
+            />
             <div className="play-detail-main-box">
               {detailNavMenu === "detail-info" && (
                 <PlayDetailInfo

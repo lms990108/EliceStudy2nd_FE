@@ -1,11 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./PlayReview.scss";
 import AverageRatingBox from "./play-review-metrials/AverageRatingBox";
 import ReviewForm from "./play-review-metrials/ReviewForm";
-import ReviewErrorBox from "./play-review-metrials/ReviewErrorBox";
 import PlayReviewHeader from "./play-review-metrials/PlayReviewHeader";
 import PlayReviewListBox from "./play-review-metrials/PlayReviewListBox";
-import PlayReviewContentBox from "./play-review-metrials/PlayReviewContentBox";
 import PaginationBox from "./play-review-metrials/PaginationBox";
 import { AlertCustom } from "../common/alert/Alerts";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -18,6 +16,8 @@ export default function PlayReview({
   state,
   userId,
 }) {
+  const scrollRef = useRef(null);
+
   // 로딩중 여부
   const [isLoading, setIsLoading] = useState(true);
   // 리뷰 작성창이 열렸는지 여부
@@ -112,6 +112,7 @@ export default function PlayReview({
               averageRate={averageRate}
               state={state}
             />
+            <div ref={scrollRef}></div>
             {isReviewFormOpened ? (
               <ReviewForm
                 purpose={userReview.isUserReviewed ? "수정" : "작성"}
@@ -148,6 +149,7 @@ export default function PlayReview({
                     }}
                     setIsReviewFormOpened={setIsReviewFormOpened}
                     review_id={review._id}
+                    scrollRef={scrollRef}
                     key={review._id}
                   />
                 ))}

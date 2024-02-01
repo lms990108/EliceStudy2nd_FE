@@ -62,7 +62,7 @@ export default function ConditionSearchFrame({
       )}
       {!options && (
         <div className="condition-checkbox">
-          <Box sx={{ width: 700 }}>
+          <Box sx={innerWidth >= 800 ? { width: 700 } : { width: 500 }}>
             <Slider
               value={values}
               onChange={handleChange}
@@ -70,6 +70,7 @@ export default function ConditionSearchFrame({
               step={10}
               marks={marks}
               color="secondary"
+              sx={{ marginLeft: "13px" }}
             />
           </Box>
         </div>
