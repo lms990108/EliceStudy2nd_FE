@@ -10,6 +10,13 @@
   .flex-box {
     display: flex;
 
+    .user-profile-img {
+      width: 38px;
+      height: 38px;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+
     textarea {
       margin-left: 10px;
       border-radius: 10px;
@@ -29,14 +36,14 @@
       }
     }
     textarea:focus {
-      border-color: black;
+      border-color: #919191;
     }
 
     textarea::placeholder {
       color: #bcbcbc;
     }
   }
-  .btn {
+  button.btn {
     margin-top: 10px;
     width: fit-content;
     align-self: flex-end;

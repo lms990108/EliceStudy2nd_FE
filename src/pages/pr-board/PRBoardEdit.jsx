@@ -29,7 +29,7 @@ export function PRBoardEdit() {
       // 404페이지
       return;
     }
-    if (data.user_id.nickname !== userData.nickname) {
+    if (data.user_id.nickname !== userData.user.nickname) {
       console.log("접근제한");
       // 403페이지로 리다이랙트
       return;

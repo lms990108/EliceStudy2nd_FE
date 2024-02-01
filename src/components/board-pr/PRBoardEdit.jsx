@@ -12,14 +12,14 @@ export function PRBoardEditForm({ setInput, handleCancle, post }) {
   const [submit, setSubmit] = useState(false);
   const [openSubmit, setOpenSubmit] = useState(false);
   const [openComplete, setOpenComplete] = useState(false);
-  const [inputTitle, setInputTitle] = useState("");
+  const [inputTitle, setInputTitle] = useState(post?.title);
   const [errorTitle, setErrorTitle] = useState("");
-  const [inputContent, setInputContent] = useState("");
+  const [inputContent, setInputContent] = useState(post?.content);
   const [errorContent, setErrorContent] = useState("");
   const [inputTag, setInputTag] = useState("");
-  const [imageURL, setImageURL] = useState("");
+  const [imageURL, setImageURL] = useState(post?.image_url);
   const [errorImage, setErrorImage] = useState("");
-  const [tagList, setTagList] = useState([]);
+  const [tagList, setTagList] = useState(post?.tags);
   const nav = useNavigate();
 
   const handleSubmit = async (e) => {

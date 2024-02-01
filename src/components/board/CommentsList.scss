@@ -8,7 +8,13 @@
     margin: 20px auto;
   }
 
-  .back-btn {
-    margin: 50px auto;
+  .more-btn {
+    margin: 5px 0;
+    background-color: #ffb3000e;
+
+    &:hover {
+      background-color: #ffb3000e;
+      color: #ff9d00;
+    }
   }
 }

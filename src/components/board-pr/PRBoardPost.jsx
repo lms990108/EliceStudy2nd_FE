@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import CircleIcon from "@mui/icons-material/Circle";
 import "./PRBoardPost.scss";
 import { PostTop } from "../board";
-import { useLocation } from "react-router-dom";
 
 export default function PRBoardPost({ data }) {
   return (
@@ -19,7 +18,7 @@ export default function PRBoardPost({ data }) {
         </span>
       </div>
       <div className="post-content-box">
-        <PostTop user={data.user_id || { nickname: "asd" }} type={"promotion"} time={data.createdAt} commentsCnt={0} postNumber={data.promotion_number} />
+        <PostTop user={data.user_id || { nickname: "asd" }} type={"promotion"} createdAt={data.createdAt} commentsCnt={0} postNumber={data.promotion_number} />
         <img className="post-image" src={data.image_url} alt="홍보 포스터" />
         <h2 className="post-title">{data.title}</h2>
         <hr />

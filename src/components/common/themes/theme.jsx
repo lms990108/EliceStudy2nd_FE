@@ -6,14 +6,21 @@ export const theme = createTheme({
       main: "#FFB400",
       contrastText: "#FFFFFF",
     },
-    ourGrey: {
+    silver: {
+      main: "#dedede",
+      contrastText: "#575757",
+    },
+    ourGray: {
       main: "#BCBCBC",
+      contrastText: "#303030",
     },
     darkGray: {
       main: "#898989",
+      contrastText: "#FFFFFF",
     },
     moreDarkGray: {
       main: "#282828",
+      contrastText: "#FFFFFF",
     },
     facebookBlue: {
       main: "#3b5998",

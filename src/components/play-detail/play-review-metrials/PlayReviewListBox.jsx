@@ -9,22 +9,8 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import PlayReviewContentBox from "./PlayReviewContentBox";
 import { AlertCustom } from "../../common/alert/Alerts";
 
-export default function PlayReviewListBox({
-  reviewInfo,
-  setIsReviewFormOpened,
-  review_id,
-}) {
-  const {
-    isAuthorLogined,
-    author,
-    date,
-    title,
-    isContentExsist,
-    isPhotoExsist,
-    rating,
-    photo,
-    content,
-  } = reviewInfo;
+export default function PlayReviewListBox({ reviewInfo, setIsReviewFormOpened, review_id }) {
+  const { isAuthorLogined, author, date, title, isContentExsist, isPhotoExsist, rating, photo, content } = reviewInfo;
 
   const [expended, setExpended] = useState(false);
   const [alert, setAlert] = useState(null);
@@ -68,8 +54,7 @@ export default function PlayReviewListBox({
         } else if (res.status === 401 || res.status === 403) {
           setAlert({
             title: "로그인 필요",
-            content:
-              "로그인이 필요한 기능입니다. 로그인 페이지로 이동하시겠습니까?",
+            content: "로그인이 필요한 기능입니다. 로그인 페이지로 이동하시겠습니까?",
             open: true,
             onclose: () => setAlert(null),
             onclick: () =>
@@ -131,7 +116,7 @@ export default function PlayReviewListBox({
           {(isContentExsist || isPhotoExsist) && !expended && (
             <KeyboardArrowDownIcon
               className="play-review-detail-arrow"
-              color="ourGrey"
+              color="ourGray"
               fontSize="large"
               onClick={() => {
                 setExpended(!expended);
@@ -141,7 +126,7 @@ export default function PlayReviewListBox({
           {(isContentExsist || isPhotoExsist) && expended && (
             <KeyboardArrowUpIcon
               className="play-review-detail-arrow"
-              color="ourGrey"
+              color="ourGray"
               fontSize="large"
               onClick={() => {
                 setExpended(!expended);
@@ -153,13 +138,7 @@ export default function PlayReviewListBox({
           <Rating name="read-only" value={rating} precision={0.5} readOnly />
         </div>
         <div className="play-review-remove">
-          {isAuthorLogined ? (
-            <DeleteIcon
-              className="play-review-delete-icon"
-              color="ourGrey"
-              onClick={() => handleDeleteBtnClick()}
-            />
-          ) : null}
+          {isAuthorLogined ? <DeleteIcon className="play-review-delete-icon" color="ourGray" onClick={() => handleDeleteBtnClick()} /> : null}
         </div>
       </div>
       {(isContentExsist || isPhotoExsist) && expended ? (
