@@ -74,13 +74,13 @@
   font-size: 28px !important;
 }
 .search-modal-input {
- margin-top: 40px;
- margin-left: 12px;
- width: 1020px;
- height: 42px;
- font-size: 32px;
- border: none;
- outline: none;
+  margin-top: 40px;
+  margin-left: 12px;
+  width: 1020px;
+  height: 42px;
+  font-size: 32px;
+  border: none;
+  outline: none;
 }
 .search-modal-exit-icon {
   color: #898989;
@@ -102,6 +102,7 @@
 }
 .last-search-delete {
   cursor: pointer;
+  user-select: none;
 }
 .last-search-delete-icon {
   position: relative;
@@ -111,4 +112,18 @@
 }
 .last-search-delete:hover {
   color: #555555;
+}
+.recent-search-box {
+  margin-top: 14px;
+}
+.recent-search-contents {
+  margin: 2px 8px;
+}
+.recent-search-text {
+  display: inline-block;
+  color: #898989;
+}
+.recent-search-text:hover {
+  color: #555555;
+  cursor: pointer;
 }

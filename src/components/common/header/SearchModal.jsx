@@ -14,6 +14,14 @@ const SearchModal = ({ onCloseModal }) => {
     if (inputRef.current) {
       inputRef.current.focus(); // input 요소에 포커스 주기
     }
+
+    // 컴포넌트가 처음으로 렌더링될 때 로컬 스토리지에서 최근 검색어 가져오기
+    const storedRecentSearches = JSON.parse(
+      localStorage.getItem("recentSearches")
+    );
+    if (storedRecentSearches) {
+      setRecentSearches(storedRecentSearches);
+    }
   }, []);
 
   const handleCloseStart = () => {
@@ -29,19 +37,29 @@ const SearchModal = ({ onCloseModal }) => {
       const encodedQuery = encodeURIComponent(searchQuery);
       window.location.href = `/search?query=${encodedQuery}`;
 
-      // 최근 검색어 목록에 추가
-      setRecentSearches((prevSearches) => {
-        if (prevSearches.includes(searchQuery)) {
-          return prevSearches;
-        }
-        return [searchQuery, ...prevSearches.slice(0, 4)];
-      });
+      // 이미 최근 검색어 목록에 존재하는지 확인 후 중복되지 않는 검색어만 추가
+      if (!recentSearches.includes(searchQuery)) {
+        const updatedRecentSearches = [searchQuery, ...recentSearches.slice(0, 4)];
+        setRecentSearches(updatedRecentSearches);
+
+        // 로컬 스토리지에 최근 검색어 저장
+        localStorage.setItem(
+          "recentSearches",
+          JSON.stringify(updatedRecentSearches)
+        );
+      }
     }
   };
 
   const handleDeleteRecentSearches = () => {
     setRecentSearches([]);
-  };
+    localStorage.removeItem("recentSearches");
+  }; // 비우기 클릭 시 로컬스토리지 비우기
+
+  const handleRecentSearchClick = (searchQuery) => {
+    const encodedQuery = encodeURIComponent(searchQuery);
+    window.location.href = `/search?query=${encodedQuery}`;
+  }; //최근 검색어를 클릭 시 해당 검색어로 검색
 
   return (
     <>
@@ -63,19 +81,20 @@ const SearchModal = ({ onCloseModal }) => {
           />
           <div className="last-search-header-box">
             <div className="last-search-title">&nbsp;&nbsp;최근 검색어</div>
-            <div className="last-search-delete">
+            <div className="last-search-delete" onClick={handleDeleteRecentSearches}>
               <DeleteOutlineIcon
                 className="last-search-delete-icon"
-                onClick={handleDeleteRecentSearches}
               />
-              비우기&nbsp;&nbsp;
+              삭제&nbsp;&nbsp;
             </div>
           </div>
+          <div className="recent-search-box">
           {recentSearches.slice(0, 5).map((search, index) => (
-            <div key={index} className="recent-search-item">
-              <p>{search}</p>
+            <div key={index} className="recent-search-contents">
+              <p className="recent-search-text" onClick={() => handleRecentSearchClick(search)}>{search}</p>
             </div>
           ))}
+          </div>
         </div>
       </div>
     </>
