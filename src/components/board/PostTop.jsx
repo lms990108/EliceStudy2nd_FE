@@ -46,6 +46,7 @@ export function PostTop({ user, createdAt, commentsCnt, type, postNumber }) {
   };
 
   useEffect(() => {
+    console.log(userData, user);
     if (userData?.user?.nickname === user?.nickname) {
       setIsWriter(true);
     }
@@ -53,7 +54,7 @@ export function PostTop({ user, createdAt, commentsCnt, type, postNumber }) {
 
   return (
     <>
-      {userData?.user && (
+      {user && (
         <div className="board-post-top">
           {user.profile_url ? <img className="user-img" src={user.profile_url} /> : <AccountCircle sx={{ fontSize: 50 }} />}
           <div className="flex-box">
