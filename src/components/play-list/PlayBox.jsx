@@ -7,24 +7,6 @@ export default function PlayBox({ playInfo, prvPageInfo }) {
   const nav = useNavigate();
   let { playId, imgSrc, title, place, period, price, state } = playInfo;
 
-  // 가격이 전석 가격이 아닐 경우 최저 가격으로 기재하기 (전석 가격은 그대로 전석 얼마 이렇게 기재)
-  if (price.includes(", ")) {
-    const splitPrice = price.split(", ").map((price) => {
-      // 숫자가 아닌 것들을 모두 찾아 빈 문자열로 대체하는 로직
-      const regex = /[^0-9]/g;
-      if (price.includes("층")) {
-        price = price.replace(regex, "");
-        price = price.substr(1);
-      }
-      price = price.replace(regex, "");
-      return parseInt(price);
-    });
-    // 최저 가격 구하기
-    const minPrice = Math.min(...splitPrice);
-    // 최저 가격으로 가격 바꾸기
-    price = `최저 ${minPrice.toLocaleString()}원`;
-  }
-
   return (
     <>
       <div

@@ -56,7 +56,7 @@ export function PlayList() {
     상태별: ["전체"],
   });
 
-  // 지역이 바뀌면 조건 검색 부분 초기화
+  // 지역이 바뀌면 조건검색 부분 초기화
   useEffect(() => {
     setConditions({ 가격별: [0, 100000], 상태별: ["전체"] });
   }, [selectedRegion]);
@@ -127,6 +127,10 @@ export function PlayList() {
           : selectedRegion
               .map((region) => `region=${region}&`)
               .reduce((acc, cur) => acc + cur);
+
+      console.log(
+        `https://dailytopia2.shop/api/shows?${regionQuery}order=${sortStandard}&date=${clickedDate}&page=${curPage}&limit=24`
+      );
 
       fetch(
         `https://dailytopia2.shop/api/shows?${regionQuery}order=${sortStandard}&date=${clickedDate}&page=${curPage}&limit=24`
