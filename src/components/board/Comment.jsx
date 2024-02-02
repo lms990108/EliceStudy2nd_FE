@@ -56,20 +56,24 @@ export function Comment({ commentData, deleteComment }) {
             <div className="user-id">{comment.user_nickname}</div>
             <div className="time">{comment.createdAt}</div>
           </div>
-          {userData.user.nickname === comment.user_nickname && isEditing ? (
-            <div className="buttons editing">
-              <Button onClick={handleClickUpdateBtn} variant="contained" color="silver" size="small" disableElevation>
-                완료
-              </Button>
-              <Button onClick={() => setIsEditing(false)} variant="outlined" color="darkGray" size="small" disableElevation>
-                취소
-              </Button>
-            </div>
-          ) : (
-            <div className="buttons default">
-              <button onClick={() => setIsEditing(true)}>수정</button>
-              <button onClick={() => setOpenAlertDelete(true)}>삭제</button>
-            </div>
+          {userData?.user?.nickname === comment.user_nickname && (
+            <>
+              {isEditing ? (
+                <div className="buttons editing">
+                  <Button onClick={handleClickUpdateBtn} variant="contained" color="silver" size="small" disableElevation>
+                    완료
+                  </Button>
+                  <Button onClick={() => setIsEditing(false)} variant="outlined" color="darkGray" size="small" disableElevation>
+                    취소
+                  </Button>
+                </div>
+              ) : (
+                <div className="buttons default">
+                  <button onClick={() => setIsEditing(true)}>수정</button>
+                  <button onClick={() => setOpenAlertDelete(true)}>삭제</button>
+                </div>
+              )}
+            </>
           )}
         </div>
         {isEditing ? (

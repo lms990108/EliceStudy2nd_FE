@@ -70,7 +70,7 @@ export function PRBoardDetailPage() {
     <div className="pr-board-detail-page page-margin-bottom">
       <BoardSecondHeader header="홍보게시판" onclick={() => nav("/promotion")} />
       <div className="body">
-        {post && <PRBoardPost data={post} />}
+        {post && <PRBoardPost data={post} totalCommentCount={totalCount} />}
         <BoardNav point={totalCount} text="개의 댓글" onclick={getPromotion} />
         <CommentForm createComment={createComment} postId={post?._id} />
         {comments && <CommentsList comments={comments} totalCount={totalCount} getComments={getComments} setComments={setComments} setTotalCount={setTotalCount} />}

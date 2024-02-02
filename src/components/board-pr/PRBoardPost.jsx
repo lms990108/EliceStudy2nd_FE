@@ -3,7 +3,7 @@ import CircleIcon from "@mui/icons-material/Circle";
 import "./PRBoardPost.scss";
 import { PostTop } from "../board";
 
-export default function PRBoardPost({ data }) {
+export default function PRBoardPost({ data, totalCommentCount }) {
   return (
     <div className="pr-board-post-box">
       <div className="post-header">
@@ -18,7 +18,7 @@ export default function PRBoardPost({ data }) {
         </span>
       </div>
       <div className="post-content-box">
-        <PostTop user={data.user_id || { nickname: "asd" }} type={"promotion"} createdAt={data.createdAt} commentsCnt={0} postNumber={data.promotion_number} />
+        <PostTop user={data.user_id || { nickname: "asd" }} type={"promotion"} createdAt={data.createdAt} commentsCnt={totalCommentCount || 0} postNumber={data.promotion_number} />
         <img className="post-image" src={data.image_url} alt="홍보 포스터" />
         <h2 className="post-title">{data.title}</h2>
         <hr />

@@ -82,7 +82,7 @@ export function FreeBoardDetailPage() {
     <div className="free-board-detail page-margin-bottom">
       <BoardSecondHeader header="커뮤니티" onclick={() => nav("/community")} />
       <div className="body">
-        {post && <FreeBoardPost data={post} />}
+        {post && <FreeBoardPost data={post} totalCommentCount={totalCount} />}
         <BoardNav point={totalCount} text="개의 댓글" onclick={handleRefreshComments} />
         <CommentForm createComment={createComment} postId={post?._id} />
         {comments && <CommentsList comments={comments} setComments={setComments} totalCount={totalCount} getComments={getComments} setTotalCount={setTotalCount} />}
