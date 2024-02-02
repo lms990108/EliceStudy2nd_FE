@@ -28,8 +28,8 @@ const rows = [
 const AdminReview = () => {
   return (
     <>
-      <div className="my-free-board-container">
-        <div className="my-free-board-header">
+      <div className="admin-board-container">
+        <div className="admin-board-header">
           <h1>공연 후기</h1>
           <Button
             variant="contained"
