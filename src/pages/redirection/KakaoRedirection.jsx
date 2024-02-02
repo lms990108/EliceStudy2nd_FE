@@ -94,7 +94,7 @@ export function KakaoRedirection({ popup, setPopup, setAlert }) {
       const authorizationCode = code;
 
       if (authorizationCode) {
-        popup.close();
+        popup?.close();
         console.log(`The popup URL has URL code param = ${authorizationCode}`);
 
         // 가져온 code 로 다른 정보를 가져오는 API 호출
@@ -150,11 +150,9 @@ export function KakaoRedirection({ popup, setPopup, setAlert }) {
               checkBtn: "확인",
             });
           });
-      } else {
-        console.error("인가코드가 없습니다.");
+        popup?.close();
+        setPopup(null);
       }
-      popup?.close();
-      setPopup(null);
     };
 
     window.addEventListener("message", kakaoOauthCodeListener, false);
