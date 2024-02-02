@@ -9,7 +9,7 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import PlayReviewContentBox from "./PlayReviewContentBox";
 import { AlertCustom } from "../../common/alert/Alerts";
 
-export default function PlayReviewListBox({ reviewInfo, setIsReviewFormOpened, review_id }) {
+export default function PlayReviewListBox({ reviewInfo, setIsReviewFormOpened, review_id, scrollRef }) {
   const { isAuthorLogined, author, date, title, isContentExsist, isPhotoExsist, rating, photo, content } = reviewInfo;
 
   const [expended, setExpended] = useState(false);
@@ -29,6 +29,7 @@ export default function PlayReviewListBox({ reviewInfo, setIsReviewFormOpened, r
   };
 
   const deleteReview = (review_id) => {
+    console.log(review_id);
     fetch(`https://dailytopia2.shop/api/reviews/${review_id}`, {
       method: "DELETE",
       credentials: "include",
@@ -75,7 +76,8 @@ export default function PlayReviewListBox({ reviewInfo, setIsReviewFormOpened, r
           });
         }
       })
-      .catch(() => {
+      .catch((err) => {
+        console.log(err);
         setAlert({
           title: `삭제 실패`,
           content: `리뷰 삭제에 실패하였습니다.`,
@@ -149,6 +151,7 @@ export default function PlayReviewListBox({ reviewInfo, setIsReviewFormOpened, r
             isAuthorLogined,
           }}
           setIsReviewFormOpened={setIsReviewFormOpened}
+          scrollRef={scrollRef}
         />
       ) : null}
     </>

@@ -23,6 +23,10 @@ body {
     align-items: center;
     padding: 66px 0;
   }
+
+  .adapted-conditions {
+    margin-top: 20px;
+  }
 }
 
 @media (min-width: 481px) and (max-width: 1130px) {
@@ -41,6 +45,10 @@ body {
     justify-content: center;
     align-items: center;
     padding: 66px 0;
+  }
+
+  .adapted-conditions {
+    margin-top: 20px;
   }
 }
 
@@ -67,5 +75,9 @@ body {
     h2 {
       font-size: 20px;
     }
+  }
+
+  .adapted-conditions {
+    margin-top: 20px;
   }
 }

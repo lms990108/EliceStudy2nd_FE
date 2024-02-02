@@ -27,8 +27,8 @@ const rows = [
 const AdminPR = () => {
   return (
     <>
-      <div className="my-free-board-container">
-        <div className="my-free-board-header">
+      <div className="admin-board-container">
+        <div className="admin-board-header">
           <h1>홍보 게시글</h1>
           <Button
             variant="contained"

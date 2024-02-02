@@ -6,7 +6,6 @@ import Stack from "@mui/material/Stack";
 export default function PaginationBox({
   innerWidth,
   playsCount,
-  plays,
   selectedRegion,
   sortStandard,
   setCurPage,

@@ -5,11 +5,16 @@ import Button from "@mui/material/Button";
 export default function PlayReviewContentBox({
   reviewContentInfo,
   setIsReviewFormOpened,
+  scrollRef,
 }) {
   const { photoSrc, content, isAuthorLogined } = reviewContentInfo;
 
   const handleModifyBtnClick = () => {
     setIsReviewFormOpened(true);
+
+    if (scrollRef.current) {
+      scrollRef.current.scrollIntoView({ behavior: "smooth" });
+    }
   };
 
   return (
