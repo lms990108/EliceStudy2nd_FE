@@ -4,52 +4,36 @@ import "./AdminUser.scss";
 import Button from "@mui/material/Button";
 
 const columns = [
-  { field: "id", headerName: "회원 번호", width: 150 },
-  { field: "nickname", headerName: "닉네임", width: 250 },
+  { field: "user_id", headerName: "회원 번호", width: 200 },
+  { field: "nickname", headerName: "닉네임", width: 200 },
   { field: "social_provider", headerName: "가입 경로", width: 200 },
   { field: "interested_area", headerName: "선호 지역", width: 200 },
 ];
 
-const rows = [
-  { id: 1, nickname: "Snow", interested_area: "Jon", social_provider: 35 },
-  {
-    id: 2,
-    nickname: "Lannister",
-    interested_area: "Cersei",
-    social_provider: 42,
-  },
-  {
-    id: 3,
-    nickname: "Lannister",
-    interested_area: "Jaime",
-    social_provider: 45,
-  },
-  { id: 4, nickname: "Stark", interested_area: "Arya", social_provider: 16 },
-  {
-    id: 5,
-    nickname: "Targaryen",
-    interested_area: "Daenerys",
-    social_provider: 32,
-  },
-];
-
 const AdminUser = () => {
-  //   const [users, setUsers] = useState([]); // 데이터를 저장할 상태
+  const [users, setUsers] = useState([]);
 
-  //   useEffect(() => {
-  //     fetch("https://dailytopia2.shop/api/users/admin/users")
-  //       .then((res) => res.json())
-  //       .then((data) => {
-  //         setUsers(data); // 데이터를 상태에 저장
-  //         console.log(data);
-  //       })
-  //       .catch((err) => alert(err));
-  //   }, []);
+  useEffect(() => {
+    fetch(`https://dailytopia2.shop/api/users/admin/users`, {
+      credentials: "include",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        // 데이터에 고유한 id 속성 추가
+        const usersWithIds = data.users.map((user, index) => ({
+          ...user,
+          id: index + 1, // 예시로 index + 1을 사용하여 고유한 id 부여
+        }));
+        setUsers(usersWithIds); // 데이터를 상태에 저장
+        console.log(usersWithIds);
+      })
+      .catch((err) => alert(err));
+  }, []);
 
   return (
     <>
-      <div className="my-free-board-container">
-        <div className="my-free-board-header">
+      <div className="admin-board-container">
+        <div className="admin-board-header">
           <h1>회원 정보</h1>
           <Button
             variant="contained"
@@ -61,7 +45,7 @@ const AdminUser = () => {
         </div>
         <div style={{ height: "631px", width: "800px" }}>
           <DataGrid
-            rows={rows}
+            rows={users}
             columns={columns}
             initialState={{
               pagination: {

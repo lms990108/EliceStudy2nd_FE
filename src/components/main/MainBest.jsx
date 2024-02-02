@@ -58,18 +58,16 @@ function MainBest() {
   };
 
   useEffect(() => {
-    fetch("https://dailytopia2.shop/api/shows?limit=1000")
+    fetch("https://dailytopia2.shop/api/shows/rank")
       .then((res) => res.json())
       .then((data) => {
-        const rankedShows = data.shows.filter(
-          (show) => show.rank && show.rank >= 1 && show.rank <= 30
-        );
+        const rankedShows = data.shows
         // 연극을 rank에 따라 정렬
         rankedShows.sort((a, b) => a.rank - b.rank);
 
         // 상위 18개 항목 선택
         const top18Shows = rankedShows.slice(0, 18);
-
+        
         // 각 연극에 인덱스 기반 순위 부여
         top18Shows.forEach((show, index) => {
           show.newRank = index + 1;
