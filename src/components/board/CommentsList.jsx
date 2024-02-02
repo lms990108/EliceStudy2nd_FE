@@ -1,26 +1,45 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Comment } from "./Comment";
-import { Button, Pagination } from "@mui/material";
+import { Button } from "@mui/material";
 import "./CommentsList.scss";
-import { useNavigate } from "react-router-dom";
+import { commentUrl } from "../../apis/apiURLs";
 
-export function CommentsList({ comments, path }) {
-  const nav = useNavigate();
+export function CommentsList({ comments, totalCount, getComments, setComments, setTotalCount }) {
+  const [uniqueComments, setUniqueComments] = useState(comments);
 
-  const handleClick = () => {
-    nav(path);
+  const deleteOneComment = async (_id) => {
+    const res = await fetch(`${commentUrl}/${_id}`, { method: "DELETE", credentials: "include" });
+    const data = await res.json();
+    console.log(data);
+
+    if (res.ok) {
+      const newComments = uniqueComments.filter((current) => current._id !== _id);
+      setComments(newComments);
+      setUniqueComments(newComments);
+      setTotalCount(totalCount - 1);
+    }
   };
+
+  useEffect(() => {
+    const newComments = comments.reduce(function (newArr, current) {
+      if (newArr.findIndex(({ _id }) => _id === current._id) === -1) {
+        newArr.push(current);
+      }
+      return newArr;
+    }, []);
+    setUniqueComments(newComments);
+  }, [comments]);
 
   return (
     <div className="comments-list-box">
-      {console.log(comments)}
-      {comments.map((comment) => (
-        <Comment data={comment} />
+      {uniqueComments.map((comment) => (
+        <Comment commentData={comment} deleteComment={deleteOneComment} key={comment._id} />
       ))}
-      {/* 더보기 버튼 추가 */}
-      <Button className="back-btn" color="inherit" variant="contained" onClick={handleClick}>
-        목록보기
-      </Button>
+      {totalCount > comments.length && (
+        <Button className="more-btn" onClick={() => getComments()} color="secondary" variant="outlined">
+          더보기
+        </Button>
+      )}
     </div>
   );
 }

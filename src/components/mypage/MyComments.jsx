@@ -1,8 +1,14 @@
 /* 마이페이지 - My 댓글 */
-import * as React from "react";
+import { useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import "./MyComments.scss";
 import Button from "@mui/material/Button";
+import { useNavigate } from "react-router";
+import { commentUrl } from "../../apis/apiURLs";
+import { CircularProgress } from "@mui/material";
+import ServerError from "../common/state/ServerError";
+import Empty from "../common/state/Empty";
+import { Link } from "react-router-dom";
 
 const columns = [
   { field: "id", headerName: "번호" },
@@ -10,39 +16,66 @@ const columns = [
   { field: "createdAt", headerName: "작성 시기", width: 150 },
 ];
 
-const rows = [
-  { id: 1, tilte: "Snow", Rating: "Jon", createdAt: 35 },
-  { id: 2, tilte: "Lannister", Rating: "Cersei", createdAt: 42 },
-  { id: 3, tilte: "Lannister", Rating: "Jaime", createdAt: 45 },
-  { id: 4, tilte: "Stark", Rating: "Arya", createdAt: 16 },
-  { id: 5, tilte: "Targaryen", Rating: "Daenerys", createdAt: 32 },
-  { id: 6, tilte: "Melisandre", Rating: "sungjae", createdAt: 150 },
-  { id: 7, tilte: "Clifford", Rating: "Ferrara", createdAt: 44 },
-  { id: 8, tilte: "Frances", Rating: "Rossini", createdAt: 36 },
-  { id: 9, tilte: "Roxie", Rating: "Harvey", createdAt: 65 },
-];
-
 function MyComments() {
+  const [comments, setComments] = useState([]);
+  const [state, setState] = useState("loading");
+  const nav = useNavigate();
+
+  const getComments = async () => {
+    setState("loading");
+    const res = await fetch(`${commentUrl}/users`, { credentials: "include" });
+    const data = await res.json();
+    console.log(data);
+
+    if (res.ok) {
+      setComments(data);
+      setState("hasValue");
+    } else {
+      setState("hasError");
+    }
+  };
+
+  useEffect(() => {
+    getComments();
+  }, []);
+
   return (
     <>
       <div className="my-comments-container">
         <div className="header">
           <h1>MY 댓글</h1>
-          <Button variant="contained" color="orange" sx={{ width: "80px", height: "40px", color: "white" }}>
-            <h4>삭제</h4>
-          </Button>
+          {!comments.length || (
+            <Button variant="contained" color="orange" sx={{ width: "80px", height: "40px", color: "white" }}>
+              <h4>삭제</h4>
+            </Button>
+          )}
         </div>
-        <div style={{ height: "631px", width: "800px" }}>
-          <DataGrid
-            rows={rows}
-            columns={columns}
-            initialState={{
-              pagination: {
-                paginationModel: { page: 0, pageSize: 10 },
-              },
-            }}
-            checkboxSelection
-          />
+        <div className="body">
+          {state === "loading" ? (
+            <CircularProgress className="loading" />
+          ) : state === "hasError" ? (
+            <ServerError onClickBtn={() => getComments()} />
+          ) : comments.length ? (
+            <DataGrid
+              rows={comments}
+              columns={columns}
+              initialState={{
+                pagination: {
+                  paginationModel: { page: 0, pageSize: 10 },
+                },
+              }}
+              checkboxSelection
+            />
+          ) : (
+            <Empty>
+              <>
+                <p>데이터가 없습니다. 연극을 찾아보고 다양한 기록을 남겨보세요</p>
+                <Link className="link" to={`/play`}>
+                  연극 찾아보기
+                </Link>
+              </>
+            </Empty>
+          )}
         </div>
       </div>
     </>

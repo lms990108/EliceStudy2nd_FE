@@ -5,6 +5,14 @@
 
   .body {
     padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+
+    .back-btn {
+      width: fit-content;
+      align-self: center;
+      margin-top: 60px;
+    }
   }
 
   .nav-box {

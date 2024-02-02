@@ -25,21 +25,21 @@ export function FreeBoardEdit() {
     const data = await res.json();
     console.log(data);
     if (!res.ok) {
-      console.log("페이지 없음");
-      // 404페이지
+      nav("/not-found");
       return;
     }
-    if (data.user_id.nickname !== userData.nickname) {
-      console.log("접근제한");
-      // 403페이지로 리다이랙트
+    if (data.user_id.nickname !== userData.user.nickname) {
+      nav("/forbidden");
       return;
     }
     setPost(data);
   };
 
   useEffect(() => {
-    getPost();
-  }, []);
+    if (userData?.user?.nickname) {
+      getPost();
+    }
+  }, [userData]);
 
   return (
     <div className="free-board-form-page page-margin-bottom">
@@ -54,7 +54,7 @@ export function FreeBoardEdit() {
         onclick={() => nav("/community")}
         closeBtn={"취소"}
         checkBtn={"확인"}
-        checkBtnColor={"red"}
+        checkBtnColor={"#ff9800"}
         severity={"warning"}
         title={"teenybox.com 내용:"}
         content={
