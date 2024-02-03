@@ -28,7 +28,6 @@ export default function SearchResultPage() {
   const [selectedTabMenu, setSelectedTabMenu] = useState("연극");
   // 연극 검색 결과
   const [playSearchResult, setPlaySearchResult] = useState(null);
-  console.log(playSearchResult);
   const [promotionSearchResult, setPromotionSearchResult] = useState(null);
   const [communitySearchResult, setCommunitySearchResult] = useState(null);
 
@@ -37,20 +36,18 @@ export default function SearchResultPage() {
   // 연극 검색 결과 현재 페이지
   const [playCurPage, setPlayCurPage] = useState(1);
   // 연극 검색 결과 총 개수
-  const [playTotalCnt, setPlayTotalCnt] = useState(0);
+  const [totalCnt, setTotalCnt] = useState({ play: 0, community: 0, promotion: 0 });
 
   // alert
   const [alert, setAlert] = useState(null);
 
   const getPlaySearchResult = async () => {
     try {
-      const res = await fetch(
-        `https://dailytopia2.shop/api/shows?title=${searchKeyword}&order=${sortStandard}&page=${playCurPage}&limit=10`
-      );
+      const res = await fetch(`https://dailytopia2.shop/api/shows?title=${searchKeyword}&order=${sortStandard}&page=${playCurPage}&limit=10`);
       const data = await res.json();
       if (res.ok) {
         setPlaySearchResult(data.data);
-        setPlayTotalCnt(data.total);
+        setTotalCnt({ ...totalCnt, play: data.total });
         setIsLoading(false);
       } else {
         setAlert({
@@ -75,17 +72,19 @@ export default function SearchResultPage() {
   };
 
   const getPromotionSearchResult = async () => {
-    const res = await fetch(`${promotionUrl}`);
+    const res = await fetch(`${promotionUrl}/search?title=${searchKeyword}`);
     const data = await res.json();
     console.log(data);
     setPromotionSearchResult(data);
+    setTotalCnt({ ...totalCnt, promotion: data.length }); // total count로 바꾸기
   };
 
   const getCommunitySearchResult = async () => {
-    const res = await fetch(`${postUrl}`);
+    const res = await fetch(`${postUrl}/search?title=${searchKeyword}`);
     const data = await res.json();
     console.log(data);
     setCommunitySearchResult(data);
+    setTotalCnt({ ...totalCnt, community: data.length }); // total count로 바꾸기
   };
 
   // 검색 결과 받아오기
@@ -99,6 +98,10 @@ export default function SearchResultPage() {
     getPlaySearchResult();
   }, [sortStandard, playCurPage]);
 
+  useEffect(() => {
+    console.log(totalCnt);
+  }, [totalCnt]);
+
   return (
     <>
       {alert && <AlertCustom title={alert.title} content={alert.content} open={alert.open} onclose={alert.onclose} severity={alert.severity} />}
@@ -107,18 +110,14 @@ export default function SearchResultPage() {
         <div className="search-result-container">
           <SearchResultHeader searchKeyword={searchKeyword} />
           <SearchResultCount />
-          <SearchResultTab
-            playSearchCnt={playTotalCnt}
-            selectedTabMenu={selectedTabMenu}
-            setSelectedTabMenu={setSelectedTabMenu}
-          />
+          <SearchResultTab totalCnt={totalCnt} selectedTabMenu={selectedTabMenu} setSelectedTabMenu={setSelectedTabMenu} />
           {selectedTabMenu === "연극" && (
             <PlaySearchResult
               playSearchResult={playSearchResult}
               setPlaySearchResult={setPlaySearchResult}
               curPage={playCurPage}
               setCurPage={setPlayCurPage}
-              playTotalCnt={playTotalCnt}
+              playTotalCnt={totalCnt.play}
               searchKeyword={searchKeyword}
               setAlert={setAlert}
               setSortStandard={setSortStandard}
