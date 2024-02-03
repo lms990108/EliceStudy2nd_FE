@@ -92,6 +92,10 @@ export function PlayList() {
           ? ""
           : `highPrice=${conditions["가격별"][1]}&`;
 
+      console.log(
+        `https://dailytopia2.shop/api/shows?${regionQuery}${stateQuery}${lowPriceQuery}${highPriceQuery}order=${sortStandard}&page=${curPage}&limit=24`
+      );
+
       fetch(
         `https://dailytopia2.shop/api/shows?${regionQuery}${stateQuery}${lowPriceQuery}${highPriceQuery}order=${sortStandard}&page=${curPage}&limit=24`
       )
@@ -287,6 +291,14 @@ export function PlayList() {
                 sortStandard={sortStandard}
                 clickedDate={clickedDate}
               />
+              {isCalendar && (
+                <div
+                  style={{
+                    borderBottom: "1.5px solid #bcbcbc",
+                    paddingTop: "10px",
+                  }}
+                ></div>
+              )}
               <div className="play-no-exsist">
                 <h2>연극이 존재하지 않습니다.</h2>
               </div>
@@ -350,6 +362,12 @@ export function PlayList() {
                 sortStandard={sortStandard}
                 clickedDate={clickedDate}
               />
+              <div
+                style={{
+                  borderBottom: "1.5px solid #bcbcbc",
+                  paddingTop: "10px",
+                }}
+              ></div>
               <div className="play-list-main">
                 {plays.map((play) => (
                   <PlayBox

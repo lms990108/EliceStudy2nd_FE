@@ -11,6 +11,7 @@ import Rating from "@mui/material/Rating";
 import { AlertCustom } from "../common/alert/Alerts";
 import Tooltip from "@mui/material/Tooltip";
 import CircularProgress from "@mui/material/CircularProgress";
+import classNames from "classnames";
 
 export default function PlayDetailTop({
   showId,
@@ -265,7 +266,7 @@ export default function PlayDetailTop({
             <h3>관람등급</h3>
             <p>{age}</p>
           </div>
-          <div>
+          <div className={classNames({ price: price.length >= 60 })}>
             <h3>가격정보</h3>
             <p>{price}</p>
           </div>
