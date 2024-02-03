@@ -1,13 +1,9 @@
 import React from "react";
 import "./RegionSelectBar.scss";
-import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
-import MenuIcon from "@mui/icons-material/Menu";
 
 export default function RegionSelectBar({
   changeSelectedRegion,
   selectedRegion,
-  changeIsCalendar,
-  isCalendar,
 }) {
   return (
     <div className="play-region-select-container">
@@ -28,11 +24,17 @@ export default function RegionSelectBar({
             <span
               key={region[0]}
               onClick={(e) => changeSelectedRegion(e, region)}
-              className={
+              className={`${
                 selectedRegion[0] === region[0]
                   ? "play-region-selected-design"
-                  : null
-              }
+                  : "non-selected-design"
+              } ${
+                selectedRegion[0] === region[0] && region[0] === "전체"
+                  ? "all-region-border"
+                  : selectedRegion[0] === region[0] && region[0] === "제주"
+                  ? "jeju-border"
+                  : ""
+              }`}
             >
               {region.length[0]
                 ? region
@@ -42,31 +44,6 @@ export default function RegionSelectBar({
             </span>
           );
         })}
-      </div>
-      {/* 여기는 캘린더로 보기 or 리스트로 보기 조정하는 부분! */}
-      <div className="play-calendar-select">
-        {!isCalendar && (
-          <>
-            <CalendarMonthIcon color="secondary" fontSize="large" />
-            <span
-              onClick={() => changeIsCalendar()}
-              // className="play-calendar-selected-design"
-            >
-              캘린더로 보기
-            </span>
-          </>
-        )}
-        {isCalendar && (
-          <>
-            <MenuIcon color="secondary" fontSize="large" />
-            <span
-              onClick={() => changeIsCalendar()}
-              // className="play-calendar-selected-design"
-            >
-              리스트로 보기
-            </span>
-          </>
-        )}
       </div>
     </div>
   );

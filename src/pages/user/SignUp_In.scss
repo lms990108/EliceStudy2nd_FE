@@ -1,9 +1,12 @@
 .signupInContainer {
   font-family: "Noto Sans KR";
   width: 100%;
+  display: flex;
+  flex-direction: column;
 
   .signup-title {
-    font-size: 50px;
+    margin-top: 0;
+    font-size: 40px;
     font-weight: 900;
     color: #ffb400;
     text-align: center;
@@ -11,7 +14,7 @@
 
   .signup-description {
     font-weight: 500;
-    margin-top: 20px;
+    padding: 10px 0;
     text-align: center;
   }
 
@@ -24,4 +27,5 @@
   max-width: 860px;
   margin: 0 auto;
   position: relative;
+  padding: 50px 0;
 }

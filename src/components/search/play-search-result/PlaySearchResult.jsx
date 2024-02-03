@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import "./PlaySearchResult.scss";
 import PlaySearchHeader from "./PlaySearchHeader";
 import PlaySearchContentBox from "./PlaySearchContentBox";

@@ -1,6 +1,22 @@
 .play-region-selected-design {
+  padding: 10px;
+  cursor: pointer;
+  flex-grow: 1;
+  flex-shrink: 0;
+  flex-basis: 0;
+  text-align: center;
+  border-bottom: none;
   color: #ffb400;
-  border-bottom: 2px solid #ffb400;
+  background-color: #282828;
+  overflow: hidden;
+}
+
+.all-region-border {
+  border-radius: 8px 0 0 8px;
+}
+
+.jeju-border {
+  border-radius: 0 8px 8px 0;
 }
 
 @media (min-width: 1130px) {
@@ -9,41 +25,35 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    padding-bottom: 50px;
-    margin: 0 auto;
+    margin-bottom: 50px;
+    border-radius: 8px;
+    border: 1px solid #bcbcbc;
 
     .play-region-select {
+      width: 100%;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      font-size: 20px;
+      font-size: 18px;
       font-weight: 700;
 
-      span {
-        margin-right: 40px;
-        padding: 0 10px 5px;
+      .non-selected-design {
+        padding: 10px;
         cursor: pointer;
-      }
-    }
-
-    .play-calendar-select {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 20px;
-      font-weight: 700;
-      cursor: pointer;
-      align-self: flex-end;
-      position: relative;
-      top: 50px;
-
-      .calendar-menu-box {
-        display: flex;
-        flex-direction: flex-end;
+        flex-grow: 1;
+        flex-shrink: 0;
+        flex-basis: 0;
+        text-align: center;
+        color: #bcbcbc;
+        border-right: 1px solid #bcbcbc;
       }
 
-      svg {
-        padding-right: 8px;
+      .non-selected-design:last-child {
+        border-right: 0;
+      }
+
+      span:hover {
+        color: #ffb400;
       }
     }
   }
@@ -64,24 +74,6 @@
         cursor: pointer;
       }
     }
-
-    .play-calendar-select {
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-      position: relative;
-      top: 38px;
-      cursor: pointer;
-
-      svg {
-        padding-right: 5px;
-      }
-
-      span {
-        font-weight: 700;
-        font-size: 20px;
-      }
-    }
   }
 }
 
@@ -95,24 +87,6 @@
       font-weight: 700;
       font-size: 18px;
       margin: 0 20px 13px;
-    }
-  }
-
-  .play-calendar-select {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    position: relative;
-    top: 38px;
-    cursor: pointer;
-
-    svg {
-      padding-right: 5px;
-    }
-
-    span {
-      font-weight: 700;
-      font-size: 18px;
     }
   }
 }

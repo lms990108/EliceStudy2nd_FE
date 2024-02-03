@@ -21,9 +21,7 @@ export default function SnsButtons() {
         {localStorage.getItem("social_provider") && (
           <div className="last-account">
             마지막으로 로그인한 계정은&nbsp;
-            <span style={{ color: "red" }}>
-              {localStorage.getItem("social_provider")}
-            </span>
+            <span>{localStorage.getItem("social_provider")}</span>
             &nbsp;입니다.
           </div>
         )}

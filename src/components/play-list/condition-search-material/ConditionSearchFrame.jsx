@@ -4,6 +4,12 @@ import ConditionCheckBox from "./ConditionCheckBox";
 import Slider from "@mui/material/Slider";
 import Box from "@mui/material/Box";
 import { ConditionContext } from "../ConditionSearch";
+import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import koLocale from "date-fns/locale/ko"; // 한국어 로케일 추가
+import dayjs from "dayjs";
 
 const marks = [
   { value: 0, label: "무료" },
@@ -23,24 +29,20 @@ function valuetext(value) {
   return `${value}원`;
 }
 
-function valueLabelFormat(value) {
-  return marks.findIndex((mark) => mark.value === value) + 1;
-}
-
 export default function ConditionSearchFrame({
   division,
   options,
   innerWidth,
   selectedRegion,
 }) {
-  const { setConditions } = useContext(ConditionContext);
+  const { conditions, setConditions } = useContext(ConditionContext);
   const [values, setValues] = useState([0, 100]);
 
   useEffect(() => {
     setValues([0, 100]);
   }, [selectedRegion]);
 
-  const handleChange = (event, newValues) => {
+  const handleChangeSlider = (event, newValues) => {
     setValues(newValues);
     const priceRange = newValues.map((val) => val * 1000);
     setConditions((prev) => {
@@ -50,22 +52,47 @@ export default function ConditionSearchFrame({
     });
   };
 
+  const handleChangeDatePicker = (date, info) => {
+    const formattedDate = dayjs(date).format("YYYY-MM-DD");
+    if (!info.validationError) {
+      setConditions((prev) => {
+        const newObj = { ...prev };
+        newObj["날짜별"] = formattedDate;
+        return newObj;
+      });
+    }
+  };
+
   return (
     <div className="flex-layout">
       <span className="condition-label">{division}</span>
-      {options && (
+      {division === "상태별" && (
         <div className="condition-checkbox">
           {options.map((option, idx) => (
             <ConditionCheckBox key={idx} division={division} option={option} />
           ))}
         </div>
       )}
-      {!options && (
+      {division === "날짜별" && (
+        <LocalizationProvider dateAdapter={AdapterDayjs} locale={koLocale}>
+          <DemoContainer
+            components={["DatePicker"]}
+            sx={{ marginLeft: "30px", padding: "10px 0" }}
+          >
+            <DatePicker
+              format="YYYY/MM/DD"
+              onChange={handleChangeDatePicker}
+              value={conditions["날짜별"]}
+            />
+          </DemoContainer>
+        </LocalizationProvider>
+      )}
+      {division === "가격별" && (
         <div className="condition-checkbox">
           <Box sx={innerWidth >= 800 ? { width: 700 } : { width: 500 }}>
             <Slider
               value={values}
-              onChange={handleChange}
+              onChange={handleChangeSlider}
               getAriaValueText={valuetext}
               step={10}
               marks={marks}

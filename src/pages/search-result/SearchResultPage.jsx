@@ -101,7 +101,15 @@ export default function SearchResultPage() {
 
   return (
     <>
-      {alert && <AlertCustom title={alert.title} content={alert.content} open={alert.open} onclose={alert.onclose} severity={alert.severity} />}
+      {alert && (
+        <AlertCustom
+          title={alert.title}
+          content={alert.content}
+          open={alert.open}
+          onclose={alert.onclose}
+          severity={alert.severity}
+        />
+      )}
       {isLoading && !playSearchResult && <Loading />}
       {!isLoading && playSearchResult && (
         <div className="search-result-container">
@@ -124,8 +132,12 @@ export default function SearchResultPage() {
               setSortStandard={setSortStandard}
             />
           )}
-          {selectedTabMenu === "홍보게시글" && <PromotionSearchResult searchResult={promotionSearchResult} />}
-          {selectedTabMenu === "커뮤니티" && <CommunitySearchResult searchResult={communitySearchResult} />}
+          {selectedTabMenu === "홍보게시글" && (
+            <PromotionSearchResult searchResult={promotionSearchResult} />
+          )}
+          {selectedTabMenu === "커뮤니티" && (
+            <CommunitySearchResult searchResult={communitySearchResult} />
+          )}
         </div>
       )}
     </>
