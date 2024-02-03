@@ -72,6 +72,10 @@
           }
         }
 
+        .price {
+          flex-direction: column;
+        }
+
         p {
           margin-left: 15px;
           font-size: 18px;
