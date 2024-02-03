@@ -6,7 +6,7 @@
     margin-bottom: 24px;
 
     span {
-      font-size: 26px;
+      font-size: 22px;
       font-weight: 700;
       display: flex;
       justify-content: center;
@@ -20,6 +20,19 @@
     background-color: #ffffff;
     border: 1px solid rgba(188, 188, 188, 0.5);
     border-radius: 8px;
+
+    .condition-search-accordian {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 10px 0;
+      cursor: pointer;
+
+      p {
+        font-size: 16px;
+        font-weight: 700;
+      }
+    }
   }
 }
 

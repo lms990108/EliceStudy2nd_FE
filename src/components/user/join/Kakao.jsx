@@ -1,8 +1,9 @@
-import kakaoimg from "../../../assets/img/user/kakaologin.png";
 import { useState } from "react";
 import { KakaoRedirection } from "../../../pages/redirection/KakaoRedirection";
 import { AlertCustom } from "../../../components/common/alert/Alerts";
 import Loading from "../../common/state/Loading";
+import "./AllLoginBtn.scss";
+import kakaoLogo from "../../../assets/img/user/kakao-logo.png";
 
 export default function Kakao() {
   const [popup, setPopup] = useState();
@@ -42,8 +43,13 @@ export default function Kakao() {
           />
         </>
       )}
-      <button onClick={() => kakaoLoginHandler()}>
-        <img className="btnimage" src={kakaoimg} alt=" 카카오로그인" />
+      <button onClick={() => kakaoLoginHandler()} className="all-login-btn">
+        <div className="sns-logo-container">
+          <img src={kakaoLogo} alt="kakao-logo" id="kakao-logo" />
+        </div>
+        <div className="logo-description">
+          <span>카카오 계정으로 로그인</span>
+        </div>
         <KakaoRedirection
           popup={popup}
           setPopup={setPopup}

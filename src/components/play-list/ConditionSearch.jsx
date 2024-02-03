@@ -1,7 +1,9 @@
 import React, { useState, createContext } from "react";
 import "./ConditionSearch.scss";
 import ConditionSearchFrame from "./condition-search-material/ConditionSearchFrame";
-import DoneIcon from "@mui/icons-material/Done";
+import ManageSearchIcon from "@mui/icons-material/ManageSearch";
+import KeyboardDoubleArrowDownIcon from "@mui/icons-material/KeyboardDoubleArrowDown";
+import KeyboardDoubleArrowUpIcon from "@mui/icons-material/KeyboardDoubleArrowUp";
 
 // 조건 검색 시 사용할 context (컴포넌트 바깥에 따로 적어주어 export 해야지 undefined로 뜨지 않는다.)
 export const ConditionContext = createContext();
@@ -22,29 +24,50 @@ export default function ConditionSearch({
   return (
     <>
       <div className="condition-search-header">
-        <DoneIcon sx={{ fontSize: 40 }} />
-        <span>조건 검색</span>
+        <ManageSearchIcon sx={{ fontSize: 32 }} />
+        <span>&nbsp;조건 검색</span>
       </div>
       <div className="condition-search-main">
         {innerWidth > 480 && (
           <>
-            {conditionTexts.map((conditionText, idx) => (
-              <ConditionContext.Provider
-                value={{
-                  conditions,
-                  setConditions,
-                }}
-                key={idx}
-              >
-                <ConditionSearchFrame
-                  key={idx}
-                  division={conditionText.division}
-                  options={conditionText.options}
-                  selectedRegion={selectedRegion}
-                  innerWidth={innerWidth}
-                />
-              </ConditionContext.Provider>
-            ))}
+            <div
+              className="condition-search-accordian"
+              style={
+                isExpandClicked
+                  ? { borderBottom: "1px solid rgba(188, 188, 188, 0.5)" }
+                  : {}
+              }
+              onClick={() => handleConditionSearchExpand()}
+            >
+              <p>
+                {!isExpandClicked ? "조건 검색 펼치기" : "조건 검색 접기"}&nbsp;
+              </p>
+              {!isExpandClicked ? (
+                <KeyboardDoubleArrowDownIcon />
+              ) : (
+                <KeyboardDoubleArrowUpIcon />
+              )}
+            </div>
+            {isExpandClicked && (
+              <div>
+                {conditionTexts.map((conditionText, idx) => (
+                  <ConditionContext.Provider
+                    value={{
+                      conditions,
+                      setConditions,
+                    }}
+                    key={idx}
+                  >
+                    <ConditionSearchFrame
+                      key={idx}
+                      division={conditionText.division}
+                      options={conditionText.options}
+                      innerWidth={innerWidth}
+                    />
+                  </ConditionContext.Provider>
+                ))}
+              </div>
+            )}
           </>
         )}
 

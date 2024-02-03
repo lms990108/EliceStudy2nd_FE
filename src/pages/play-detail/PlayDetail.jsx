@@ -13,7 +13,7 @@ import Loading from "../../components/common/state/Loading";
 import { AppContext } from "../../App";
 import { BackButton } from "../../components/common/button/BackButton";
 
-export function PlayDetail(props) {
+export function PlayDetail() {
   // 유저 로그인 여부 + 정보 확인
   const { userData } = useContext(AppContext);
   const location = useLocation();
@@ -27,6 +27,7 @@ export function PlayDetail(props) {
   const [isLoading, setIsLoading] = useState(true);
   // 연극 상세 정보
   const [playInfo, setPlayInfo] = useState({});
+  console.log(playInfo);
   // 에러 메시지 상태
   const [error, setError] = useState(null);
 

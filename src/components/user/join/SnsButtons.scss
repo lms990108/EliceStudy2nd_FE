@@ -1,29 +1,22 @@
 .socialButtons {
   max-width: 300px;
-  margin: 50px auto 0px auto;
+  margin: 26.8px auto 0px auto;
   box-sizing: border-box;
 
   .btnbox {
     margin-bottom: 20px;
     display: flex;
     justify-content: center;
-
-    button {
-      width: 230px;
-      border: none;
-      cursor: pointer;
-      padding: 0;
-
-      .btnimage {
-        display: block;
-        width: 230px;
-      }
-    }
   }
 
   /* 마지막 로그인 계정 표시 텍스트 */
   .last-account {
     text-align: center;
     margin-top: 35px;
+
+    span {
+      color: red;
+      font-weight: 500;
+    }
   }
 }

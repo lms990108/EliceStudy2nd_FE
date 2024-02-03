@@ -4,26 +4,16 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Tooltip from "@mui/material/Tooltip";
 
-export default function PlaySearchContentBox({ showId, imgSrc, location, title, startDate, endDate, price, state }) {
-  // // 가격이 전석 가격이 아닐 경우 최저 가격으로 기재하기 (전석 가격은 그대로 전석 얼마 이렇게 기재)
-  // if (price.includes(", ")) {
-  //   const splitPrice = price.split(", ").map((price) => {
-  //     // 숫자가 아닌 것들을 모두 찾아 빈 문자열로 대체하는 로직
-  //     const regex = /[^0-9]/g;
-  //     if (price.includes("층")) {
-  //       price = price.replace(regex, "");
-  //       price = price.substr(1);
-  //     }
-  //     price = price.replace(regex, "");
-  //     return parseInt(price);
-  //   });
-  //   // 최저 가격 구하기
-  //   const minPrice = Math.min(...splitPrice);
-  //   console.log(minPrice);
-  //   // 최저 가격으로 가격 바꾸기
-  //   price = `최저 ${minPrice.toLocaleString()}원`;
-  // }
-
+export default function PlaySearchContentBox({
+  showId,
+  imgSrc,
+  location,
+  title,
+  startDate,
+  endDate,
+  price,
+  state,
+}) {
   return (
     <div className="play-search-content-box">
       <div className="play-img-container">
@@ -38,7 +28,7 @@ export default function PlaySearchContentBox({ showId, imgSrc, location, title, 
           <p>
             {startDate.split("T")[0]} ~ {endDate.split("T")[0]}
           </p>
-          <h3>{price}</h3>
+          <h3>{price.length >= 45 ? `${price.slice(0, 45)}...` : price}</h3>
         </Link>
       </div>
       <div className="reservation-btn">

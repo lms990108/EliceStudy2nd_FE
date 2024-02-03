@@ -1,0 +1,54 @@
+.all-login-btn {
+  border: 1.2px solid #bcbcbc;
+  width: 300px;
+  height: 50px;
+  background-color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: "Noto Sans KR", sans-serif;
+  display: flex;
+  align-items: center;
+
+  .sns-logo-container {
+    width: 60px;
+    height: 50px;
+    border-right: 1.2px solid #bcbcbc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    #naver-logo,
+    #kakao-logo,
+    #google-logo {
+      position: relative;
+      right: 2px;
+    }
+
+    #naver-logo {
+      width: 40px;
+      height: 45px;
+    }
+
+    #kakao-logo {
+      width: 33px;
+      height: 33px;
+    }
+
+    #google-logo {
+      width: 30px;
+      height: 30px;
+    }
+  }
+
+  .logo-description {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+
+    span {
+      font-weight: bold;
+      font-size: 16px;
+    }
+  }
+}
