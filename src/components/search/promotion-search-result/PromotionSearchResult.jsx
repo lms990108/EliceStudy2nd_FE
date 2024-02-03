@@ -6,7 +6,7 @@ export default function PromotionSearchResult({ searchResult }) {
   return (
     <div className="promotion-search-result-container">
       <div className="search-header">
-        <span>연극 검색 결과</span>
+        <span>홍보 게시글 검색 결과</span>
         <select className="sort-by" onChange={(e) => setSortStandard(e.target.value)}>
           {/* select에서 e.target.value는 option에 부여해준 value가 됨. */}
           <option value="new">최신순</option>

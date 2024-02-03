@@ -16,11 +16,12 @@
 
 @media (min-width: 930px) {
   .search-result-tab-container {
+    width: 100%;
     @include flex-center();
 
     .menu {
       @include common-menu-style();
-      width: 15%;
+      width: 100%;
     }
 
     .menu:nth-child(2) {

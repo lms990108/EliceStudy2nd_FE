@@ -54,10 +54,7 @@ export function InputAdditionalInfo() {
               profileUrl={info.profileUrl}
               user_id={info.id}
             />
-            <PreferredRegionsArea
-              selectedRegion={selectedRegion}
-              setSelectedRegion={setSelectedRegion}
-            />
+            <PreferredRegionsArea selectedRegion={selectedRegion} setSelectedRegion={setSelectedRegion} />
             <SubmitBtnsArea
               additionalUserInfo={{
                 id: info.id,
