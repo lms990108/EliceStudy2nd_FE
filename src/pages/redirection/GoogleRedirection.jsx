@@ -53,12 +53,12 @@ export function GoogleRedirection({ popup, setPopup, setAlert }) {
   useEffect(() => {
     const currentUrl = window.location.href;
     const searchParams = new URL(currentUrl).searchParams;
+    const code = searchParams.get("code");
     const error = searchParams.get("error");
     if (error === "access_denied") {
       window.opener.postMessage({ error }, window.location.origin);
       return;
     }
-    const code = searchParams.get("code");
 
     if (code) {
       window.opener.postMessage({ code }, window.location.origin);
