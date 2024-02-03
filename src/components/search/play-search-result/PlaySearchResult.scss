@@ -1,7 +1,7 @@
 @mixin basic-margin-and-width {
   margin: 20px auto;
   margin-top: 80px;
-  width: 70%;
+  width: 100%;
 }
 
 .play-search-result-container {
@@ -9,7 +9,7 @@
   margin-bottom: 0;
 
   @media (max-width: 1000px) {
-    width: 95%;
+    width: 100%;
   }
 
   .play-search-content {
