@@ -17,7 +17,11 @@ export default function Kakao() {
     const left = window.screenX + (window.outerWidth - width) / 2;
     const top = window.screenY + (window.outerHeight - height) / 2;
     const url = `https://kauth.kakao.com/oauth/authorize?client_id=${KAKAO_REST_API_KEY}&redirect_uri=${KAKAO_REDIRECT_URL}&response_type=code`;
-    const popup = window.open(url, "로그인 중...", `width=${width},height=${height},left=${left},top=${top}`);
+    const popup = window.open(
+      url,
+      "로그인 중...",
+      `width=${width},height=${height},left=${left},top=${top}`
+    );
     setPopup(popup);
   };
 
@@ -40,7 +44,11 @@ export default function Kakao() {
       )}
       <button onClick={() => kakaoLoginHandler()}>
         <img className="btnimage" src={kakaoimg} alt=" 카카오로그인" />
-        <KakaoRedirection popup={popup} setPopup={setPopup} setAlert={setAlert} />
+        <KakaoRedirection
+          popup={popup}
+          setPopup={setPopup}
+          setAlert={setAlert}
+        />
       </button>
     </>
   );

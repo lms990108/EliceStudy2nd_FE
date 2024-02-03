@@ -56,7 +56,7 @@ export function PlayList() {
     상태별: ["전체"],
   });
 
-  // 지역이 바뀌면 조건 검색 부분 초기화
+  // 지역이 바뀌면 조건검색 부분 초기화
   useEffect(() => {
     setConditions({ 가격별: [0, 100000], 상태별: ["전체"] });
   }, [selectedRegion]);
@@ -91,6 +91,10 @@ export function PlayList() {
         conditions["가격별"][1] === 100000
           ? ""
           : `highPrice=${conditions["가격별"][1]}&`;
+
+      console.log(
+        `https://dailytopia2.shop/api/shows?${regionQuery}${stateQuery}${lowPriceQuery}${highPriceQuery}order=${sortStandard}&page=${curPage}&limit=24`
+      );
 
       fetch(
         `https://dailytopia2.shop/api/shows?${regionQuery}${stateQuery}${lowPriceQuery}${highPriceQuery}order=${sortStandard}&page=${curPage}&limit=24`
@@ -127,6 +131,10 @@ export function PlayList() {
           : selectedRegion
               .map((region) => `region=${region}&`)
               .reduce((acc, cur) => acc + cur);
+
+      console.log(
+        `https://dailytopia2.shop/api/shows?${regionQuery}order=${sortStandard}&date=${clickedDate}&page=${curPage}&limit=24`
+      );
 
       fetch(
         `https://dailytopia2.shop/api/shows?${regionQuery}order=${sortStandard}&date=${clickedDate}&page=${curPage}&limit=24`
@@ -283,6 +291,14 @@ export function PlayList() {
                 sortStandard={sortStandard}
                 clickedDate={clickedDate}
               />
+              {isCalendar && (
+                <div
+                  style={{
+                    borderBottom: "1.5px solid #bcbcbc",
+                    paddingTop: "10px",
+                  }}
+                ></div>
+              )}
               <div className="play-no-exsist">
                 <h2>연극이 존재하지 않습니다.</h2>
               </div>
@@ -346,6 +362,12 @@ export function PlayList() {
                 sortStandard={sortStandard}
                 clickedDate={clickedDate}
               />
+              <div
+                style={{
+                  borderBottom: "1.5px solid #bcbcbc",
+                  paddingTop: "10px",
+                }}
+              ></div>
               <div className="play-list-main">
                 {plays.map((play) => (
                   <PlayBox

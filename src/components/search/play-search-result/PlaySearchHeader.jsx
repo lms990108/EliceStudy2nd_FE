@@ -13,7 +13,6 @@ export default function PlaySearchHeader({ setSortStandard, setCurPage }) {
       >
         {/* select에서 e.target.value는 option에 부여해준 value가 됨. */}
         <option value="recent">최신순</option>
-        <option value="price">낮은 가격순</option>
         <option value="rate">높은 평점순</option>
       </select>
     </div>

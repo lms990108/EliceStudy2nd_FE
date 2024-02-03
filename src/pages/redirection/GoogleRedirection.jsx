@@ -59,6 +59,7 @@ export function GoogleRedirection({ popup, setPopup, setAlert }) {
       return;
     }
     const code = searchParams.get("code");
+
     if (code) {
       window.opener.postMessage({ code }, window.location.origin);
     }
@@ -69,9 +70,9 @@ export function GoogleRedirection({ popup, setPopup, setAlert }) {
     if (!popup) {
       return;
     }
+
     const googleOauthCodeListener = (e) => {
       if (e.origin !== window.location.origin) {
-        console.log("hi");
         return;
       }
 
@@ -91,7 +92,7 @@ export function GoogleRedirection({ popup, setPopup, setAlert }) {
 
       const { code } = e.data;
       const authorizationCode = code;
-      console.log({ authorizationCode });
+
       if (authorizationCode) {
         popup?.close();
         console.log(`The popup URL has URL code param = ${authorizationCode}`);
@@ -149,11 +150,9 @@ export function GoogleRedirection({ popup, setPopup, setAlert }) {
               checkBtn: "확인",
             });
           });
-      } else {
-        console.error("인가코드가 없습니다.");
+        popup?.close();
+        setPopup(null);
       }
-      popup?.close();
-      setPopup(null);
     };
     window.addEventListener("message", googleOauthCodeListener, false);
     return () => {
