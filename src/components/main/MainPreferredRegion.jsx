@@ -65,7 +65,7 @@ function MainPreferredRegion() {
   }, [selectedRegion]);
 
   const formatTitle = (title) => {
-    return title.length > 10 ? title.slice(0, 10) + "・・・" : title;
+    return title.length > 13 ? title.slice(0, 13) : title;
   };
 
   const regionArray = [
@@ -82,7 +82,7 @@ function MainPreferredRegion() {
   return (
     <div className="main-layout-container">
       <div className="main-title-box">
-        <h1 className="main-title">지역별 최신 신작들을 한 눈에 👀</h1>
+        <h1 className="main-title">지역별 최신 신작</h1>
       </div>
       <div className="region-list-container">
         <ul className="region-list-box">

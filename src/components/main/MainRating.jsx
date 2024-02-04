@@ -73,7 +73,7 @@ function MainRating() {
   }, []);
 
   const formatTitle = (title) => {
-    return title.length > 10 ? title.slice(0, 10) + "・・・" : title;
+    return title.length > 13 ? title.slice(0, 13) : title;
   };
 
   return (

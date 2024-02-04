@@ -82,7 +82,7 @@ function MainTheater() {
   const theaterInfo = getTheaterInfo(selectedTheater);
 
   const formatTitle = (title) => {
-    return title.length > 12 ? title.slice(0, 12) + "・・・" : title;
+    return title.length > 13 ? title.slice(0, 13) : title;
   };
 
   return (

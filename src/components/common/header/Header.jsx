@@ -37,6 +37,7 @@ const Header = () => {
 
   const handleClose = () => {
     setOpen(false);
+    window.location.reload();
   };
   const onShowModal = () => {
     setSearchModalOpen(true); //검색 모달 열기
