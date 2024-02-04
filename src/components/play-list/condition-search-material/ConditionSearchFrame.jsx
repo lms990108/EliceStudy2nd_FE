@@ -36,11 +36,10 @@ export default function ConditionSearchFrame({
   selectedRegion,
 }) {
   const { conditions, setConditions } = useContext(ConditionContext);
-  const [values, setValues] = useState([0, 100]);
-
-  useEffect(() => {
-    setValues([0, 100]);
-  }, [selectedRegion]);
+  const [values, setValues] = useState([
+    conditions["가격별"][0] ? conditions["가격별"][0] / 1000 : 0,
+    conditions["가격별"][1] / 1000,
+  ]);
 
   const handleChangeSlider = (event, newValues) => {
     setValues(newValues);
@@ -82,7 +81,7 @@ export default function ConditionSearchFrame({
             <DatePicker
               format="YYYY/MM/DD"
               onChange={handleChangeDatePicker}
-              value={conditions["날짜별"]}
+              value={conditions["날짜별"] ? dayjs(conditions["날짜별"]) : null}
             />
           </DemoContainer>
         </LocalizationProvider>

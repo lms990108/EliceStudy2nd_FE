@@ -14,6 +14,7 @@
 
       h3 {
         margin-right: 30px;
+        font-size: 18px;
       }
     }
 
@@ -23,12 +24,17 @@
 
       h3 {
         margin-right: 30px;
+        font-size: 18px;
       }
     }
 
     .review-content-box {
       display: flex;
       flex-direction: column;
+
+      h3 {
+        font-size: 18px;
+      }
 
       div {
         width: 100%;
@@ -41,12 +47,17 @@
 
       h3 {
         margin-right: 30px;
+        font-size: 18px;
       }
     }
 
     .reivew-photo-upload-box {
       display: flex;
       align-items: center;
+
+      h3 {
+        font-size: 18px;
+      }
 
       .file-upload-btn {
         margin-left: 20px;
@@ -73,7 +84,7 @@
     .review-guide-text {
       p {
         margin: 10px 0;
-        font-size: 15px;
+        font-size: 14px;
       }
     }
 

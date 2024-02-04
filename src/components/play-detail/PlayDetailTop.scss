@@ -2,13 +2,14 @@
   .play-detail-top-container {
     .play-detail-top {
       display: flex;
+      align-items: center;
 
       .play-poster {
         display: flex;
 
         .poster-box {
-          width: 350px;
-          height: 450px;
+          width: 290px;
+          height: 390px;
           border-radius: 8px;
           box-shadow: -3px 3px 5px #bcbcbc;
 
@@ -16,16 +17,16 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            width: 350px;
-            height: 450px;
+            width: 290px;
+            height: 390px;
             position: absolute;
             background-color: rgb(0, 0, 0, 0.5);
             font-family: "Noto Sans KR";
             border-radius: 8px;
 
             img {
-              width: 250px;
-              height: 250px;
+              width: 230px;
+              height: 290px;
             }
 
             .end-show-text {
@@ -40,8 +41,8 @@
           }
 
           img {
-            width: 350px;
-            height: 450px;
+            width: 290px;
+            height: 390px;
             border-radius: 8px;
           }
         }
@@ -57,18 +58,50 @@
           display: flex;
           flex-wrap: wrap;
           font-family: "Noto Sans KR";
-          font-size: 42px;
+          font-size: 30px;
           height: auto;
         }
 
-        div {
-          height: 45px;
-          padding-left: 10px;
-          display: flex;
-          flex-wrap: wrap;
+        .play-summary-info {
+          display: grid;
+          padding: 0 15px;
 
-          h3 {
+          div:first-child,
+          div:nth-child(3) {
+            grid-column-start: 1;
+            grid-column-end: 2;
+          }
+
+          div:nth-child(2),
+          div:nth-child(4) {
+            grid-column-start: 2;
+            grid-column-end: 3;
+          }
+
+          div:nth-child(5),
+          div:nth-child(6) {
+            grid-column-start: 1;
+            grid-column-end: 3;
+          }
+
+          div {
+            height: 45px;
+            display: flex;
+            flex-wrap: wrap;
             margin: 0;
+
+            h3 {
+              margin: 0;
+              font-size: 17px;
+            }
+          }
+
+          .play-detail-buttons {
+            flex-wrap: nowrap;
+            grid-column-start: 1;
+            grid-column-end: 3;
+            position: relative;
+            bottom: 12px;
           }
         }
 
@@ -78,7 +111,7 @@
 
         p {
           margin-left: 15px;
-          font-size: 18px;
+          font-size: 17px;
           line-height: 1.2;
         }
 
@@ -110,12 +143,8 @@
         p {
           display: inline-block;
           line-height: 1;
-          font-size: 18px;
+          font-size: 17px;
         }
-
-        // svg {
-        //   margin-right: 5px;
-        // }
 
         &:hover {
           cursor: pointer;
@@ -126,11 +155,12 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        align-items: flex-start;
 
         p {
+          font-size: 17px;
           margin: 0;
           padding-right: 20px;
-          font-size: 18px;
           position: relative;
           bottom: 13px;
         }
@@ -140,42 +170,49 @@
           height: 50px;
         }
 
-        .share-option {
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-          padding-right: 20px;
+        .share-options {
           position: relative;
-          bottom: 12px;
+          top: 35px;
+          right: 28px;
+          border: 1.5px solid #ffb400;
+          border-radius: 8px;
+          padding: 25px 10px 0;
 
-          .SNS-img-box {
-            height: 50px;
+          .share-option {
             display: flex;
+            flex-direction: column;
+            justify-content: center;
             align-items: center;
+            position: relative;
+            bottom: 12px;
+            margin: 0 10px;
 
-            img {
-              width: 30px;
-              height: 30px;
+            .SNS-img-box {
+              height: 50px;
+              display: flex;
+              align-items: center;
+
+              img {
+                width: 30px;
+                height: 30px;
+              }
             }
           }
         }
       }
 
       .another-btn {
+        position: relative;
+        bottom: 10px;
         display: flex;
+        justify-content: space-between;
 
-        .dibs-btn,
-        .reserve-btn {
-          // padding: 0;
-          margin-right: 30px;
-          height: 60px;
+        p {
+          margin: 0;
         }
 
         .reserve-btn {
-          display: flex;
-          flex-direction: column;
-          width: 191px;
+          padding-left: 20px;
         }
       }
     }

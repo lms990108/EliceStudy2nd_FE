@@ -9,16 +9,33 @@ import ReviewErrorBox from "./ReviewErrorBox";
 import DriveFolderUploadIcon from "@mui/icons-material/DriveFolderUpload";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-export default function ReviewForm({ purpose, review_id, review_title, review_author, review_content, review_rate, review_image_urls, setIsReviewFormOpened, showId }) {
+export default function ReviewForm({
+  purpose,
+  review_id,
+  review_title,
+  review_author,
+  review_content,
+  review_rate,
+  review_image_urls,
+  setIsReviewFormOpened,
+  showId,
+}) {
   const navigate = useNavigate();
   const [title, setTitle] = useState(review_title || "");
-  const [content, setContent] = useState(review_content === "null" ? "" : review_content ? review_content : "");
+  const [content, setContent] = useState(
+    review_content === "null" ? "" : review_content ? review_content : ""
+  );
   const [ratingValue, setRatingValue] = useState(review_rate || 0);
-  const [photo, setPhoto] = useState(review_image_urls?.length ? review_image_urls[0] : null);
+  const [photo, setPhoto] = useState(
+    review_image_urls?.length ? review_image_urls : []
+  );
+  console.log(photo);
   // fixed된 알림을 띄우기 위한 상태
   const [alert, setAlert] = useState(null);
-  // 리뷰 필수 기재 항목 검증
-  const [reviewValidation, setReviewValidation] = useState(true);
+  // // 리뷰 필수 기재 항목 검증
+  // const [reviewValidation, setReviewValidation] = useState(true);
+  // 리뷰 에러 box에 담을 에러 문구
+  const [reviewErrorText, setReviewErrorText] = useState("");
 
   const fileInput = useRef(null);
 
@@ -39,10 +56,31 @@ export default function ReviewForm({ purpose, review_id, review_title, review_au
     });
   };
 
+  const handleDeletePhoto = (itemIdx) => {
+    setPhoto((prev) => {
+      const newArray = [...prev];
+      newArray.splice(itemIdx, 1);
+      return newArray;
+    });
+  };
+
+  const handleImageSelect = (image) => {
+    if (photo.length === 3) {
+      setReviewErrorText("사진은 최대 3장만 업로드 가능합니다.");
+    } else if (!image) {
+      return;
+    } else {
+      setPhoto((prev) => [...prev, image]);
+    }
+  };
+
   // 리뷰 작성 or 수정 완료 후 제출 시
   const handleCompelteBtnClick = () => {
     if (!title || !ratingValue || !content) {
-      setReviewValidation(false);
+      // setReviewValidation(false);
+      setReviewErrorText(
+        "제목, 별점, 내용은 필수 입력값입니다. 입력 후 다시 제출해 주세요."
+      );
       return;
     }
 
@@ -90,7 +128,8 @@ export default function ReviewForm({ purpose, review_id, review_title, review_au
         } else if (res.status === 401 || res.status === 403) {
           setAlert({
             title: "로그인 필요",
-            content: "로그인이 필요한 기능입니다. 로그인 페이지로 이동하시겠습니까?",
+            content:
+              "로그인이 필요한 기능입니다. 로그인 페이지로 이동하시겠습니까?",
             open: true,
             onclose: () => setAlert(null),
             onclick: () =>
@@ -104,7 +143,8 @@ export default function ReviewForm({ purpose, review_id, review_title, review_au
         } else if (res.status === 413) {
           setAlert({
             title: "리뷰 업로드 실패",
-            content: "파일 크기가 제한을 초과하였습니다. 파일 용량을 확인해 주세요.",
+            content:
+              "파일 크기가 제한을 초과하였습니다. 파일 용량을 확인해 주세요.",
             open: true,
             onclose: () => setAlert(null),
             severity: "error",
@@ -160,7 +200,8 @@ export default function ReviewForm({ purpose, review_id, review_title, review_au
         } else if (res.status === 401 || res.status === 403) {
           setAlert({
             title: "로그인 필요",
-            content: "로그인이 필요한 기능입니다. 로그인 페이지로 이동하시겠습니까?",
+            content:
+              "로그인이 필요한 기능입니다. 로그인 페이지로 이동하시겠습니까?",
             open: true,
             onclose: () => setAlert(null),
             onclick: () =>
@@ -174,7 +215,8 @@ export default function ReviewForm({ purpose, review_id, review_title, review_au
         } else if (res.status === 413) {
           setAlert({
             title: "리뷰 업로드 실패",
-            content: "파일 크기가 제한을 초과하였습니다. 파일 용량을 확인해 주세요.",
+            content:
+              "파일 크기가 제한을 초과하였습니다. 파일 용량을 확인해 주세요.",
             open: true,
             onclose: () => setAlert(null),
             severity: "error",
@@ -263,36 +305,73 @@ export default function ReviewForm({ purpose, review_id, review_title, review_au
         </div>
         <div className="reivew-photo-upload-box">
           <h3>사진 첨부</h3>
-          <Button className="file-upload-btn" color="darkGray" variant="outlined" size="small" startIcon={<DriveFolderUploadIcon />} onClick={() => handleImgUploadBtnClick()}>
+          <Button
+            className="file-upload-btn"
+            color="darkGray"
+            variant="outlined"
+            size="small"
+            startIcon={<DriveFolderUploadIcon />}
+            onClick={() => handleImgUploadBtnClick()}
+          >
             <label htmlFor="image">파일 찾기</label>
           </Button>
-          <input type="file" className="file-input" ref={fileInput} onChange={(e) => setPhoto(e.target.files[0])} accept=".png, .jpg, .jpeg" />
+          <input
+            type="file"
+            className="file-input"
+            ref={fileInput}
+            onChange={(e) => handleImageSelect(e.target.files[0])}
+            accept=".png, .jpg, .jpeg"
+          />
         </div>
-        {photo && (
-          <div>
-            <img src={typeof photo === "string" ? photo : URL.createObjectURL(photo)} alt="리뷰 첨부 이미지" />
-            <DeleteIcon
-              color="ourGray"
-              sx={{
-                paddingLeft: "10px",
-                cursor: "pointer",
-                position: "absolute",
-              }}
-              onClick={() => setPhoto(null)}
-            />
-          </div>
-        )}
+        <div style={{ display: "flex" }}>
+          {photo.length
+            ? photo.map((item, idx) => (
+                <div key={idx}>
+                  <img
+                    src={
+                      typeof item === "string"
+                        ? item
+                        : URL.createObjectURL(item)
+                    }
+                    alt="리뷰 첨부 이미지"
+                  />
+                  <DeleteIcon
+                    color="ourGray"
+                    sx={{
+                      cursor: "pointer",
+                      paddingLeft: "10px",
+                      position: "relative",
+                      bottom: "120px",
+                      paddingRight: "30px",
+                    }}
+                    onClick={() => handleDeletePhoto(idx)}
+                  />
+                </div>
+              ))
+            : null}
+        </div>
         <div className="review-guide-text">
           <p>- * 표시가 되어 있는 항목은 필수 기재 항목입니다.</p>
-          <p>- 제목은 띄어쓰기 포함 30자, 내용은 띄어쓰기 포함 500자 제한입니다.</p>
-          <p>- 사진은 1장만 업로드 가능합니다.</p>
+          <p>
+            - 제목은 띄어쓰기 포함 30자, 내용은 띄어쓰기 포함 500자 제한입니다.
+          </p>
+          <p>- 사진은 3장까지 업로드 가능합니다.</p>
         </div>
-        {!reviewValidation && <ReviewErrorBox errorText="제목, 별점, 내용은 필수 입력값입니다. 입력 후 다시 제출해 주세요." />}
+        {reviewErrorText && <ReviewErrorBox errorText={reviewErrorText} />}
         <div className="play-review-btn">
-          <Button variant="contained" className="play-review-btn" onClick={() => handleCompelteBtnClick()}>
+          <Button
+            variant="contained"
+            className="play-review-btn"
+            onClick={() => handleCompelteBtnClick()}
+          >
             {purpose} 완료
           </Button>
-          <Button variant="outlined" color="error" className="play-review-btn" onClick={() => handleCancelBtnClick()}>
+          <Button
+            variant="outlined"
+            color="error"
+            className="play-review-btn"
+            onClick={() => handleCancelBtnClick()}
+          >
             {purpose} 취소
           </Button>
         </div>

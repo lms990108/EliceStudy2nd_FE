@@ -106,6 +106,7 @@ export function PlayDetail() {
                   detail_images={playInfo.detail_images}
                   schedule={playInfo.schedule}
                   seat_cnt={playInfo.seat_cnt}
+                  state={playInfo.state}
                 />
               )}
               {detailNavMenu === "reviews" && (

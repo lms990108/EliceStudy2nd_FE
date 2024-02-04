@@ -9,12 +9,17 @@ export default function PlayInfo({
   description,
   detail_images,
   schedule,
+  state,
 }) {
   return (
     <div className="play-detail-info">
       <div className="play-time-info">
         <h3>공연 시간 정보</h3>
         <p>{schedule}</p>
+      </div>
+      <div>
+        <h3>공연 상태</h3>
+        <p>{state}</p>
       </div>
       {description && (
         <div className="summary">
