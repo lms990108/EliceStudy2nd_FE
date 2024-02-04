@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import "./PlayList.scss";
 import ConditionSearch from "../../components/play-list/ConditionSearch";
 import PlayListHeader from "../../components/play-list/PlayListHeader";
@@ -12,20 +12,34 @@ import Stack from "@mui/material/Stack";
 import MovieIcon from "@mui/icons-material/Movie";
 import LocalAtmIcon from "@mui/icons-material/LocalAtm";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import { AppContext } from "../../App";
 
-// 지역, 상태별, 가격별, 정렬 기준, 캘린더 여부 띄워야 함!
+// 지역, 페이지 연극 디테일 페이지에서 뒤로가기 시 데이터 유지 완료!
+// 조건, 정렬까지 데이터 유지하면 완벽!
 export function PlayList() {
+  const { prevPlayListQuery, setPrevPlayListQuery } = useContext(AppContext);
+  const queryParams = new URLSearchParams(prevPlayListQuery);
+
   // 로딩중 여부
   const [isLoading, setIsLoading] = useState(true);
   // 전체 연극들
   const [plays, setPlays] = useState([]);
-  console.log(plays);
   // 선택된 지역
-  const [selectedRegion, setSelectedRegion] = useState(["전체"]);
+  const [selectedRegion, setSelectedRegion] = useState(
+    !queryParams.has("region")
+      ? ["전체"]
+      : queryParams.getAll("region").includes("대전")
+      ? ["대전", "충청", "세종"]
+      : queryParams.getAll("region")
+  );
   // 선택된 정렬 기준 (최신순, 낮은 가격순, 종료 임박순, 인기순)
-  const [sortStandard, setSortStandard] = useState("recent");
+  const [sortStandard, setSortStandard] = useState(
+    queryParams.get("order") ? queryParams.get("order") : "recent"
+  );
   // 현재 페이지
-  const [curPage, setCurPage] = useState(1);
+  const [curPage, setCurPage] = useState(
+    queryParams.get("page") ? Number(queryParams.get("page")) : 1
+  );
   // 가져와지는 총 연극 개수
   const [playTotalCnt, setPlayTotalCnt] = useState(0);
   // 현재 화면 너비에 따라 다르게 UI가 보여져야 하므로 innerWidth 상태도 정의
@@ -34,6 +48,8 @@ export function PlayList() {
   const [error, setError] = useState("");
   // 에러 발생 시 창을 띄우기 위한 상태
   const [isAlertOpen, setIsAlertOpen] = useState(false);
+  // 요청을 보내는 url
+  const [reqQuery, setReqQuery] = useState("");
 
   // 화면에 띄울 조건 검색 텍스트
   const conditionTexts = [
@@ -47,57 +63,72 @@ export function PlayList() {
 
   // 조건 검색 상태 정의
   const [conditions, setConditions] = useState({
-    가격별: [0, 100000],
-    상태별: ["전체"],
-    날짜별: null,
+    가격별:
+      queryParams.get("lowPrice") && queryParams.get("highPrice")
+        ? [+queryParams.get("lowPrice"), +queryParams.get("highPrice")]
+        : !+queryParams.get("lowPrice") && +queryParams.get("highPrice")
+        ? [0, +queryParams.get("highPrice")]
+        : !+queryParams.get("highPrice") && +queryParams.get("lowPrice")
+        ? [+queryParams.get("lowPrice"), 100000]
+        : [0, 100000],
+    상태별: queryParams.has("state") ? queryParams.getAll("state") : ["전체"],
+    날짜별: queryParams.get("date") ? queryParams.get("date") : null,
   });
 
   // 지역이 바뀌면 조건검색 부분 초기화
   useEffect(() => {
-    setConditions({ 가격별: [0, 100000], 상태별: ["전체"] });
+    if (!prevPlayListQuery) {
+      setConditions({ 가격별: [0, 100000], 상태별: ["전체"] });
+    }
   }, [selectedRegion]);
 
   // 연극 데이터 받아오기
   useEffect(() => {
-    const regionQuery =
-      selectedRegion[0] === "전체"
-        ? ""
-        : selectedRegion.length === 1
-        ? `region=${selectedRegion}&`
-        : selectedRegion
-            .map((region) => `region=${region}&`)
-            .reduce((acc, cur) => acc + cur);
+    let reqQuery = "";
 
-    const stateQuery =
-      conditions["상태별"][0] === "전체"
-        ? ""
-        : conditions["상태별"].length === 1
-        ? `state=${conditions["상태별"][0]}&`
-        : conditions["상태별"]
-            .map((state) => `state=${state}&`)
-            .reduce((acc, cur) => acc + cur);
+    if (prevPlayListQuery) {
+      reqQuery = prevPlayListQuery;
+      setReqQuery(reqQuery);
+    } else {
+      const regionQuery =
+        selectedRegion[0] === "전체"
+          ? ""
+          : selectedRegion.length === 1
+          ? `region=${selectedRegion}&`
+          : selectedRegion
+              .map((region) => `region=${region}&`)
+              .reduce((acc, cur) => acc + cur);
 
-    const lowPriceQuery =
-      conditions["가격별"][0] === 0
-        ? ""
-        : `lowPrice=${conditions["가격별"][0]}&`;
+      const stateQuery =
+        conditions["상태별"][0] === "전체"
+          ? ""
+          : conditions["상태별"].length === 1
+          ? `state=${conditions["상태별"][0]}&`
+          : conditions["상태별"]
+              .map((state) => `state=${state}&`)
+              .reduce((acc, cur) => acc + cur);
 
-    const highPriceQuery =
-      conditions["가격별"][1] === 100000
-        ? ""
-        : `highPrice=${conditions["가격별"][1]}&`;
+      const lowPriceQuery =
+        conditions["가격별"][0] === 0
+          ? ""
+          : `lowPrice=${conditions["가격별"][0]}&`;
 
-    const dateQuery = conditions["날짜별"]
-      ? `date=${conditions["날짜별"]}&`
-      : "";
+      const highPriceQuery =
+        conditions["가격별"][1] === 100000
+          ? ""
+          : `highPrice=${conditions["가격별"][1]}&`;
 
-    console.log(
-      `https://dailytopia2.shop/api/shows?${regionQuery}${stateQuery}${lowPriceQuery}${highPriceQuery}order=${sortStandard}&date=${dateQuery}&page=${curPage}&limit=24`
-    );
+      const dateQuery = conditions["날짜별"]
+        ? `&date=${conditions["날짜별"]}&`
+        : "";
 
-    fetch(
-      `https://dailytopia2.shop/api/shows?${regionQuery}${stateQuery}${lowPriceQuery}${highPriceQuery}order=${sortStandard}&date=${dateQuery}&page=${curPage}&limit=24`
-    )
+      reqQuery = `?${regionQuery}${stateQuery}${lowPriceQuery}${highPriceQuery}order=${sortStandard}${dateQuery}&page=${curPage}&limit=24`;
+
+      setReqQuery(reqQuery);
+    }
+
+    console.log(`https://dailytopia2.shop/api/shows${reqQuery}`);
+    fetch(`https://dailytopia2.shop/api/shows${reqQuery}`)
       .then((res) => {
         if (res.ok) {
           return res.json();
@@ -111,6 +142,7 @@ export function PlayList() {
         setPlayTotalCnt(data.total);
         setIsLoading(false);
       })
+      .finally(() => setPrevPlayListQuery(null))
       .catch(() => {
         setError("연극 목록을 가져오는 데 실패하였습니다.");
         setIsAlertOpen(true);
@@ -120,17 +152,21 @@ export function PlayList() {
 
   // 지역이 바뀌면 클릭되어 있는 날짜 상태를 null로 다시 초기화하기 + 정렬 기준 초기화 + 조건검색 초기화
   useEffect(() => {
-    setSortStandard("recent");
-    setConditions({
-      가격별: [0, 100000],
-      상태별: ["전체"],
-      날짜별: null,
-    });
+    if (!prevPlayListQuery) {
+      setSortStandard("recent");
+      setConditions({
+        가격별: [0, 100000],
+        상태별: ["전체"],
+        날짜별: null,
+      });
+    }
   }, [selectedRegion]);
 
   // 페이지네이션 초기화
   useEffect(() => {
-    setCurPage(1);
+    if (!prevPlayListQuery) {
+      setCurPage(1);
+    }
   }, [selectedRegion, conditions, sortStandard]);
 
   // 화면 너비 조절 이벤트를 듣도록 하기
@@ -180,6 +216,9 @@ export function PlayList() {
                 <Chip icon={<MovieIcon />} label={state} key={idx} />
               ))
             )}
+            {conditions["날짜별"] ? (
+              <Chip icon={<CalendarMonthIcon />} label={conditions["날짜별"]} />
+            ) : null}
             {conditions["가격별"][0] === 0 &&
             conditions["가격별"][1] === 100000 ? (
               <Chip icon={<LocalAtmIcon />} label="가격 전체" />
@@ -191,9 +230,6 @@ export function PlayList() {
                   .join(" ~ ")}
               />
             )}
-            {conditions["날짜별"] ? (
-              <Chip icon={<CalendarMonthIcon />} label={conditions["날짜별"]} />
-            ) : null}
           </Stack>
           {!playTotalCnt ? (
             <>
@@ -230,6 +266,8 @@ export function PlayList() {
                       price: play.price,
                       state: play.state,
                     }}
+                    query={reqQuery}
+                    setPrevPlayListQuery={setPrevPlayListQuery}
                   />
                 ))}
               </div>
@@ -237,9 +275,6 @@ export function PlayList() {
                 <PaginationBox
                   innerWidth={innerWidth}
                   playsCount={playTotalCnt}
-                  plays={plays}
-                  selectedRegion={selectedRegion}
-                  sortStandard={sortStandard}
                   setCurPage={setCurPage}
                   curPage={curPage}
                 />

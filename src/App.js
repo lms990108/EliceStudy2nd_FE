@@ -34,6 +34,9 @@ function App() {
   const [userData, setUserData] = useState(null);
   console.log(userData);
 
+  const [prevPlayListQuery, setPrevPlayListQuery] = useState(null);
+  console.log(prevPlayListQuery);
+
   const getUserData = async () => {
     try {
       const res = await fetch(`https://dailytopia2.shop/api/users`, {
@@ -72,10 +75,6 @@ function App() {
     getUserData();
   }, []);
 
-  useEffect(() => {
-    getUserData();
-  }, []);
-
   return (
     <div className="App">
       <Helmet>
@@ -86,7 +85,14 @@ function App() {
         />
       </Helmet>
       <ThemeProvider theme={theme}>
-        <AppContext.Provider value={{ userData, setUserData }}>
+        <AppContext.Provider
+          value={{
+            userData,
+            setUserData,
+            prevPlayListQuery,
+            setPrevPlayListQuery,
+          }}
+        >
           <BrowserRouter>
             <Routes>
               {/* 에러 페이지 */}
