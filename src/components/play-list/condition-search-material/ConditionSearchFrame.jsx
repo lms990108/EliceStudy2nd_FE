@@ -82,7 +82,7 @@ export default function ConditionSearchFrame({
             <DatePicker
               format="YYYY/MM/DD"
               onChange={handleChangeDatePicker}
-              value={conditions["날짜별"]}
+              value={conditions["날짜별"] ? dayjs(conditions["날짜별"]) : null}
             />
           </DemoContainer>
         </LocalizationProvider>

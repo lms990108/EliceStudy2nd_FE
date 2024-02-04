@@ -6,17 +6,15 @@
 
   .play-review-header-container .number-of-plays {
     font-weight: 700;
-    font-size: 28px;
+    font-size: 24px;
   }
 
   .play-review-header-container .number-of-plays span {
     color: #ffb400;
+    font-size: 24px;
   }
 
   .review-header-line {
     border-bottom: 1px solid #bcbcbc;
   }
-}
-
-@media (max-width: 480px) {
 }

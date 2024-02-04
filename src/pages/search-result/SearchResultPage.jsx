@@ -36,17 +36,23 @@ export default function SearchResultPage() {
   // 연극 검색 결과 현재 페이지
   const [playCurPage, setPlayCurPage] = useState(1);
   // 연극 검색 결과 총 개수
-  const [totalCnt, setTotalCnt] = useState({ play: 0, community: 0, promotion: 0 });
+  const [totalCnt, setTotalCnt] = useState({
+    play: 0,
+    community: 0,
+    promotion: 0,
+  });
 
   // alert
   const [alert, setAlert] = useState(null);
 
   const getPlaySearchResult = async () => {
     try {
-      const res = await fetch(`https://dailytopia2.shop/api/shows?title=${searchKeyword}&order=${sortStandard}&page=${playCurPage}&limit=10`);
+      const res = await fetch(
+        `https://dailytopia2.shop/api/shows?title=${searchKeyword}&order=${sortStandard}&page=${playCurPage}&limit=10`
+      );
       const data = await res.json();
       if (res.ok) {
-        setPlaySearchResult(data.data);
+        setPlaySearchResult(data.shows);
         setTotalCnt({ ...totalCnt, play: data.total });
         setIsLoading(false);
       } else {
@@ -118,7 +124,11 @@ export default function SearchResultPage() {
         <div className="search-result-container">
           <SearchResultHeader searchKeyword={searchKeyword} />
           <SearchResultCount />
-          <SearchResultTab totalCnt={totalCnt} selectedTabMenu={selectedTabMenu} setSelectedTabMenu={setSelectedTabMenu} />
+          <SearchResultTab
+            totalCnt={totalCnt}
+            selectedTabMenu={selectedTabMenu}
+            setSelectedTabMenu={setSelectedTabMenu}
+          />
           {selectedTabMenu === "연극" && (
             <PlaySearchResult
               playSearchResult={playSearchResult}

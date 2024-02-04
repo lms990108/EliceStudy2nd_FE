@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import "./PlayList.scss";
 import ConditionSearch from "../../components/play-list/ConditionSearch";
 import PlayListHeader from "../../components/play-list/PlayListHeader";
@@ -15,13 +15,11 @@ import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 
 // 지역, 상태별, 가격별, 정렬 기준, 캘린더 여부 띄워야 함!
 export function PlayList() {
-  // 달력에서 날짜 선택 시 스크롤을 내리기 위한 ref
-  const scrollRef = useRef(null);
-
   // 로딩중 여부
   const [isLoading, setIsLoading] = useState(true);
   // 전체 연극들
   const [plays, setPlays] = useState([]);
+  console.log(plays);
   // 선택된 지역
   const [selectedRegion, setSelectedRegion] = useState(["전체"]);
   // 선택된 정렬 기준 (최신순, 낮은 가격순, 종료 임박순, 인기순)
@@ -53,8 +51,6 @@ export function PlayList() {
     상태별: ["전체"],
     날짜별: null,
   });
-
-  console.log(conditions);
 
   // 지역이 바뀌면 조건검색 부분 초기화
   useEffect(() => {
@@ -111,7 +107,7 @@ export function PlayList() {
       })
       .then((data) => {
         setIsLoading(true);
-        setPlays(data.data);
+        setPlays(data.shows);
         setPlayTotalCnt(data.total);
         setIsLoading(false);
       })
