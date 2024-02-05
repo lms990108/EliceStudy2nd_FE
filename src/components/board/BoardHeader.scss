@@ -1,39 +1,10 @@
 .board-list-header {
   width: 100%;
-
-  .content {
-    padding: 0 10px;
-
-    h2 {
-      margin: 0;
-      padding: 10px 0 30px;
-      font-size: 48px;
-      font-weight: bold;
-    }
-  }
-
-  .flex-box {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px;
-
-    p {
-      margin: 0;
-      font-size: 18px;
-    }
-    Button {
-      height: 45px;
-      width: 115px;
-      text-align: center;
-      line-height: 30px;
-      font-weight: 600;
-      margin-top: auto;
-    }
-  }
-  hr {
-    border: 0;
-    height: 2px;
-    background-color: #b8b8b8;
+  h2 {
+    margin: 0;
+    padding: 20px 0 40px;
+    font-size: 36px;
+    font-weight: 700;
   }
 }
 

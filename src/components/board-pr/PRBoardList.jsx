@@ -1,61 +1,69 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./PRBoardList.scss";
-import SmsOutlinedIcon from "@mui/icons-material/SmsOutlined";
 import { Link } from "react-router-dom";
+import { SmsOutlined, SwapVert, ThumbUpOutlined, VisibilityOutlined } from "@mui/icons-material";
+import { Button } from "@mui/material";
 
 export default function PRBoardList({ newList }) {
-  const [boardListLeft, setBoardListLeft] = useState([]);
-  const [boardListRight, setBoardListRight] = useState([]);
+  const [selected, setSelected] = useState("all");
 
-  useEffect(() => {
-    if (!boardListLeft.length && !boardListRight.length) return;
-    const lastl = document.querySelector(".left .content-box:last-child")?.clientHeight + 78;
-    const lastr = document.querySelector(".right .content-box:last-child")?.clientHeight + 78;
-    const suml = document.querySelector(".left").clientHeight;
-    const sumr = document.querySelector(".right").clientHeight;
-
-    if (suml > sumr && suml - lastl > sumr) {
-      setBoardListRight((cur) => [...cur, boardListLeft[boardListLeft.length - 1]]);
-      setBoardListLeft((cur) => [...cur.slice(0, cur.length - 1)]);
-    } else if (sumr > suml && sumr - lastr > suml) {
-      setBoardListLeft((cur) => [...cur, boardListRight[boardListRight.length - 1]]);
-      setBoardListRight((cur) => [...cur.slice(0, cur.length - 1)]);
-    }
-  }, [boardListLeft, boardListRight]);
-
-  useEffect(() => {
-    console.log("newlist update");
-    setBoardListLeft((cur) => [...cur, ...newList.filter((b, idx) => idx % 2 == 0)]);
-    setBoardListRight((cur) => [...cur, ...newList.filter((b, idx) => idx % 2 == 1)]);
-  }, [newList]);
-
-  const content = (post) => (
-    <Link className={`content-box pointer`} key={post._id} id={post._id} to={`${post.promotion_number}`}>
-      <img src={post.image_url} alt="" />
-      <div className="post-content-box">
-        <div className="flex-box">
-          <div className="title">{post.title}</div>
-          <div className="flex-box comments">
-            <SmsOutlinedIcon sx={{ fontSize: 20 }} />
-            <span>{post.comments?.length || 0}</span>
-          </div>
-        </div>
-        {post.tags && post.tags.length !== 0 && (
-          <div className="tags">
-            {post.tags.map((tag, idx) => (
-              <div key={idx}># {tag}</div>
-            ))}
-          </div>
-        )}
-        <div className="content">{post.content}</div>
-      </div>
-    </Link>
-  );
+  const handleClickDivision = (e) => {
+    setSelected(e.target.id);
+  };
 
   return (
     <div className="pr-board-list-box">
-      <div className="left">{boardListLeft.map((post, idx) => content(post, idx))}</div>
-      <div className="right">{boardListRight.map((post, idx) => content(post, idx))}</div>
+      <div className="header flex-box">
+        <div className="division flex-box">
+          <div id="all" className={selected === "all" && "selected"} onClick={handleClickDivision}>
+            전체보기
+          </div>
+          <div id="in-progress" className={selected === "in-progress" && "selected"} onClick={handleClickDivision}>
+            진행중인 연극
+          </div>
+          <div id="done" className={selected === "done" && "selected"} onClick={handleClickDivision}>
+            종료된 연극
+          </div>
+        </div>
+        <div className="buttons">
+          <Button variant="outlined" size="small" color="darkGray" startIcon={<SwapVert />}>
+            최신순
+          </Button>
+          <Button variant="contained" size="small" color="secondary" disableElevation>
+            작성하기
+          </Button>
+        </div>
+      </div>
+      <div className="body">
+        {newList.map((post) => (
+          <Link className={`post-card pointer`} key={post._id} id={post._id} to={`${post.promotion_number}`}>
+            <img src={post.image_url} alt="" />
+            <div className="post-card-content">
+              <div className="title">{post.title}</div>
+              {post.start_date && post.end_date && (
+                <div className="date">
+                  {post.start_date.split("T")[0]} ~ {post.end_date.split("T")[0]}
+                </div>
+              )}
+              {post.tags && post.tags.length !== 0 && (
+                <div className="tags">
+                  {post.tags.map((tag, idx) => (
+                    <div key={idx}># {tag}</div>
+                  ))}
+                </div>
+              )}
+            </div>
+            <div className="flex-box post-card-footer">
+              <VisibilityOutlined sx={{ fontSize: 16 }} />
+              <span>{post.views || 0}</span>
+              <ThumbUpOutlined sx={{ fontSize: 16 }} />
+              <span>{post.likes || 0}</span>
+              <SmsOutlined sx={{ fontSize: 16 }} />
+              <span>{post.comments || 0}</span>
+            </div>
+          </Link>
+        ))}
+      </div>
     </div>
   );
 }
