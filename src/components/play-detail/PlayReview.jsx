@@ -128,6 +128,8 @@ export default function PlayReview({
                 review_image_urls={userReview.review?.image_urls}
                 setIsReviewFormOpened={setIsReviewFormOpened}
                 showId={showId}
+                getReviews={getReviews}
+                getUserReview={getUserReview}
               />
             ) : null}
 
@@ -154,6 +156,8 @@ export default function PlayReview({
                     setIsReviewFormOpened={setIsReviewFormOpened}
                     review_id={review._id}
                     scrollRef={scrollRef}
+                    getReviews={getReviews}
+                    getUserReview={getUserReview}
                     key={review._id}
                   />
                 ))}
