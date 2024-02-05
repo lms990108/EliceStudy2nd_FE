@@ -141,7 +141,7 @@ export function PRBoardForm({ setInput, handleComplete, handleCancle }) {
       <div className="flex-box title">
         <div className="input">
           <label htmlFor="title">*제목</label>
-          <input type="text" id="title" name="title" value={inputTitle} onChange={handleTitleChange} maxLength={40} placeholder="제목을 작성해 주세요." required />
+          <input type="text" id="title" name="title" value={inputTitle} onChange={handleTitleChange} maxLength={30} placeholder="제목을 작성해 주세요." required />
         </div>
         {handleError(errorTitle)}
       </div>

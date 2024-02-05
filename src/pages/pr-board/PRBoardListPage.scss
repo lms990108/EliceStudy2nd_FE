@@ -1,3 +1,5 @@
+@import "../../App.scss";
+
 .pr-board-page {
   font-family: "Noto Sans KR";
   max-width: 1110px;
@@ -30,7 +32,7 @@
     }
 
     .contents-container {
-      margin: 44px 160px;
+      margin: 44px 120px;
       z-index: 10;
       color: #fff;
       height: calc(100% - 88px);
@@ -68,7 +70,7 @@
         .date {
           font-size: 14px;
           color: #ffffffbb;
-          margin: 12px 0;
+          margin-bottom: 6px;
         }
 
         .content {
@@ -76,6 +78,11 @@
           color: #ffffffbb;
           margin: 12px 0;
           flex-grow: 1;
+
+          .ellipsis {
+            @include ellipsis(3, 20px);
+            white-space: wrap;
+          }
         }
 
         .footer {
@@ -98,7 +105,7 @@
 
       .poster {
         height: 100%;
-        max-width: 300px;
+        max-width: 365px;
         object-fit: cover;
       }
     }

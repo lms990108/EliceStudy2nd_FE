@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import SmsOutlinedIcon from "@mui/icons-material/SmsOutlined";
 import "./FreeBoardList.scss";
 import { Link, useNavigate } from "react-router-dom";
 import { format } from "date-fns";
+import { SmsOutlined, ThumbUpOutlined, VisibilityOutlined } from "@mui/icons-material";
 
 export default function FreeBoardList({ boardList }) {
   const [posts, setPosts] = useState([]);
@@ -34,10 +34,22 @@ export default function FreeBoardList({ boardList }) {
             <div className="title">{post.title}</div>
           </div>
           <div className="flex-box bottom">
-            <div className="content">{post.content}</div>
-            <div className="comments">
-              <SmsOutlinedIcon sx={{ fontSize: 16 }} />
-              <span>{post.comments?.length || 10}</span>
+            {post.tags?.length ? (
+              <div className="tags">
+                {post.tags.map((tag, idx) => (
+                  <div key={idx}># {tag}</div>
+                ))}
+              </div>
+            ) : (
+              <div className="content">{post.content}</div>
+            )}
+            <div className="flex-box post-card-footer">
+              <VisibilityOutlined sx={{ fontSize: 16 }} />
+              <span>{post.views || 0}</span>
+              <ThumbUpOutlined sx={{ fontSize: 16 }} />
+              <span>{post.likes || 0}</span>
+              <SmsOutlined sx={{ fontSize: 16 }} />
+              <span>{post.comments || 0}</span>
             </div>
           </div>
         </Link>

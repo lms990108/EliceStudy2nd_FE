@@ -11,12 +11,14 @@ import ServerError from "../../components/common/state/ServerError";
 import Empty from "../../components/common/state/Empty";
 import { ArrowBackIosNewRounded, ArrowBackIosRounded, ArrowForwardIosRounded, SmsOutlined, ThumbUpOutlined, VisibilityOutlined } from "@mui/icons-material";
 
+const MAX_BANNER_INDEX = 3;
+
 export function PRBoardListPage() {
   const [boardList, setBoardList] = useState([]);
   const [page, setPage] = useState(1);
   const [state, setState] = useState("loading");
   const [scrollRef, inView] = useInView();
-  const nav = useNavigate();
+  const [bannerIndex, setBannerIndex] = useState(0);
 
   const addBoardList = (newList) => {
     setBoardList((cur) => [...cur, ...newList]);
@@ -40,8 +42,20 @@ export function PRBoardListPage() {
     }
   };
 
-  const handleFormBtn = () => {
-    nav("/promotion/write");
+  const handleClickLeftArrow = () => {
+    if (bannerIndex <= 0) {
+      setBannerIndex(MAX_BANNER_INDEX);
+    } else {
+      setBannerIndex((cur) => cur - 1);
+    }
+  };
+
+  const handleClickRightArrow = () => {
+    if (bannerIndex >= MAX_BANNER_INDEX) {
+      setBannerIndex(0);
+    } else {
+      setBannerIndex((cur) => cur + 1);
+    }
   };
 
   useEffect(() => {
@@ -54,36 +68,36 @@ export function PRBoardListPage() {
     }
   }, [inView]);
 
-  const desc = <>소규모 연극을 홍보하는 곳입니다.</>;
-
   return (
     <div className="pr-board-page page-margin">
-      <BoardListHeader header="홍보게시판" onclick={handleFormBtn} />
+      <BoardListHeader header="홍보게시판" />
       <div className="best-box">
-        <img className="bg-img" src="https://elice-5th.s3.amazonaws.com/promotions/1706321523702_110302_play_726.jpg" />
+        <img className="bg-img" src={boardList[bannerIndex]?.image_url || "https://elice-5th.s3.amazonaws.com/promotions/1706321523702_110302_play_726.jpg"} />
         <div className="bg-mask">
           <div className="contents-container">
             <div className="left-box">
               <div className="sub-title">BEST 홍보글</div>
-              <h2 className="title">{boardList[0]?.title}</h2>
+              <h2 className="title">{boardList[bannerIndex]?.title}</h2>
               <div className="date">
-                {boardList[0]?.start_date.split("T")[0]} ~ {boardList[0]?.end_date.split("T")[0]}
+                {boardList[bannerIndex]?.start_date?.split("T")[bannerIndex] || "2024-02-01"} ~ {boardList[bannerIndex]?.end_date?.split("T")[bannerIndex] || "2024-04-12"}
               </div>
-              <div className="content">{boardList[0]?.content}</div>
+              <div className="content">
+                <div className="ellipsis">{boardList[bannerIndex]?.content}</div>
+              </div>
               <div className="footer">
                 <VisibilityOutlined sx={{ fontSize: 20 }} />
-                <span>{boardList[0]?.views || 0}</span>
+                <span>{boardList[bannerIndex]?.views || 0}</span>
                 <ThumbUpOutlined sx={{ fontSize: 20 }} />
-                <span>{boardList[0]?.likes || 0}</span>
+                <span>{boardList[bannerIndex]?.likes || 0}</span>
                 <SmsOutlined sx={{ fontSize: 20 }} />
-                <span>{boardList[0]?.comments || 0}</span>
+                <span>{boardList[bannerIndex]?.comments || 0}</span>
               </div>
             </div>
-            <img className="poster" src="https://elice-5th.s3.amazonaws.com/promotions/1706321523702_110302_play_726.jpg" />
+            <img className="poster" src={boardList[bannerIndex]?.image_url || "https://elice-5th.s3.amazonaws.com/promotions/1706321523702_110302_play_726.jpg"} />
           </div>
           <div className="arrow">
-            <ArrowBackIosRounded className="pointer" />
-            <ArrowForwardIosRounded className="pointer" />
+            <ArrowBackIosRounded onClick={handleClickLeftArrow} className="pointer" />
+            <ArrowForwardIosRounded onClick={handleClickRightArrow} className="pointer" />
           </div>
         </div>
       </div>
