@@ -1,23 +1,30 @@
 .selected-play-detail-menu {
-  color: #ffb400;
-  border-bottom: 2px solid #ffb400;
+  color: #222222;
+  border-bottom: 2px solid #222222;
 }
 
 @media (min-width: 900px) {
   .play-detail-nav {
     display: flex;
-    margin-top: 100px;
-  }
+    margin-top: 85px;
 
-  .play-detail-nav div {
-    font-size: 22px;
-    font-weight: 700;
-    padding: 0 10px 10px 10px;
-    margin-right: 100px;
-  }
+    div {
+      font-size: 20px;
+      font-weight: 700;
+      padding: 0 10px 10px 10px;
+      flex-grow: 1;
+      text-align: center;
 
-  .play-detail-nav div:hover {
-    cursor: pointer;
+      &:hover {
+        cursor: pointer;
+        color: #222222;
+      }
+    }
+
+    .unselected {
+      color: #bcbcbc;
+      border-bottom: 2px solid #bcbcbc;
+    }
   }
 }
 

@@ -8,8 +8,12 @@
     margin-bottom: 50px;
 
     .star-and-rating {
+      h2 {
+        font-size: 20px;
+      }
+
       .rating {
-        font-size: 28px;
+        font-size: 26px;
         font-weight: 700;
         padding-left: 30px;
         position: relative;
@@ -17,7 +21,7 @@
       }
 
       .rating-addtional-text {
-        font-size: 15px;
+        font-size: 14px;
         padding: 15px 0;
       }
     }
@@ -32,13 +36,14 @@
     }
 
     .review-button button {
-      width: 240px;
-      height: 60px;
+      width: 200px;
+      height: 45px;
     }
 
     .review-button button p {
       font-weight: 700;
-      font-size: 23px;
+      font-size: 18px;
+      font-family: "Noto Sans KR", sans-serif;
     }
   }
 }

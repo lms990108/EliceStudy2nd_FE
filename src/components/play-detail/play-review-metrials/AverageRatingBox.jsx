@@ -13,7 +13,9 @@ export default function AverageRatingBox({
   count,
   averageRate,
   state,
+  purpose,
 }) {
+  console.log(purpose);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -75,15 +77,9 @@ export default function AverageRatingBox({
                 color="inherit"
                 state="focused"
                 variant="outlined"
-                size="large"
                 disabled
               >
-                <Typography
-                  fontFamily="Nanum Gothic, sans-serif"
-                  className="review-button-text"
-                >
-                  관람 후기 작성하기
-                </Typography>
+                <Typography>관람 후기 작성하기</Typography>
               </Button>
             </div>
           </Tooltip>
@@ -100,7 +96,7 @@ export default function AverageRatingBox({
                 fontFamily="Nanum Gothic, sans-serif"
                 className="review-button-text"
               >
-                관람 후기 작성하기
+                관람 후기 {purpose}하기
               </Typography>
             </Button>
           </div>

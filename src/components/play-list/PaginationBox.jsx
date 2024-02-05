@@ -6,19 +6,12 @@ import Stack from "@mui/material/Stack";
 export default function PaginationBox({
   innerWidth,
   playsCount,
-  selectedRegion,
-  sortStandard,
   setCurPage,
   curPage,
 }) {
   const handlePageNumberChange = (e, number) => {
     setCurPage(number);
   };
-
-  // 지역, 조건 검색, 정렬 기준이 변할 때 페이지는 1로 다시 리셋되어야 함.
-  useEffect(() => {
-    setCurPage(1);
-  }, [selectedRegion, sortStandard]);
 
   return (
     <div className="play-list-pagenation">

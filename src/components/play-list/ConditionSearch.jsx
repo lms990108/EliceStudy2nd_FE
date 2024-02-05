@@ -1,4 +1,4 @@
-import React, { useState, createContext } from "react";
+import React, { useState, createContext, useEffect } from "react";
 import "./ConditionSearch.scss";
 import ConditionSearchFrame from "./condition-search-material/ConditionSearchFrame";
 import ManageSearchIcon from "@mui/icons-material/ManageSearch";
@@ -16,6 +16,10 @@ export default function ConditionSearch({
   selectedRegion,
 }) {
   const [isExpandClicked, setIsExpandClicked] = useState(false);
+
+  useEffect(() => {
+    setIsExpandClicked(false);
+  }, [selectedRegion]);
 
   const handleConditionSearchExpand = () => {
     setIsExpandClicked(!isExpandClicked);

@@ -34,6 +34,9 @@ function App() {
   const [userData, setUserData] = useState(null);
   console.log(userData);
 
+  const [prevPlayListQuery, setPrevPlayListQuery] = useState(null);
+  console.log(prevPlayListQuery);
+
   const getUserData = async () => {
     try {
       const res = await fetch(`https://dailytopia2.shop/api/users`, {
@@ -44,7 +47,24 @@ function App() {
         const data = await res.json();
         setUserData({ isLoggedIn: true, user: data.user });
       } else if (res.status === 401 || res.status === 403) {
-        setUserData({ isLoggedIn: false });
+        // 다시 한 번 시도
+        try {
+          const secondRes = await fetch(`https://dailytopia2.shop/api/users`, {
+            credentials: "include",
+          });
+
+          if (secondRes.ok) {
+            const secondData = await secondRes.json();
+            setUserData({ isLoggedIn: true, user: secondData.user });
+          } else {
+            // 두 번째 시도에서도 오류가 발생하면 isLoggedIn을 false로 설정
+            setUserData({ isLoggedIn: false });
+          }
+        } catch (secondErr) {
+          console.error(secondErr);
+          // 두 번째 시도 자체가 실패하면 isLoggedIn을 false로 설정
+          setUserData({ isLoggedIn: false });
+        }
       }
     } catch (err) {
       console.error(err);
@@ -65,7 +85,14 @@ function App() {
         />
       </Helmet>
       <ThemeProvider theme={theme}>
-        <AppContext.Provider value={{ userData, setUserData }}>
+        <AppContext.Provider
+          value={{
+            userData,
+            setUserData,
+            prevPlayListQuery,
+            setPrevPlayListQuery,
+          }}
+        >
           <BrowserRouter>
             <Routes>
               {/* 에러 페이지 */}

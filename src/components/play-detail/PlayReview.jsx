@@ -24,14 +24,12 @@ export default function PlayReview({
   const [isReviewFormOpened, setIsReviewFormOpened] = useState(false);
   // 현재 연극의 리뷰 (페이지네이션 적용)
   const [reviews, setReviews] = useState(null);
-  // console.log(reviews);
   // 현재 페이지
   const [curPage, setCurPage] = useState(1);
   // 해당 연극 총 리뷰수
   const [totalCount, setTotalCount] = useState(0);
   // 현재 연극에 현재 로그인되어 있는 유저가 리뷰를 달았는지, 작성한 리뷰 정보에 대한 상태
   const [userReview, setUserReview] = useState(null);
-  console.log(userReview);
   // 알림
   const [alert, setAlert] = useState(null);
 
@@ -42,13 +40,10 @@ export default function PlayReview({
     )
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         setReviews(data.data);
         setTotalCount(data.total);
-        setIsLoading(false);
       })
       .catch((err) => {
-        console.log(err);
         setAlert({
           title: "오류",
           content: "리뷰 데이터를 받아오는 데 실패했습니다.",
@@ -73,16 +68,24 @@ export default function PlayReview({
               isUserReviewed: true,
               review: data.data[0],
             };
+            setUserReview(userReviewData);
+            setIsLoading(false);
           } else {
             userReviewData = {
               isUserReviewed: false,
             };
+            setUserReview(userReviewData);
+            setIsLoading(false);
           }
-          setUserReview(userReviewData);
         })
         .catch((err) => {
           console.log(err);
         });
+    } else {
+      setUserReview({
+        isUserReviewed: false,
+      });
+      setIsLoading(false);
     }
   };
 
@@ -103,7 +106,7 @@ export default function PlayReview({
         />
       )}
       <div className="play-review-container">
-        {!isLoading && (
+        {!isLoading && userReview && reviews && (
           <>
             <AverageRatingBox
               isLoggedIn={isLoggedIn}
@@ -111,6 +114,7 @@ export default function PlayReview({
               count={totalCount}
               averageRate={averageRate}
               state={state}
+              purpose={userReview.isUserReviewed ? "수정" : "작성"}
             />
             <div ref={scrollRef}></div>
             {isReviewFormOpened ? (
