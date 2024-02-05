@@ -14,8 +14,7 @@ import LocalAtmIcon from "@mui/icons-material/LocalAtm";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import { AppContext } from "../../App";
 
-// 지역, 페이지 연극 디테일 페이지에서 뒤로가기 시 데이터 유지 완료!
-// 조건, 정렬까지 데이터 유지하면 완벽!
+// 홍보, 커뮤니티, 마이페이지, 검색 페이지, 로그인 페이지, 홈 페이지 접속 시 setPrevPlayListQuery(null)로 설정하기
 export function PlayList() {
   const { prevPlayListQuery, setPrevPlayListQuery } = useContext(AppContext);
   const queryParams = new URLSearchParams(prevPlayListQuery);

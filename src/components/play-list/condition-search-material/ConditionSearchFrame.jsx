@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState } from "react";
 import "./ConditionSearchFrame.scss";
 import ConditionCheckBox from "./ConditionCheckBox";
 import Slider from "@mui/material/Slider";
@@ -10,6 +10,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import koLocale from "date-fns/locale/ko"; // 한국어 로케일 추가
 import dayjs from "dayjs";
+import Button from "@mui/material/Button";
 
 const marks = [
   { value: 0, label: "무료" },
@@ -33,7 +34,6 @@ export default function ConditionSearchFrame({
   division,
   options,
   innerWidth,
-  selectedRegion,
 }) {
   const { conditions, setConditions } = useContext(ConditionContext);
   const [values, setValues] = useState([
@@ -53,13 +53,21 @@ export default function ConditionSearchFrame({
 
   const handleChangeDatePicker = (date, info) => {
     const formattedDate = dayjs(date).format("YYYY-MM-DD");
-    if (!info.validationError) {
+    if (!info.validationError && date !== null) {
       setConditions((prev) => {
         const newObj = { ...prev };
         newObj["날짜별"] = formattedDate;
         return newObj;
       });
     }
+  };
+
+  const dateReset = () => {
+    setConditions((prev) => {
+      const newObj = { ...prev };
+      newObj["날짜별"] = null;
+      return newObj;
+    });
   };
 
   return (
@@ -73,18 +81,37 @@ export default function ConditionSearchFrame({
         </div>
       )}
       {division === "날짜별" && (
-        <LocalizationProvider dateAdapter={AdapterDayjs} locale={koLocale}>
-          <DemoContainer
-            components={["DatePicker"]}
-            sx={{ marginLeft: "30px", padding: "10px 0" }}
-          >
-            <DatePicker
-              format="YYYY/MM/DD"
-              onChange={handleChangeDatePicker}
-              value={conditions["날짜별"] ? dayjs(conditions["날짜별"]) : null}
-            />
-          </DemoContainer>
-        </LocalizationProvider>
+        <>
+          <LocalizationProvider dateAdapter={AdapterDayjs} locale={koLocale}>
+            <DemoContainer
+              components={["DatePicker"]}
+              sx={{ marginLeft: "30px", padding: "5px 0 10px 0" }}
+            >
+              <DatePicker
+                format="YYYY/MM/DD"
+                onChange={handleChangeDatePicker}
+                value={
+                  conditions["날짜별"] ? dayjs(conditions["날짜별"]) : null
+                }
+              />
+            </DemoContainer>
+          </LocalizationProvider>
+          {conditions["날짜별"] ? (
+            <Button
+              color="secondary"
+              sx={{ marginLeft: "10px" }}
+              size="large"
+              onClick={dateReset}
+              readOnly
+            >
+              초기화
+            </Button>
+          ) : (
+            <Button size="large" disabled sx={{ marginLeft: "10px" }}>
+              초기화
+            </Button>
+          )}
+        </>
       )}
       {division === "가격별" && (
         <div className="condition-checkbox">

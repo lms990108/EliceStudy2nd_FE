@@ -15,6 +15,8 @@ export default function PlayReviewListBox({
   setIsReviewFormOpened,
   review_id,
   scrollRef,
+  getReviews,
+  getUserReview,
 }) {
   const {
     isAuthorLogined,
@@ -60,11 +62,13 @@ export default function PlayReviewListBox({
             open: true,
             onclose: () => {
               setAlert(null);
-              location.reload();
+              getReviews();
+              getUserReview();
             },
             onclick: () => {
               setAlert(null);
-              location.reload();
+              getReviews();
+              getUserReview();
             },
             severity: "success",
             checkBtn: "확인",

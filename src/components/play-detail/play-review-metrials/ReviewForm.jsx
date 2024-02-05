@@ -19,6 +19,8 @@ export default function ReviewForm({
   review_image_urls,
   setIsReviewFormOpened,
   showId,
+  getReviews,
+  getUserReview,
 }) {
   const navigate = useNavigate();
   const [title, setTitle] = useState(review_title || "");
@@ -32,8 +34,6 @@ export default function ReviewForm({
   console.log(photo);
   // fixed된 알림을 띄우기 위한 상태
   const [alert, setAlert] = useState(null);
-  // // 리뷰 필수 기재 항목 검증
-  // const [reviewValidation, setReviewValidation] = useState(true);
   // 리뷰 에러 box에 담을 에러 문구
   const [reviewErrorText, setReviewErrorText] = useState("");
 
@@ -115,11 +115,13 @@ export default function ReviewForm({
             onclose: () => {
               setAlert(null);
               setIsReviewFormOpened(false);
-              location.reload();
+              getReviews();
+              getUserReview();
             },
             onclick: () => {
               setIsReviewFormOpened(false);
-              location.reload();
+              getReviews();
+              getUserReview();
             },
             severity: "success",
             checkBtn: "확인",
@@ -187,11 +189,13 @@ export default function ReviewForm({
             onclose: () => {
               setAlert(null);
               setIsReviewFormOpened(false);
-              location.reload();
+              getReviews();
+              getUserReview();
             },
             onclick: () => {
               setIsReviewFormOpened(false);
-              location.reload();
+              getReviews();
+              getUserReview();
             },
             severity: "success",
             checkBtn: "확인",
