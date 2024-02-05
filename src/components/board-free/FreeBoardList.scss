@@ -1,17 +1,19 @@
 .free-board-list-box {
   display: flex;
   flex-direction: column;
-  border-top: #bcbcbc solid 1px;
+
   .content-box {
     display: flex;
     flex-direction: column;
-    border-bottom: 1px #bcbcbc solid;
-    padding: 16px;
+    border-bottom: #6b72804d solid 1px;
+    padding: 16px 8px;
     background-color: #fff;
+
     .flex-box {
       display: flex;
       justify-content: space-between;
     }
+
     .top {
       font-size: small;
       padding-bottom: 10px;
@@ -24,18 +26,20 @@
           margin-left: 6px;
         }
         .user-img {
-          width: 24px;
-          height: 24px;
+          width: 22px;
+          height: 22px;
           border-radius: 50px;
           object-fit: cover;
         }
       }
     }
+
     .title {
       font-size: 22px;
       font-weight: 500;
       padding-bottom: 6px;
     }
+
     .bottom {
       .content {
         width: 70%;
@@ -48,6 +52,7 @@
         overflow: hidden;
         // text-overflow: ellipsis;
       }
+
       .comments {
         font-size: small;
         display: flex;

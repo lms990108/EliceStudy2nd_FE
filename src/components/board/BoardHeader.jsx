@@ -6,7 +6,7 @@ import { AlertCustom } from "../common/alert/Alerts";
 import { useNavigate } from "react-router-dom";
 import { AppContext } from "../../App";
 
-export function BoardListHeader({ header, desc, onclick }) {
+export function BoardListHeader({ header, onclick }) {
   const { userData } = useContext(AppContext);
   const nav = useNavigate();
   const [open, setOpen] = useState(false);
@@ -30,16 +30,7 @@ export function BoardListHeader({ header, desc, onclick }) {
         checkBtn={"확인"}
         closeBtn={"취소"}
       />
-      <div className="content flex-box">
-        <div>
-          <h2>{header}</h2>
-          <p>{desc}</p>
-        </div>
-        <Button onClick={handleClick} variant="contained" color="secondary" sx={{ fontSize: 18 }}>
-          작성하기
-        </Button>
-      </div>
-      <hr></hr>
+      <h2>{header}</h2>
     </div>
   );
 }
