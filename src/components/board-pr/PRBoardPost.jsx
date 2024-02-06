@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import CircleIcon from "@mui/icons-material/Circle";
 import "./PRBoardPost.scss";
 import { PostTop } from "../board";
-import icon_double from "../../assets/img/icon_double.png";
 import { CalendarMonth, FormatQuote, LocationOn, MovieCreation } from "@mui/icons-material";
 
 export default function PRBoardPost({ data, totalCommentCount }) {
