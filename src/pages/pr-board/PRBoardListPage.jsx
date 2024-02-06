@@ -4,17 +4,17 @@ import "./PRBoardListPage.scss";
 import PRBoardList from "../../components/board-pr/PRBoardList";
 import { UpButton } from "../../components/common/button/UpButton";
 import { useInView } from "react-intersection-observer";
-import { useNavigate } from "react-router-dom";
 import { promotionUrl } from "../../apis/apiURLs";
 import { CircularProgress } from "@mui/material";
 import ServerError from "../../components/common/state/ServerError";
 import Empty from "../../components/common/state/Empty";
-import { ArrowBackIosNewRounded, ArrowBackIosRounded, ArrowForwardIosRounded, SmsOutlined, ThumbUpOutlined, VisibilityOutlined } from "@mui/icons-material";
+import { ArrowBackIosRounded, ArrowForwardIosRounded, SmsOutlined, ThumbUpOutlined, VisibilityOutlined } from "@mui/icons-material";
 
 const MAX_BANNER_INDEX = 3;
 
 export function PRBoardListPage() {
   const [boardList, setBoardList] = useState([]);
+  const [totalCnt, setTotalCnt] = useState(0);
   const [page, setPage] = useState(1);
   const [state, setState] = useState("loading");
   const [scrollRef, inView] = useInView();
@@ -26,15 +26,17 @@ export function PRBoardListPage() {
 
   const getPage = async () => {
     // 총 개수 받아서 page 넘어가면 api 호출 X
+    if (totalCnt && boardList.length >= totalCnt) return;
     setState("loading");
-    const res = await fetch(`${promotionUrl}?page=${page}&limit=8`);
-    const list = await res.json();
-    console.log(list);
+    const res = await fetch(`${promotionUrl}?page=${page}&limit=20`);
+    const data = await res.json();
+    console.log(data);
 
     if (res.ok) {
-      if (list.length) {
-        addBoardList(list);
+      if (data.totalCount) {
+        addBoardList(data.promotions);
         setPage(page + 1);
+        setTotalCnt(data.totalCount);
       }
       setState("hasValue");
     } else {
@@ -72,7 +74,7 @@ export function PRBoardListPage() {
     <div className="pr-board-page page-margin">
       <BoardListHeader header="홍보게시판" />
       <div className="best-box">
-        <img className="bg-img" src={boardList[bannerIndex]?.image_url || "https://elice-5th.s3.amazonaws.com/promotions/1706321523702_110302_play_726.jpg"} />
+        <img className="bg-img" src={boardList[bannerIndex]?.image_url[0] || "https://elice-5th.s3.amazonaws.com/promotions/1706321523702_110302_play_726.jpg"} />
         <div className="bg-mask">
           <div className="contents-container">
             <div className="left-box">
@@ -93,7 +95,7 @@ export function PRBoardListPage() {
                 <span>{boardList[bannerIndex]?.comments || 0}</span>
               </div>
             </div>
-            <img className="poster" src={boardList[bannerIndex]?.image_url || "https://elice-5th.s3.amazonaws.com/promotions/1706321523702_110302_play_726.jpg"} />
+            <img className="poster" src={boardList[bannerIndex]?.image_url[0] || "https://elice-5th.s3.amazonaws.com/promotions/1706321523702_110302_play_726.jpg"} />
           </div>
           <div className="arrow">
             <ArrowBackIosRounded onClick={handleClickLeftArrow} className="pointer" />

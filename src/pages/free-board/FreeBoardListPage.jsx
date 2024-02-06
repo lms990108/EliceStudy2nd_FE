@@ -12,6 +12,7 @@ import { BoardRightContainer } from "../../components/board/BoardRightContainer"
 
 export function FreeBoardListPage() {
   const [boardList, setBoardList] = useState([]);
+  const [totalCnt, setTotalCnt] = useState(0);
   const [page, setPage] = useState(1);
   const [state, setState] = useState("loading");
   const [toggle, setToggle] = useState(false);
@@ -28,11 +29,13 @@ export function FreeBoardListPage() {
     setState("loading");
     const query_page = Number(searchParams.get("page")) || 1;
     const res = await fetch(`${postUrl}?page=${query_page}&limit=10`);
-    const list = await res.json();
+    const data = await res.json();
+    console.log(data);
 
     if (res.ok) {
-      setBoardList(list);
+      setBoardList(data.posts);
       setPage(query_page);
+      setTotalCnt(data.totalCount);
       setState("hasValue");
     } else {
       setState("hasError");
@@ -83,7 +86,7 @@ export function FreeBoardListPage() {
             <>
               <FreeBoardList boardList={boardList} />
               <div className="pagination">
-                <Pagination page={page} onChange={handleChange} count={Math.ceil(boardList.length / 10)} color="secondary" siblingCount={2} />
+                <Pagination page={page} onChange={handleChange} count={Math.ceil(totalCnt / 10)} color="secondary" siblingCount={2} />
               </div>
             </>
           ) : (

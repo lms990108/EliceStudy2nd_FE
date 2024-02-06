@@ -26,7 +26,7 @@ export default function FreeBoardList({ boardList }) {
           <div className="flex-box top">
             <div className="user">
               {post.user_id ? <img className="user-img" src={post.user_id.profile_url} /> : <AccountCircleIcon sx={{ fontSize: 24 }} />}
-              <span>{post.user_id?.nickname || "test nickname"}</span>
+              <span>{post.user_id?.nickname || "nickname"}</span>
             </div>
             <div className="time">{format(new Date(post.createdAt), "yyyy-MM-dd")}</div>
           </div>
@@ -49,7 +49,7 @@ export default function FreeBoardList({ boardList }) {
               <ThumbUpOutlined sx={{ fontSize: 16 }} />
               <span>{post.likes || 0}</span>
               <SmsOutlined sx={{ fontSize: 16 }} />
-              <span>{post.comments || 0}</span>
+              <span>{post.commentsCount || 0}</span>
             </div>
           </div>
         </Link>

@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { SmsOutlined, SwapVert, ThumbUpOutlined, VisibilityOutlined } from "@mui/icons-material";
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom/dist";
+import empty_img from "../../assets/img/empty_img.svg";
 
 export default function PRBoardList({ newList }) {
   const [selected, setSelected] = useState("all");
@@ -43,7 +44,7 @@ export default function PRBoardList({ newList }) {
       <div className="body">
         {newList.map((post) => (
           <Link className={`post-card pointer`} key={post._id} id={post._id} to={`${post.promotion_number}`}>
-            <img src={post.image_url} alt="" />
+            <img src={Array.isArray(post.image_url) ? post.image_url[0] : ""} onError={(e) => (e.target.src = empty_img)} alt="" />
             <div className="post-card-content">
               <div className={`title ${post.tags?.length ? "" : "tl-2"}`}>{post.title}</div>
               <div className="date">

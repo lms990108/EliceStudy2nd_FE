@@ -7,6 +7,7 @@ import "./PRBoardForm.scss";
 import { AlertCustom } from "../common/alert/Alerts";
 import { useNavigate } from "react-router-dom";
 import { promotionUrl, uploadImgUrl } from "../../apis/apiURLs";
+import dayjs from "dayjs";
 
 export function PRBoardForm({ setInput, handleComplete, handleCancle }) {
   const [submit, setSubmit] = useState(false);
@@ -31,7 +32,9 @@ export function PRBoardForm({ setInput, handleComplete, handleCancle }) {
         title: inputTitle,
         content: inputContent,
         tags: tagList,
-        image_url: imageURL,
+        image_url: [imageURL],
+        start_date: dayjs(),
+        end_date: dayjs().add(1, "w"),
       }),
     });
     const data = await res.json();

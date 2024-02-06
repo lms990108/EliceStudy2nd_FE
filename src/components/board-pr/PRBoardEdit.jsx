@@ -32,7 +32,7 @@ export function PRBoardEditForm({ setInput, handleCancle, post }) {
         title: inputTitle,
         content: inputContent,
         tags: tagList,
-        image_url: imageURL,
+        image_url: [imageURL],
       }),
     });
     const data = await res.json();
