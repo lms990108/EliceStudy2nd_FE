@@ -1,29 +1,24 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
 import "./MainPublicity.scss";
 
 function MainPublicity() {
   const [promotions, setPromotions] = useState([]);
-  const [animate, setAnimate] = useState(true);
-  const onStop = () => setAnimate(false);
-  const onRun = () => setAnimate(true);
-  const navigate = useNavigate();
-
-  // 메인페이지에서 포로모션을 클릭하면 해당 프로모션 상세페이지로 이동
-  const handlePromotionClick = (promotion_number) => {
-    navigate(`/promotion/${promotion_number}`);
-  };
 
   useEffect(() => {
     fetch("https://dailytopia2.shop/api/promotions")
       .then((res) => res.json())
       .then((data) => {
-        setPromotions(data);
+        setPromotions(data.promotions);
         console.log(data);
       })
       .catch((err) => console.error(err));
   }, []);
+
+  // 날짜 형식을 조정하는 함수
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return `${date.getFullYear()}. ${date.getMonth() + 1}. ${date.getDate()}`;
+  };
 
   return (
     <div className="main-layout-container">
@@ -32,28 +27,39 @@ function MainPublicity() {
       </div>
       <div className="main-publicity-container">
         <div className="publicity-box1">
-          <div className="publicity-product1">
-            {promotions.length > 0 && (
-              <>
-                <img src={promotions[0]?.image_url} alt={promotions[0]?.title} />
-                <p>{promotions[0]?.title}</p>
-              </>
-            )}
-          </div>
+          {promotions.length > 0 && (
+            <div className="publicity-product1">
+              <img src={promotions[0]?.image_url[0]} alt={promotions[0]?.title} />
+              <p>{promotions[0]?.title}</p>
+              <p>{formatDate(promotions[0]?.start_date)} ~ {formatDate(promotions[0]?.end_date)}</p>
+              <p>조회수: {promotions[0]?.views}</p>
+              <p>좋아요: {promotions[0]?.likes}</p>
+              <p>댓글 수: {promotions[0]?.commentsCount}</p>
+            </div>
+          )}
         </div>
         <div className="publicity-box2">
-          {promotions.slice(1, 4).map((promotion, index) => (
-            <div key={index} className="publicity-product">
-              <img src={promotion.image_url} alt={promotion.title} />
-              <p>{promotion.title}</p>
-            </div>
-          ))}
+          {promotions.length > 1 &&
+            promotions.slice(1, 4).map((promotion, index) => (
+              <div key={index} className="publicity-product">
+                <img src={promotion.image_url[0]} alt={promotion.title} />
+                <p>{promotion.title}</p>
+                <p>{formatDate(promotions[0]?.start_date)} ~ {formatDate(promotions[0]?.end_date)}</p>
+                <p>조회수: {promotion.views}</p>
+                <p>좋아요: {promotion.likes}</p>
+                <p>댓글 수: {promotion.commentsCount}</p>
+              </div>
+            ))}
         </div>
         <div className="publicity-box3">
           {promotions.slice(4, 7).map((promotion, index) => (
             <div key={index} className="publicity-product">
-              <img src={promotion.image_url} alt={promotion.title} />
+              <img src={promotion.image_url[0]} alt={promotion.title} />
               <p>{promotion.title}</p>
+              <p>{formatDate(promotions[0]?.start_date)} ~ {formatDate(promotions[0]?.end_date)}</p>
+              <p>조회수: {promotion.views}</p>
+              <p>좋아요: {promotion.likes}</p>
+              <p>댓글 수: {promotion.commentsCount}</p>
             </div>
           ))}
         </div>
