@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import "./MainPublicity.scss";
 
-
 function MainPublicity() {
   const [promotions, setPromotions] = useState([]);
   const [animate, setAnimate] = useState(true);
@@ -21,53 +20,45 @@ function MainPublicity() {
       .then((res) => res.json())
       .then((data) => {
         setPromotions(data);
+        console.log(data);
       })
       .catch((err) => console.error(err));
   }, []);
 
   return (
-    <>
-      <div className="main-publicit-header">
-        <h1 className="main-publicity-title">
-          숨소리까지 들리는 생생함, 소규모 연극
-        </h1>
-        <Link to="/promotion">
-          <div className="publicity-btn">
-            <p>모두 보기</p>
-          </div>
-        </Link>
+    <div className="main-layout-container">
+      <div className="main-title-box">
+        <p className="main-title">숨소리까지 들리는 생생함! 소규모 연극</p>
       </div>
-      <div className="publicit-wrapper">
-        <div className="publicit-slide-container">
-          <ul className="publicit-slide-wrapper">
-            <div className={"slide original".concat(animate ? "" : " stop")}>
-              {promotions.map((promotion, i) => (
-                <li key={i}>
-                  <img
-                    src={promotion.image_url}
-                    onMouseEnter={onStop} // 슬라이드 멈춤
-                    onMouseLeave={onRun} // 슬라이드 재개
-                    onClick={() => handlePromotionClick(promotion.promotion_number)}
-                  />
-                </li>
-              ))}
+      <div className="main-publicity-container">
+        <div className="publicity-box1">
+          <div className="publicity-product1">
+            {promotions.length > 0 && (
+              <>
+                <img src={promotions[0]?.image_url} alt={promotions[0]?.title} />
+                <p>{promotions[0]?.title}</p>
+              </>
+            )}
+          </div>
+        </div>
+        <div className="publicity-box2">
+          {promotions.slice(1, 4).map((promotion, index) => (
+            <div key={index} className="publicity-product">
+              <img src={promotion.image_url} alt={promotion.title} />
+              <p>{promotion.title}</p>
             </div>
-            <div className={"slide clone".concat(animate ? "" : " stop")}>
-              {promotions.map((promotion, i) => (
-                <li key={i}>
-                  <img
-                    src={promotion.image_url}
-                    onMouseEnter={onStop} // 슬라이드 멈춤
-                    onMouseLeave={onRun} // 슬라이드 재개
-                    onClick={() => handlePromotionClick(promotion.promotion_number)}
-                  />
-                </li>
-              ))}
+          ))}
+        </div>
+        <div className="publicity-box3">
+          {promotions.slice(4, 7).map((promotion, index) => (
+            <div key={index} className="publicity-product">
+              <img src={promotion.image_url} alt={promotion.title} />
+              <p>{promotion.title}</p>
             </div>
-          </ul>
+          ))}
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

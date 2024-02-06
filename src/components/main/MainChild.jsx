@@ -86,7 +86,7 @@ function MainChild() {
   return (
     <div className="main-layout-container">
       <div className="main-title-box">
-        <h1 className="main-title">가족 모두 즐기는 문화생활</h1>
+        <p className="main-title">아이와 같이 즐기는 문화생활</p>
         <div className="slide-info-box">
           <p
             className={`slide-info1 ${
@@ -111,7 +111,7 @@ function MainChild() {
         <ArrowBackIosIcon
           onClick={handleLeftClick}
           className="slide-left-icon"
-          style={{ fontSize: 48 }}
+          style={{ fontSize: 32 }}
         />
         <div className="main-play-container">
           <div style={wrapperStyles}>
@@ -135,7 +135,7 @@ function MainChild() {
         <ArrowForwardIosIcon
           onClick={handleRightClick}
           className="slide-right-icon"
-          style={{ fontSize: 48 }}
+          style={{ fontSize: 32 }}
         />
       </div>
     </div>

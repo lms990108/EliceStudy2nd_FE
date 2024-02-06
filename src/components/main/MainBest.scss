@@ -9,27 +9,31 @@
   justify-content: space-between;
   width: 1200px;
 }
+.main-title {
+  font-size: 26px;
+  font-weight: 500;
+}
 .slide-info-box {
   display: flex;
   align-items: flex-end;
 }
 .slide-info1 {
   display: inline;
-  font-size: 28px;
+  font-size: 24px;
   margin-right: 2px;
   color: #aaa;
   user-select: none;
 }
 .slide-info2 {
   display: inline;
-  font-size: 28px;
+  font-size: 24px;
   margin-right: 2px;
   color: #aaa;
   user-select: none;
 }
 .slide-info3 {
   display: inline;
-  font-size: 28px;
+  font-size: 24px;
   margin-right: 12px;
   color: #aaa;
   user-select: none;
@@ -37,7 +41,6 @@
 .slide-info1.active,
 .slide-info2.active,
 .slide-info3.active {
-  font-weight: 900;
   color: #FFB400;
 }
 .main-slide-container {
@@ -109,11 +112,11 @@
 .main-play-title {
   color: #eee;
   margin: 16px 0 4px 0;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 300;
 }
 .main-play-period {
   color: #bbb;
-  font-size: 12px;
+  font-size: 14px;
   margin: 0px;
 }

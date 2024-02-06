@@ -17,55 +17,42 @@ function MainPreferredRegion() {
   };
 
   useEffect(() => {
-    fetch("https://dailytopia2.shop/api/shows?limit=1000")
-      .then((res) => res.json())
-      .then((data) => {
-        // 오늘 날짜와 1년 전 날짜 계산
+    const fetchData = async () => {
+      try {
         const today = new Date();
-        const oneYearAgo = new Date(today);
-        oneYearAgo.setFullYear(today.getFullYear() - 1);
+        const todayString = today.toISOString().split('T')[0];
+        
+        let queryString;
+        if (selectedRegion === "경기/인천") {
+          queryString = `region=${encodeURIComponent(selectedRegion)}`;
+        } else {
+          let encodedRegions = selectedRegion.split("/").map(region => encodeURIComponent(region)); // 지역 값을 배열로 변환하고 URL 인코딩합니다.
+          queryString = encodedRegions.map(region => `region=${region}`).join("&");
+        }
 
-        const regionMapping = {
-          서울: ["서울"],
-          "경기/인천": ["경기/인천"],
-          강원: ["강원"],
-          "대전/충청": ["대전", "충청"],
-          "광주/전라": ["광주", "전라"],
-          "대구/경상": ["대구", "경상"],
-          "부산/울산": ["부산", "울산"],
-          제주: ["제주"],
-        };
-
-        let filteredShows = data.shows.filter(
-          (show) =>
-            regionMapping[selectedRegion].includes(show.region) &&
-            new Date(show.start_date) >= oneYearAgo &&
-            new Date(show.start_date) <= today
-        );
-
-        // 제목 시작 4글자가 같은 공연 중복 제거
-        const uniqueTitles = new Set();
-        filteredShows = filteredShows.filter((show) => {
-          const titleStart = show.title.slice(0, 4);
-          if (!uniqueTitles.has(titleStart)) {
-            uniqueTitles.add(titleStart);
-            return true;
-          }
-          return false;
-        });
-
-        // 시작 날짜 기준 정렬
-        filteredShows.sort(
-          (b, a) => new Date(a.start_date) - new Date(b.start_date)
-        );
-
-        setShows(filteredShows.slice(0, 6));
-      })
-      .catch((err) => console.error(err));
+        const response = await fetch(`https://dailytopia2.shop/api/shows?${queryString}`);
+        if (!response.ok) {
+          throw new Error('데이터를 가져오는데 문제가 발생했습니다.');
+        }
+        const data = await response.json();
+        if (data.shows) {
+          // 시작일 기준으로 가장 가까운 공연부터 정렬
+          const sortedShows = data.shows.sort((a, b) => Math.abs(new Date(a.start_date) - today) - Math.abs(new Date(b.start_date) - today));
+          setShows(sortedShows.slice(0, 6));
+          console.log(data);
+        } else {
+          console.error('API에서 shows 데이터를 찾을 수 없습니다.');
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+  
+    fetchData();
   }, [selectedRegion]);
 
   const formatTitle = (title) => {
-    return title.length > 13 ? title.slice(0, 13) : title;
+    return title.length > 11 ? title.slice(0, 11) : title;
   };
 
   const regionArray = [
@@ -82,7 +69,7 @@ function MainPreferredRegion() {
   return (
     <div className="main-layout-container">
       <div className="main-title-box">
-        <h1 className="main-title">지역별 최신 신작</h1>
+        <p className="main-title">지역별 신작</p>
       </div>
       <div className="region-list-container">
         <ul className="region-list-box">

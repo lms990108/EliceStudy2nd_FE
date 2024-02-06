@@ -93,7 +93,7 @@ function MainBest() {
   return (
     <div className="main-layout-container">
       <div className="main-title-box">
-        <h1 className="main-title">실시간 베스트 연극</h1>
+        <p className="main-title">실시간 베스트 연극</p>
         <div className="slide-info-box">
           <p
             className={`slide-info1 ${
@@ -118,7 +118,7 @@ function MainBest() {
         <ArrowBackIosIcon
           onClick={handleLeftClick}
           className="slide-left-icon"
-          style={{ fontSize: 48 }}
+          style={{ fontSize: 32 }}
         />
         <div className="main-play-container">
           <div style={wrapperStyles}>
@@ -149,7 +149,7 @@ function MainBest() {
         <ArrowForwardIosIcon
           onClick={handleRightClick}
           className="slide-right-icon"
-          style={{ fontSize: 48 }}
+          style={{ fontSize: 32 }}
         />
       </div>
     </div>
