@@ -6,7 +6,7 @@
 .banner-container {
     display: flex;
     justify-content: center;
-    height: 300px;
+    height: 340px;
     background-repeat: repeat;
     background-size: contain;
 }
@@ -15,20 +15,24 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 500px;
-    background-color: #282828;
+    height: 540px;
+    background-color: #202020;
 }
 .preferred-region-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
-    height: 550px;
+    height: 540px;
+    padding-bottom: 20px;
     background-color: #282828;
 }
 .publicity-container {
-    height: 500px;
-    background-color: #202020;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 1700px;
+    background-color: #282828;
 }
 .rating-container {
     display: flex;
@@ -49,8 +53,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
-    height: 500px;
-    padding-bottom: 20px;
+    height: 540px;
     background-color: #282828;
 }
 .theater-container {
