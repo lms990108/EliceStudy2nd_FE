@@ -11,7 +11,7 @@
           width: 290px;
           height: 390px;
           border-radius: 8px;
-          box-shadow: -3px 3px 5px #bcbcbc;
+          box-shadow: 5px 5px 10px #bcbcbc;
 
           .end-show-design {
             display: flex;
@@ -44,6 +44,7 @@
             width: 290px;
             height: 390px;
             border-radius: 8px;
+            object-fit: cover;
           }
         }
       }
@@ -58,13 +59,13 @@
           display: flex;
           flex-wrap: wrap;
           font-family: "Noto Sans KR";
-          font-size: 30px;
+          font-size: 26px;
           height: auto;
         }
 
         .play-summary-info {
           display: grid;
-          padding: 0 15px;
+          padding: 0 10px;
 
           div:first-child,
           div:nth-child(3) {
@@ -92,7 +93,9 @@
 
             h3 {
               margin: 0;
-              font-size: 17px;
+              font-size: 16px;
+              color: #666666;
+              font-weight: 400;
             }
           }
 
@@ -110,9 +113,10 @@
         }
 
         p {
-          margin-left: 15px;
-          font-size: 17px;
+          margin-left: 35px;
+          font-size: 16px;
           line-height: 1.2;
+          font-weight: 500;
         }
 
         hr {
@@ -177,6 +181,7 @@
           border: 1.5px solid #ffb400;
           border-radius: 8px;
           padding: 25px 10px 0;
+          display: flex;
 
           .share-option {
             display: flex;
@@ -186,6 +191,7 @@
             position: relative;
             bottom: 12px;
             margin: 0 10px;
+            flex-grow: 1;
 
             .SNS-img-box {
               height: 50px;
@@ -196,6 +202,13 @@
                 width: 30px;
                 height: 30px;
               }
+            }
+          }
+
+          .share-option:nth-child(3) {
+            img {
+              height: 27px;
+              width: 27px;
             }
           }
         }

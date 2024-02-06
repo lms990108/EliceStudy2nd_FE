@@ -5,10 +5,11 @@
     margin-top: 15px;
 
     h3 {
-      font-size: 16px;
+      font-size: 18px;
     }
 
     p {
+      color: #666666;
       font-size: 15px;
     }
 
@@ -20,8 +21,10 @@
       }
     }
 
-    .play-time-info p:nth-child(2) {
+    .play-time-info p {
       font-weight: 700;
+      margin: 10px 0;
+      line-height: 1.4;
     }
 
     .summary {

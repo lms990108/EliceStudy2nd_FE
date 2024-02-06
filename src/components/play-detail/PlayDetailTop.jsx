@@ -83,10 +83,10 @@ export default function PlayDetailTop({
         content: {
           title: `[🎫TeenyBox] ${title} 정보 공유`, // 보여질 제목
           description: `${title} 정보 공유입니다 (from TeenyBox)`, // 보여질 설명
-          imageUrl: `${process.env.REACT_APP_BASE_URL}${currentURL.pathname}`, // 콘텐츠 URL
+          imageUrl: window.location.href, // 콘텐츠 URL
           link: {
-            mobileWebUrl: `${process.env.REACT_APP_BASE_URL}${currentURL.pathname}`,
-            webUrl: `${process.env.REACT_APP_BASE_URL}${currentURL.pathname}`,
+            mobileWebUrl: window.location.href,
+            webUrl: window.location.href,
           },
         },
       });
@@ -135,14 +135,14 @@ export default function PlayDetailTop({
 
   // 페이스북으로 공유하기 버튼 클릭 시
   const shareFacebook = () => {
-    var sendUrl = `${process.env.REACT_APP_BASE_URL}${currentURL.pathname}`; // 전달할 URL
+    var sendUrl = window.location.href; // 전달할 URL
     window.open("http://www.facebook.com/sharer/sharer.php?u=" + sendUrl);
   };
 
   // 트위터로 공유하기 버튼 클릭 시
   const shareTwitter = () => {
     var sendText = `[🎫TeenyBox] ${title} 정보 공유`; // 전달할 텍스트
-    var sendUrl = `${process.env.REACT_APP_BASE_URL}${currentURL.pathname}`; // 전달할 URL
+    var sendUrl = window.location.href; // 전달할 URL
     window.open(
       "https://twitter.com/intent/tweet?text=" + sendText + "&url=" + sendUrl
     );
@@ -271,12 +271,18 @@ export default function PlayDetailTop({
           <hr style={{ backgroundColor: "black" }} />
           <div className="play-summary-info">
             <div>
-              <h3>상영기간</h3>
+              <h3>기간</h3>
               <p>{`${start_date.split("T")[0]} ~ ${end_date.split("T")[0]}`}</p>
             </div>
             <div>
               <h3>관람등급</h3>
               <p>{age}</p>
+            </div>
+            <div>
+              <h3>평점</h3>
+              <p style={{ position: "relative", bottom: "2px" }}>
+                <Rating value={averageRate} readOnly precision={0.5} />
+              </p>
             </div>
             {runtime && (
               <div>
@@ -285,17 +291,11 @@ export default function PlayDetailTop({
               </div>
             )}
             <div>
-              <h3>평점</h3>
-              <p>
-                <Rating value={averageRate} readOnly precision={0.5} />
-              </p>
-            </div>
-            <div>
-              <h3>상영장소</h3>
+              <h3>장소</h3>
               <p>{location}</p>
             </div>
             <div className={classNames({ price: price.length >= 60 })}>
-              <h3>가격정보</h3>
+              <h3>가격</h3>
               <p>{price}</p>
             </div>
             <div
@@ -303,11 +303,13 @@ export default function PlayDetailTop({
                 gridColumnStart: "1",
                 gridColumnEnd: "3",
                 borderTop: "1px solid #bcbcbc",
+                width: "103%",
+                position: "relative",
+                right: "9px",
               }}
             ></div>
             <div className="play-detail-buttons">
               <div className="share-btn">
-                <p>공유</p>
                 <ShareIcon
                   fontSize="medium"
                   onClick={() => handleShareBtnClick()}
@@ -324,13 +326,10 @@ export default function PlayDetailTop({
                     <div className="share-option">
                       <Tooltip title="링크 복사" arrow>
                         <LinkIcon
-                          fontSize="medium"
                           onClick={() =>
-                            handleLinkShareBtnClick(
-                              `${process.env.REACT_APP_BASE_URL}${currentURL.pathname}`
-                            )
+                            handleLinkShareBtnClick(window.location.href)
                           }
-                          style={{ cursor: "pointer" }}
+                          style={{ cursor: "pointer", width: "31px" }}
                         />
                       </Tooltip>
                     </div>
@@ -430,6 +429,7 @@ export default function PlayDetailTop({
                         variant="contained"
                         color="secondary"
                         size="large"
+                        disableElevation
                       >
                         <Typography className="button-text">
                           예매하러 가기
@@ -443,10 +443,7 @@ export default function PlayDetailTop({
                     >
                       <div>
                         <Button variant="contained" disabled>
-                          <Typography
-                            fontFamily="Nanum Gothic, sans-serif"
-                            className="button-text"
-                          >
+                          <Typography className="button-text">
                             예매하러 가기
                           </Typography>
                         </Button>
