@@ -1,43 +1,40 @@
-.pr-board-post-box {
-  background-color: rgba(255, 255, 255, 0.653);
-  border-radius: 52px;
-  overflow: hidden;
-  box-shadow: 2px 1px 6px #00000016;
+.pr-board-post {
+  background-color: #fff;
+  padding: 30px 0 40px;
+  display: flex;
+  flex-direction: column;
 
-  .post-header {
-    background-color: #ffb400;
-    height: 90px;
+  .top-container {
     display: flex;
-    box-sizing: border-box;
-    padding: 32px 40px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid #6b72804d;
 
-    .dot {
-      margin-right: 10px;
+    .left-box {
+      flex: 1 1;
     }
   }
 
-  .post-content-box {
-    min-height: 500px;
-    padding: 30px;
+  .main-img {
+    height: 260px;
+    max-width: 220px;
+    object-fit: cover;
+    margin-left: 40px;
+  }
 
-    hr {
-      border: none;
-      background-color: #bcbcbc;
-      height: 2px;
+  .title {
+    font-size: 24px;
+    font-weight: 500;
+    color: #111827;
+  }
+
+  .content {
+    color: #374151;
+    font-size: 16px;
+    line-height: 24px;
+    padding: 20px 0;
+
+    p {
+      padding: 6px 0;
     }
-  }
-
-  .post-image {
-    width: 100%;
-    margin-top: 20px;
-  }
-
-  .post-title {
-    font-size: 30px;
-  }
-
-  .post-content {
-    margin: 30px 0;
-    white-space: pre;
   }
 }

@@ -8,6 +8,7 @@ import { postUrl } from "../../apis/apiURLs";
 import ServerError from "../../components/common/state/ServerError";
 import Empty from "../../components/common/state/Empty";
 import { Loop, SwapVert } from "@mui/icons-material";
+import { BoardRightContainer } from "../../components/board/BoardRightContainer";
 
 export function FreeBoardListPage() {
   const [boardList, setBoardList] = useState([]);
@@ -54,7 +55,7 @@ export function FreeBoardListPage() {
   return (
     <div className="free-board-page page-margin">
       <div className="free-board-left-container">
-        <BoardListHeader header="커뮤니티" onclick={handleFormBtn} />
+        <BoardListHeader header="커뮤니티" />
         <div className="header flex-box">
           <div className="left">
             <span className="point">160</span>개의 글
@@ -64,7 +65,7 @@ export function FreeBoardListPage() {
             <Button variant="outlined" size="small" color="darkGray" startIcon={<SwapVert />}>
               최신순
             </Button>
-            <Button variant="contained" size="small" color="secondary" disableElevation>
+            <Button onClick={handleFormBtn} variant="contained" size="small" color="secondary" disableElevation>
               작성하기
             </Button>
           </div>
@@ -92,51 +93,7 @@ export function FreeBoardListPage() {
           )}
         </div>
       </div>
-      <div className="free-board-right-container">
-        <div className="right-box">
-          <h4>최근 본 글</h4>
-          <ul>
-            <li>연극 보러 갈 사람?</li>
-            <li>소규모 연극 신입 부원 구합니다!</li>
-            <li>서울대 연극 동아리 &lt;배고픈 사람들&gt; 후기</li>
-            <li>꽃 찾으러 왔단다라는 연극 아시나용</li>
-            <li>요즘 하는 재밌는 연극 추천좀</li>
-          </ul>
-        </div>
-
-        <div className="right-box">
-          <h4>인기 글</h4>
-          <ul>
-            <li>1. 연극 보러 갈 사람?</li>
-            <li>2. 소규모 연극 신입 부원 구합니다!</li>
-            <li>3. 서울대 연극 동아리 &lt;배고픈 사람들&gt; 후기</li>
-            <li>4. 꽃 찾으러 왔단다라는 연극 아시나용</li>
-            <li>5. 요즘 하는 재밌는 연극 추천좀</li>
-          </ul>
-        </div>
-
-        <div className="right-box">
-          <h4>인기 태그</h4>
-          <ol>
-            <li>#연극 보러 갈 사람?</li>
-            <li>#소규모 연극</li>
-            <li>#동아리</li>
-            <li>#추천</li>
-            <li>#옥탑방 고양이</li>
-          </ol>
-        </div>
-
-        <div className="right-box">
-          <h4>최근 댓글</h4>
-          <ul>
-            <li>연극 보러 갈 사람?</li>
-            <li>소규모 연극 신입 부원 구합니다!</li>
-            <li>서울대 연극 동아리 &lt;배고픈 사람들&gt; 후기</li>
-            <li>꽃 찾으러 왔단다라는 연극 아시나용</li>
-            <li>요즘 하는 재밌는 연극 추천좀</li>
-          </ul>
-        </div>
-      </div>
+      <BoardRightContainer />
     </div>
   );
 }

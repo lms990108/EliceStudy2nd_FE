@@ -3,6 +3,7 @@
   flex-direction: column;
 
   .content-box {
+    width: 100%;
     color: #787878;
     display: flex;
     flex-direction: column;
@@ -45,9 +46,11 @@
     .bottom {
       .content {
         width: 70%;
+        max-width: 500px;
         font-size: small;
-        display: -webkit-box;
         text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
       }
 
       .tags {

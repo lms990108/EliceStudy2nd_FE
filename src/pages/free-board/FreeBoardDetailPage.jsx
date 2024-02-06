@@ -5,6 +5,7 @@ import { BoardSecondHeader, BoardNav, CommentForm, CommentsList } from "../../co
 import { useNavigate, useParams } from "react-router-dom";
 import { commentUrl, postUrl } from "../../apis/apiURLs";
 import { Button } from "@mui/material";
+import { BoardRightContainer } from "../../components/board/BoardRightContainer";
 
 export function FreeBoardDetailPage() {
   const [post, setPost] = useState({});
@@ -26,7 +27,7 @@ export function FreeBoardDetailPage() {
   const getComments = async () => {
     if (totalCount !== 0 && totalCount <= comments.length) return;
 
-    const res = await fetch(`${commentUrl}/posts/${post._id}?page=${page}&limit=2`);
+    const res = await fetch(`${commentUrl}/posts/${post._id}?page=${page}&limit=10`);
     const data = await res.json();
     console.log(data);
 
@@ -79,17 +80,20 @@ export function FreeBoardDetailPage() {
   }, []);
 
   return (
-    <div className="free-board-detail page-margin-bottom">
-      <BoardSecondHeader header="커뮤니티" onclick={() => nav("/community")} />
-      <div className="body">
-        {post && <FreeBoardPost data={post} totalCommentCount={totalCount} />}
-        <BoardNav point={totalCount} text="개의 댓글" onclick={handleRefreshComments} />
-        <CommentForm createComment={createComment} postId={post?._id} />
-        {comments && <CommentsList comments={comments} setComments={setComments} totalCount={totalCount} getComments={getComments} setTotalCount={setTotalCount} />}
-        <Button className="back-btn" color="inherit" variant="contained" onClick={() => nav(`/community`)}>
-          목록보기
-        </Button>
+    <div className="free-board-detail page-margin">
+      <div className="free-board-left-container">
+        <BoardSecondHeader header="커뮤니티" onclick={() => nav("/community")} />
+        <div className="body">
+          {post && <FreeBoardPost data={post} totalCommentCount={totalCount} />}
+          <BoardNav point={totalCount} text="개의 댓글" onclick={handleRefreshComments} />
+          <CommentForm createComment={createComment} postId={post?._id} />
+          {comments && <CommentsList comments={comments} setComments={setComments} totalCount={totalCount} getComments={getComments} setTotalCount={setTotalCount} />}
+          <Button className="back-btn" color="inherit" variant="contained" onClick={() => nav(`/community`)}>
+            목록보기
+          </Button>
+        </div>
       </div>
+      <BoardRightContainer />
     </div>
   );
 }

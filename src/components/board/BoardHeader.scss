@@ -1,5 +1,6 @@
 .board-list-header {
   width: 100%;
+
   h2 {
     margin: 0;
     padding: 20px 0 40px;
@@ -11,8 +12,8 @@
 .board-second-header {
   display: flex;
   align-items: center;
-  margin: 38px 0 20px 0;
   width: 100%;
+  color: #6b72805b;
 
   .click-box {
     display: flex;
@@ -21,14 +22,14 @@
 
   .header-title {
     margin: 0 8px 2px 4px;
-    font-size: 16px;
-    font-weight: 600;
+    font-size: 14px;
+    font-weight: 500;
   }
 
   hr {
     flex-grow: 1;
     border: none;
-    background-color: #000;
-    height: 2px;
+    background-color: #6b72804d;
+    height: 1px;
   }
 }

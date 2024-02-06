@@ -2,14 +2,14 @@ import React, { useContext, useEffect, useState } from "react";
 import "./PostTop.scss";
 import { AlertCustom } from "../common/alert/Alerts";
 import copyUrl from "../../utils/copyUrl";
-import { AccountCircle, DeleteOutline, EditOutlined, ShareOutlined, SmsOutlined } from "@mui/icons-material";
+import { AccountCircle, DeleteOutline, EditOutlined, ShareOutlined, SmsOutlined, VisibilityOutlined } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import { postUrl, promotionUrl } from "../../apis/apiURLs";
 import { format } from "date-fns";
 import { AppContext } from "../../App";
 import { Backdrop } from "@mui/material";
 
-export function PostTop({ user, createdAt, commentsCnt, type, postNumber }) {
+export function PostTop({ user, createdAt, commentsCnt, type, postNumber, postViewCnt }) {
   const [openURLCopyAlert, setOpenURLCopyAlert] = useState(false);
   const [openDeleteAlert, setOpenDeleteAlert] = useState(false);
   const [isWriter, setIsWriter] = useState(false); // false로 바꾸기
@@ -59,14 +59,23 @@ export function PostTop({ user, createdAt, commentsCnt, type, postNumber }) {
           {user.profile_url ? <img className="user-img" src={user.profile_url} /> : <AccountCircle sx={{ fontSize: 50 }} />}
           <div className="flex-box">
             <div className="user-id">{user.nickname}</div>
-            <div className="date">{createdAt?.split("T")[0]}</div>
+            <div className="date">
+              {createdAt?.split("T")[0]}
+              <span className="dot">•</span>
+              <div className="view-cnt">
+                <VisibilityOutlined sx={{ fontSize: 16 }} />
+                <span>{postViewCnt || 0}</span>
+              </div>
+            </div>
           </div>
           <div className="icons">
             <ShareOutlined className="share-icon" onClick={handleCopyButtonClick} />
-            <div className="comments-icon" onClick={handleCommentsButtonClick}>
-              <SmsOutlined />
-              <span>{commentsCnt}</span>
-            </div>
+            {type === "community" && (
+              <div className="comments-icon" onClick={handleCommentsButtonClick}>
+                <SmsOutlined />
+                <span>{commentsCnt}</span>
+              </div>
+            )}
             {isWriter && (
               <>
                 <EditOutlined onClick={handleEditButtonClick} />

@@ -1,10 +1,9 @@
 import React, { useContext, useState } from "react";
-import { Button } from "@mui/material";
-import KeyboardDoubleArrowLeftOutlinedIcon from "@mui/icons-material/KeyboardDoubleArrowLeftOutlined";
 import "./BoardHeader.scss";
 import { AlertCustom } from "../common/alert/Alerts";
 import { useNavigate } from "react-router-dom";
 import { AppContext } from "../../App";
+import { KeyboardDoubleArrowLeftOutlined } from "@mui/icons-material";
 
 export function BoardListHeader({ header, onclick }) {
   const { userData } = useContext(AppContext);
@@ -39,7 +38,7 @@ export function BoardSecondHeader({ header, onclick }) {
   return (
     <div className="board-second-header">
       <div className="click-box pointer" onClick={onclick}>
-        <KeyboardDoubleArrowLeftOutlinedIcon />
+        <KeyboardDoubleArrowLeftOutlined sx={{ fontSize: 18 }} />
         <span className="header-title">{header}</span>
       </div>
       <hr />

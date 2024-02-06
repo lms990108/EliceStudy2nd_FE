@@ -5,6 +5,7 @@ import "./PRBoardDetailPage.scss";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { commentUrl, promotionUrl } from "../../apis/apiURLs";
 import { Button } from "@mui/material";
+import { BoardRightContainer } from "../../components/board/BoardRightContainer";
 
 export function PRBoardDetailPage() {
   const [post, setPost] = useState({});
@@ -67,17 +68,20 @@ export function PRBoardDetailPage() {
   }, []);
 
   return (
-    <div className="pr-board-detail-page page-margin-bottom">
-      <BoardSecondHeader header="홍보게시판" onclick={() => nav("/promotion")} />
-      <div className="body">
-        {post && <PRBoardPost data={post} totalCommentCount={totalCount} />}
-        <BoardNav point={totalCount} text="개의 댓글" onclick={getPromotion} />
-        <CommentForm createComment={createComment} postId={post?._id} />
-        {comments && <CommentsList comments={comments} totalCount={totalCount} getComments={getComments} setComments={setComments} setTotalCount={setTotalCount} />}
-        <Button className="back-btn" color="inherit" variant="contained" onClick={() => nav(`/promotion`)}>
-          목록보기
-        </Button>
+    <div className="pr-board-detail-page page-margin">
+      <div className="board-left-container">
+        <BoardSecondHeader header="홍보게시판" onclick={() => nav("/promotion")} />
+        <div className="body">
+          {post && <PRBoardPost data={post} totalCommentCount={totalCount} />}
+          <BoardNav point={totalCount} text="개의 댓글" onclick={getPromotion} />
+          <CommentForm createComment={createComment} postId={post?._id} />
+          {comments && <CommentsList comments={comments} totalCount={totalCount} getComments={getComments} setComments={setComments} setTotalCount={setTotalCount} />}
+          <Button className="back-btn" color="inherit" variant="contained" onClick={() => nav(`/promotion`)}>
+            목록보기
+          </Button>
+        </div>
       </div>
+      <BoardRightContainer />
     </div>
   );
 }

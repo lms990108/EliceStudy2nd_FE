@@ -1,8 +1,6 @@
 import React, { useContext, useState } from "react";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { Button } from "@mui/material";
 import "./CommentForm.scss";
-import moment from "moment";
 import { AppContext } from "../../App";
 
 export function CommentForm({ createComment }) {

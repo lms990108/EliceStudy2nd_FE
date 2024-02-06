@@ -18,7 +18,6 @@ export function Comment({ commentData, deleteComment }) {
     const textBox = e.target.closest(".text");
     textBox.classList.toggle("close");
     setSeeMoreOpen((cur) => !cur);
-    console.log(textBox.clientHeight);
   };
 
   const handleClickUpdateBtn = async () => {
@@ -40,8 +39,7 @@ export function Comment({ commentData, deleteComment }) {
   useEffect(() => {
     if (!isEditing) {
       const textBox = document.querySelector(`#comment${comment._id} .text`);
-      if (parseInt(textBox.clientHeight) > 72) {
-        console.log("?");
+      if (parseInt(textBox.clientHeight) > 262) {
         setDisable(false);
       }
     }
@@ -51,7 +49,7 @@ export function Comment({ commentData, deleteComment }) {
     <>
       <div className="comment-box" id={`comment${comment._id}`}>
         <div className="top">
-          <img className="user-profile-img" src={comment.user_profile || "https://elice-5th.s3.amazonaws.com/promotions/1706717302540_KakaoTalk_20240131_164754169_05.jpg"} />
+          <img className="user-profile-img" src={comment.user_profile_url || "https://elice-5th.s3.amazonaws.com/promotions/1706717302540_KakaoTalk_20240131_164754169_05.jpg"} />
           <div className="flex-box">
             <div className="user-id">{comment.user_nickname}</div>
             <div className="time">{comment.createdAt}</div>

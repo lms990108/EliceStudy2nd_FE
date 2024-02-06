@@ -105,6 +105,7 @@
 
       .poster {
         height: 100%;
+        min-width: 190px;
         max-width: 365px;
         object-fit: cover;
       }
