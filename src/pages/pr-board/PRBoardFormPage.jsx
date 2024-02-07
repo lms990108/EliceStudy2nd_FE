@@ -1,19 +1,30 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { BoardSecondHeader } from "../../components/board";
 import { PRBoardForm } from "../../components/board-pr/PRBoardForm";
 import "./PRBoardFormPage.scss";
 import { AlertCustom } from "../../components/common/alert/Alerts";
 import { useNavigate } from "react-router-dom";
+import useGetUser from "../../hooks/authoriaztionHooks/useGetUser";
+import { AlertContext, AppContext } from "../../App";
 
 export function PRBoardFormPage() {
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState(false);
   const nav = useNavigate();
+  const user = useGetUser();
+  const { setOpenLoginAlert } = useContext(AlertContext);
 
   const handleCancle = (e) => {
     if (input) setOpen(true);
     else nav("/promotion");
   };
+
+  useEffect(() => {
+    console.log(user);
+    if (!user) {
+      setOpenLoginAlert(true);
+    }
+  }, []);
 
   return (
     <div className="pr-board-form-page page-margin">

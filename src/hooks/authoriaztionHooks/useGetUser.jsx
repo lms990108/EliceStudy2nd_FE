@@ -1,12 +1,42 @@
+import { useContext } from "react";
+import { AppContext } from "../../App";
+
 export default function useGetUser() {
-  const user = {
-    isLoggedIn: JSON.parse(localStorage.getItem("isLoggedIn")),
-    role: localStorage.getItem("role"),
-    nickname: localStorage.getItem("nickname"),
-    profile_url: localStorage.getItem("profile_url"),
-    interested_area: localStorage.getItem("interested_area"),
-    social_provider: localStorage.getItem("social_provider"),
+  const { userData, setUserData } = useContext(AppContext);
+
+  const getUserData = async () => {
+    try {
+      const res = await fetch(`https://dailytopia2.shop/api/users`, {
+        credentials: "include",
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        setUserData({ isLoggedIn: true, user: data.user });
+      } else if (res.status === 401 || res.status === 403) {
+        // 다시 한 번 시도
+        try {
+          const secondRes = await fetch(`https://dailytopia2.shop/api/users`, {
+            credentials: "include",
+          });
+
+          if (secondRes.ok) {
+            const secondData = await secondRes.json();
+            setUserData({ isLoggedIn: true, user: secondData.user });
+          } else {
+            // 두 번째 시도에서도 오류가 발생하면 isLoggedIn을 false로 설정
+            setUserData({ isLoggedIn: false });
+          }
+        } catch (secondErr) {
+          console.error(secondErr);
+          // 두 번째 시도 자체가 실패하면 isLoggedIn을 false로 설정
+          setUserData({ isLoggedIn: false });
+        }
+      }
+    } catch (err) {
+      console.error(err);
+    }
   };
 
-  return user;
+  return userData;
 }

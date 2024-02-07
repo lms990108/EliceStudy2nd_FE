@@ -1,4 +1,4 @@
-import { Button, FormControlLabel, IconButton, Radio, RadioGroup } from "@mui/material";
+import { Backdrop, Button, FormControlLabel, IconButton, Radio, RadioGroup } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
@@ -435,38 +435,45 @@ export function PRBoardForm({ setInput, handleComplete, handleCancle }) {
         <div className="notice">
           <span className="star">*</span>표시가 되어 있는 항목은 필수 기재 항목입니다.
         </div>
-        <Button disabled={false} type="button" variant="contained" onClick={handleClickSubmitButton}>
-          작성완료
-        </Button>
+        <div>
+          <Button color="darkGray" size="large" variant="outlined" onClick={handleCancle} sx={{ marginRight: "14px" }}>
+            취소
+          </Button>
+          <Button variant="contained" size="large" onClick={handleClickSubmitButton} disableElevation>
+            등록
+          </Button>
+        </div>
       </div>
 
-      <AlertCustom
-        open={openSubmit}
-        onclose={() => setOpenSubmit(false)}
-        title={"teenybox.com 내용:"}
-        content={"게시글을 작성하시겠습니까?"}
-        onclick={() => {
-          handleSubmit();
-        }}
-        checkBtn={"등록"}
-        closeBtn={"취소"}
-        checkBtnColor={"#42BB48"}
-      />
-      <AlertCustom
-        open={openComplete}
-        onclose={() => {
-          setOpenComplete(false);
-          setTimeout(() => nav("/promotion"), 300);
-        }}
-        onclick={() => {
-          setOpenComplete(false);
-          setTimeout(() => nav("/promotion"), 300);
-        }}
-        title={"teenybox.com 내용:"}
-        content={"글 등록이 완료되었습니다!"}
-        btnCloseHidden={true}
-        time={2000}
-      />
+      <Backdrop open={openSubmit || openComplete}>
+        <AlertCustom
+          open={openSubmit}
+          onclose={() => setOpenSubmit(false)}
+          title={"teenybox.com 내용:"}
+          content={"게시글을 작성하시겠습니까?"}
+          onclick={() => {
+            handleSubmit();
+          }}
+          checkBtn={"등록"}
+          closeBtn={"취소"}
+          checkBtnColor={"#42BB48"}
+        />
+        <AlertCustom
+          open={openComplete}
+          onclose={() => {
+            setOpenComplete(false);
+            setTimeout(() => nav("/promotion"), 300);
+          }}
+          onclick={() => {
+            setOpenComplete(false);
+            setTimeout(() => nav("/promotion"), 300);
+          }}
+          title={"teenybox.com 내용:"}
+          content={"글 등록이 완료되었습니다!"}
+          btnCloseHidden={true}
+          time={1200}
+        />
+      </Backdrop>
     </div>
   );
 }

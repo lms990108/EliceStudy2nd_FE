@@ -19,6 +19,7 @@ import { KakaoRedirection, GoogleRedirection, NaverRedirection } from "./pages";
 import { ForbiddenPage, NotFoundPage, NotFoundRedirect } from "./pages";
 import CommonLayout from "./pages/common/CommonLayout";
 import LoginAlert from "./components/common/alert/LoginAlert";
+import PrivacyPolicy from "./pages/util/PrivacyPolicy";
 
 export const AppContext = createContext();
 export const AlertContext = createContext();
@@ -89,6 +90,7 @@ function App() {
                 {/* 에러 페이지 */}
                 <Route path="/forbidden" element={<ForbiddenPage />} />
                 <Route path="/not-found" element={<NotFoundPage />} />
+                <Route path="/privacy-policy" element={<PrivacyPolicy />} />
 
                 {/* 로그인 관련 페이지 */}
                 <Route path="/user/kakao-login" element={<KakaoRedirection />} />

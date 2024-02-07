@@ -64,7 +64,7 @@ export function FreeBoardListPage() {
         <BoardListHeader header="커뮤니티" />
         <div className="header flex-box">
           <div className="left">
-            <span className="point">160</span>개의 글
+            <span className="point">{totalCnt}</span>개의 글
             <Loop onClick={handleClick} color="secondary" className={`refresh pointer ${toggle && "start"}`} />
           </div>
           <div className="buttons">
