@@ -37,6 +37,7 @@ const Header = () => {
 
   const handleClose = () => {
     setOpen(false);
+    window.location.reload();
   };
   const onShowModal = () => {
     setSearchModalOpen(true); //검색 모달 열기
@@ -62,20 +63,17 @@ const Header = () => {
         <div className="header-box">
           <div className="vertical-box1">
             {userData && userData.isLoggedIn ? (
-              userData.user.role === "user" ? (
-                <>
-                  <div className="header-login-btn-box">
-                    <Link to="/mypages" style={{ textDecoration: "none" }}>
-                      <div className="header-login-btn">
-                        <Tooltip title="마이 페이지" arrow>
-                          <AccountCircleIcon className="header-icon" />
-                        </Tooltip>
-                      </div>
-                    </Link>
-                  </div>
-                </>
-              ) : userData.user.role === "admin" ? (
-                <>
+              <>
+                <div className="header-login-btn-box">
+                  <Link to="/mypages" style={{ textDecoration: "none" }}>
+                    <div className="header-login-btn">
+                      <Tooltip title="마이 페이지" arrow>
+                        <AccountCircleIcon className="header-icon" />
+                      </Tooltip>
+                    </div>
+                  </Link>
+                </div>
+                {userData.user.role === "admin" && (
                   <div className="header-login-btn-box">
                     <Link to="/admin" style={{ textDecoration: "none" }}>
                       <div className="header-login-btn">
@@ -85,8 +83,15 @@ const Header = () => {
                       </div>
                     </Link>
                   </div>
-                </>
-              ) : null
+                )}
+                <div className="header-login-btn-box">
+                  <div className="header-login-btn">
+                    <Tooltip title="로그아웃" arrow>
+                      <LogoutOutlinedIcon className="header-icon" onClick={handleLogout} />
+                    </Tooltip>
+                  </div>
+                </div>
+              </>
             ) : (
               <div className="header-login-btn-box">
                 <Link to="/signup-in" style={{ textDecoration: "none" }}>
@@ -96,15 +101,6 @@ const Header = () => {
                     </Tooltip>
                   </div>
                 </Link>
-              </div>
-            )}
-            {userData && userData.isLoggedIn && (
-              <div className="header-login-btn-box">
-                <div className="header-login-btn">
-                  <Tooltip title="로그아웃" arrow>
-                    <LogoutOutlinedIcon className="header-icon" onClick={handleLogout} />
-                  </Tooltip>
-                </div>
               </div>
             )}
           </div>

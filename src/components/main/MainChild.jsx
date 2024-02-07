@@ -60,24 +60,11 @@ function MainChild() {
     const today = new Date();
     today.setHours(0, 0, 0, 0); // 오늘 날짜만 고려 (시간은 무시)
 
-    fetch("https://dailytopia2.shop/api/shows?limit=1000")
+    fetch("https://dailytopia2.shop/api/shows/children")
       .then((res) => res.json())
       .then((data) => {
-        const validAges = [
-          "전체 관람가",
-          "만 5세 이상",
-          "만 6세 이상",
-          "만 7세 이상",
-        ];
-
-        // age가 조건에 맞고 start_date가 오늘 이전인 항목 필터링 및 정렬
-        let sortedShows = data.shows
-          .filter((show) => {
-            const startDate = new Date(show.start_date);
-            return startDate <= today && validAges.includes(show.age);
-          })
-          .sort((a, b) => new Date(b.start_date) - new Date(a.start_date));
-
+        console.log(data)
+        let sortedShows = data.shows;
         // 상위 18개 공연만 선택
         sortedShows = sortedShows.slice(0, 18);
 
@@ -93,13 +80,13 @@ function MainChild() {
   }, []);
 
   const formatTitle = (title) => {
-    return title.length > 10 ? title.slice(0, 10) + "・・・" : title;
+    return title.length > 13 ? title.slice(0, 13) : title;
   };
 
   return (
     <div className="main-layout-container">
       <div className="main-title-box">
-        <h1 className="main-title">가족 🏠 모두 즐기는 문화생활</h1>
+        <p className="main-title">아이와 같이 즐기는 문화생활</p>
         <div className="slide-info-box">
           <p
             className={`slide-info1 ${
@@ -124,7 +111,7 @@ function MainChild() {
         <ArrowBackIosIcon
           onClick={handleLeftClick}
           className="slide-left-icon"
-          style={{ fontSize: 48 }}
+          style={{ fontSize: 32 }}
         />
         <div className="main-play-container">
           <div style={wrapperStyles}>
@@ -148,7 +135,7 @@ function MainChild() {
         <ArrowForwardIosIcon
           onClick={handleRightClick}
           className="slide-right-icon"
-          style={{ fontSize: 48 }}
+          style={{ fontSize: 32 }}
         />
       </div>
     </div>

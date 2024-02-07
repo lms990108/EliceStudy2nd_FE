@@ -4,10 +4,12 @@ import "./AdminUser.scss";
 import Button from "@mui/material/Button";
 
 const columns = [
-  { field: "user_id", headerName: "회원 번호", width: 200 },
-  { field: "nickname", headerName: "닉네임", width: 200 },
-  { field: "social_provider", headerName: "가입 경로", width: 200 },
-  { field: "interested_area", headerName: "선호 지역", width: 200 },
+  { field: "id", headerName: "회원 번호", width: 120 },
+  { field: "nickname", headerName: "닉네임", width: 150 },
+  { field: "social_provider", headerName: "가입 경로", width: 120 },
+  { field: "interested_area", headerName: "선호 지역", width: 120 },
+  { field: "role", headerName: "회원 등급", width: 120 },
+  { field: "state", headerName: "회원 상태", width: 120 },
 ];
 
 const AdminUser = () => {

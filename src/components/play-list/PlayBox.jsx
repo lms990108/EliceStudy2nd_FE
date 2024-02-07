@@ -35,7 +35,9 @@ export default function PlayBox({ playInfo, query, setPrevPlayListQuery }) {
           {place.length >= 17 ? `${place.slice(0, 16)}...` : place}
         </div>
         <div className="play-period">{period}</div>
-        <div className="play-price">{price}</div>
+        <div className="play-price">
+          {price.length >= 40 ? `${price.slice(0, 40)}...` : price}
+        </div>
       </div>
     </>
   );

@@ -61,6 +61,7 @@ function MainBest() {
     fetch("https://dailytopia2.shop/api/shows/rank")
       .then((res) => res.json())
       .then((data) => {
+        console.log(data);
         const rankedShows = data.shows
         // 연극을 rank에 따라 정렬
         rankedShows.sort((a, b) => a.rank - b.rank);
@@ -86,13 +87,13 @@ function MainBest() {
   }, []);
 
   const formatTitle = (title) => {
-    return title.length > 10 ? title.slice(0, 10) + "・・・" : title;
+    return title.length > 13? title.slice(0, 13) : title;
   };
 
   return (
     <div className="main-layout-container">
       <div className="main-title-box">
-        <h1 className="main-title">보도 또 봐도 좋은 실시간 베스트 👑 연극</h1>
+        <p className="main-title">실시간 베스트 연극</p>
         <div className="slide-info-box">
           <p
             className={`slide-info1 ${
@@ -117,7 +118,7 @@ function MainBest() {
         <ArrowBackIosIcon
           onClick={handleLeftClick}
           className="slide-left-icon"
-          style={{ fontSize: 48 }}
+          style={{ fontSize: 32 }}
         />
         <div className="main-play-container">
           <div style={wrapperStyles}>
@@ -148,7 +149,7 @@ function MainBest() {
         <ArrowForwardIosIcon
           onClick={handleRightClick}
           className="slide-right-icon"
-          style={{ fontSize: 48 }}
+          style={{ fontSize: 32 }}
         />
       </div>
     </div>

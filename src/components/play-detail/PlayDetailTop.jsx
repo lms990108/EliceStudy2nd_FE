@@ -12,7 +12,7 @@ import { AlertCustom } from "../common/alert/Alerts";
 import Tooltip from "@mui/material/Tooltip";
 import CircularProgress from "@mui/material/CircularProgress";
 import classNames from "classnames";
-import ShareIcon from "@mui/icons-material/Share";
+import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";
 import CloseIcon from "@mui/icons-material/Close";
 
 export default function PlayDetailTop({
@@ -83,10 +83,10 @@ export default function PlayDetailTop({
         content: {
           title: `[🎫TeenyBox] ${title} 정보 공유`, // 보여질 제목
           description: `${title} 정보 공유입니다 (from TeenyBox)`, // 보여질 설명
-          imageUrl: `${process.env.REACT_APP_BASE_URL}${currentURL.pathname}`, // 콘텐츠 URL
+          imageUrl: window.location.href, // 콘텐츠 URL
           link: {
-            mobileWebUrl: `${process.env.REACT_APP_BASE_URL}${currentURL.pathname}`,
-            webUrl: `${process.env.REACT_APP_BASE_URL}${currentURL.pathname}`,
+            mobileWebUrl: window.location.href,
+            webUrl: window.location.href,
           },
         },
       });
@@ -135,14 +135,14 @@ export default function PlayDetailTop({
 
   // 페이스북으로 공유하기 버튼 클릭 시
   const shareFacebook = () => {
-    var sendUrl = `${process.env.REACT_APP_BASE_URL}${currentURL.pathname}`; // 전달할 URL
+    var sendUrl = window.location.href; // 전달할 URL
     window.open("http://www.facebook.com/sharer/sharer.php?u=" + sendUrl);
   };
 
   // 트위터로 공유하기 버튼 클릭 시
   const shareTwitter = () => {
     var sendText = `[🎫TeenyBox] ${title} 정보 공유`; // 전달할 텍스트
-    var sendUrl = `${process.env.REACT_APP_BASE_URL}${currentURL.pathname}`; // 전달할 URL
+    var sendUrl = window.location.href; // 전달할 URL
     window.open(
       "https://twitter.com/intent/tweet?text=" + sendText + "&url=" + sendUrl
     );
@@ -267,16 +267,102 @@ export default function PlayDetailTop({
           </div>
         </div>
         <div className="play-info">
-          <h1>연극 &lt;{title}&gt;</h1>
+          <div className="title-container">
+            <h1>연극 &lt;{title}&gt;</h1>
+            <div className="share-btn">
+              <ShareOutlinedIcon
+                fontSize="medium"
+                onClick={() => handleShareBtnClick()}
+                sx={{
+                  cursor: "pointer",
+                  position: "relative",
+                  bottom: "21px",
+                }}
+              />
+
+              {isShareBtnClicked ? (
+                <div
+                  className="share-options"
+                  style={{ top: title.length >= 31 ? "67px" : "36px" }}
+                >
+                  <div className="share-option">
+                    <Tooltip title="링크 복사" arrow>
+                      <LinkIcon
+                        onClick={() =>
+                          handleLinkShareBtnClick(window.location.href)
+                        }
+                        style={{ cursor: "pointer", width: "31px" }}
+                      />
+                    </Tooltip>
+                  </div>
+                  <div className="share-option">
+                    <Tooltip title="카카오톡" arrow>
+                      <div className="SNS-img-box">
+                        <img
+                          id="btnKakaoShare"
+                          src={kakaoTalkImg}
+                          alt="kakaoTalk-icon"
+                          style={{ cursor: "pointer" }}
+                          onClick={() => shareKakao()}
+                        />
+                      </div>
+                    </Tooltip>
+                  </div>
+                  <div className="share-option">
+                    <Tooltip title="X" arrow>
+                      <div className="SNS-img-box">
+                        <img
+                          src={XImg}
+                          onClick={() => shareTwitter()}
+                          alt="X-icon"
+                          style={{ cursor: "pointer" }}
+                        />
+                      </div>
+                    </Tooltip>
+                  </div>
+                  <div className="share-option">
+                    <Tooltip title="페이스북" arrow>
+                      <FacebookIcon
+                        fontSize="large"
+                        color="facebookBlue"
+                        onClick={() => shareFacebook()}
+                        style={{ cursor: "pointer" }}
+                      />
+                    </Tooltip>
+                  </div>
+                  <div
+                    className="close-icon"
+                    onClick={() => handleShareCloseBtnClick()}
+                  >
+                    <CloseIcon
+                      fontSize="small"
+                      sx={{
+                        cursor: "pointer",
+                        color: "#bcbcbc",
+                        position: "relative",
+                        bottom: "33px",
+                      }}
+                    />
+                  </div>
+                </div>
+              ) : null}
+            </div>
+          </div>
           <hr style={{ backgroundColor: "black" }} />
           <div className="play-summary-info">
             <div>
-              <h3>상영기간</h3>
+              <h3>기간</h3>
               <p>{`${start_date.split("T")[0]} ~ ${end_date.split("T")[0]}`}</p>
             </div>
             <div>
               <h3>관람등급</h3>
               <p>{age}</p>
+            </div>
+            <div>
+              <h3>평점</h3>
+              <p style={{ position: "relative", bottom: "2px" }}>
+                <Rating value={averageRate} readOnly precision={0.5} />
+              </p>
             </div>
             {runtime && (
               <div>
@@ -285,17 +371,11 @@ export default function PlayDetailTop({
               </div>
             )}
             <div>
-              <h3>평점</h3>
-              <p>
-                <Rating value={averageRate} readOnly precision={0.5} />
-              </p>
-            </div>
-            <div>
-              <h3>상영장소</h3>
+              <h3>장소</h3>
               <p>{location}</p>
             </div>
             <div className={classNames({ price: price.length >= 60 })}>
-              <h3>가격정보</h3>
+              <h3>가격</h3>
               <p>{price}</p>
             </div>
             <div
@@ -306,86 +386,6 @@ export default function PlayDetailTop({
               }}
             ></div>
             <div className="play-detail-buttons">
-              <div className="share-btn">
-                <p>공유</p>
-                <ShareIcon
-                  fontSize="medium"
-                  onClick={() => handleShareBtnClick()}
-                  sx={{
-                    cursor: "pointer",
-                    width: "28px",
-                    height: "28px",
-                    position: "relative",
-                    bottom: "21px",
-                  }}
-                />
-                {isShareBtnClicked ? (
-                  <div className="share-options">
-                    <div className="share-option">
-                      <Tooltip title="링크 복사" arrow>
-                        <LinkIcon
-                          fontSize="medium"
-                          onClick={() =>
-                            handleLinkShareBtnClick(
-                              `${process.env.REACT_APP_BASE_URL}${currentURL.pathname}`
-                            )
-                          }
-                          style={{ cursor: "pointer" }}
-                        />
-                      </Tooltip>
-                    </div>
-                    <div className="share-option">
-                      <Tooltip title="페이스북" arrow>
-                        <FacebookIcon
-                          fontSize="large"
-                          color="facebookBlue"
-                          onClick={() => shareFacebook()}
-                          style={{ cursor: "pointer" }}
-                        />
-                      </Tooltip>
-                    </div>
-                    <div className="share-option">
-                      <Tooltip title="X" arrow>
-                        <div className="SNS-img-box">
-                          <img
-                            src={XImg}
-                            onClick={() => shareTwitter()}
-                            alt="X-icon"
-                            style={{ cursor: "pointer" }}
-                          />
-                        </div>
-                      </Tooltip>
-                    </div>
-                    <div className="share-option">
-                      <Tooltip title="카카오톡" arrow>
-                        <div className="SNS-img-box">
-                          <img
-                            id="btnKakaoShare"
-                            src={kakaoTalkImg}
-                            alt="kakaoTalk-icon"
-                            style={{ cursor: "pointer" }}
-                            onClick={() => shareKakao()}
-                          />
-                        </div>
-                      </Tooltip>
-                    </div>
-                    <div
-                      className="close-icon"
-                      onClick={() => handleShareCloseBtnClick()}
-                    >
-                      <CloseIcon
-                        fontSize="small"
-                        sx={{
-                          cursor: "pointer",
-                          color: "#bcbcbc",
-                          position: "relative",
-                          bottom: "33px",
-                        }}
-                      />
-                    </div>
-                  </div>
-                ) : null}
-              </div>
               <div className="another-btn">
                 <div className="dibs-btn">
                   {loadingBtn ? (
@@ -430,6 +430,7 @@ export default function PlayDetailTop({
                         variant="contained"
                         color="secondary"
                         size="large"
+                        disableElevation
                       >
                         <Typography className="button-text">
                           예매하러 가기
@@ -443,10 +444,7 @@ export default function PlayDetailTop({
                     >
                       <div>
                         <Button variant="contained" disabled>
-                          <Typography
-                            fontFamily="Nanum Gothic, sans-serif"
-                            className="button-text"
-                          >
+                          <Typography className="button-text">
                             예매하러 가기
                           </Typography>
                         </Button>

@@ -85,7 +85,7 @@ export default function ConditionSearchFrame({
           <LocalizationProvider dateAdapter={AdapterDayjs} locale={koLocale}>
             <DemoContainer
               components={["DatePicker"]}
-              sx={{ marginLeft: "30px", padding: "5px 0 10px 0" }}
+              sx={{ marginLeft: "30px", padding: "5px 0" }}
             >
               <DatePicker
                 format="YYYY/MM/DD"
@@ -93,6 +93,7 @@ export default function ConditionSearchFrame({
                 value={
                   conditions["날짜별"] ? dayjs(conditions["날짜별"]) : null
                 }
+                className="date-picker"
               />
             </DemoContainer>
           </LocalizationProvider>

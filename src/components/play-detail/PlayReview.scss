@@ -1,15 +1,16 @@
 @media (min-width: 480px) {
   .play-review-container {
     margin: 30px 0;
+    min-height: 313.8px;
   }
 
   .play-review-container .play-review-list {
-    padding: 10px 30px 0 30px;
+    padding: 5px 30px;
   }
 
   .play-review-not-exsist {
-    font-weight: 700;
-    font-size: 24px;
+    font-weight: 500;
+    font-size: 18px;
     display: flex;
     justify-content: center;
     align-items: center;
