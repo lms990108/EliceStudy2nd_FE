@@ -48,6 +48,7 @@
     .review-rating-box {
       display: flex;
       align-items: center;
+      padding-top: 10px;
 
       h3 {
         margin-right: 30px;
@@ -83,6 +84,7 @@
     img {
       width: 150px;
       height: 150px;
+      padding-top: 10px;
     }
 
     .review-guide-text {
@@ -90,7 +92,8 @@
 
       p {
         margin: 10px 0;
-        font-size: 14px;
+        font-size: 13px;
+        color: #808080;
       }
     }
 

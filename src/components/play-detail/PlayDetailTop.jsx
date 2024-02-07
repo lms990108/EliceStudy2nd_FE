@@ -12,7 +12,7 @@ import { AlertCustom } from "../common/alert/Alerts";
 import Tooltip from "@mui/material/Tooltip";
 import CircularProgress from "@mui/material/CircularProgress";
 import classNames from "classnames";
-import ShareIcon from "@mui/icons-material/Share";
+import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";
 import CloseIcon from "@mui/icons-material/Close";
 
 export default function PlayDetailTop({
@@ -267,7 +267,87 @@ export default function PlayDetailTop({
           </div>
         </div>
         <div className="play-info">
-          <h1>연극 &lt;{title}&gt;</h1>
+          <div className="title-container">
+            <h1>연극 &lt;{title}&gt;</h1>
+            <div className="share-btn">
+              <ShareOutlinedIcon
+                fontSize="medium"
+                onClick={() => handleShareBtnClick()}
+                sx={{
+                  cursor: "pointer",
+                  position: "relative",
+                  bottom: "21px",
+                }}
+              />
+
+              {isShareBtnClicked ? (
+                <div
+                  className="share-options"
+                  style={{ top: title.length >= 31 ? "67px" : "36px" }}
+                >
+                  <div className="share-option">
+                    <Tooltip title="링크 복사" arrow>
+                      <LinkIcon
+                        onClick={() =>
+                          handleLinkShareBtnClick(window.location.href)
+                        }
+                        style={{ cursor: "pointer", width: "31px" }}
+                      />
+                    </Tooltip>
+                  </div>
+                  <div className="share-option">
+                    <Tooltip title="카카오톡" arrow>
+                      <div className="SNS-img-box">
+                        <img
+                          id="btnKakaoShare"
+                          src={kakaoTalkImg}
+                          alt="kakaoTalk-icon"
+                          style={{ cursor: "pointer" }}
+                          onClick={() => shareKakao()}
+                        />
+                      </div>
+                    </Tooltip>
+                  </div>
+                  <div className="share-option">
+                    <Tooltip title="X" arrow>
+                      <div className="SNS-img-box">
+                        <img
+                          src={XImg}
+                          onClick={() => shareTwitter()}
+                          alt="X-icon"
+                          style={{ cursor: "pointer" }}
+                        />
+                      </div>
+                    </Tooltip>
+                  </div>
+                  <div className="share-option">
+                    <Tooltip title="페이스북" arrow>
+                      <FacebookIcon
+                        fontSize="large"
+                        color="facebookBlue"
+                        onClick={() => shareFacebook()}
+                        style={{ cursor: "pointer" }}
+                      />
+                    </Tooltip>
+                  </div>
+                  <div
+                    className="close-icon"
+                    onClick={() => handleShareCloseBtnClick()}
+                  >
+                    <CloseIcon
+                      fontSize="small"
+                      sx={{
+                        cursor: "pointer",
+                        color: "#bcbcbc",
+                        position: "relative",
+                        bottom: "33px",
+                      }}
+                    />
+                  </div>
+                </div>
+              ) : null}
+            </div>
+          </div>
           <hr style={{ backgroundColor: "black" }} />
           <div className="play-summary-info">
             <div>
@@ -303,88 +383,9 @@ export default function PlayDetailTop({
                 gridColumnStart: "1",
                 gridColumnEnd: "3",
                 borderTop: "1px solid #bcbcbc",
-                width: "103%",
-                position: "relative",
-                right: "9px",
               }}
             ></div>
             <div className="play-detail-buttons">
-              <div className="share-btn">
-                <ShareIcon
-                  fontSize="medium"
-                  onClick={() => handleShareBtnClick()}
-                  sx={{
-                    cursor: "pointer",
-                    width: "28px",
-                    height: "28px",
-                    position: "relative",
-                    bottom: "21px",
-                  }}
-                />
-                {isShareBtnClicked ? (
-                  <div className="share-options">
-                    <div className="share-option">
-                      <Tooltip title="링크 복사" arrow>
-                        <LinkIcon
-                          onClick={() =>
-                            handleLinkShareBtnClick(window.location.href)
-                          }
-                          style={{ cursor: "pointer", width: "31px" }}
-                        />
-                      </Tooltip>
-                    </div>
-                    <div className="share-option">
-                      <Tooltip title="페이스북" arrow>
-                        <FacebookIcon
-                          fontSize="large"
-                          color="facebookBlue"
-                          onClick={() => shareFacebook()}
-                          style={{ cursor: "pointer" }}
-                        />
-                      </Tooltip>
-                    </div>
-                    <div className="share-option">
-                      <Tooltip title="X" arrow>
-                        <div className="SNS-img-box">
-                          <img
-                            src={XImg}
-                            onClick={() => shareTwitter()}
-                            alt="X-icon"
-                            style={{ cursor: "pointer" }}
-                          />
-                        </div>
-                      </Tooltip>
-                    </div>
-                    <div className="share-option">
-                      <Tooltip title="카카오톡" arrow>
-                        <div className="SNS-img-box">
-                          <img
-                            id="btnKakaoShare"
-                            src={kakaoTalkImg}
-                            alt="kakaoTalk-icon"
-                            style={{ cursor: "pointer" }}
-                            onClick={() => shareKakao()}
-                          />
-                        </div>
-                      </Tooltip>
-                    </div>
-                    <div
-                      className="close-icon"
-                      onClick={() => handleShareCloseBtnClick()}
-                    >
-                      <CloseIcon
-                        fontSize="small"
-                        sx={{
-                          cursor: "pointer",
-                          color: "#bcbcbc",
-                          position: "relative",
-                          bottom: "33px",
-                        }}
-                      />
-                    </div>
-                  </div>
-                ) : null}
-              </div>
               <div className="another-btn">
                 <div className="dibs-btn">
                   {loadingBtn ? (

@@ -7,11 +7,17 @@
 
     .review-author-and-date {
       width: 17%;
+
       p {
         margin: 10px;
         display: flex;
         justify-content: center;
         align-items: center;
+      }
+
+      p:nth-child(2) {
+        color: #808080;
+        font-size: 14px;
       }
     }
 

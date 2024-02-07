@@ -61,7 +61,7 @@ export default function AverageRatingBox({
             precision={0.5}
           />
           <span className="rating">
-            {count ? `${averageRate.toFixed(1)} ` : "0.0 "}/ 5
+            {count ? `${averageRate.toFixed(1)} ` : "0.0 "}
           </span>
           <p className="rating-addtional-text">
             * 아래의 관람 후기들을 바탕으로 한 평균 평점입니다.

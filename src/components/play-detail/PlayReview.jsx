@@ -30,6 +30,8 @@ export default function PlayReview({
   const [totalCount, setTotalCount] = useState(0);
   // 현재 연극에 현재 로그인되어 있는 유저가 리뷰를 달았는지, 작성한 리뷰 정보에 대한 상태
   const [userReview, setUserReview] = useState(null);
+  // 리뷰 정렬 기준
+  const [sortStandard, setSortStandard] = useState("recent");
   // 알림
   const [alert, setAlert] = useState(null);
 
@@ -133,7 +135,12 @@ export default function PlayReview({
               />
             ) : null}
 
-            <PlayReviewHeader count={totalCount} />
+            <PlayReviewHeader
+              count={totalCount}
+              sortStandard={sortStandard}
+              setSortStandard={setSortStandard}
+              setCurPage={setCurPage}
+            />
 
             {reviews.length ? (
               <div className="play-review-list">

@@ -16,11 +16,16 @@
       line-height: 160%;
     }
 
-    .play-review-photo {
-      width: 200px;
-      height: 200px;
-      padding-top: 15px;
-      cursor: zoom-in;
+    .review-photos {
+      display: flex;
+
+      .play-review-photo {
+        width: 150px;
+        height: 150px;
+        padding-top: 15px;
+        padding-right: 15px;
+        cursor: zoom-in;
+      }
     }
 
     .play-review-modify-btn {

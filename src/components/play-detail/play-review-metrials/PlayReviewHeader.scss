@@ -1,17 +1,31 @@
 @media (min-width: 480px) {
   .play-review-header-container {
-    margin: 20px 0;
+    margin: 20px 0 15px;
     display: flex;
-  }
+    justify-content: space-between;
 
-  .play-review-header-container .number-of-plays {
-    font-weight: 700;
-    font-size: 20px;
-  }
+    .number-of-plays {
+      font-weight: 700;
+      font-size: 20px;
+      display: flex;
+      align-items: center;
 
-  .play-review-header-container .number-of-plays span {
-    color: #ffb400;
-    font-size: 20px;
+      span {
+        color: #ffb400;
+        font-size: 20px;
+      }
+    }
+
+    .play-review-sort {
+      select {
+        height: 30px;
+        padding: 5px;
+        font-family: "Noto Sans KR", sans-serif;
+        text-align: center;
+        border-radius: 6px;
+        border-color: #bcbcbc;
+      }
+    }
   }
 
   .review-header-line {
