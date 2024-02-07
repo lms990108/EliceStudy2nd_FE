@@ -2,18 +2,21 @@ import React, { useContext, useEffect, useState } from "react";
 import "./PostTop.scss";
 import { AlertCustom } from "../common/alert/Alerts";
 import copyUrl from "../../utils/copyUrl";
-import { AccountCircle, DeleteOutline, EditOutlined, ShareOutlined, SmsOutlined, VisibilityOutlined } from "@mui/icons-material";
+import { AccountCircle, DeleteOutline, EditOutlined, ShareOutlined, SmsOutlined, ThumbUpAlt, ThumbUpAltOutlined, VisibilityOutlined } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import { postUrl, promotionUrl } from "../../apis/apiURLs";
 import { format } from "date-fns";
-import { AppContext } from "../../App";
-import { Backdrop } from "@mui/material";
+import { AlertContext, AppContext } from "../../App";
+import { Backdrop, Button, Tooltip } from "@mui/material";
 
-export function PostTop({ user, createdAt, commentsCnt, type, postNumber, postViewCnt }) {
+export function PostTop({ user, type, post, totalCommentCount }) {
   const [openURLCopyAlert, setOpenURLCopyAlert] = useState(false);
   const [openDeleteAlert, setOpenDeleteAlert] = useState(false);
   const [isWriter, setIsWriter] = useState(false); // false로 바꾸기
+  const [isLiked, setIsLiked] = useState(false);
+  const [likes, setLikes] = useState(post.likes);
   const { userData } = useContext(AppContext);
+  const { setOpenLoginAlert } = useContext(AlertContext);
   const nav = useNavigate();
 
   const handleCommentsButtonClick = () => {
@@ -27,15 +30,42 @@ export function PostTop({ user, createdAt, commentsCnt, type, postNumber, postVi
   };
 
   const handleEditButtonClick = () => {
-    nav(`/${type}/edit/${postNumber}`);
+    nav(`/${type}/edit/${post.post_number || post.promotion_number}`);
   };
 
   const handleDeleteButtonClick = () => {
     setOpenDeleteAlert(true);
   };
 
+  const handleClickLikes = async () => {
+    if (!userData?.user?._id) {
+      setOpenLoginAlert(true);
+    }
+
+    const url = type === "community" ? `${postUrl}/${post.post_number}/like` : `${promotionUrl}/${post.promotion_number}/like`;
+    if (isLiked) {
+      const res = await fetch(url, { method: "DELETE" });
+      const data = await res.json();
+      console.log(data);
+
+      if (res.ok) {
+        setIsLiked(true);
+        setLikes((cur) => cur + 1);
+      }
+    } else {
+      const res = await fetch(url, { method: "POST" });
+      const data = await res.json();
+      console.log(data);
+
+      if (res.ok) {
+        setIsLiked(true);
+        setLikes((cur) => cur + 1);
+      }
+    }
+  };
+
   const deletePost = async () => {
-    const url = type === "community" ? `${postUrl}/${postNumber}` : `${promotionUrl}/${postNumber}`;
+    const url = type === "community" ? `${postUrl}/${post.post_number}` : `${promotionUrl}/${post.promotion_number}`;
     const res = await fetch(url, {
       method: "DELETE",
       credentials: "include",
@@ -50,6 +80,10 @@ export function PostTop({ user, createdAt, commentsCnt, type, postNumber, postVi
     if (userData?.user?.nickname === user?.nickname) {
       setIsWriter(true);
     }
+
+    if (userData?.user?._id) {
+      setIsLiked(post.likedUsers.includes(userData?.user?._id));
+    }
   }, [userData, user]);
 
   return (
@@ -60,11 +94,11 @@ export function PostTop({ user, createdAt, commentsCnt, type, postNumber, postVi
           <div className="flex-box">
             <div className="user-id">{user.nickname}</div>
             <div className="date">
-              {createdAt?.split("T")[0]}
+              {post.createdAt?.split("T")[0]}
               <span className="dot">•</span>
               <div className="view-cnt">
                 <VisibilityOutlined sx={{ fontSize: 16 }} />
-                <span>{postViewCnt || 0}</span>
+                <span>{post.views || 0}</span>
               </div>
             </div>
           </div>
@@ -73,7 +107,7 @@ export function PostTop({ user, createdAt, commentsCnt, type, postNumber, postVi
             {type === "community" && (
               <div className="comments-icon" onClick={handleCommentsButtonClick}>
                 <SmsOutlined />
-                <span>{commentsCnt}</span>
+                <span>{totalCommentCount}</span>
               </div>
             )}
             {isWriter && (
@@ -82,6 +116,11 @@ export function PostTop({ user, createdAt, commentsCnt, type, postNumber, postVi
                 <DeleteOutline onClick={handleDeleteButtonClick} />
               </>
             )}
+            <Tooltip title={isLiked ? "추천됨" : "추천하기"} arrow>
+              <Button onClick={handleClickLikes} variant={"outlined"} size="small" startIcon={isLiked ? <ThumbUpAlt /> : <ThumbUpAltOutlined />} disableElevation>
+                {likes}
+              </Button>
+            </Tooltip>
           </div>
 
           <AlertCustom open={openURLCopyAlert} onclose={() => setOpenURLCopyAlert(false)} title={"URL이 복사되었습니다!"} content={window.location.href} time={1500} />

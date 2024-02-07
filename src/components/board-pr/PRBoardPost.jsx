@@ -4,11 +4,12 @@ import "./PRBoardPost.scss";
 import { PostTop } from "../board";
 import empty_image from "../../assets/img/empty_img.svg";
 import { CalendarMonth, FormatQuote, LocationOn, MovieCreation } from "@mui/icons-material";
+import empty_img from "../../assets/img/empty_img.svg";
 
 export default function PRBoardPost({ data, totalCommentCount }) {
   return (
     <div className="pr-board-post">
-      <PostTop user={data.user_id || { nickname: "asd" }} type={"promotion"} createdAt={data.createdAt} commentsCnt={totalCommentCount || 0} postNumber={data.promotion_number} />
+      <PostTop user={data.user_id || { nickname: "user" }} type={"promotion"} post={data} totalCommentCount={totalCommentCount} />
       <div className="top-container">
         <img className="main-img" src={data.image_url[0]} onError={(e) => (e.target.src = empty_image)} alt="홍보 포스터" />
         <div className="flex-column">
@@ -46,7 +47,16 @@ export default function PRBoardPost({ data, totalCommentCount }) {
       {data.tags && data.tags.length !== 0 && (
         <div className="tags">
           {data.tags.map((tag, idx) => (
-            <div key={idx}># {tag}</div>
+            <div className="tag" key={idx}>
+              # {tag}
+            </div>
+          ))}
+        </div>
+      )}
+      {data.image_url.length > 1 && (
+        <div className="images">
+          {data.image_url.slice(1).map((url) => (
+            <img src={url} key={url} onError={(e) => (e.target.src = empty_img)} />
           ))}
         </div>
       )}

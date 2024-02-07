@@ -47,8 +47,8 @@
   .icons {
     align-self: center;
     display: flex;
-    height: 24px;
-    align-items: flex-start;
+    height: 44px;
+    align-items: center;
     font-size: 18px;
 
     > * {
@@ -63,5 +63,9 @@
       line-height: 20px;
       margin-left: 2px;
     }
+  }
+
+  .MuiTooltip-popper {
+    background-color: #bcbcbc;
   }
 }

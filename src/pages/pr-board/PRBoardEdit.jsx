@@ -42,11 +42,8 @@ export function PRBoardEdit() {
   }, [userData]);
 
   return (
-    <div className="pr-board-form-page page-margin-bottom">
-      <BoardSecondHeader header="홍보게시판" onclick={handleCancle} />
-      <div className="body">
-        <PRBoardEditForm setInput={(boolean) => setInput(boolean)} handleCancle={handleCancle} post={post} />
-      </div>
+    <div className="pr-board-form-page page-margin">
+      <div className="body">{post && <PRBoardEditForm setInput={(boolean) => setInput(boolean)} handleCancle={handleCancle} post={post} />}</div>
 
       <AlertCustom
         open={open}

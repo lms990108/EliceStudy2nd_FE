@@ -8,7 +8,7 @@
     display: flex;
     width: 100%;
     padding-bottom: 10px;
-    border-bottom: 1px solid #6b72804d;
+    border-bottom: 1px solid #6b728023;
     margin: 20px 0 10px;
 
     .main-img {
@@ -77,9 +77,33 @@
     color: #374151;
     font-size: 16px;
     line-height: 24px;
+    margin-bottom: 80px;
 
     p {
       padding: 6px 0;
+    }
+  }
+
+  .tags {
+    margin-bottom: 40px;
+    display: flex;
+    flex-wrap: wrap;
+
+    .tag {
+      color: #374151;
+      background-color: #f3f4f6;
+      padding: 6px 12px;
+      border-radius: 10px;
+      font-size: 14px;
+      margin: 6px 8px 0 0;
+      flex-shrink: 0;
+    }
+  }
+
+  .images {
+    img {
+      width: 100%;
+      margin-top: 2px;
     }
   }
 }

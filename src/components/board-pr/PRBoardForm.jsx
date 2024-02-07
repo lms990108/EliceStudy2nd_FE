@@ -404,7 +404,7 @@ export function PRBoardForm({ setInput, handleComplete, handleCancle }) {
               파일 찾기
             </label>
           </Button>
-          (세로 이미지 권장)
+          <span className="placeholder">(세로 이미지 권장)</span>
           <input type="file" id="main-image" name="main-image" accept="image/*" onChange={handleChangeMainImage} required />
         </div>
         {handleErrorPlaceholder(errorMainImage)}
