@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import CircleIcon from "@mui/icons-material/Circle";
 import "./PRBoardPost.scss";
 import { PostTop } from "../board";
 import empty_image from "../../assets/img/empty_img.svg";

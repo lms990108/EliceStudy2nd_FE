@@ -7,9 +7,8 @@
   .top-container {
     display: flex;
     width: 100%;
-    padding-bottom: 10px;
     border-bottom: 1px solid #6b728023;
-    margin: 20px 0 10px;
+    margin: 20px 0 0;
 
     .main-img {
       height: 320px;
@@ -68,9 +67,10 @@
   }
 
   .title {
-    font-size: 24px;
+    font-size: 30px;
     font-weight: 500;
     color: #111827;
+    margin: 30px 0;
   }
 
   .content {

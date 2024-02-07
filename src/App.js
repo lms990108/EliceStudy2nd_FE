@@ -25,7 +25,7 @@ export const AlertContext = createContext();
 
 function App() {
   const [userData, setUserData] = useState(null);
-  const [openLoginAlert, setOpenLoginAlert] = useState(true);
+  const [openLoginAlert, setOpenLoginAlert] = useState(false);
   console.log(userData);
 
   const [prevPlayListQuery, setPrevPlayListQuery] = useState(null);

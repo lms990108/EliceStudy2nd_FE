@@ -9,7 +9,7 @@ import { format } from "date-fns";
 import { AlertContext, AppContext } from "../../App";
 import { Backdrop, Button, Tooltip } from "@mui/material";
 
-export function PostTop({ user, type, post, totalCommentCount }) {
+export function PostTop({ user, type, post, commentsCnt }) {
   const [openURLCopyAlert, setOpenURLCopyAlert] = useState(false);
   const [openDeleteAlert, setOpenDeleteAlert] = useState(false);
   const [isWriter, setIsWriter] = useState(false); // false로 바꾸기
@@ -38,10 +38,6 @@ export function PostTop({ user, type, post, totalCommentCount }) {
   };
 
   const handleClickLikes = async () => {
-    if (!userData?.user?._id) {
-      setOpenLoginAlert(true);
-    }
-
     const url = type === "community" ? `${postUrl}/${post.post_number}/like` : `${promotionUrl}/${post.promotion_number}/like`;
     if (isLiked) {
       const res = await fetch(url, { method: "DELETE" });
@@ -51,6 +47,8 @@ export function PostTop({ user, type, post, totalCommentCount }) {
       if (res.ok) {
         setIsLiked(true);
         setLikes((cur) => cur + 1);
+      } else if (res.status === 403) {
+        setOpenLoginAlert(true);
       }
     } else {
       const res = await fetch(url, { method: "POST" });
@@ -60,6 +58,8 @@ export function PostTop({ user, type, post, totalCommentCount }) {
       if (res.ok) {
         setIsLiked(true);
         setLikes((cur) => cur + 1);
+      } else if (res.status === 403) {
+        setOpenLoginAlert(true);
       }
     }
   };
@@ -107,7 +107,7 @@ export function PostTop({ user, type, post, totalCommentCount }) {
             {type === "community" && (
               <div className="comments-icon" onClick={handleCommentsButtonClick}>
                 <SmsOutlined />
-                <span>{totalCommentCount}</span>
+                <span>{commentsCnt}</span>
               </div>
             )}
             {isWriter && (

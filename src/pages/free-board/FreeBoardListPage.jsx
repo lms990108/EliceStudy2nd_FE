@@ -9,6 +9,7 @@ import ServerError from "../../components/common/state/ServerError";
 import Empty from "../../components/common/state/Empty";
 import { Loop, SwapVert } from "@mui/icons-material";
 import { BoardRightContainer } from "../../components/board/BoardRightContainer";
+import { set } from "date-fns";
 
 export function FreeBoardListPage() {
   const [boardList, setBoardList] = useState([]);
@@ -27,14 +28,12 @@ export function FreeBoardListPage() {
 
   const getPage = async () => {
     setState("loading");
-    const query_page = Number(searchParams.get("page")) || 1;
-    const res = await fetch(`${postUrl}?page=${query_page}&limit=10`);
+    const res = await fetch(`${postUrl}?page=${page}&limit=10`);
     const data = await res.json();
     console.log(data);
 
     if (res.ok) {
       setBoardList(data.posts);
-      setPage(query_page);
       setTotalCnt(data.totalCount);
       setState("hasValue");
     } else {
@@ -54,6 +53,10 @@ export function FreeBoardListPage() {
   useEffect(() => {
     getPage();
   }, [page]);
+
+  useEffect(() => {
+    setPage(Number(searchParams.get("page")) || 1);
+  }, [searchParams]);
 
   return (
     <div className="free-board-page page-margin">

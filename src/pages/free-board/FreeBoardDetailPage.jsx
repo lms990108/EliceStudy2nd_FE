@@ -8,7 +8,7 @@ import { Button } from "@mui/material";
 import { BoardRightContainer } from "../../components/board/BoardRightContainer";
 
 export function FreeBoardDetailPage() {
-  const [post, setPost] = useState({});
+  const [post, setPost] = useState();
   const [comments, setComments] = useState([]);
   const [totalCount, setTotalCount] = useState(0);
   const [page, setPage] = useState(1);
@@ -21,7 +21,9 @@ export function FreeBoardDetailPage() {
     const data = await res.json();
     console.log(data);
 
-    setPost(data);
+    if (res.ok) {
+      setPost(data);
+    }
   };
 
   const getComments = async () => {
@@ -70,7 +72,7 @@ export function FreeBoardDetailPage() {
   };
 
   useEffect(() => {
-    if (post._id) {
+    if (post?._id) {
       getComments();
     }
   }, [post]);
