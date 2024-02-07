@@ -1,17 +1,86 @@
 .post-form-box {
   background-color: #fff;
-  border-radius: 30px;
-  padding: 30px;
+  padding: 50px;
+  box-shadow: 1px 2px 10px 2px #00000017;
+
+  #date.hidden {
+    width: 0px;
+    height: 0px;
+    border: none;
+    position: absolute;
+    left: 0;
+  }
+
+  .star {
+    color: #1976d2;
+  }
 
   .form-header {
-    margin-bottom: 30px;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    padding-bottom: 30px;
+    border-bottom: #e8e8e8 3px solid;
 
     .title {
       margin: 0;
-      font-size: 20px;
+      font-size: 30px;
       font-weight: 500;
+    }
+
+    button {
+      padding: 0;
+    }
+  }
+
+  .category {
+    .MuiFormGroup-root {
+      flex-direction: row;
+      display: inline-block;
+
+      .MuiRadio-root {
+        padding: 0px 10px;
+        margin-bottom: 2px;
+      }
+    }
+  }
+
+  .add-info {
+    padding-top: 40px;
+    margin-bottom: 80px;
+    border-bottom: #e8e8e8 3px dotted;
+
+    .MuiStack-root {
+      display: inline-block;
+      width: 500px;
+
+      .MuiFormControl-root {
+        width: 160px;
+      }
+      input {
+        border: none;
+      }
+      span.line {
+        font-size: 30px;
+        padding-top: 8px;
+        color: #d9d9d9;
+      }
+    }
+
+    .date {
+      .input {
+        display: flex;
+        align-items: center;
+      }
+    }
+
+    .running-time {
+      input {
+        width: 10%;
+      }
+      span {
+        color: #5e5e5e;
+        font-weight: 300;
+      }
     }
   }
 
@@ -30,15 +99,16 @@
   }
 
   .flex-box {
-    margin-bottom: 30px;
+    margin-bottom: 50px;
     display: flex;
     flex-direction: column;
   }
 
   .input {
     justify-content: flex-start;
+    position: relative;
 
-    input {
+    input[type="text"] {
       width: 60%;
     }
 
@@ -71,7 +141,7 @@
 
     label {
       display: inline-block;
-      width: 90px;
+      width: 110px;
     }
 
     :focus {
@@ -86,12 +156,29 @@
       }
     }
 
-    img {
-      margin-top: 16px;
-      max-height: 600px;
-      min-height: 150px;
-      width: 300px;
-      object-fit: cover;
+    &.image {
+      margin-top: 50px;
+
+      img {
+        margin-top: 16px;
+        max-height: 600px;
+        min-height: 150px;
+        width: 300px;
+        object-fit: cover;
+      }
+
+      .preview-box {
+        width: 100%;
+        height: 220px;
+        overflow-x: auto;
+        display: flex;
+
+        img {
+          margin-left: 8px;
+          width: fit-content;
+          height: calc(100% - 20px);
+        }
+      }
     }
   }
 
@@ -141,9 +228,10 @@
   }
 
   .title,
-  .image {
+  .image,
+  .date {
     .error {
-      margin-left: 90px;
+      margin-left: 110px;
     }
   }
 
@@ -151,6 +239,7 @@
     font-size: 12px;
     color: rgb(255, 0, 0);
     display: flex;
+    line-height: 1.5;
     svg {
       margin: 3px 2px 0 0;
     }

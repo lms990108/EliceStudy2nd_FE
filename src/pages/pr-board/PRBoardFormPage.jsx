@@ -16,8 +16,7 @@ export function PRBoardFormPage() {
   };
 
   return (
-    <div className="pr-board-form-page page-margin-bottom">
-      <BoardSecondHeader header="홍보게시판" onclick={handleCancle} />
+    <div className="pr-board-form-page page-margin">
       <div className="body">
         <PRBoardForm setInput={(boolean) => setInput(boolean)} handleCancle={handleCancle} />
       </div>

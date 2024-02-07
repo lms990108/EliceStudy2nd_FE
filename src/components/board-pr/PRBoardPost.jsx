@@ -8,35 +8,35 @@ import { CalendarMonth, FormatQuote, LocationOn, MovieCreation } from "@mui/icon
 export default function PRBoardPost({ data, totalCommentCount }) {
   return (
     <div className="pr-board-post">
+      <PostTop user={data.user_id || { nickname: "asd" }} type={"promotion"} createdAt={data.createdAt} commentsCnt={totalCommentCount || 0} postNumber={data.promotion_number} />
       <div className="top-container">
-        <img className="main-img" src={data.image_url} alt="홍보 포스터" />
+        <img className="main-img" src={data.image_url[0]} onError={(e) => (e.target.src = empty_image)} alt="홍보 포스터" />
         <div className="flex-column">
           <div className="box">
             <div className="lable">타이틀</div>
-            <div className="value">{data.title}</div>
+            <div className="value">{data.play_title}</div>
             <FormatQuote className="icon double" />
           </div>
           <div className="box">
             <div className="lable">공연기간</div>
-            <div className="value">{data.createdAt}</div>
+            <div className="value">{data.start_date}</div>
             <CalendarMonth className="icon" />
           </div>
         </div>
         <div className="flex-column">
           <div className="box">
             <div className="lable">장소</div>
-            <div className="value">뜻밖의 극장</div>
+            <div className="value">{data.location}</div>
             <LocationOn className="icon" />
           </div>
           <div className="box">
             <div className="lable">주최</div>
-            <div className="value">Yoonhogirl's Club</div>
+            <div className="value">{data.host}</div>
             <MovieCreation className="icon" />
           </div>
         </div>
       </div>
 
-      <PostTop user={data.user_id || { nickname: "asd" }} type={"promotion"} createdAt={data.createdAt} commentsCnt={totalCommentCount || 0} postNumber={data.promotion_number} />
       <h2 className="title">{data.title}</h2>
       <div className="content">
         {data.content?.split("\n").map((text) => (

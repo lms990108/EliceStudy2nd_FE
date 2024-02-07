@@ -12,14 +12,40 @@ export function PRBoardEditForm({ setInput, handleCancle, post }) {
   const [submit, setSubmit] = useState(false);
   const [openSubmit, setOpenSubmit] = useState(false);
   const [openComplete, setOpenComplete] = useState(false);
+
+  // 카테고리
+  const [inputCategory, setInputCategiry] = useState(post?.category);
+  const [errorCategory, setErrorCategory] = useState("");
+  // 연극명
+  const [inputPlayTitle, setInputPlayTitle] = useState(post?.play_title);
+  const [errorPlayTitle, setErrorPlayTitle] = useState("");
+  // 장소
+  const [inputLocation, setInputLocation] = useState(post?.location);
+  const [errorLocation, setErrorLocation] = useState("");
+  // 주최
+  const [inputHost, setInputHost] = useState(post?.host);
+  const [errorHost, setErrorHost] = useState("");
+  // 러닝타임
+  const [inputRuntime, setInputRuntime] = useState(post?.runtime);
+  const [errorRuntime, setErrorRuntime] = useState("");
+  // 기간
+  const [inputStartDate, setInputStartDate] = useState(post?.start_date);
+  const [errorStartDate, setErrorStartDate] = useState("");
+  const [inputEndDate, setInputEndDate] = useState(post?.end_date);
+  const [errorEndDate, setErrorEndDate] = useState("");
+  // 글제목
   const [inputTitle, setInputTitle] = useState(post?.title);
   const [errorTitle, setErrorTitle] = useState("");
+  // 내용
   const [inputContent, setInputContent] = useState(post?.content);
   const [errorContent, setErrorContent] = useState("");
-  const [inputTag, setInputTag] = useState("");
-  const [imageURL, setImageURL] = useState(post?.image_url);
-  const [errorImage, setErrorImage] = useState("");
+  // 태그
   const [tagList, setTagList] = useState(post?.tags);
+  const [inputTag, setInputTag] = useState("");
+  // 사진
+  const [imageURL, setImageURL] = useState(post?.image_url); // 0인덱스 대표이미지
+  const [errorImage, setErrorImage] = useState("");
+
   const nav = useNavigate();
 
   const handleSubmit = async (e) => {
