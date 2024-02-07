@@ -20,6 +20,7 @@ import { ForbiddenPage, NotFoundPage, NotFoundRedirect } from "./pages";
 import CommonLayout from "./pages/common/CommonLayout";
 import LoginAlert from "./components/common/alert/LoginAlert";
 import PrivacyPolicy from "./pages/util/PrivacyPolicy";
+import LoginAlertBack from "./components/common/alert/LoginAlertBack";
 
 export const AppContext = createContext();
 export const AlertContext = createContext();
@@ -27,6 +28,7 @@ export const AlertContext = createContext();
 function App() {
   const [userData, setUserData] = useState(null);
   const [openLoginAlert, setOpenLoginAlert] = useState(false);
+  const [openLoginAlertBack, setOpenLoginAlertBack] = useState(false);
   console.log(userData);
 
   const [prevPlayListQuery, setPrevPlayListQuery] = useState(null);
@@ -84,7 +86,7 @@ function App() {
             setPrevPlayListQuery,
           }}
         >
-          <AlertContext.Provider value={{ openLoginAlert, setOpenLoginAlert }}>
+          <AlertContext.Provider value={{ openLoginAlert, setOpenLoginAlert, openLoginAlertBack, setOpenLoginAlertBack }}>
             <BrowserRouter>
               <Routes>
                 {/* 에러 페이지 */}
@@ -137,6 +139,7 @@ function App() {
                 />
               </Routes>
               <LoginAlert />
+              <LoginAlertBack />
             </BrowserRouter>
           </AlertContext.Provider>
         </AppContext.Provider>

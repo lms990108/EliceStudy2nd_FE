@@ -12,7 +12,7 @@ export function PRBoardFormPage() {
   const [input, setInput] = useState(false);
   const nav = useNavigate();
   const user = useGetUser();
-  const { setOpenLoginAlert } = useContext(AlertContext);
+  const { setOpenLoginAlertBack } = useContext(AlertContext);
 
   const handleCancle = (e) => {
     if (input) setOpen(true);
@@ -20,9 +20,8 @@ export function PRBoardFormPage() {
   };
 
   useEffect(() => {
-    console.log(user);
-    if (!user) {
-      setOpenLoginAlert(true);
+    if (!user?.isLoggedIn) {
+      // setOpenLoginAlertBack(true);
     }
   }, []);
 

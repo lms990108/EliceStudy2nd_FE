@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { AppContext } from "../../App";
 
 export default function useGetUser() {
@@ -37,6 +37,10 @@ export default function useGetUser() {
       console.error(err);
     }
   };
+
+  useEffect(() => {
+    getUserData();
+  }, []);
 
   return userData;
 }

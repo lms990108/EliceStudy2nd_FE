@@ -94,7 +94,7 @@
 
         &.tl-2 {
           @include ellipsis(2, 20px);
-          height: 40px;
+          height: fit-content;
           white-space: wrap;
         }
 

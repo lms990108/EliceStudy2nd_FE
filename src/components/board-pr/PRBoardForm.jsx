@@ -40,7 +40,7 @@ export function PRBoardForm({ setInput, handleComplete, handleCancle }) {
   const [inputContent, setInputContent] = useState();
   const [errorContent, setErrorContent] = useState("내용을 최소 3자 이상 입력해주세요.");
   // 태그
-  const [tagList, setTagList] = useState();
+  const [tagList, setTagList] = useState([]);
   const [inputTag, setInputTag] = useState();
   // 사진
   const [imageURL, setImageURL] = useState([""]); // 0인덱스 대표이미지
@@ -105,7 +105,7 @@ export function PRBoardForm({ setInput, handleComplete, handleCancle }) {
   };
 
   const handleChangePlayTitle = (e) => {
-    setInputPlayTitle(e.target.value);
+    setInputPlayTitle(e.target.value.trimStart());
     if (!e.target.value) {
       setErrorPlayTitle("연극명을 입력해주세요.");
     } else {
@@ -119,7 +119,7 @@ export function PRBoardForm({ setInput, handleComplete, handleCancle }) {
   };
 
   const handleChangeTitle = (e) => {
-    setInputTitle(e.target.value);
+    setInputTitle(e.target.value.trimStart());
     if (e.target.value.length < 3) {
       setErrorTitle("제목을 최소 3자 이상 입력해주세요.");
     } else {
@@ -129,7 +129,7 @@ export function PRBoardForm({ setInput, handleComplete, handleCancle }) {
 
   const handleChangeContent = (e) => {
     setInputContent(e.target.value);
-    if (e.target.value.length < 3) {
+    if (e.target.value.trim().length < 3) {
       setErrorContent("내용을 최소 3자 이상 입력해주세요.");
     } else {
       setErrorContent("");
@@ -266,7 +266,7 @@ export function PRBoardForm({ setInput, handleComplete, handleCancle }) {
               id="location"
               name="location"
               value={inputLocation}
-              onChange={(e) => setInputLocation(e.target.value)}
+              onChange={(e) => setInputLocation(e.target.value.trimStart())}
               maxLength={30}
               placeholder="장소를 작성해 주세요."
             />
@@ -281,7 +281,7 @@ export function PRBoardForm({ setInput, handleComplete, handleCancle }) {
               id="host"
               name="host"
               value={inputHost}
-              onChange={(e) => setInputHost(e.target.value)}
+              onChange={(e) => setInputHost(e.target.value.trimStart())}
               maxLength={30}
               placeholder="주최자 또는 기관을 작성해 주세요."
             />
@@ -375,7 +375,7 @@ export function PRBoardForm({ setInput, handleComplete, handleCancle }) {
             name="tags"
             onKeyDown={handleChangeTag}
             value={inputTag}
-            onChange={(e) => setInputTag(e.target.value)}
+            onChange={(e) => setInputTag(e.target.value.trimStart())}
             placeholder="엔터를 입력하여 태그를 등록할 수 있습니다."
             maxLength={16}
           />
