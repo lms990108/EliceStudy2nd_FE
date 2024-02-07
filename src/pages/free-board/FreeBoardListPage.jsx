@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { BoardListHeader, BoardNav } from "../../components/board";
 import FreeBoardList from "../../components/board-free/FreeBoardList";
 import "./FreeBoardListPage.scss";
-import { Button, CircularProgress, Pagination } from "@mui/material";
+import { Button, CircularProgress, Pagination, FormControl, MenuItem, Select } from "@mui/material";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { postUrl } from "../../apis/apiURLs";
 import ServerError from "../../components/common/state/ServerError";
@@ -17,6 +17,7 @@ export function FreeBoardListPage() {
   const [page, setPage] = useState(1);
   const [state, setState] = useState("loading");
   const [toggle, setToggle] = useState(false);
+  const [sort, setSort] = useState("최신순");
   const nav = useNavigate();
   const [searchParams] = useSearchParams();
 
@@ -68,9 +69,14 @@ export function FreeBoardListPage() {
             <Loop onClick={handleClick} color="secondary" className={`refresh pointer ${toggle && "start"}`} />
           </div>
           <div className="buttons">
-            <Button variant="outlined" size="small" color="darkGray" startIcon={<SwapVert />}>
-              최신순
-            </Button>
+            <FormControl sx={{ m: 1, minWidth: 120 }}>
+              <Select value={sort} onChange={(e) => setSort(e.target.value)} displayEmpty>
+                <MenuItem value="최신순">최신순</MenuItem>
+                <MenuItem value="추천순">추천순</MenuItem>
+                <MenuItem value="조회순">조회순</MenuItem>
+                <MenuItem value="오래된순">오래된순</MenuItem>
+              </Select>
+            </FormControl>
             <Button onClick={handleFormBtn} variant="contained" size="small" color="secondary" disableElevation>
               작성하기
             </Button>

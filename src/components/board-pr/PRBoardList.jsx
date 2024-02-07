@@ -2,12 +2,14 @@ import React, { useState } from "react";
 import "./PRBoardList.scss";
 import { Link } from "react-router-dom";
 import { SmsOutlined, SwapVert, ThumbUpOutlined, VisibilityOutlined } from "@mui/icons-material";
-import { Button } from "@mui/material";
+import { Button, FormControl, MenuItem, Select } from "@mui/material";
 import { useNavigate } from "react-router-dom/dist";
 import empty_img from "../../assets/img/empty_img.svg";
 
 export default function PRBoardList({ newList }) {
   const [selected, setSelected] = useState("all");
+  const [sort, setSort] = useState("최신순");
+
   const nav = useNavigate();
 
   const handleClickDivision = (e) => {
@@ -33,9 +35,14 @@ export default function PRBoardList({ newList }) {
           </div>
         </div>
         <div className="buttons">
-          <Button variant="outlined" size="small" color="darkGray" startIcon={<SwapVert />}>
-            최신순
-          </Button>
+          <FormControl sx={{ m: 1, minWidth: 120 }}>
+            <Select value={sort} onChange={(e) => setSort(e.target.value)} displayEmpty>
+              <MenuItem value="최신순">최신순</MenuItem>
+              <MenuItem value="추천순">추천순</MenuItem>
+              <MenuItem value="조회순">조회순</MenuItem>
+              <MenuItem value="오래된순">오래된순</MenuItem>
+            </Select>
+          </FormControl>
           <Button onClick={handleFormBtn} variant="contained" size="small" color="secondary" disableElevation>
             작성하기
           </Button>

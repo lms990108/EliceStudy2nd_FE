@@ -47,15 +47,38 @@
       }
     }
 
-    .buttons > button {
-      margin-left: 10px;
+    .buttons {
+      button {
+        margin-left: 10px;
 
-      .MuiButton-startIcon {
-        margin-right: 2px;
+        .MuiButton-startIcon {
+          margin-right: 2px;
+        }
+
+        &.MuiButton-outlinedDarkGray:hover {
+          border-color: #89898980;
+        }
       }
 
-      &.MuiButton-outlinedDarkGray:hover {
-        border-color: #89898980;
+      .MuiFormControl-root {
+        height: 30px;
+        margin: 0;
+
+        .MuiInputBase-root {
+          color: #898989;
+          font-size: 13px;
+          font-weight: 500;
+          line-height: 24px;
+
+          &.Mui-focused .MuiOutlinedInput-notchedOutline {
+            border-color: rgba(137, 137, 137, 0.5019607843);
+          }
+
+          .MuiSelect-select {
+            padding: 3px 9px;
+            height: 24px;
+          }
+        }
       }
     }
   }
