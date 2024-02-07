@@ -24,7 +24,9 @@ export default function PlaySearchContentBox({
       <div className="play-info">
         <Link to={`/play/${showId}`} style={{ margin: 0 }}>
           <h3>{title}</h3>
-          <p>{location.length >= 30 ? `${location.slice(0, 28)}...` : location}</p>
+          <p className="location">
+            {location.length >= 30 ? `${location.slice(0, 28)}...` : location}
+          </p>
           <p>
             {startDate.split("T")[0]} ~ {endDate.split("T")[0]}
           </p>
@@ -33,16 +35,28 @@ export default function PlaySearchContentBox({
       </div>
       <div className="reservation-btn">
         {state !== "공연완료" ? (
-          <a href={`https://tickets.interpark.com/contents/search?keyword=${title}&start=0&rows=20`} target="_blank" rel="noopener noreferrer">
-            <Button variant="contained" color="secondary" size="large">
-              <Typography fontFamily="Nanum Gothic, sans-serif">예매하러 가기</Typography>
+          <a
+            href={`https://tickets.interpark.com/contents/search?keyword=${title}&start=0&rows=20`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Button
+              variant="contained"
+              color="secondary"
+              size="large"
+              disableElevation
+            >
+              <Typography>예매하러 가기</Typography>
             </Button>
           </a>
         ) : (
-          <Tooltip title="본 연극은 종료되어 예매 링크가 제공되지 않습니다." arrow>
+          <Tooltip
+            title="본 연극은 종료되어 예매 링크가 제공되지 않습니다."
+            arrow
+          >
             <div className="reservation-disabled">
               <Button variant="contained" disabled>
-                <Typography fontFamily="Nanum Gothic, sans-serif" className="button-text">
+                <Typography className="button-text" disableElevation>
                   예매하러 가기
                 </Typography>
               </Button>

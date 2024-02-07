@@ -4,6 +4,71 @@
       display: flex;
       align-items: center;
 
+      .title-container {
+        display: flex;
+        justify-content: space-between;
+
+        .share-btn {
+          display: flex;
+          align-items: flex-end;
+          position: relative;
+          top: 25px;
+
+          p {
+            font-size: 17px;
+            margin: 0;
+            padding-right: 20px;
+            position: relative;
+            bottom: 13px;
+          }
+
+          .share-options {
+            right: 0px;
+            border: 1.5px solid #ffb400;
+            border-radius: 8px;
+            padding: 25px 10px 0;
+            display: flex;
+            position: absolute;
+            z-index: 100;
+            background-color: #ffffff;
+
+            .share-option {
+              display: flex;
+              flex-direction: column;
+              justify-content: center;
+              align-items: center;
+              position: relative;
+              bottom: 12px;
+              margin: 0 10px;
+              flex-grow: 1;
+
+              .SNS-img-box {
+                height: 50px;
+                display: flex;
+                align-items: center;
+
+                img {
+                  width: 30px;
+                  height: 30px;
+                }
+              }
+            }
+
+            .share-option:nth-child(3) {
+              img {
+                height: 27px;
+                width: 27px;
+              }
+            }
+
+            .close-icon {
+              position: relative;
+              top: 15px;
+            }
+          }
+        }
+      }
+
       .play-poster {
         display: flex;
 
@@ -11,7 +76,7 @@
           width: 290px;
           height: 390px;
           border-radius: 8px;
-          box-shadow: -3px 3px 5px #bcbcbc;
+          box-shadow: 5px 5px 10px #bcbcbc;
 
           .end-show-design {
             display: flex;
@@ -44,27 +109,27 @@
             width: 290px;
             height: 390px;
             border-radius: 8px;
+            object-fit: cover;
           }
         }
       }
 
       .play-info {
-        margin-left: 100px;
+        margin-left: 60px;
         width: 800px;
 
         h1 {
           height: 45px;
-          padding-left: 10px;
           display: flex;
           flex-wrap: wrap;
           font-family: "Noto Sans KR";
-          font-size: 30px;
+          font-size: 26px;
           height: auto;
+          margin-bottom: 5px;
         }
 
         .play-summary-info {
           display: grid;
-          padding: 0 15px;
 
           div:first-child,
           div:nth-child(3) {
@@ -92,7 +157,9 @@
 
             h3 {
               margin: 0;
-              font-size: 17px;
+              font-size: 16px;
+              color: #666666;
+              font-weight: 400;
             }
           }
 
@@ -102,6 +169,8 @@
             grid-column-end: 3;
             position: relative;
             bottom: 12px;
+            display: flex;
+            justify-content: flex-end;
           }
         }
 
@@ -110,9 +179,10 @@
         }
 
         p {
-          margin-left: 15px;
-          font-size: 17px;
+          margin-left: 35px;
+          font-size: 16px;
           line-height: 1.2;
+          font-weight: 500;
         }
 
         hr {
@@ -136,76 +206,11 @@
         padding: 5px;
       }
 
-      .copy-btn {
-        display: flex;
-        margin-bottom: 10px;
-
-        p {
-          display: inline-block;
-          line-height: 1;
-          font-size: 17px;
-        }
-
-        &:hover {
-          cursor: pointer;
-        }
-      }
-
-      .share-btn {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        align-items: flex-start;
-
-        p {
-          font-size: 17px;
-          margin: 0;
-          padding-right: 20px;
-          position: relative;
-          bottom: 13px;
-        }
-
-        svg {
-          // padding-right: 10px;
-          height: 50px;
-        }
-
-        .share-options {
-          position: relative;
-          top: 35px;
-          right: 28px;
-          border: 1.5px solid #ffb400;
-          border-radius: 8px;
-          padding: 25px 10px 0;
-
-          .share-option {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-            bottom: 12px;
-            margin: 0 10px;
-
-            .SNS-img-box {
-              height: 50px;
-              display: flex;
-              align-items: center;
-
-              img {
-                width: 30px;
-                height: 30px;
-              }
-            }
-          }
-        }
-      }
-
       .another-btn {
         position: relative;
         bottom: 10px;
         display: flex;
-        justify-content: space-between;
+        justify-content: flex-end;
 
         p {
           margin: 0;
@@ -336,10 +341,6 @@
           line-height: 1;
           font-size: 18px;
         }
-
-        // svg {
-        //   margin-right: 5px;
-        // }
 
         &:hover {
           cursor: pointer;

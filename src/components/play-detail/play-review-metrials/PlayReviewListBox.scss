@@ -1,17 +1,23 @@
 @media (min-width: 925px) {
   .play-review-list-box {
     border-bottom: 1px solid rgb(188, 188, 188, 0.5);
-    padding: 0 20px;
+    padding: 5px 20px;
     display: flex;
     align-items: center;
 
     .review-author-and-date {
       width: 17%;
+
       p {
         margin: 10px;
         display: flex;
         justify-content: center;
         align-items: center;
+      }
+
+      p:nth-child(2) {
+        color: #808080;
+        font-size: 14px;
       }
     }
 

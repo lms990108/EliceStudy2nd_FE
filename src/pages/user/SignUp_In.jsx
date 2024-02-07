@@ -11,7 +11,6 @@ export const fromPageContext = createContext();
 
 export function SignUp_In() {
   const { userData } = useContext(AppContext);
-  console.log(userData);
   const location = useLocation();
   const pageFrom = location.state?.from;
   const nav = useNavigate();

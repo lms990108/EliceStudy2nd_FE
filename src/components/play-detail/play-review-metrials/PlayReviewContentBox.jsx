@@ -37,16 +37,18 @@ export default function PlayReviewContentBox({
           {!content || content === "null" ? "" : content}
         </p>
       ) : null}
-      {photoSrc.length
-        ? photoSrc.map((src, idx) => (
-            <img
-              src={src}
-              className="play-review-photo"
-              key={idx}
-              onClick={() => handleReviewPhotoClick(src)}
-            />
-          ))
-        : null}
+      <div className="review-photos">
+        {photoSrc.length
+          ? photoSrc.map((src, idx) => (
+              <img
+                src={src}
+                className="play-review-photo"
+                key={idx}
+                onClick={() => handleReviewPhotoClick(src)}
+              />
+            ))
+          : null}
+      </div>
       <div className="play-review-modify-btn">
         {isAuthorLogined && (
           <Button variant="outlined" onClick={() => handleModifyBtnClick()}>

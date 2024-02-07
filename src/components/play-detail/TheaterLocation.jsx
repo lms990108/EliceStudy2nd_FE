@@ -25,7 +25,7 @@ export default function TheaterLoction({ theaterLocation, locationName }) {
       });
       marker.setMap(map);
 
-      const iwContent = `<div style="padding: 5px; display: flex; flex-direction: column; height: 120px;">🚩 ${locationName}<a href="https://map.kakao.com/link/map/${locationName},${lat},${lng}" style="color: blue;" target="_blank">🗺️ 큰지도보기</a><a href="https://map.kakao.com/link/to/${locationName},${lat},${lng}" style="color: blue;" target="_blank">🚕 길찾기</a></div>`, // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+      const iwContent = `<div style="padding: 10px 5px 10px 5px; display: flex; flex-direction: column; height: 80px;"><div>🚩 ${locationName}</div><div style='padding-top: 10px;'><a href="https://map.kakao.com/link/map/${locationName},${lat},${lng}" style="color: blue;" target="_blank">🗺️ 큰지도보기</a></div><div style='padding-top: 10px;'><a href="https://map.kakao.com/link/to/${locationName},${lat},${lng}" style="color: blue;" target="_blank">🚕 길찾기</a></div></div>`, // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
         iwPosition = new kakao.maps.LatLng(lat, lng); //인포윈도우 표시 위치입니다
 
       // 인포윈도우를 생성합니다

@@ -7,7 +7,7 @@ import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import ReviewErrorBox from "./ReviewErrorBox";
 import DriveFolderUploadIcon from "@mui/icons-material/DriveFolderUpload";
-import DeleteIcon from "@mui/icons-material/Delete";
+import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 
 export default function ReviewForm({
   purpose,
@@ -265,6 +265,10 @@ export default function ReviewForm({
       {/* <ReviewErrorBox errorText="제목과 별점은 필수 입력값입니다." /> */}
       <form className="review-form-container">
         <h2>관람 후기 {purpose}</h2>
+        <div className="review-author-box">
+          <h3>작성자</h3>
+          <p>{review_author}</p>
+        </div>
         <div className="review-title-box">
           <h3>* 제목</h3>
           <TextField
@@ -277,11 +281,8 @@ export default function ReviewForm({
             inputProps={{ maxLength: 30 }}
             value={title}
             onChange={(e) => setTitle(e.target.value)}
+            helperText="제목은 1자 이상 30자 이하로 작성 가능합니다."
           />
-        </div>
-        <div className="review-author-box">
-          <h3>작성자</h3>
-          <p>{review_author}</p>
         </div>
         <div className="review-content-box">
           <h3>* 후기 내용</h3>
@@ -294,6 +295,7 @@ export default function ReviewForm({
             inputProps={{ maxLength: 500 }}
             value={content}
             onChange={(e) => setContent(e.target.value)}
+            helperText="내용은 1자 이상 500자 이하로 작성 가능합니다."
           />
         </div>
         <div className="review-rating-box">
@@ -339,14 +341,15 @@ export default function ReviewForm({
                     }
                     alt="리뷰 첨부 이미지"
                   />
-                  <DeleteIcon
+                  <HighlightOffIcon
                     color="ourGray"
                     sx={{
                       cursor: "pointer",
-                      paddingLeft: "10px",
                       position: "relative",
+                      width: "27px",
+                      height: "27px",
                       bottom: "120px",
-                      paddingRight: "30px",
+                      right: "32px",
                     }}
                     onClick={() => handleDeletePhoto(idx)}
                   />
@@ -356,10 +359,7 @@ export default function ReviewForm({
         </div>
         <div className="review-guide-text">
           <p>- * 표시가 되어 있는 항목은 필수 기재 항목입니다.</p>
-          <p>
-            - 제목은 띄어쓰기 포함 30자, 내용은 띄어쓰기 포함 500자 제한입니다.
-          </p>
-          <p>- 사진은 3장까지 업로드 가능합니다.</p>
+          <p>- 사진은 3장까지 업로드 가능합니다. (최대 5MB)</p>
         </div>
         {reviewErrorText && <ReviewErrorBox errorText={reviewErrorText} />}
         <div className="play-review-btn">

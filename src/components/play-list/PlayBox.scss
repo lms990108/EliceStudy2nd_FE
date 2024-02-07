@@ -31,34 +31,37 @@
         width: 240px;
         height: 320px;
         border-radius: 8px;
+        object-fit: cover;
       }
     }
 
     .play-title {
-      margin: 15px 0 10px 0;
-      font-size: 20px;
-      font-weight: 700;
+      margin: 20px 0 13px 0;
+      font-size: 18px;
+      font-weight: 500;
       width: 250px;
       @include play-box-flex-wrap;
     }
 
     .play-place {
+      font-size: 14px;
       font-weight: 500;
-      font-size: 15px;
       width: 250px;
+      color: #808080;
       @include play-box-flex-wrap;
     }
 
     .play-period {
-      margin: 5px 0;
-      font-size: 15px;
+      margin: 7px 0 13px;
+      font-size: 14px;
       width: 250px;
+      color: #808080;
       @include play-box-flex-wrap;
     }
 
     .play-price {
-      font-size: 18px;
-      font-weight: 700;
+      font-size: 17px;
+      font-weight: 500;
       width: 250px;
       @include play-box-flex-wrap;
     }

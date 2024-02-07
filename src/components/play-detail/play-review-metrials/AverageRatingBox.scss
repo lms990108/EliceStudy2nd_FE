@@ -1,7 +1,7 @@
 @media (min-width: 800px) {
   .average-rating-box {
     display: flex;
-    padding: 0 30px;
+    padding: 5px 30px;
     justify-content: space-between;
     border: 1.5px solid rgba(188, 188, 188, 0.5);
     border-radius: 8px;
@@ -9,20 +9,21 @@
 
     .star-and-rating {
       h2 {
-        font-size: 20px;
+        font-size: 18px;
       }
 
       .rating {
-        font-size: 26px;
+        font-size: 22px;
         font-weight: 700;
-        padding-left: 30px;
+        padding-left: 20px;
         position: relative;
-        bottom: 5px;
+        bottom: 7px;
       }
 
       .rating-addtional-text {
         font-size: 14px;
         padding: 15px 0;
+        color: #808080;
       }
     }
 
@@ -32,17 +33,17 @@
       align-items: center;
       height: 65px;
       position: relative;
-      top: 42px;
+      top: 32px;
     }
 
     .review-button button {
-      width: 200px;
-      height: 45px;
+      width: 180px;
+      height: 45.2px;
     }
 
     .review-button button p {
-      font-weight: 700;
-      font-size: 18px;
+      font-weight: 500;
+      font-size: 16px;
       font-family: "Noto Sans KR", sans-serif;
     }
   }
