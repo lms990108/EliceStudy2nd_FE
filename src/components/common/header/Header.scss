@@ -59,21 +59,23 @@
     background-color: #282828;
   }
   .header-search-btn {
-    border-radius: 15px;
+    border-radius: 20px;
     padding-left: 20px;
-    background-color: white;
+    background-color: #282828;
+    border: 1px solid #eee;
     width: 280px;
     height: 40px;
     cursor: pointer;
   }
   .header-search-btn:hover {
-    background-color: #ddd;
+    border: 1.5px solid #eee;
+    background-color: #222222;
   }
   .search-container {
     position: relative;
   }
   .search-icon {
-    color: #282828;
+    color: #ccc;
     position: absolute;
     right: 15px;
     top: 43%;

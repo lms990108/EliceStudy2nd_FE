@@ -3,43 +3,86 @@
   gap: 50px;
   color: white;
   width: 1200px;
-  height: 1600px;
+  height: 100%;
+  margin-top: 28px;
 }
 .publicity-box1 {
   width: 460px;
-  height: 1400px;
+  height: 100%;
 }
 .publicity-box2 {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  padding-bottom: 100px;
+  gap: 40px;
   width: 320px;
-  height: 1400px;
+  height: 100%;
 }
 .publicity-box3 {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  padding-top: 100px;
+  gap: 40px;
+  padding-top: 80px;
   width: 320px;
-  height: 1400px;
+  height: 100%;
 }
 .publicity-product1 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
   width: 100%;
   height: auto; /* 이미지가 넘치지 않도록 높이 자동 조절 */
-  background-color: #202020;
+  position: sticky;
+  top: 0;
+  left: 0;
+  cursor: pointer;
 }
 .publicity-product1 img {
   width: 100%;
-  height: auto;
+  height: 100%;
+  transition: transform 0.2s ease-in-out;
+  &:hover {
+    transform: scale(1.05);
+  }
 }
 .publicity-product {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
   width: 100%;
   height: auto; /* 이미지가 넘치지 않도록 높이 자동 조절 */
-  background-color: #202020;
+  cursor: pointer;
 }
 .publicity-product img {
   width: 100%;
-  height: auto;
+  height: 100%;
+  transition: transform 0.2s ease-in-out;
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+.main-publicity1-img-box {
+  width: 460px;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 8px;
+  box-shadow: 7px 7px 7px rgba(0, 0, 0, 0.3);
+}
+.main-publicity-img-box {
+  width: 320px;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 4px;
+  box-shadow: 6px 6px 6px rgba(0, 0, 0, 0.3);
+}
+.promotions-title {
+  display: flex;
+  font-weight: 400;
+  color: #ddd;
+  font-size: 20px;
+}
+.promotions-period {
+  color: #aaa;
+  font-size: 14px;
 }

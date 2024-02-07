@@ -42,15 +42,14 @@ export default function ColorTabs() {
           ".MuiTab-root": {
             width: "120px",
             padding: "0px",
-            fontWeight: "500",
-            fontSize: "18px",
-            letterSpacing: "4px",
-            color: "white",
+            fontWeight: "400",
+            fontSize: "17px",
+            letterSpacing: "1px",
+            color: "#eee",
             "&.Mui-selected": {
               color: "#ffb400",
             },
             "&:hover": {
-              fontSize: "19px",
               fontWeight: "600",
             },
           },
