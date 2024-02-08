@@ -32,6 +32,8 @@ export default function ReviewForm({
     review_image_urls?.length ? review_image_urls : []
   );
   console.log(photo);
+  const [deletedPhoto, setDeletedPhoto] = useState([]);
+  console.log(deletedPhoto);
   // fixed된 알림을 띄우기 위한 상태
   const [alert, setAlert] = useState(null);
   // 리뷰 에러 box에 담을 에러 문구
@@ -52,6 +54,7 @@ export default function ReviewForm({
         "https://dailytopia2.shop/api/presigned-urls",
         {
           method: "POST",
+          credentials: "include",
           headers: {
             "Content-Type": "application/json",
           },
@@ -64,6 +67,7 @@ export default function ReviewForm({
         const { presigned_url, public_url } = data;
         const uploadRes = await fetch(presigned_url, {
           method: "PUT",
+          credentials: "include",
           headers: {
             "Content-Type": file.type,
           },
@@ -74,7 +78,8 @@ export default function ReviewForm({
           setPhoto((prev) => [...prev, public_url]);
           if (
             reviewErrorText ===
-            "사진 등록에 실패하였습니다. 다시 시도해 주세요."
+              "사진 등록에 실패하였습니다. 다시 시도해 주세요." ||
+            reviewErrorText === "사진은 장당 5MB 이하로만 등록이 가능합니다."
           ) {
             setReviewErrorText(null);
           }
@@ -108,11 +113,14 @@ export default function ReviewForm({
   };
 
   const handleDeletePhoto = (itemIdx) => {
+    setDeletedPhoto((prev) => [...prev, photo[itemIdx]]);
     setPhoto((prev) => {
       const newArray = [...prev];
       newArray.splice(itemIdx, 1);
       return newArray;
     });
+    // 파일 인풋 초기화
+    document.getElementById("fileInput").value = "";
   };
 
   const handleImageSelect = (image) => {
@@ -134,27 +142,29 @@ export default function ReviewForm({
       );
       return;
     }
+    const body = {
+      title,
+      content,
+      rate: ratingValue,
+      imageUrls: photo,
+      imageUrlsToDelete: deletedPhoto,
+    };
 
-    const formData = new FormData();
-    formData.append("title", title);
-    formData.append("content", content);
-    formData.append("rate", ratingValue);
-    formData.append("review_images", photo);
+    console.log(body);
 
-    formData.forEach(function (value, key) {
-      console.log(key + ", " + value);
-    });
-
-    if (purpose === "작성") postReview(formData);
-    else if (purpose === "수정") patchReview(formData);
+    if (purpose === "작성") postReview(body);
+    else if (purpose === "수정") patchReview(body);
   };
 
   // 리뷰 '작성' 시의 fetch
-  const postReview = (formData) => {
+  const postReview = (body) => {
     fetch(`https://dailytopia2.shop/api/reviews/${showId}`, {
       credentials: "include",
-      body: formData,
       method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
     })
       .then((res) => {
         console.log(res);
@@ -225,11 +235,14 @@ export default function ReviewForm({
   };
 
   // 리뷰 '수정' 시의 fetch
-  const patchReview = (formData) => {
+  const patchReview = (body) => {
     fetch(`https://dailytopia2.shop/api/reviews/${review_id}`, {
       credentials: "include",
-      body: formData,
       method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
     })
       .then((res) => {
         if (res.ok) {
@@ -254,16 +267,15 @@ export default function ReviewForm({
           });
         } else if (res.status === 401 || res.status === 403) {
           setAlert({
-            title: "로그인 필요",
-            content:
-              "로그인이 필요한 기능입니다. 로그인 페이지로 이동하시겠습니까?",
+            title: "tennybox.com 내용:",
+            content: "로그인이 필요한 서비스입니다. 로그인 하시겠습니까?",
             open: true,
             onclose: () => setAlert(null),
             onclick: () =>
               navigate("/signup-in", {
                 state: { from: `${location.pathname}${location.search}` },
               }),
-            severity: "warning",
+            severity: "info",
             checkBtn: "확인",
             closeBtn: "취소",
           });
@@ -378,6 +390,7 @@ export default function ReviewForm({
             ref={fileInput}
             onChange={(e) => handleImageSelect(e.target.files[0])}
             accept=".png, .jpg, .jpeg"
+            id="fileInput"
           />
         </div>
         <div style={{ display: "flex" }}>
