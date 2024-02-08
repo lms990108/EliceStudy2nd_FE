@@ -9,7 +9,7 @@ export default function Empty({ onClickBtn, title, children, btnText }) {
       <div className="icon empty">
         <InsertDriveFileOutlined />
       </div>
-      <h3>{title && "아직 데이터가 없습니다."}</h3>
+      <h3>{title || "데이터가 존재하지 않습니다."}</h3>
       {children || (
         <>
           <p>데이터가 없습니다. {onClickBtn ? "데이터를 추가하려면 아래 작성하기 버튼을 눌러주세요" : "연극을 찾아보고 다양한 기록을 남겨보세요"}</p>

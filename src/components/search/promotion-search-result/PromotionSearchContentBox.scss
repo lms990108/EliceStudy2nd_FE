@@ -1,3 +1,5 @@
+@import "../../../App.scss";
+
 .promotion-search-content-box {
   display: flex;
   border-bottom: 1px solid #bcbcbc;
@@ -15,8 +17,8 @@
     align-items: center;
     border: 1px solid #bcbcbc;
     border-radius: 8px;
-    width: 130px;
-    height: 130px;
+    width: 120px;
+    height: 168px;
     overflow: hidden;
 
     a {
@@ -33,22 +35,52 @@
 
   .promotion-info {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     flex-direction: column;
     padding-left: 50px;
+    flex: 1 0;
 
-    h3 {
+    .info {
+      flex-grow: 1;
+    }
+
+    .category {
+      display: inline-block;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 6px 12px;
+      border: 1px solid #ffb400;
+      color: #ffb400;
+      border-radius: 50px;
+      margin-right: 10px;
+
+      .blue {
+        color: #1976d2;
+        border-color: #1976d2;
+      }
+    }
+
+    .title {
       margin: 0;
-      padding: 10px 0 5px;
+      padding: 4px 0 14px;
       font-size: 20px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+
+      h3 {
+        margin: 0;
+      }
     }
 
     p {
-      padding: 1.5px 0;
+      margin-bottom: 10px;
       font-size: 14px;
+      color: #808080;
     }
 
     .tags {
+      justify-self: flex-end;
       display: flex;
       flex-wrap: wrap;
       margin-top: 10px;
@@ -58,11 +90,11 @@
       }
       overflow: hidden;
 
-      p {
+      .tag {
         flex: 0 0 auto;
         height: 24px;
         box-sizing: border-box;
-        background-color: #d9d9d9;
+        background-color: #f0f0f0;
         margin: 0 6px 4px 0;
         padding: 3px 8px;
         border-radius: 7px;
