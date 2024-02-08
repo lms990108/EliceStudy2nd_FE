@@ -73,7 +73,6 @@ export function NaverRedirection({ popup, setPopup, setAlert }) {
 
     const naverOauthCodeListener = (e) => {
       if (e.origin !== window.location.origin) {
-        console.log("hi");
         return;
       }
 
@@ -95,7 +94,6 @@ export function NaverRedirection({ popup, setPopup, setAlert }) {
 
       if ((code, state)) {
         popup?.close();
-        console.log(`The popup URL has URL code param = ${(code, state)}`);
 
         // 가져온 code 로 다른 정보를 가져오는 API 호출
         fetch(`https://dailytopia2.shop/api/users/login/naver`, {
@@ -107,7 +105,6 @@ export function NaverRedirection({ popup, setPopup, setAlert }) {
           credentials: "include",
         })
           .then((res) => {
-            console.log(res);
             if (res.ok) {
               // 마지막으로 로그인한 계정 저장
               localStorage.setItem("social_provider", "naver");

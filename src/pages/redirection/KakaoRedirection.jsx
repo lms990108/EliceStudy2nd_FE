@@ -95,7 +95,6 @@ export function KakaoRedirection({ popup, setPopup, setAlert }) {
 
       if (authorizationCode) {
         popup?.close();
-        console.log(`The popup URL has URL code param = ${authorizationCode}`);
 
         // 가져온 code 로 다른 정보를 가져오는 API 호출
         fetch(`https://dailytopia2.shop/api/users/login/kakao`, {
@@ -107,7 +106,6 @@ export function KakaoRedirection({ popup, setPopup, setAlert }) {
           credentials: "include",
         })
           .then((res) => {
-            console.log(res);
             if (res.ok) {
               // 마지막으로 로그인한 계정 저장
               localStorage.setItem("social_provider", "kakao");

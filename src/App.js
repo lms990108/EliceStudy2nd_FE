@@ -33,10 +33,8 @@ export const AppContext = createContext();
 
 function App() {
   const [userData, setUserData] = useState(null);
-  console.log(userData);
 
   const [prevPlayListQuery, setPrevPlayListQuery] = useState(null);
-  console.log(prevPlayListQuery);
 
   const getUserData = async () => {
     try {

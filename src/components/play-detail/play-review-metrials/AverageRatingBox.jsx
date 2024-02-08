@@ -15,7 +15,6 @@ export default function AverageRatingBox({
   state,
   purpose,
 }) {
-  console.log(purpose);
   const navigate = useNavigate();
   const location = useLocation();
 

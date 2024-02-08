@@ -14,7 +14,6 @@ export default function ImageExpandModal({ imgSrc, setClickedPhoto }) {
     transform: "translate(-50%, -50%)",
     width: "100%",
     height: "100%",
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
@@ -49,6 +48,9 @@ export default function ImageExpandModal({ imgSrc, setClickedPhoto }) {
       BackdropComponent={(props) => (
         <Backdrop {...props} onClick={() => handleClose()} />
       )}
+      style={{
+        backgroundColor: "rgb(0, 0, 0, 0.43)",
+      }}
     >
       <Box sx={{ boxStyle }}>
         <img src={imgSrc} alt="확대된 리뷰 이미지" style={imgStyle} />

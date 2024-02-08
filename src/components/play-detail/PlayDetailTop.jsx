@@ -115,7 +115,6 @@ export default function PlayDetailTop({
         severity: "success",
       });
     } catch (err) {
-      console.log(err);
       setAlert({
         title: "링크 복사 실패",
         content: "현재 페이지 링크 복사에 실패하였습니다.",

@@ -49,7 +49,6 @@ export default function PlayReviewListBox({
   };
 
   const deleteReview = (review_id) => {
-    console.log(review_id);
     fetch(`https://dailytopia2.shop/api/reviews/${review_id}`, {
       method: "DELETE",
       credentials: "include",

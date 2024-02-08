@@ -42,9 +42,6 @@ export default function PlaySearchResult({
             curPage={curPage}
             setCurPage={setCurPage}
             playTotalCnt={playTotalCnt}
-            keyword={searchKeyword}
-            setPlaySearchResult={setPlaySearchResult}
-            setAlert={setAlert}
           />
         </>
       ) : (
