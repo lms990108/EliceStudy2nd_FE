@@ -10,13 +10,13 @@ function MainPreferredRegion() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // userData가 있고 interested_area가 존재할 때 해당 지역으로 선택
-    if (userData && userData.user.interested_area) {
-      setSelectedRegion(userData.user.interested_area);
-    } else {
-      setSelectedRegion("서울"); // 로그인을 안했을 시 "서울" 설정
-    }
-  }, [userData]);
+  // userData가 있고 interested_area가 존재할 때 해당 지역으로 선택
+  if (userData && userData.user && userData.user.interested_area) {
+    setSelectedRegion(userData.user.interested_area);
+  } else {
+    setSelectedRegion("서울"); // 로그인을 안했을 시 "서울" 설정
+  }
+}, [userData]);
 
   const handleShowClick = (showId) => {
     navigate(`/play/${showId}`);

@@ -1,161 +1,116 @@
-@import url("https://fonts.cdnfonts.com/css/baloo-bhaina-2");
-@media (min-width: 769px) {
-  .header-container {
-    display: flex;
-    justify-content: center;
-    background-color: #282828;
-    height: 194x;
-  }
-  .header-box {
-    display: flex;
-    flex-direction: column;
-    width: 1110px;
-    height: 194px;
-  }
-  .vertical-box1 {
-    display: flex;
-    align-items: flex-end;
-    justify-content: flex-end;
-    height: 44px;
-    background-color: #282828;
-    color: white;
-    font-weight: 200;
-  }
-  .header-login-btn-box {
-    width: 44px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    text-align: center;
-    font-size: 15px;
-    cursor: pointer;
-  }
-  .header-login-btn {
-    display: flex;
-    justify-content: center;
-    margin: 0;
-    color: white;
-  }
-  .header-icon:hover {
-    font-size: 26px;
-  }
-  .vertical-box2 {
-    height: 100px;
-    background-color: #282828;
-    color: white;
-    font-size: 50px;
-    display: flex;
-    justify-content: center;
-  }
-  .logo {
-    height: 100px;
-    width: 360px;
-    user-select: none;
-  }
-  .vertical-box3 {
-    display: flex;
-    justify-content: space-between;
-    height: 50px;
-    background-color: #282828;
-  }
-  .header-search-btn {
-    border-radius: 20px;
-    padding-left: 20px;
-    background-color: #282828;
-    border: 1px solid #eee;
-    width: 280px;
-    height: 40px;
-    cursor: pointer;
-  }
-  .header-search-btn:hover {
-    border: 1.5px solid #eee;
-    background-color: #222222;
-  }
-  .search-container {
-    position: relative;
-  }
-  .search-icon {
-    color: #ccc;
-    position: absolute;
-    right: 15px;
-    top: 43%;
-    transform: translateY(-50%);
-    cursor: pointer;
-  }
+.header-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  background-color: #282828;
+  height: 200px;
 }
-@media (max-width: 768px) {
-  .header-container {
-    display: flex;
-    justify-content: center;
-    background-color: #282828;
-    height: 194px;
-  }
-  .header-box {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    width: 1110px;
-    height: 194px;
-  }
-  .vertical-box1 {
-    display: flex;
-    justify-content: flex-end;
-    height: 44px;
-    background-color: #282828;
-    color: white;
-    font-weight: 200;
-  }
-  .header-login-btn-box {
-    width: 48px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    text-align: center;
-    font-size: 15px;
-    cursor: pointer;
-  }
-  .header-login-btn-box:hover {
-    font-weight: 600;
-  }
-  .header-login-btn {
-    margin: 0;
-    color: white;
-  }
-  .vertical-box2 {
-    height: 100px;
-    background-color: #282828;
-    color: white;
-    font-size: 50px;
-    display: flex;
-    justify-content: center;
-  }
-  .logo {
-    height: 100px;
-    width: 360px;
-  }
-  .vertical-box3 {
-    display: flex;
-    justify-content: space-between;
-    height: 50px;
-    background-color: #282828;
-  }
-  .header-search-btn {
-    border-radius: 15px;
-    padding-left: 20px;
-    background-color: white;
-    width: 280px;
-    height: 40px;
-    cursor: pointer;
-  }
-  .search-container {
-    position: relative;
-  }
-  .search-icon {
-    color: #ffb400;
-    position: absolute;
-    right: 15px;
-    top: 45%;
-    transform: translateY(-50%);
-    cursor: pointer;
-  }
+.header-container::before {
+  content: '';
+  position: absolute;
+  top: 70%;
+  left: 0;
+  width: 100%;
+  height: 0.5px;
+  background-color: #bbb;
+}
+.header-box {
+  display: flex;
+  flex-direction: column;
+  width: 1110px;
+  height: 200px;
+}
+.header-icon-box {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.header-login-btn-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 80px;
+  margin-top: 12px;
+  cursor: pointer;
+}
+.header-icon {
+  color: #ddd;
+  font-size: 32px !important;
+}
+.header-icon:hover {
+  color: #eee;
+}
+.header-icon-text {
+  font-size: 14px;
+  color: #ddd;
+}
+.vertical-box1 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 140px;
+  background-color: #282828;
+  color: white;
+  font-size: 50px;
+}
+.logo {
+  height: 80px;
+  width: 280px;
+  margin-top: 8px;
+  user-select: none;
+}
+.vertical-box2 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 60px;
+  background-color: #282828;
+}
+.header-tab-box {
+  display: flex;
+}
+.header-tab {
+  width: 120px;
+}
+.header-tab-text {
+  color: #eee;
+  font-size: 16px;
+  letter-spacing: 1px;
+  width: 64px;
+  cursor: pointer;
+  transition: transform 0.4s ease-in-out;
+}
+.header-tab-text.active {
+  color: #ffb400;
+  font-weight: 600;
+}
+.header-tab-text:hover {
+  font-weight: 600;
+}
+.header-search-btn {
+  padding-left: 20px;
+  background-color: #282828;
+  border-left: 0.5px solid #ccc;
+  border-right: 0.5px solid #ccc;
+  width: 260px;
+  height: 36px;
+  cursor: pointer;
+  transition: transform 0.4s ease-in-out;
+}
+.header-search-btn:hover {
+  background-color: #222222;
+}
+.search-container {
+  position: relative;
+}
+.search-icon {
+  font-size: 20px !important;
+  color: #ccc;
+  position: absolute;
+  right: 15px;
+  top: 54%;
+  transform: translateY(-50%);
+  cursor: pointer;
 }

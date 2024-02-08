@@ -1,10 +1,5 @@
 import React, { useState, useEffect } from "react";
 import "./MainPublicity.scss";
-import {
-  SmsOutlined,
-  ThumbUpOutlined,
-  VisibilityOutlined,
-} from "@mui/icons-material";
 
 function MainPublicity() {
   const [promotions, setPromotions] = useState([]);
@@ -36,7 +31,7 @@ function MainPublicity() {
   return (
     <div className="main-layout-container">
       <div className="main-title-box">
-        <p className="main-title">HOT 소규모 추천 연극</p>
+        <p className="main-title">소규모 추천 연극</p>
       </div>
       <div className="main-publicity-container">
         <div>
@@ -44,10 +39,12 @@ function MainPublicity() {
             {promotions.length > 0 && (
               <div className="publicity-product1">
                 <div className="main-publicity1-img-box">
-                  <img
-                    src={promotions[0]?.image_url[0]}
-                    alt={promotions[0]?.title}
-                  />
+                  {promotions[0]?.image_url && ( // image_url이 존재하는지 확인
+                    <img
+                      src={promotions[0]?.image_url[0]}
+                      alt={promotions[0]?.title}
+                    />
+                  )}
                 </div>
                 <p className="promotions-title">
                   {limitTitleLength(promotions[0]?.title, 30)}
@@ -65,7 +62,10 @@ function MainPublicity() {
             promotions.slice(1, 4).map((promotion, index) => (
               <div key={index} className="publicity-product">
                 <div className="main-publicity-img-box">
-                  <img src={promotion.image_url[0]} alt={promotion.title} />
+                  {promotion.image_url &&
+                    promotion.image_url[0] && ( // image_url이 존재하는지 확인
+                      <img src={promotion.image_url[0]} alt={promotion.title} />
+                    )}
                 </div>
                 <p className="promotions-title">
                   {limitTitleLength(promotion.title, 20)}
@@ -81,7 +81,10 @@ function MainPublicity() {
           {promotions.slice(4, 7).map((promotion, index) => (
             <div key={index} className="publicity-product">
               <div className="main-publicity-img-box">
-                <img src={promotion.image_url[0]} alt={promotion.title} />
+                {promotion.image_url &&
+                  promotion.image_url[0] && ( // image_url이 존재하는지 확인
+                    <img src={promotion.image_url[0]} alt={promotion.title} />
+                  )}
               </div>
               <p className="promotions-title">
                 {limitTitleLength(promotion.title, 20)}
