@@ -2,66 +2,16 @@
 
 .pr-board-list-box {
   margin-top: 60px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 70px 36px;
 
   .flex-box {
     display: flex;
     justify-content: space-between;
     align-items: center;
-  }
-
-  .header {
-    width: 100%;
-    padding: 10px 0;
-    margin-bottom: 30px;
-    border-bottom: #6b72804d solid 1px;
-
-    .division > div {
-      margin-right: 24px;
-      cursor: pointer;
-      color: #7f7f7f;
-
-      &.selected {
-        color: #ffa200;
-        font-weight: 500;
-      }
-    }
-
-    .buttons {
-      position: relative;
-
-      button {
-        margin-left: 10px;
-
-        .MuiButton-startIcon {
-          margin-right: 2px;
-        }
-
-        &.MuiButton-outlinedDarkGray:hover {
-          border-color: #89898980;
-        }
-      }
-
-      .MuiFormControl-root {
-        height: 30px;
-        margin: 0;
-
-        .MuiInputBase-root {
-          color: #898989;
-          font-size: 13px;
-          font-weight: 500;
-          line-height: 24px;
-
-          &.Mui-focused .MuiOutlinedInput-notchedOutline {
-            border-color: rgba(137, 137, 137, 0.5019607843);
-          }
-
-          .MuiSelect-select {
-            padding: 3px 9px;
-            height: 24px;
-          }
-        }
-      }
-    }
   }
 
   .body {
@@ -77,7 +27,6 @@
     position: relative;
     top: 0;
 
-    margin-bottom: 70px;
     display: flex;
     flex-direction: column;
     box-shadow: 1px 2px 8px rgba(0, 0, 0, 0.096);

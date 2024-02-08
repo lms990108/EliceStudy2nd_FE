@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from "react";
-import { BoardSecondHeader } from "../../components/board";
 import "./FreeBoardFormPage.scss";
 import { useNavigate, useParams } from "react-router-dom";
 import { AlertCustom } from "../../components/common/alert/Alerts";
@@ -18,7 +17,7 @@ export function FreeBoardEdit() {
 
   const handleCancle = (e) => {
     if (input) setOpen(true);
-    else nav("/community");
+    else nav(-1);
   };
 
   const getPost = async () => {
@@ -43,8 +42,7 @@ export function FreeBoardEdit() {
   }, [userData]);
 
   return (
-    <div className="free-board-form-page page-margin-bottom">
-      <BoardSecondHeader header="커뮤니티" onclick={handleCancle} />
+    <div className="free-board-form-page page-margin">
       <div className="body">
         <FreeBoardEditForm setInput={(boolean) => setInput(boolean)} handleCancle={handleCancle} post={post} />
       </div>

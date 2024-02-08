@@ -6,6 +6,7 @@ import { AlertCustom } from "../../components/common/alert/Alerts";
 import { useNavigate } from "react-router-dom";
 import useGetUser from "../../hooks/authoriaztionHooks/useGetUser";
 import { AlertContext, AppContext } from "../../App";
+import { Backdrop } from "@mui/material";
 
 export function PRBoardFormPage() {
   const [open, setOpen] = useState(false);
@@ -13,6 +14,7 @@ export function PRBoardFormPage() {
   const nav = useNavigate();
   const user = useGetUser();
   const { setOpenLoginAlertBack } = useContext(AlertContext);
+  const { userData } = useContext(AppContext);
 
   const handleCancle = (e) => {
     if (input) setOpen(true);
@@ -20,10 +22,10 @@ export function PRBoardFormPage() {
   };
 
   useEffect(() => {
-    if (!user?.isLoggedIn) {
+    if (userData?.user?.isLoggedIn) {
       setOpenLoginAlertBack(true);
     }
-  }, []);
+  }, [userData]);
 
   return (
     <div className="pr-board-form-page page-margin">

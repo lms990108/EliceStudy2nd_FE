@@ -138,7 +138,7 @@ export function PRBoardForm({ setInput, handleComplete, handleCancle }) {
 
   const handleChangeMainImage = async (e) => {
     if (e.target.files[0]) {
-      if (e.target.files[0].size > 1024 * 1024 * 1) {
+      if (e.target.files[0].size > 1024 * 1024 * 5) {
         return setErrorMainImage("사진은 최대 1MB까지 업로드 가능합니다.");
       }
 
@@ -167,7 +167,7 @@ export function PRBoardForm({ setInput, handleComplete, handleCancle }) {
 
   const handleChangeImage = async (e) => {
     if (e.target.files[0]) {
-      if (e.target.files[0].size > 1024 * 1024 * 1) {
+      if (e.target.files[0].size > 1024 * 1024 * 5) {
         return setErrorImage("사진은 최대 1MB까지 업로드 가능합니다.");
       }
 
@@ -242,7 +242,8 @@ export function PRBoardForm({ setInput, handleComplete, handleCancle }) {
         <div className="flex-box title">
           <div className="input">
             <label htmlFor="play-title">
-              연극명<span className="star">*</span>
+              {inputCategory === "연극" ? "연극명" : "행사명"}
+              <span className="star">*</span>
             </label>
             <input
               type="text"
@@ -251,7 +252,7 @@ export function PRBoardForm({ setInput, handleComplete, handleCancle }) {
               value={inputPlayTitle}
               onChange={handleChangePlayTitle}
               maxLength={30}
-              placeholder="연극명을 작성해 주세요."
+              placeholder={`${inputCategory === "연극" ? "연극명" : "행사명"}을 작성해 주세요.`}
               required
             />
           </div>
@@ -267,7 +268,7 @@ export function PRBoardForm({ setInput, handleComplete, handleCancle }) {
               name="location"
               value={inputLocation}
               onChange={(e) => setInputLocation(e.target.value.trimStart())}
-              maxLength={30}
+              maxLength={40}
               placeholder="장소를 작성해 주세요."
             />
           </div>
@@ -322,7 +323,7 @@ export function PRBoardForm({ setInput, handleComplete, handleCancle }) {
                   label="시작"
                   format="YYYY-MM-DD"
                   value={inputStartDate}
-                  minDate={dayjs().startOf("day")}
+                  minDate={dayjs().subtract(1, "month").startOf("day")}
                   maxDate={dayjs().add(1, "year").endOf("day")}
                   onChange={(value) => setInputStartDate(value)}
                   slotProps={{ textField: { size: "small" } }}
@@ -334,7 +335,7 @@ export function PRBoardForm({ setInput, handleComplete, handleCancle }) {
                   label="종료"
                   format="YYYY-MM-DD"
                   value={inputEndDate}
-                  minDate={dayjs().startOf("day")} //시작일로 변경
+                  minDate={dayjs().isAfter(inputStartDate) ? dayjs() : inputStartDate} //시작일로 변경
                   maxDate={dayjs().add(1, "year").endOf("day")}
                   onChange={(value) => setInputEndDate(value)}
                   slotProps={{ textField: { size: "small" } }}
@@ -353,7 +354,7 @@ export function PRBoardForm({ setInput, handleComplete, handleCancle }) {
           <label htmlFor="title">
             글 제목<span className="star">*</span>
           </label>
-          <input type="text" id="title" name="title" value={inputTitle} onChange={handleChangeTitle} maxLength={30} placeholder="제목을 작성해 주세요." required />
+          <input type="text" id="title" name="title" value={inputTitle} onChange={handleChangeTitle} maxLength={40} placeholder="제목을 작성해 주세요." required />
         </div>
         {handleErrorPlaceholder(errorTitle)}
       </div>

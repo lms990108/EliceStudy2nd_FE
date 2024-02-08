@@ -40,7 +40,7 @@ export function PostTop({ user, type, post, commentsCnt }) {
   const handleClickLikes = async () => {
     const url = type === "community" ? `${postUrl}/${post.post_number}/like` : `${promotionUrl}/${post.promotion_number}/like`;
     if (isLiked) {
-      const res = await fetch(url, { method: "DELETE" });
+      const res = await fetch(url, { method: "DELETE", credentials: "include" });
       const data = await res.json();
       console.log(data);
 
@@ -51,7 +51,7 @@ export function PostTop({ user, type, post, commentsCnt }) {
         setOpenLoginAlert(true);
       }
     } else {
-      const res = await fetch(url, { method: "POST" });
+      const res = await fetch(url, { method: "POST", credentials: "include" });
       const data = await res.json();
       console.log(data);
 

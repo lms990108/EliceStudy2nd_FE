@@ -8,8 +8,8 @@ export default function FreeBoardPost({ data, totalCommentCount }) {
       <PostTop user={data.user_id || { nickname: "test nick" }} type={"community"} post={data} commentsCnt={totalCommentCount || 0} />
       <h2 className="title">{data.title}</h2>
       <div className="content">
-        {data.content?.split("\n").map((text) => (
-          <p>{text || " "}</p>
+        {data.content?.split("\n").map((text, idx) => (
+          <p key={idx + text}>{text || " "}</p>
         ))}
       </div>
       {data.tags && data.tags.length !== 0 && (

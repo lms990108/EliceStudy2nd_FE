@@ -72,8 +72,8 @@ export function FreeBoardForm({ setInput, handleCancle }) {
 
   const handleContentChange = (e) => {
     setInputContent(e.target.value);
-    if (e.target.value.trim().length < 3) {
-      setErrorContent("내용을 최소 3자 이상 입력해주세요.");
+    if (e.target.value.trim().length < 1) {
+      setErrorContent("내용을 최소 1자 이상 입력해주세요.");
     } else {
       setErrorContent("");
     }
@@ -95,9 +95,9 @@ export function FreeBoardForm({ setInput, handleCancle }) {
   };
 
   useEffect(() => {
-    if (inputTitle || inputContent) setInput(true);
+    if (inputTitle || inputContent || tagList.length) setInput(true);
     else setInput(false);
-  }, [inputTitle, inputContent]);
+  }, [inputTitle, inputContent, tagList]);
 
   return (
     <div className="post-form-box">

@@ -11,10 +11,14 @@ export function FreeBoardEditForm({ setInput, handleCancle, post }) {
   const [submit, setSubmit] = useState(false);
   const [openSubmit, setOpenSubmit] = useState(false);
   const [openComplete, setOpenComplete] = useState(false);
+
   const [inputTitle, setInputTitle] = useState(post?.title || "");
   const [errorTitle, setErrorTitle] = useState("");
   const [inputContent, setInputContent] = useState(post?.content || "");
   const [errorContent, setErrorContent] = useState("");
+  const [tagList, setTagList] = useState([]);
+  const [inputTag, setInputTag] = useState();
+
   const nav = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -35,7 +39,7 @@ export function FreeBoardEditForm({ setInput, handleCancle, post }) {
     }
   };
 
-  const handleButtonClick = (e) => {
+  const handleClickSubmitButton = (e) => {
     setSubmit(true);
     if (errorTitle) {
       document.querySelector("#title").focus();
@@ -59,8 +63,8 @@ export function FreeBoardEditForm({ setInput, handleCancle, post }) {
 
   const handleTitleChange = (e) => {
     setInputTitle(e.target.value);
-    if (e.target.value.length < 5) {
-      setErrorTitle("제목을 최소 5자 이상 입력해주세요.");
+    if (e.target.value.length < 3) {
+      setErrorTitle("제목을 최소 3자 이상 입력해주세요.");
     } else {
       setErrorTitle("");
     }
@@ -68,17 +72,32 @@ export function FreeBoardEditForm({ setInput, handleCancle, post }) {
 
   const handleContentChange = (e) => {
     setInputContent(e.target.value);
-    if (e.target.value.length < 5) {
-      setErrorContent("내용을 최소 5자 이상 입력해주세요.");
+    if (e.target.value.length < 1) {
+      setErrorContent("내용을 최소 1자 이상 입력해주세요.");
     } else {
       setErrorContent("");
     }
   };
 
+  const handleChangeTag = (e) => {
+    if (e.keyCode === 13) {
+      if (!inputTag) return;
+      setTagList((cur) => [...cur, inputTag]);
+      setInputTag("");
+    }
+  };
+
+  const handleRemoveTag = (e) => {
+    const tagId = e.target.closest(".tag-box").id;
+    let newList = [...tagList];
+    newList.splice(tagId, 1);
+    setTagList(newList);
+  };
+
   useEffect(() => {
-    if (inputTitle || inputContent) setInput(true);
+    if (inputTitle || inputContent || tagList) setInput(true);
     else setInput(false);
-  }, [inputTitle, inputContent]);
+  }, [inputTitle, inputContent, tagList]);
 
   useEffect(() => {
     console.log(post);
@@ -91,31 +110,61 @@ export function FreeBoardEditForm({ setInput, handleCancle, post }) {
   return (
     <div className="post-form-box">
       <div className="form-header">
-        <div className="title">게시글 작성하기</div>
-        <IconButton aria-label="close" color="inherit" onClick={handleCancle}>
-          <CloseIcon fontSize="inherit" />
-        </IconButton>
+        <div className="title">게시글 수정하기</div>
       </div>
 
       <div className="flex-box title">
         <div className="input">
-          <label htmlFor="title">*제목</label>
+          <label htmlFor="title">제목*</label>
           <input type="text" id="title" name="title" value={inputTitle} onChange={handleTitleChange} maxLength={40} placeholder="제목을 작성해 주세요." required />
         </div>
         {handleError(errorTitle)}
       </div>
 
       <div className="input content flex-box">
-        <label htmlFor="content">*내용</label>
+        <label htmlFor="content">내용*</label>
         <textarea id="content" name="content" value={inputContent} onChange={handleContentChange} placeholder="내용을 작성해 주세요." required></textarea>
         {handleError(errorContent)}
       </div>
 
+      <div className="input tag flex-box">
+        <div>
+          <label htmlFor="tags">태그</label>
+          <input
+            type="text"
+            id="tags"
+            name="tags"
+            onKeyDown={handleChangeTag}
+            value={inputTag}
+            onChange={(e) => setInputTag(e.target.value.trimStart())}
+            placeholder="엔터를 입력하여 태그를 등록할 수 있습니다."
+            maxLength={16}
+          />
+        </div>
+        {tagList && (
+          <div className="tag-list flex">
+            {tagList.map((tag, idx) => (
+              <div id={idx} className="tag-box flex">
+                <span># {tag} </span>
+                <IconButton onClick={handleRemoveTag} size="small" sx={{ padding: "2px", fontSize: 14, marginLeft: "4px" }}>
+                  <CloseIcon fontSize="inherit" />
+                </IconButton>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
       <div className="form-footer">
         <div className="notice">*표시가 되어 있는 항목은 필수 기재 항목입니다.</div>
-        <Button disabled={false} type="button" variant="contained" onClick={handleButtonClick}>
-          작성완료
-        </Button>
+        <div>
+          <Button color="darkGray" size="large" variant="outlined" onClick={handleCancle} sx={{ marginRight: "14px" }}>
+            취소
+          </Button>
+          <Button variant="contained" size="large" onClick={handleClickSubmitButton} disableElevation>
+            수정
+          </Button>
+        </div>
       </div>
 
       <Backdrop open={openSubmit || openComplete} sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
@@ -125,7 +174,7 @@ export function FreeBoardEditForm({ setInput, handleCancle, post }) {
           title={"teenybox.com 내용:"}
           content={"게시글을 수정하시겠습니까?"}
           onclick={handleSubmit}
-          checkBtn={"수정"}
+          checkBtn={"확인"}
           closeBtn={"취소"}
           checkBtnColor={"#42BB48"}
         />
@@ -142,7 +191,7 @@ export function FreeBoardEditForm({ setInput, handleCancle, post }) {
           title={"teenybox.com 내용:"}
           content={"글 수정이 완료되었습니다!"}
           btnCloseHidden={true}
-          time={1000}
+          time={300}
         />
       </Backdrop>
     </div>

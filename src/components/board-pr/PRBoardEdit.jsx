@@ -20,22 +20,17 @@ export function PRBoardEditForm({ setInput, handleCancle, post }) {
 
   // 카테고리
   const [inputCategory, setInputCategiry] = useState(post.category);
-  const [errorCategory, setErrorCategory] = useState("");
   // 연극명
   const [inputPlayTitle, setInputPlayTitle] = useState(post.play_title);
   const [errorPlayTitle, setErrorPlayTitle] = useState("");
   // 장소
   const [inputLocation, setInputLocation] = useState(post.location);
-  const [errorLocation, setErrorLocation] = useState("");
   // 주최
   const [inputHost, setInputHost] = useState(post?.host);
-  const [errorHost, setErrorHost] = useState("");
   // 러닝타임
   const [inputRuntime, setInputRuntime] = useState(post.runtime);
-  const [errorRuntime, setErrorRuntime] = useState("");
   // 기간
   const [inputStartDate, setInputStartDate] = useState(dayjs(post.start_date));
-  const [errorStartDate, setErrorStartDate] = useState("");
   const [inputEndDate, setInputEndDate] = useState(dayjs(post.end_date));
   const [errorDate, setErrorDate] = useState("");
   // 글제목
@@ -69,7 +64,7 @@ export function PRBoardEditForm({ setInput, handleCancle, post }) {
         end_date: inputEndDate || undefined,
         category: inputCategory,
         play_title: inputPlayTitle,
-        runtime: inputRuntime || "",
+        runtime: inputRuntime || 0,
         location: inputLocation || "",
         host: inputHost || "",
       }),
@@ -199,8 +194,8 @@ export function PRBoardEditForm({ setInput, handleCancle, post }) {
           <div className="input">
             <label htmlFor="">카테고리</label>
             <RadioGroup name="controlled-radio-buttons-group" value={inputCategory} onChange={(e) => setInputCategiry(e.target.value)}>
-              <FormControlLabel value="연극" control={<Radio size="small" />} label="연극" />
-              <FormControlLabel value="기타" control={<Radio size="small" />} label="기타" />
+              <FormControlLabel value="연극" control={<Radio size="small" />} label="연극" disabled={inputCategory !== "연극"} />
+              <FormControlLabel value="기타" control={<Radio size="small" />} label="기타" disabled={inputCategory !== "기타"} />
             </RadioGroup>
           </div>
         </div>
@@ -288,7 +283,7 @@ export function PRBoardEditForm({ setInput, handleCancle, post }) {
                   label="시작"
                   format="YYYY-MM-DD"
                   value={inputStartDate}
-                  minDate={dayjs().startOf("day")}
+                  minDate={dayjs().subtract(1, "month").startOf("day")}
                   maxDate={dayjs().add(1, "year").endOf("day")}
                   onChange={(value) => setInputStartDate(value)}
                   slotProps={{ textField: { size: "small" } }}
@@ -300,7 +295,7 @@ export function PRBoardEditForm({ setInput, handleCancle, post }) {
                   label="종료"
                   format="YYYY-MM-DD"
                   value={inputEndDate}
-                  minDate={dayjs().startOf("day")} //시작일로 변경
+                  minDate={dayjs().isAfter(inputStartDate) ? dayjs() : inputStartDate}
                   maxDate={dayjs().add(1, "year").endOf("day")}
                   onChange={(value) => setInputEndDate(value)}
                   slotProps={{ textField: { size: "small" } }}
@@ -401,9 +396,14 @@ export function PRBoardEditForm({ setInput, handleCancle, post }) {
         <div className="notice">
           <span className="star">*</span>표시가 되어 있는 항목은 필수 기재 항목입니다.
         </div>
-        <Button disabled={false} type="button" variant="contained" onClick={handleClickSubmitButton}>
-          작성완료
-        </Button>
+        <div>
+          <Button color="darkGray" size="large" variant="outlined" onClick={handleCancle} sx={{ marginRight: "14px" }}>
+            취소
+          </Button>
+          <Button variant="contained" size="large" onClick={handleClickSubmitButton} disableElevation>
+            수정
+          </Button>
+        </div>
       </div>
 
       <Backdrop open={openSubmit || openComplete} sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
@@ -411,11 +411,11 @@ export function PRBoardEditForm({ setInput, handleCancle, post }) {
           open={openSubmit}
           onclose={() => setOpenSubmit(false)}
           title={"teenybox.com 내용:"}
-          content={"게시글을 작성하시겠습니까?"}
+          content={"게시글을 수정하시겠습니까?"}
           onclick={() => {
             handleSubmit();
           }}
-          checkBtn={"등록"}
+          checkBtn={"확인"}
           closeBtn={"취소"}
           checkBtnColor={"#42BB48"}
         />
@@ -430,7 +430,7 @@ export function PRBoardEditForm({ setInput, handleCancle, post }) {
             setTimeout(() => nav("/promotion"), 300);
           }}
           title={"teenybox.com 내용:"}
-          content={"글 등록이 완료되었습니다!"}
+          content={"글 수정이 완료되었습니다!"}
           btnCloseHidden={true}
           time={2000}
         />

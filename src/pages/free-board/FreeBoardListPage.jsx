@@ -17,7 +17,7 @@ export function FreeBoardListPage() {
   const [page, setPage] = useState(1);
   const [state, setState] = useState("loading");
   const [toggle, setToggle] = useState(false);
-  const [sort, setSort] = useState("최신순");
+  const [sort, setSort] = useState("post_number desc");
   const nav = useNavigate();
   const [searchParams] = useSearchParams();
 
@@ -29,7 +29,8 @@ export function FreeBoardListPage() {
 
   const getPage = async () => {
     setState("loading");
-    const res = await fetch(`${postUrl}?page=${page}&limit=10`);
+    const [by, order] = sort.split(" ");
+    const res = await fetch(`${postUrl}?page=${page}&limit=10&sortBy=${by}&sortOrder=${order}`);
     const data = await res.json();
     console.log(data);
 
@@ -59,6 +60,10 @@ export function FreeBoardListPage() {
     setPage(Number(searchParams.get("page")) || 1);
   }, [searchParams]);
 
+  useEffect(() => {
+    getPage();
+  }, [sort]);
+
   return (
     <div className="free-board-page page-margin">
       <div className="free-board-left-container">
@@ -71,10 +76,10 @@ export function FreeBoardListPage() {
           <div className="buttons">
             <FormControl sx={{ m: 1, minWidth: 120 }}>
               <Select value={sort} onChange={(e) => setSort(e.target.value)} displayEmpty>
-                <MenuItem value="최신순">최신순</MenuItem>
-                <MenuItem value="추천순">추천순</MenuItem>
-                <MenuItem value="조회순">조회순</MenuItem>
-                <MenuItem value="오래된순">오래된순</MenuItem>
+                <MenuItem value="post_number desc">최신순</MenuItem>
+                <MenuItem value="likes desc">추천순</MenuItem>
+                <MenuItem value="views desc">조회순</MenuItem>
+                <MenuItem value="post_number asc">오래된순</MenuItem>
               </Select>
             </FormControl>
             <Button onClick={handleFormBtn} variant="contained" size="small" color="secondary" disableElevation>
