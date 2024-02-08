@@ -4,18 +4,8 @@ import { Helmet } from "react-helmet";
 import { theme } from "./components/common/themes/theme";
 import { ThemeProvider } from "@mui/material";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import {
-  PRBoardListPage,
-  PRBoardDetailPage,
-  PRBoardFormPage,
-  FreeBoardEdit,
-  PRBoardEdit,
-} from "./pages";
-import {
-  FreeBoardDetailPage,
-  FreeBoardFormPage,
-  FreeBoardListPage,
-} from "./pages";
+import { PRBoardListPage, PRBoardDetailPage, PRBoardFormPage, FreeBoardEdit, PRBoardEdit } from "./pages";
+import { FreeBoardDetailPage, FreeBoardFormPage, FreeBoardListPage } from "./pages";
 import Header from "./components/common/header/Header";
 import Footer from "./components/common/footer/Footer";
 import { PlayList, PlayDetail } from "./pages";
@@ -28,11 +18,18 @@ import SearchResult from "./pages/search-result/SearchResultPage";
 import { KakaoRedirection, GoogleRedirection, NaverRedirection } from "./pages";
 import { ForbiddenPage, NotFoundPage, NotFoundRedirect } from "./pages";
 import CommonLayout from "./pages/common/CommonLayout";
+import LoginAlert from "./components/common/alert/LoginAlert";
+import PrivacyPolicy from "./pages/util/PrivacyPolicy";
+import LoginAlertBack from "./components/common/alert/LoginAlertBack";
 
 export const AppContext = createContext();
+export const AlertContext = createContext();
 
 function App() {
   const [userData, setUserData] = useState(null);
+  const [openLoginAlert, setOpenLoginAlert] = useState(false);
+  const [openLoginAlertBack, setOpenLoginAlertBack] = useState(false);
+  console.log(userData);
 
   const [prevPlayListQuery, setPrevPlayListQuery] = useState(null);
 
@@ -77,11 +74,7 @@ function App() {
   return (
     <div className="App">
       <Helmet>
-        <script
-          type="text/javascript"
-          defer
-          src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.REACT_APP_KAKAO_MAP_API_KEY}&autoload=false`}
-        />
+        <script type="text/javascript" defer src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.REACT_APP_KAKAO_MAP_API_KEY}&autoload=false`} />
       </Helmet>
       <ThemeProvider theme={theme}>
         <AppContext.Provider
@@ -92,87 +85,62 @@ function App() {
             setPrevPlayListQuery,
           }}
         >
-          <BrowserRouter>
-            <Routes>
-              {/* 에러 페이지 */}
-              <Route path="/forbidden" element={<ForbiddenPage />} />
-              <Route path="/not-found" element={<NotFoundPage />} />
+          <AlertContext.Provider value={{ openLoginAlert, setOpenLoginAlert, openLoginAlertBack, setOpenLoginAlertBack }}>
+            <BrowserRouter>
+              <Routes>
+                {/* 에러 페이지 */}
+                <Route path="/forbidden" element={<ForbiddenPage />} />
+                <Route path="/not-found" element={<NotFoundPage />} />
+                <Route path="/privacy-policy" element={<PrivacyPolicy />} />
 
-              {/* 로그인 관련 페이지 */}
-              <Route path="/user/kakao-login" element={<KakaoRedirection />} />
-              <Route
-                path="/user/google-login"
-                element={<GoogleRedirection />}
-              />
-              <Route path="/user/naver-login" element={<NaverRedirection />} />
+                {/* 로그인 관련 페이지 */}
+                <Route path="/user/kakao-login" element={<KakaoRedirection />} />
+                <Route path="/user/google-login" element={<GoogleRedirection />} />
+                <Route path="/user/naver-login" element={<NaverRedirection />} />
 
-              {/* 나머지 페이지 */}
-              <Route
-                path="/*"
-                element={
-                  <>
-                    <Header />
-                    <ScrollToTop />
-                    <CommonLayout setPrevPlayListQuery={setPrevPlayListQuery}>
-                      <Routes>
-                        <Route path="/signup-in" element={<SignUp_In />} />
-                        <Route
-                          path="/additional-user-info"
-                          element={<InputAdditionalInfo />}
-                        />
+                {/* 나머지 페이지 */}
+                <Route
+                  path="/*"
+                  element={
+                    <>
+                      <Header />
+                      <ScrollToTop />
+                      <CommonLayout setPrevPlayListQuery={setPrevPlayListQuery}>
+                        <Routes>
+                          <Route path="/signup-in" element={<SignUp_In />} />
+                          <Route path="/additional-user-info" element={<InputAdditionalInfo />} />
 
-                        <Route path="/mypages" element={<MyPage />} />
-                        <Route path="/" element={<Main />} />
+                          <Route path="/mypages" element={<MyPage />} />
+                          <Route path="/" element={<Main />} />
 
-                        <Route path="/admin" element={<Admin />} />
+                          <Route path="/admin" element={<Admin />} />
 
-                        <Route
-                          path="/community"
-                          element={<FreeBoardListPage />}
-                        />
-                        <Route
-                          path="/community/:postId"
-                          element={<FreeBoardDetailPage />}
-                        />
-                        <Route
-                          path="/community/write"
-                          element={<FreeBoardFormPage />}
-                        />
-                        <Route
-                          path="/community/edit/:postId"
-                          element={<FreeBoardEdit />}
-                        />
+                          <Route path="/community" element={<FreeBoardListPage />} />
+                          <Route path="/community/:postId" element={<FreeBoardDetailPage />} />
+                          <Route path="/community/write" element={<FreeBoardFormPage />} />
+                          <Route path="/community/edit/:postId" element={<FreeBoardEdit />} />
 
-                        <Route
-                          path="/promotion"
-                          element={<PRBoardListPage />}
-                        />
-                        <Route
-                          path="/promotion/:postId"
-                          element={<PRBoardDetailPage />}
-                        />
-                        <Route
-                          path="/promotion/write"
-                          element={<PRBoardFormPage />}
-                        />
-                        <Route
-                          path="/promotion/edit/:postId"
-                          element={<PRBoardEdit />}
-                        />
+                          <Route path="/promotion" element={<PRBoardListPage />} />
+                          <Route path="/promotion/:postId" element={<PRBoardDetailPage />} />
+                          <Route path="/promotion/write" element={<PRBoardFormPage />} />
+                          <Route path="/promotion/edit/:postId" element={<PRBoardEdit />} />
 
-                        <Route path="/play" element={<PlayList />} />
-                        <Route path="/play/:playId" element={<PlayDetail />} />
+                          <Route path="/play" element={<PlayList />} />
+                          <Route path="/play/:playId" element={<PlayDetail />} />
 
-                        <Route path="/search" element={<SearchResult />} />
-                        <Route path="/*" element={<NotFoundRedirect />} />
-                      </Routes>
-                    </CommonLayout>
-                    <Footer />
-                  </>
-                }
-              />
-            </Routes>
-          </BrowserRouter>
+                          <Route path="/search" element={<SearchResult />} />
+                          <Route path="/*" element={<NotFoundRedirect />} />
+                        </Routes>
+                      </CommonLayout>
+                      <Footer />
+                    </>
+                  }
+                />
+              </Routes>
+              <LoginAlert />
+              <LoginAlertBack />
+            </BrowserRouter>
+          </AlertContext.Provider>
         </AppContext.Provider>
       </ThemeProvider>
     </div>

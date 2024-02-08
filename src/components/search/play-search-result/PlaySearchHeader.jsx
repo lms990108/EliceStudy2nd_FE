@@ -3,7 +3,7 @@ import "./PlaySearchHeader.scss";
 export default function PlaySearchHeader({ setSortStandard, setCurPage }) {
   return (
     <div className="play-search-header">
-      <span>연극 검색 결과</span>
+      <span>연극 검색결과</span>
       <select
         className="sort-by"
         onChange={(e) => {

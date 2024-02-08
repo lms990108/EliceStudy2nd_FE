@@ -1,0 +1,23 @@
+.free-board-right-container {
+  width: 250px;
+  margin-left: 60px;
+  flex-shrink: 0;
+
+  .right-box {
+    margin-bottom: 60px;
+
+    h4 {
+      margin: 0;
+      padding: 12px 0;
+      border-bottom: #dcdcdc solid 1px;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    li {
+      margin: 14px 0;
+      font-size: 12px;
+      color: #505050;
+    }
+  }
+}

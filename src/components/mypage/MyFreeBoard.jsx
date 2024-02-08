@@ -22,7 +22,7 @@ function MyFreeBoard({ user }) {
 
   const getPosts = async () => {
     setState("loading");
-    const res = await fetch(`${postUrl}/user/${user.user_id}`);
+    const res = await fetch(`${postUrl}/user/${user._id}`);
     const data = await res.json();
     console.log(data);
 

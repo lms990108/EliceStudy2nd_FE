@@ -1,43 +1,109 @@
-.pr-board-post-box {
-  background-color: rgba(255, 255, 255, 0.653);
-  border-radius: 52px;
-  overflow: hidden;
-  box-shadow: 2px 1px 6px #00000016;
+.pr-board-post {
+  background-color: #fff;
+  padding: 30px 0 0;
+  display: flex;
+  flex-direction: column;
 
-  .post-header {
-    background-color: #ffb400;
-    height: 90px;
+  .top-container {
     display: flex;
-    box-sizing: border-box;
-    padding: 32px 40px;
-
-    .dot {
-      margin-right: 10px;
-    }
-  }
-
-  .post-content-box {
-    min-height: 500px;
-    padding: 30px;
-
-    hr {
-      border: none;
-      background-color: #bcbcbc;
-      height: 2px;
-    }
-  }
-
-  .post-image {
     width: 100%;
-    margin-top: 20px;
+    border-bottom: 1px solid #6b728023;
+    margin: 20px 0 0;
+
+    .main-img {
+      height: 320px;
+      width: 240px;
+      object-fit: cover;
+    }
+
+    .flex-column {
+      display: flex;
+      flex-direction: column;
+      flex: 1 1;
+
+      .box {
+        position: relative;
+        background-color: #f8f9fa;
+        padding: 20px 30px;
+        margin: 0 0 20px 20px;
+        width: 260px;
+        height: 150px;
+        box-sizing: border-box;
+
+        .lable {
+          width: fit-content;
+          font-size: 12px;
+          padding: 4px 8px;
+          border: 1px #ffb300 solid;
+          border-radius: 20px;
+          font-weight: 500;
+          color: #ffb300;
+        }
+
+        .value {
+          font-size: 14px;
+          font-weight: 500;
+          margin-top: 14px;
+          line-height: 18px;
+        }
+
+        .icon {
+          position: absolute;
+          bottom: 14px;
+          right: 12px;
+          width: 32px;
+          height: 32px;
+          color: #d9d9d9;
+
+          &.double {
+            width: 41px;
+            height: 41px;
+            bottom: 6px;
+            right: 6px;
+          }
+        }
+      }
+    }
   }
 
-  .post-title {
+  .title {
     font-size: 30px;
+    font-weight: 500;
+    color: #111827;
+    margin: 30px 0;
   }
 
-  .post-content {
-    margin: 30px 0;
-    white-space: pre;
+  .content {
+    color: #374151;
+    font-size: 16px;
+    line-height: 24px;
+    margin-bottom: 80px;
+
+    p {
+      padding: 6px 0;
+    }
+  }
+
+  .tags {
+    margin-bottom: 40px;
+    display: flex;
+    flex-wrap: wrap;
+
+    .tag {
+      color: #374151;
+      background-color: #f3f4f6;
+      padding: 6px 12px;
+      border-radius: 10px;
+      font-size: 14px;
+      margin: 6px 8px 0 0;
+      flex-shrink: 0;
+    }
+  }
+
+  .images {
+    img {
+      width: 100%;
+      margin-top: 2px;
+    }
   }
 }

@@ -4,6 +4,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin: 0 auto;
 
   .icon {
     width: 86px;
@@ -31,9 +32,14 @@
 
   p {
     font-size: 14px;
-    text-align: center;
+    // text-align: center;
     word-break: keep-all;
     color: #505050;
+    width: max-content;
+
+    li {
+      padding-top: 6px;
+    }
   }
 
   button {

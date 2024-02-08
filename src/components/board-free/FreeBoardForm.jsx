@@ -1,4 +1,4 @@
-import { Button, IconButton } from "@mui/material";
+import { Backdrop, Button, IconButton } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
@@ -11,10 +11,14 @@ export function FreeBoardForm({ setInput, handleCancle }) {
   const [submit, setSubmit] = useState(false);
   const [openSubmit, setOpenSubmit] = useState(false);
   const [openComplete, setOpenComplete] = useState(false);
+
   const [inputTitle, setInputTitle] = useState("");
-  const [errorTitle, setErrorTitle] = useState("제목을 최소 5자 이상 입력해주세요.");
+  const [errorTitle, setErrorTitle] = useState("제목을 최소 3자 이상 입력해주세요.");
   const [inputContent, setInputContent] = useState("");
-  const [errorContent, setErrorContent] = useState("내용을 최소 5자 이상 입력해주세요.");
+  const [errorContent, setErrorContent] = useState("내용을 최소 3자 이상 입력해주세요.");
+  const [tagList, setTagList] = useState([]);
+  const [inputTag, setInputTag] = useState();
+
   const nav = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -29,9 +33,13 @@ export function FreeBoardForm({ setInput, handleCancle }) {
     });
     const data = await res.json();
     console.log(data);
+
+    if (res.ok) {
+      setOpenComplete(true);
+    }
   };
 
-  const handleButtonClick = (e) => {
+  const handleClickSubmitButton = (e) => {
     setSubmit(true);
     if (errorTitle) {
       document.querySelector("#title").focus();
@@ -54,9 +62,9 @@ export function FreeBoardForm({ setInput, handleCancle }) {
   };
 
   const handleTitleChange = (e) => {
-    setInputTitle(e.target.value);
-    if (e.target.value.length < 5) {
-      setErrorTitle("제목을 최소 5자 이상 입력해주세요.");
+    setInputTitle(e.target.value.trimStart());
+    if (e.target.value.trim().length < 3) {
+      setErrorTitle("제목을 최소 3자 이상 입력해주세요.");
     } else {
       setErrorTitle("");
     }
@@ -64,25 +72,37 @@ export function FreeBoardForm({ setInput, handleCancle }) {
 
   const handleContentChange = (e) => {
     setInputContent(e.target.value);
-    if (e.target.value.length < 5) {
-      setErrorContent("내용을 최소 5자 이상 입력해주세요.");
+    if (e.target.value.trim().length < 1) {
+      setErrorContent("내용을 최소 1자 이상 입력해주세요.");
     } else {
       setErrorContent("");
     }
   };
 
+  const handleChangeTag = (e) => {
+    if (e.keyCode === 13) {
+      if (!inputTag) return;
+      setTagList((cur) => [...cur, inputTag]);
+      setInputTag("");
+    }
+  };
+
+  const handleRemoveTag = (e) => {
+    const tagId = e.target.closest(".tag-box").id;
+    let newList = [...tagList];
+    newList.splice(tagId, 1);
+    setTagList(newList);
+  };
+
   useEffect(() => {
-    if (inputTitle || inputContent) setInput(true);
+    if (inputTitle || inputContent || tagList.length) setInput(true);
     else setInput(false);
-  }, [inputTitle, inputContent]);
+  }, [inputTitle, inputContent, tagList]);
 
   return (
     <div className="post-form-box">
       <div className="form-header">
         <div className="title">게시글 작성하기</div>
-        <IconButton aria-label="close" color="inherit" onClick={handleCancle}>
-          <CloseIcon fontSize="inherit" />
-        </IconButton>
       </div>
 
       <div className="flex-box title">
@@ -99,41 +119,77 @@ export function FreeBoardForm({ setInput, handleCancle }) {
         {handleError(errorContent)}
       </div>
 
-      <div className="form-footer">
-        <div className="notice">*표시가 되어 있는 항목은 필수 기재 항목입니다.</div>
-        <Button disabled={false} type="button" variant="contained" onClick={handleButtonClick}>
-          작성완료
-        </Button>
+      <div className="input tag flex-box">
+        <div>
+          <label htmlFor="tags">태그</label>
+          <input
+            type="text"
+            id="tags"
+            name="tags"
+            onKeyDown={handleChangeTag}
+            value={inputTag}
+            onChange={(e) => setInputTag(e.target.value.trimStart())}
+            placeholder="엔터를 입력하여 태그를 등록할 수 있습니다."
+            maxLength={16}
+          />
+        </div>
+        {tagList && (
+          <div className="tag-list flex">
+            {tagList.map((tag, idx) => (
+              <div id={idx} className="tag-box flex">
+                <span># {tag} </span>
+                <IconButton onClick={handleRemoveTag} size="small" sx={{ padding: "2px", fontSize: 14, marginLeft: "4px" }}>
+                  <CloseIcon fontSize="inherit" />
+                </IconButton>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
 
-      <AlertCustom
-        open={openSubmit}
-        onclose={() => setOpenSubmit(false)}
-        title={"teenybox.com 내용:"}
-        content={"게시글을 작성하시겠습니까?"}
-        onclick={() => {
-          setOpenComplete(true);
-          handleSubmit();
-        }}
-        checkBtn={"등록"}
-        closeBtn={"취소"}
-        checkBtnColor={"#42BB48"}
-      />
-      <AlertCustom
-        open={openComplete}
-        onclose={() => {
-          setOpenComplete(false);
-          setTimeout(() => nav("/community"), 300);
-        }}
-        onclick={() => {
-          setOpenComplete(false);
-          setTimeout(() => nav("/community"), 300);
-        }}
-        title={"teenybox.com 내용:"}
-        content={"글 등록이 완료되었습니다!"}
-        btnCloseHidden={true}
-        time={2000}
-      />
+      <div className="form-footer">
+        <div className="notice">
+          <span className="star">*</span>표시가 되어 있는 항목은 필수 기재 항목입니다.
+        </div>
+        <div>
+          <Button color="darkGray" size="large" variant="outlined" onClick={handleCancle} sx={{ marginRight: "14px" }}>
+            취소
+          </Button>
+          <Button variant="contained" size="large" onClick={handleClickSubmitButton} disableElevation>
+            등록
+          </Button>
+        </div>
+      </div>
+
+      <Backdrop open={openSubmit || openComplete} sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
+        <AlertCustom
+          open={openSubmit}
+          onclose={() => setOpenSubmit(false)}
+          title={"teenybox.com 내용:"}
+          content={"게시글을 작성하시겠습니까?"}
+          onclick={() => {
+            handleSubmit();
+          }}
+          checkBtn={"등록"}
+          closeBtn={"취소"}
+          checkBtnColor={"#42BB48"}
+        />
+        <AlertCustom
+          open={openComplete}
+          onclose={() => {
+            setOpenComplete(false);
+            setTimeout(() => nav("/community"), 300);
+          }}
+          onclick={() => {
+            setOpenComplete(false);
+            setTimeout(() => nav("/community"), 300);
+          }}
+          title={"teenybox.com 내용:"}
+          content={"글 등록이 완료되었습니다!"}
+          btnCloseHidden={true}
+          time={2000}
+        />
+      </Backdrop>
     </div>
   );
 }

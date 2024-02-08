@@ -2,18 +2,22 @@ import React, { useEffect, useState } from "react";
 import { BoardListHeader, BoardNav } from "../../components/board";
 import FreeBoardList from "../../components/board-free/FreeBoardList";
 import "./FreeBoardListPage.scss";
-import { Button, CircularProgress, Pagination } from "@mui/material";
+import { Button, CircularProgress, Pagination, FormControl, MenuItem, Select } from "@mui/material";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { postUrl } from "../../apis/apiURLs";
 import ServerError from "../../components/common/state/ServerError";
 import Empty from "../../components/common/state/Empty";
 import { Loop, SwapVert } from "@mui/icons-material";
+import { BoardRightContainer } from "../../components/board/BoardRightContainer";
+import { set } from "date-fns";
 
 export function FreeBoardListPage() {
   const [boardList, setBoardList] = useState([]);
+  const [totalCnt, setTotalCnt] = useState(0);
   const [page, setPage] = useState(1);
   const [state, setState] = useState("loading");
   const [toggle, setToggle] = useState(false);
+  const [sort, setSort] = useState("post_number desc");
   const nav = useNavigate();
   const [searchParams] = useSearchParams();
 
@@ -25,13 +29,14 @@ export function FreeBoardListPage() {
 
   const getPage = async () => {
     setState("loading");
-    const query_page = Number(searchParams.get("page")) || 1;
-    const res = await fetch(`${postUrl}?page=${query_page}&limit=10`);
-    const list = await res.json();
+    const [by, order] = sort.split(" ");
+    const res = await fetch(`${postUrl}?page=${page}&limit=10&sortBy=${by}&sortOrder=${order}`);
+    const data = await res.json();
+    console.log(data);
 
     if (res.ok) {
-      setBoardList(list);
-      setPage(query_page);
+      setBoardList(data.posts);
+      setTotalCnt(data.totalCount);
       setState("hasValue");
     } else {
       setState("hasError");
@@ -51,20 +56,33 @@ export function FreeBoardListPage() {
     getPage();
   }, [page]);
 
+  useEffect(() => {
+    setPage(Number(searchParams.get("page")) || 1);
+  }, [searchParams]);
+
+  useEffect(() => {
+    getPage();
+  }, [sort]);
+
   return (
     <div className="free-board-page page-margin">
       <div className="free-board-left-container">
-        <BoardListHeader header="커뮤니티" onclick={handleFormBtn} />
+        <BoardListHeader header="커뮤니티" />
         <div className="header flex-box">
           <div className="left">
-            <span className="point">160</span>개의 글
+            <span className="point">{totalCnt}</span>개의 글
             <Loop onClick={handleClick} color="secondary" className={`refresh pointer ${toggle && "start"}`} />
           </div>
           <div className="buttons">
-            <Button variant="outlined" size="small" color="darkGray" startIcon={<SwapVert />}>
-              최신순
-            </Button>
-            <Button variant="contained" size="small" color="secondary" disableElevation>
+            <FormControl sx={{ m: 1, minWidth: 120 }}>
+              <Select value={sort} onChange={(e) => setSort(e.target.value)} displayEmpty>
+                <MenuItem value="post_number desc">최신순</MenuItem>
+                <MenuItem value="likes desc">추천순</MenuItem>
+                <MenuItem value="views desc">조회순</MenuItem>
+                <MenuItem value="post_number asc">오래된순</MenuItem>
+              </Select>
+            </FormControl>
+            <Button onClick={handleFormBtn} variant="contained" size="small" color="secondary" disableElevation>
               작성하기
             </Button>
           </div>
@@ -82,7 +100,7 @@ export function FreeBoardListPage() {
             <>
               <FreeBoardList boardList={boardList} />
               <div className="pagination">
-                <Pagination page={page} onChange={handleChange} count={Math.ceil(boardList.length / 10)} color="secondary" siblingCount={2} />
+                <Pagination page={page} onChange={handleChange} count={Math.ceil(totalCnt / 10)} color="secondary" siblingCount={2} />
               </div>
             </>
           ) : (
@@ -92,51 +110,7 @@ export function FreeBoardListPage() {
           )}
         </div>
       </div>
-      <div className="free-board-right-container">
-        <div className="right-box">
-          <h4>최근 본 글</h4>
-          <ul>
-            <li>연극 보러 갈 사람?</li>
-            <li>소규모 연극 신입 부원 구합니다!</li>
-            <li>서울대 연극 동아리 &lt;배고픈 사람들&gt; 후기</li>
-            <li>꽃 찾으러 왔단다라는 연극 아시나용</li>
-            <li>요즘 하는 재밌는 연극 추천좀</li>
-          </ul>
-        </div>
-
-        <div className="right-box">
-          <h4>인기 글</h4>
-          <ul>
-            <li>1. 연극 보러 갈 사람?</li>
-            <li>2. 소규모 연극 신입 부원 구합니다!</li>
-            <li>3. 서울대 연극 동아리 &lt;배고픈 사람들&gt; 후기</li>
-            <li>4. 꽃 찾으러 왔단다라는 연극 아시나용</li>
-            <li>5. 요즘 하는 재밌는 연극 추천좀</li>
-          </ul>
-        </div>
-
-        <div className="right-box">
-          <h4>인기 태그</h4>
-          <ol>
-            <li>#연극 보러 갈 사람?</li>
-            <li>#소규모 연극</li>
-            <li>#동아리</li>
-            <li>#추천</li>
-            <li>#옥탑방 고양이</li>
-          </ol>
-        </div>
-
-        <div className="right-box">
-          <h4>최근 댓글</h4>
-          <ul>
-            <li>연극 보러 갈 사람?</li>
-            <li>소규모 연극 신입 부원 구합니다!</li>
-            <li>서울대 연극 동아리 &lt;배고픈 사람들&gt; 후기</li>
-            <li>꽃 찾으러 왔단다라는 연극 아시나용</li>
-            <li>요즘 하는 재밌는 연극 추천좀</li>
-          </ul>
-        </div>
-      </div>
+      <BoardRightContainer />
     </div>
   );
 }

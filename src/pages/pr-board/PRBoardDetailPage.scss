@@ -1,10 +1,15 @@
 .pr-board-detail-page {
   font-family: "Noto Sans KR";
-  max-width: 840px;
   width: 100%;
+  max-width: 1110px;
+  display: flex;
+  justify-content: space-between;
+
+  .board-left-container {
+    flex-grow: 1;
+  }
 
   .body {
-    padding: 0 20px;
     display: flex;
     flex-direction: column;
 
@@ -16,9 +21,6 @@
   }
 
   .nav-box {
-    margin-top: 40px;
-    * {
-      font-weight: 500;
-    }
+    margin-top: 60px;
   }
 }

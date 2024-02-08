@@ -24,7 +24,7 @@ function MyPRBoard({ user }) {
   const getPosts = async () => {
     setState("loading");
     console.log(user.user_id);
-    const res = await fetch(`${promotionUrl}/user/${user.user_id}`);
+    const res = await fetch(`${promotionUrl}/user/${user._id}`);
     const data = await res.json();
     console.log(data);
 

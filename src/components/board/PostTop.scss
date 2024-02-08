@@ -1,33 +1,58 @@
 .board-post-top {
   display: flex;
+  color: #6b72805b;
 
   .user-img {
-    width: 48px;
-    height: 48px;
+    width: 40px;
+    height: 40px;
     border-radius: 50px;
     object-fit: cover;
-    margin-right: 2px;
+    margin: 2px;
   }
 
   .flex-box {
-    margin-left: 5px;
+    margin-left: 8px;
     flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
   }
+
   .user-id {
-    font-size: 18px;
+    font-size: 16px;
+    color: #111827;
+    line-height: 24px;
   }
   .date {
-    font-size: 12px;
-    color: #616161;
+    font-size: 14px;
+    color: #374151;
+    line-height: 20px;
+    display: flex;
+
+    .dot {
+      color: #3741518f;
+      padding: 0 4px;
+      font-size: 10px;
+    }
+  }
+  .view-cnt {
+    display: flex;
+    align-items: center;
+
+    .MuiSvgIcon-root {
+      margin: 2px 1px 0;
+      color: #374151b3;
+    }
   }
   .icons {
     align-self: center;
     display: flex;
-    height: 24px;
-    align-items: flex-start;
+    height: 44px;
+    align-items: center;
     font-size: 18px;
+
     > * {
-      margin-left: 10px;
+      margin-left: 14px;
       cursor: pointer;
     }
 
@@ -38,5 +63,9 @@
       line-height: 20px;
       margin-left: 2px;
     }
+  }
+
+  .MuiTooltip-popper {
+    background-color: #bcbcbc;
   }
 }
