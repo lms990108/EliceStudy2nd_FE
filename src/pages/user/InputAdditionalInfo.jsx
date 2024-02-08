@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import CloseIconArea from "../../components/user/additional-info/CloseIconArea";
 import PageTitleArea from "../../components/user/additional-info/PageTitleArea";
 import UserInfoArea from "../../components/user/additional-info/UserInfoArea";
 import PreferredRegionsArea from "../../components/user/additional-info/PreferredRegionsArea";
@@ -43,7 +42,6 @@ export function InputAdditionalInfo() {
     <>
       {info && selectedImg && nicknameInfo ? (
         <div className="input-additional-info-container">
-          <CloseIconArea />
           <main>
             <PageTitleArea />
             <UserInfoArea
@@ -54,7 +52,10 @@ export function InputAdditionalInfo() {
               profileUrl={info.profileUrl}
               user_id={info.id}
             />
-            <PreferredRegionsArea selectedRegion={selectedRegion} setSelectedRegion={setSelectedRegion} />
+            <PreferredRegionsArea
+              selectedRegion={selectedRegion}
+              setSelectedRegion={setSelectedRegion}
+            />
             <SubmitBtnsArea
               additionalUserInfo={{
                 id: info.id,

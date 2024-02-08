@@ -14,12 +14,7 @@ export default function PreferredRegionsArea({
     <div className="preferred-regions-area">
       <h2>선호 지역</h2>
       <div className="region-check-list">
-        <FormControl
-          required
-          // error={error}
-          component="fieldset"
-          variant="standard"
-        >
+        <FormControl required component="fieldset" variant="standard">
           <FormGroup
             sx={{
               display: "flex",

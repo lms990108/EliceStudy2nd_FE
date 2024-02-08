@@ -15,7 +15,6 @@ export default function AverageRatingBox({
   state,
   purpose,
 }) {
-  console.log(purpose);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -24,7 +23,8 @@ export default function AverageRatingBox({
 
   const handleReviewBtnClick = () => {
     // 로그인이 되어 있지 않은 경우 로그인 페이지로 이동 알람
-    if (!isLoggedIn) {
+    if (isLoggedIn) {
+      // 여기 나중에 ! 추가하기
       setNeedLoginAlert(
         "로그인이 필요한 기능입니다. 로그인 페이지로 이동하시겠습니까?"
       );

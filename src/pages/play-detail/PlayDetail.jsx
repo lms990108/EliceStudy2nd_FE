@@ -11,7 +11,6 @@ import { AlertCustom } from "../../components/common/alert/Alerts";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import Loading from "../../components/common/state/Loading";
 import { AppContext } from "../../App";
-import { BackButton } from "../../components/common/button/BackButton";
 
 export function PlayDetail() {
   // 유저 로그인 여부 + 정보 확인
@@ -27,7 +26,6 @@ export function PlayDetail() {
   const [isLoading, setIsLoading] = useState(true);
   // 연극 상세 정보
   const [playInfo, setPlayInfo] = useState({});
-  console.log(playInfo);
   // 에러 메시지 상태
   const [error, setError] = useState(null);
 
@@ -75,7 +73,6 @@ export function PlayDetail() {
         {!isLoading && playInfo && userData && (
           <>
             <UpButton />
-            {/* <BackButton state={location.state} /> */}
             <PlayDetailTop
               showId={playInfo.showId}
               age={playInfo.age}

@@ -126,7 +126,6 @@ export function PlayList() {
       setReqQuery(reqQuery);
     }
 
-    console.log(`https://dailytopia2.shop/api/shows${reqQuery}`);
     fetch(`https://dailytopia2.shop/api/shows${reqQuery}`)
       .then((res) => {
         if (res.ok) {
