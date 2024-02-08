@@ -168,7 +168,6 @@ export default function PlayReview({
                     key={review._id}
                   />
                 ))}
-
                 <PaginationBox
                   showId={showId}
                   curPage={curPage}

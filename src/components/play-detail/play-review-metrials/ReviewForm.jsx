@@ -39,6 +39,57 @@ export default function ReviewForm({
 
   const fileInput = useRef(null);
 
+  const getPresignedUrl = async (file) => {
+    const maxSizeInBytes = 5 * 1024 * 1024; // 5MB
+    if (file?.size > maxSizeInBytes) {
+      setReviewErrorText("사진은 장당 5MB 이하로만 등록이 가능합니다.");
+      return;
+    }
+
+    try {
+      console.log(file);
+      const presignRes = await fetch(
+        "https://dailytopia2.shop/api/presigned-urls",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ key: file.name }),
+        }
+      );
+
+      if (presignRes.ok) {
+        const data = await presignRes.json();
+        const { presigned_url, public_url } = data;
+        const uploadRes = await fetch(presigned_url, {
+          method: "PUT",
+          headers: {
+            "Content-Type": file.type,
+          },
+          body: file,
+        });
+
+        if (uploadRes.ok) {
+          setPhoto((prev) => [...prev, public_url]);
+          if (
+            reviewErrorText ===
+            "사진 등록에 실패하였습니다. 다시 시도해 주세요."
+          ) {
+            setReviewErrorText(null);
+          }
+        } else {
+          setReviewErrorText("사진 등록에 실패하였습니다. 다시 시도해 주세요.");
+        }
+      } else {
+        setReviewErrorText("사진 등록에 실패하였습니다. 다시 시도해 주세요.");
+      }
+    } catch (err) {
+      console.log(err);
+      setReviewErrorText("사진 등록에 실패하였습니다. 다시 시도해 주세요.");
+    }
+  };
+
   const handleImgUploadBtnClick = () => {
     fileInput.current.click();
   };
@@ -70,7 +121,7 @@ export default function ReviewForm({
     } else if (!image) {
       return;
     } else {
-      setPhoto((prev) => [...prev, image]);
+      getPresignedUrl(image);
     }
   };
 

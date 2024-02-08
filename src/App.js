@@ -32,7 +32,6 @@ function App() {
   console.log(userData);
 
   const [prevPlayListQuery, setPrevPlayListQuery] = useState(null);
-  console.log(prevPlayListQuery);
 
   const getUserData = async () => {
     try {

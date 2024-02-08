@@ -37,8 +37,6 @@ export default function SubmitBtnsArea({ additionalUserInfo }) {
       body: formData,
     })
       .then((res) => {
-        console.log(res);
-        console.log(res.body);
         if (res.ok) {
           setAlert({
             severity: "success",
@@ -51,9 +49,7 @@ export default function SubmitBtnsArea({ additionalUserInfo }) {
           });
         }
       })
-      .then((data) => console.log(data))
       .catch((err) => {
-        console.log(err);
         setAlert({
           severity: "error",
           title: "회원가입 실패",

@@ -1,4 +1,3 @@
-import { useState } from "react";
 import "./PaginationBox.scss";
 import Pagination from "@mui/material/Pagination";
 
@@ -35,7 +34,6 @@ export default function PaginationBox({
         count={Math.ceil(totalCount / 10)}
         page={curPage}
         color="secondary"
-        // size={innerWidth >= 481 ? "large" : "small"}
         onChange={handlePageNumberChange}
       />
     </div>

@@ -7,7 +7,6 @@ export default function PlayReviewHeader({
   setSortStandard,
   setCurPage,
 }) {
-  console.log(sortStandard);
   return (
     <>
       <div className="play-review-header-container">
