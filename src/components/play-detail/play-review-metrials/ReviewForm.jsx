@@ -40,6 +40,12 @@ export default function ReviewForm({
   const fileInput = useRef(null);
 
   const getPresignedUrl = async (file) => {
+    const maxSizeInBytes = 5 * 1024 * 1024; // 5MB
+    if (file?.size > maxSizeInBytes) {
+      setReviewErrorText("사진은 장당 5MB 이하로만 등록이 가능합니다.");
+      return;
+    }
+
     try {
       console.log(file);
       const presignRes = await fetch(

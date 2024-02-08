@@ -1,4 +1,3 @@
-import { useState } from "react";
 import "./PreferredRegionsArea.scss";
 import Checkbox from "@mui/material/Checkbox";
 import FormControl from "@mui/material/FormControl";
@@ -35,7 +34,6 @@ export default function PreferredRegionsArea({
               <FormControlLabel
                 control={
                   <Checkbox
-                    defaultChecked={region === selectedRegion}
                     name={region}
                     checked={region === selectedRegion}
                     onClick={() => setSelectedRegion(region)}
