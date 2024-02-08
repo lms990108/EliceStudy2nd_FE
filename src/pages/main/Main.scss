@@ -6,7 +6,7 @@
 .banner-container {
     display: flex;
     justify-content: center;
-    height: 340px;
+    height: 320px;
     background-repeat: repeat;
     background-size: contain;
 }
@@ -31,15 +31,8 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    height: 1700px;
-    background-color: #282828;
-}
-.rating-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
-    height: 500px;
+    height: 100%;
+    padding: 56px 0 72px 0;
     background-color: #282828;
 }
 .review-container {
@@ -55,12 +48,4 @@
     justify-content: space-around;
     height: 540px;
     background-color: #282828;
-}
-.theater-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 540px;
-    background-color: #202020;
 }

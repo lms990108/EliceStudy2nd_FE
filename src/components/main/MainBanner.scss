@@ -55,19 +55,21 @@
 .banner-text-box {
   display: flex;
   flex-direction: column;
-  gap: 4px;
   animation: letterSpacingAnimation 4s ease infinite, gapAnimation 4s ease infinite, scaleAnimation 4s ease infinite;
   font-size: 40px;
-  font-weight: 900;
+  font-weight: 700;
   letter-spacing: 3px;
   color: #282828;
   width: 520px;
   text-align: center;
   user-select: none;
+  p {
+    margin: 4px 0;
+  }
 }
 .banner-point-text {
   margin-left: 4px;
   font-size: 40px;
-  font-weight: 900;
+  font-weight: 800;
   color: #006eff;
 }

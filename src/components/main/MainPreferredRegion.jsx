@@ -1,11 +1,22 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import "./MainPreferredRegion.scss";
+import { AppContext } from "../../App";
 
 function MainPreferredRegion() {
+  const { userData } = useContext(AppContext);
+  const [selectedRegion, setSelectedRegion] = useState("");
   const [shows, setShows] = useState([]); // API로부터 가져온 공연 데이터를 저장할 상태
-  const [selectedRegion, setSelectedRegion] = useState("서울"); // 선택된 지역 상태
   const navigate = useNavigate();
+
+  useEffect(() => {
+  // userData가 있고 interested_area가 존재할 때 해당 지역으로 선택
+  if (userData && userData.user && userData.user.interested_area) {
+    setSelectedRegion(userData.user.interested_area);
+  } else {
+    setSelectedRegion("서울"); // 로그인을 안했을 시 "서울" 설정
+  }
+}, [userData]);
 
   const handleShowClick = (showId) => {
     navigate(`/play/${showId}`);
@@ -20,7 +31,6 @@ function MainPreferredRegion() {
     const fetchData = async () => {
       try {
         const today = new Date();
-        const todayString = today.toISOString().split('T')[0];
         
         let queryString;
         if (selectedRegion === "경기/인천") {
@@ -38,7 +48,7 @@ function MainPreferredRegion() {
         if (data.shows) {
           // 시작일 기준으로 가장 가까운 공연부터 정렬
           const sortedShows = data.shows.sort((a, b) => Math.abs(new Date(a.start_date) - today) - Math.abs(new Date(b.start_date) - today));
-          setShows(sortedShows.slice(0, 6));
+          setShows(sortedShows.slice(0, 5));
           console.log(data);
         } else {
           console.error('API에서 shows 데이터를 찾을 수 없습니다.');
@@ -98,7 +108,7 @@ function MainPreferredRegion() {
               <div className="main-region-play-img-box">
                 <img src={show.poster} alt={show.title} />
               </div>
-              <p className="main-play-title">{formatTitle(show.title)}</p>
+              <p className="main-region-play-title">{formatTitle(show.title)}</p>
               <p className="main-region-play-period">{`${new Date(
                 show.start_date
               ).toLocaleDateString()} Open`}</p>
