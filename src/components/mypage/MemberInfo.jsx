@@ -8,7 +8,7 @@ import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormHelperText from "@mui/material/FormHelperText";
 import { userUrl, uploadImgUrl } from "../../apis/apiURLs";
-import { Alert, TextField } from "@mui/material";
+import { Alert, Backdrop, TextField } from "@mui/material";
 import { EditAttributes, ImageSearchRounded } from "@mui/icons-material";
 import { AlertCustom } from "../common/alert/Alerts";
 
@@ -199,15 +199,17 @@ function MemberInfo({ user, setUserData }) {
               회원정보 수정
             </Button>
           </div>
-          <AlertCustom
-            open={openComplete}
-            onclose={() => setOpenComplete(false)}
-            onclick={() => setOpenComplete(false)}
-            title={"teenybox.com 내용:"}
-            content={"회원정보 수정이 완료되었습니다!"}
-            btnCloseHidden={true}
-            time={1000}
-          />
+          <Backdrop open={openComplete} sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
+            <AlertCustom
+              open={openComplete}
+              onclose={() => setOpenComplete(false)}
+              onclick={() => setOpenComplete(false)}
+              title={"teenybox.com 내용:"}
+              content={"회원정보 수정이 완료되었습니다!"}
+              btnCloseHidden={true}
+              time={1000}
+            />
+          </Backdrop>
         </div>
       )}
     </>

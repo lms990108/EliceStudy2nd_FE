@@ -445,7 +445,7 @@ export function PRBoardForm({ setInput, handleComplete, handleCancle }) {
         </div>
       </div>
 
-      <Backdrop open={openSubmit || openComplete}>
+      <Backdrop open={openSubmit || openComplete} sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
         <AlertCustom
           open={openSubmit}
           onclose={() => setOpenSubmit(false)}

@@ -1,4 +1,4 @@
-import { Button, IconButton } from "@mui/material";
+import { Backdrop, Button, IconButton } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
@@ -118,31 +118,33 @@ export function FreeBoardEditForm({ setInput, handleCancle, post }) {
         </Button>
       </div>
 
-      <AlertCustom
-        open={openSubmit}
-        onclose={() => setOpenSubmit(false)}
-        title={"teenybox.com 내용:"}
-        content={"게시글을 수정하시겠습니까?"}
-        onclick={handleSubmit}
-        checkBtn={"수정"}
-        closeBtn={"취소"}
-        checkBtnColor={"#42BB48"}
-      />
-      <AlertCustom
-        open={openComplete}
-        onclose={() => {
-          setOpenComplete(false);
-          setTimeout(() => nav("/community"), 300);
-        }}
-        onclick={() => {
-          setOpenComplete(false);
-          setTimeout(() => nav("/community"), 300);
-        }}
-        title={"teenybox.com 내용:"}
-        content={"글 수정이 완료되었습니다!"}
-        btnCloseHidden={true}
-        time={1000}
-      />
+      <Backdrop open={openSubmit || openComplete} sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
+        <AlertCustom
+          open={openSubmit}
+          onclose={() => setOpenSubmit(false)}
+          title={"teenybox.com 내용:"}
+          content={"게시글을 수정하시겠습니까?"}
+          onclick={handleSubmit}
+          checkBtn={"수정"}
+          closeBtn={"취소"}
+          checkBtnColor={"#42BB48"}
+        />
+        <AlertCustom
+          open={openComplete}
+          onclose={() => {
+            setOpenComplete(false);
+            nav("/community");
+          }}
+          onclick={() => {
+            setOpenComplete(false);
+            nav("/community");
+          }}
+          title={"teenybox.com 내용:"}
+          content={"글 수정이 완료되었습니다!"}
+          btnCloseHidden={true}
+          time={1000}
+        />
+      </Backdrop>
     </div>
   );
 }

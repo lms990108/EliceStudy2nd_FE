@@ -6,6 +6,7 @@ import SnsButtons from "../../components/user/join/SnsButtons";
 import { AlertCustom } from "../../components/common/alert/Alerts";
 import { AppContext } from "../../App";
 import DisableModal from "../../components/common/modal/DisableModal";
+import { Backdrop } from "@mui/material";
 
 export const fromPageContext = createContext();
 
@@ -31,23 +32,24 @@ export function SignUp_In() {
       {forbiddenAlert && (
         <>
           <DisableModal />
-          <AlertCustom
-            title={"로그인 불가"}
-            content={"로그아웃 후 로그인 페이지 이용이 가능합니다."}
-            severity="error"
-            open={true}
-            btnCloseHidden={true}
-            checkBtn="확인"
-            onclick={() => nav("/")}
-            onclose={() => nav("/")}
-          />
+
+          <Backdrop open={true} sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
+            <AlertCustom
+              title={"로그인 불가"}
+              content={"로그아웃 후 로그인 페이지 이용이 가능합니다."}
+              severity="error"
+              open={true}
+              btnCloseHidden={true}
+              checkBtn="확인"
+              onclick={() => nav("/")}
+              onclose={() => nav("/")}
+            />
+          </Backdrop>
         </>
       )}
       <section className="signupInContainer inner">
         <h1 className="signup-title">SIGN UP / LOGIN </h1>
-        <p className="signup-description">
-          소셜 로그인 및 이메일 계정으로 가입이 가능합니다.
-        </p>
+        <p className="signup-description">소셜 로그인 및 이메일 계정으로 가입이 가능합니다.</p>
 
         <div className="social-buttons">
           <fromPageContext.Provider value={pageFrom}>

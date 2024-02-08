@@ -34,7 +34,7 @@ function MemberDeletion() {
           <h4>티니박스 서비스 탈퇴</h4>
         </Button>
       </div>
-      <Backdrop open={openAlert}>
+      <Backdrop open={openAlert} sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
         <AlertCustom
           severity="error"
           open={openAlert}

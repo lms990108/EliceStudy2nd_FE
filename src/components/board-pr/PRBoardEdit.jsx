@@ -1,4 +1,4 @@
-import { Button, FormControlLabel, IconButton, Radio, RadioGroup } from "@mui/material";
+import { Backdrop, Button, FormControlLabel, IconButton, Radio, RadioGroup } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
@@ -406,33 +406,35 @@ export function PRBoardEditForm({ setInput, handleCancle, post }) {
         </Button>
       </div>
 
-      <AlertCustom
-        open={openSubmit}
-        onclose={() => setOpenSubmit(false)}
-        title={"teenybox.com 내용:"}
-        content={"게시글을 작성하시겠습니까?"}
-        onclick={() => {
-          handleSubmit();
-        }}
-        checkBtn={"등록"}
-        closeBtn={"취소"}
-        checkBtnColor={"#42BB48"}
-      />
-      <AlertCustom
-        open={openComplete}
-        onclose={() => {
-          setOpenComplete(false);
-          setTimeout(() => nav("/promotion"), 300);
-        }}
-        onclick={() => {
-          setOpenComplete(false);
-          setTimeout(() => nav("/promotion"), 300);
-        }}
-        title={"teenybox.com 내용:"}
-        content={"글 등록이 완료되었습니다!"}
-        btnCloseHidden={true}
-        time={2000}
-      />
+      <Backdrop open={openSubmit || openComplete} sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
+        <AlertCustom
+          open={openSubmit}
+          onclose={() => setOpenSubmit(false)}
+          title={"teenybox.com 내용:"}
+          content={"게시글을 작성하시겠습니까?"}
+          onclick={() => {
+            handleSubmit();
+          }}
+          checkBtn={"등록"}
+          closeBtn={"취소"}
+          checkBtnColor={"#42BB48"}
+        />
+        <AlertCustom
+          open={openComplete}
+          onclose={() => {
+            setOpenComplete(false);
+            setTimeout(() => nav("/promotion"), 300);
+          }}
+          onclick={() => {
+            setOpenComplete(false);
+            setTimeout(() => nav("/promotion"), 300);
+          }}
+          title={"teenybox.com 내용:"}
+          content={"글 등록이 완료되었습니다!"}
+          btnCloseHidden={true}
+          time={2000}
+        />
+      </Backdrop>
     </div>
   );
 }
