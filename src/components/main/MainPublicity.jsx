@@ -5,7 +5,7 @@ function MainPublicity() {
   const [promotions, setPromotions] = useState([]);
 
   useEffect(() => {
-    fetch("https://dailytopia2.shop/api/promotions")
+    fetch("https://dailytopia2.shop/api/promotions?limit=100")
       .then((res) => res.json())
       .then((data) => {
         setPromotions(data.promotions);
