@@ -1,4 +1,3 @@
-import Modal from "@mui/material/Modal";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 
@@ -10,17 +9,15 @@ export default function Loading() {
     transform: "translate(-50%, -50%)",
     width: "100%",
     height: "100%",
-    bgcolor: "rgba(0, 0, 0, 0.3)",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
+    zIndex: 2000,
   };
 
   return (
-    <Modal open={true}>
-      <Box sx={style}>
-        <CircularProgress color="secondary" />
-      </Box>
-    </Modal>
+    <Box sx={style}>
+      <CircularProgress color="secondary" />
+    </Box>
   );
 }

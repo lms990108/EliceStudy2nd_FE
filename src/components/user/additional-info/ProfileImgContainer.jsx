@@ -52,7 +52,10 @@ export default function ProfileImgContainer({
 
         if (uploadRes.ok) {
           setSelectedImg(public_url);
-          if (alert?.title === "사진 등록 실패") {
+          if (
+            alert?.title === "사진 등록 실패" ||
+            alert?.title === "제한 용량 초과"
+          ) {
             setAlert(null);
           }
         } else {

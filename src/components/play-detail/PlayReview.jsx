@@ -37,8 +37,11 @@ export default function PlayReview({
 
   // 리뷰 가져오기
   const getReviews = () => {
+    console.log(
+      `https://dailytopia2.shop/api/reviews?showId=${showId}&order=${sortStandard}&page=${curPage}&limit=10`
+    );
     fetch(
-      `https://dailytopia2.shop/api/reviews?showId=${showId}&page=${curPage}&limit=10`
+      `https://dailytopia2.shop/api/reviews?showId=${showId}&order=${sortStandard}&page=${curPage}&limit=10`
     )
       .then((res) => res.json())
       .then((data) => {
@@ -91,8 +94,9 @@ export default function PlayReview({
     }
   };
 
+  useEffect(() => getReviews(), [sortStandard, curPage]);
+
   useEffect(() => {
-    getReviews();
     getUserReview();
   }, []);
 
@@ -169,11 +173,8 @@ export default function PlayReview({
                   />
                 ))}
                 <PaginationBox
-                  showId={showId}
                   curPage={curPage}
                   setCurPage={setCurPage}
-                  setAlert={setAlert}
-                  setReviews={setReviews}
                   totalCount={totalCount}
                 />
               </div>
