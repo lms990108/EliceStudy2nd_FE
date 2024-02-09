@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { Children, useEffect, useState } from "react";
 import { BoardListHeader } from "../../components/board";
 import "./PRBoardListPage.scss";
 import PRBoardList from "../../components/board-pr/PRBoardList";
@@ -9,7 +9,7 @@ import { Button, CircularProgress, FormControl, MenuItem, Select } from "@mui/ma
 import ServerError from "../../components/common/state/ServerError";
 import Empty from "../../components/common/state/Empty";
 import { ArrowBackIosRounded, ArrowForwardIosRounded, SmsOutlined, ThumbUpOutlined, VisibilityOutlined } from "@mui/icons-material";
-import { useNavigate } from "react-router-dom/dist";
+import { Link, useNavigate } from "react-router-dom/dist";
 import getBestPromotionPlay from "../../utils/getBestPromotionPlay";
 import TimeFormat from "../../components/common/time/TimeFormat";
 
@@ -23,6 +23,7 @@ export function PRBoardListPage() {
 
   const [bannerList, setBannerList] = useState([]);
   const [bannerIndex, setBannerIndex] = useState(0);
+  const [fadeIn, setFadeIn] = useState("fade-in");
 
   const [scrollRef, inView] = useInView();
   const nav = useNavigate();
@@ -55,13 +56,21 @@ export function PRBoardListPage() {
       setState("hasError");
     }
   };
+  const removeClassName = () => {
+    setFadeIn("");
+  };
+  const addClassName = () => {
+    setFadeIn("fade-in");
+  };
 
   const handleClickLeftArrow = () => {
+    removeClassName();
     if (bannerIndex <= 0) {
       setBannerIndex(bannerList.length - 1);
     } else {
       setBannerIndex((cur) => cur - 1);
     }
+    addClassName();
   };
 
   const handleClickRightArrow = () => {
@@ -70,6 +79,8 @@ export function PRBoardListPage() {
     } else {
       setBannerIndex((cur) => cur + 1);
     }
+    const div = document.querySelector(".best-box .contents-container");
+    div.style.animation = "fadein 3s";
   };
 
   const handleClickDivision = (e) => {
@@ -100,57 +111,69 @@ export function PRBoardListPage() {
     <div className="pr-board-page page-margin">
       <BoardListHeader header="홍보게시판" />
       {!bannerList.length || (
-        <div className="best-box">
+        <div className="best-box ">
           <img className="bg-img" src={bannerList[bannerIndex]?.image_url[0] || "https://elice-5th.s3.amazonaws.com/promotions%252F1707380134216_teeny-box-icon.png"} />
           <div className="bg-mask">
-            <div className="contents-container">
-              <div className="left-box">
-                <div className="sub-title">인기 소규모 연극</div>
-                <h2 className="title">{bannerList[bannerIndex]?.play_title}</h2>
-                <div className="ellipsis">{bannerList[bannerIndex]?.title}</div>
+            {Children.toArray(
+              bannerList.map((post, idx) => (
+                <div className={`absolute ${bannerIndex === idx && "visible"}`}>
+                  <div className={"contents-container"}>
+                    <div className="left-box">
+                      <div className="sub-title">인기 소규모 연극</div>
+                      <h2 className="title">
+                        <Link to={`/promotion/${bannerList[bannerIndex].promotion_number}`}>{bannerList[bannerIndex]?.play_title}</Link>
+                      </h2>
+                      <div className="ellipsis">
+                        <Link to={`/promotion/${bannerList[bannerIndex].promotion_number}`}>{bannerList[bannerIndex]?.title}</Link>
+                      </div>
 
-                <div className="content">
-                  {bannerList[bannerIndex].start_date && bannerList[bannerIndex].end_date && (
-                    <div className="date">
-                      <span className="lable">공연기간</span>
-                      {bannerList[bannerIndex].start_date && <TimeFormat time={bannerList[bannerIndex].start_date} />}
-                      {" ~ "}
-                      {bannerList[bannerIndex].end_date && <TimeFormat time={bannerList[bannerIndex].end_date} />}
+                      <div className="content">
+                        {bannerList[bannerIndex].start_date && bannerList[bannerIndex].end_date && (
+                          <div className="date">
+                            <span className="lable">공연기간</span>
+                            {bannerList[bannerIndex].start_date && <TimeFormat time={bannerList[bannerIndex].start_date} />}
+                            {" ~ "}
+                            {bannerList[bannerIndex].end_date && <TimeFormat time={bannerList[bannerIndex].end_date} />}
+                          </div>
+                        )}
+                        {bannerList[bannerIndex].location && (
+                          <div>
+                            <span className="lable">장소</span>
+                            {bannerList[bannerIndex].location}
+                          </div>
+                        )}
+                        {bannerList[bannerIndex].host && (
+                          <div>
+                            <span className="lable">주최</span>
+                            {bannerList[bannerIndex].host}
+                          </div>
+                        )}
+                        {!bannerList[bannerIndex].runtime || (
+                          <div>
+                            <span className="lable">런타임</span>
+                            {bannerList[bannerIndex].runtime} 분
+                          </div>
+                        )}
+                      </div>
+                      <div className="footer">
+                        <VisibilityOutlined sx={{ fontSize: 20 }} />
+                        <span>{bannerList[bannerIndex]?.views || 0}</span>
+                        <ThumbUpOutlined sx={{ fontSize: 20 }} />
+                        <span>{bannerList[bannerIndex]?.likes || 0}</span>
+                        <SmsOutlined sx={{ fontSize: 20 }} />
+                        <span>{bannerList[bannerIndex]?.comments || 0}</span>
+                      </div>
                     </div>
-                  )}
-                  {bannerList[bannerIndex].location && (
-                    <div>
-                      <span className="lable">장소</span>
-                      {bannerList[bannerIndex].location}
-                    </div>
-                  )}
-                  {bannerList[bannerIndex].host && (
-                    <div>
-                      <span className="lable">주최</span>
-                      {bannerList[bannerIndex].host}
-                    </div>
-                  )}
-                  {!bannerList[bannerIndex].runtime || (
-                    <div>
-                      <span className="lable">런타임</span>
-                      {bannerList[bannerIndex].runtime} 분
-                    </div>
-                  )}
+                    <Link to={`/promotion/${bannerList[bannerIndex].promotion_number}`}>
+                      <img className="poster" src={bannerList[bannerIndex]?.image_url[0] || "https://elice-5th.s3.amazonaws.com/promotions%252F1707380134216_teeny-box-icon.png"} />
+                    </Link>
+                  </div>
                 </div>
-                <div className="footer">
-                  <VisibilityOutlined sx={{ fontSize: 20 }} />
-                  <span>{bannerList[bannerIndex]?.views || 0}</span>
-                  <ThumbUpOutlined sx={{ fontSize: 20 }} />
-                  <span>{bannerList[bannerIndex]?.likes || 0}</span>
-                  <SmsOutlined sx={{ fontSize: 20 }} />
-                  <span>{bannerList[bannerIndex]?.comments || 0}</span>
-                </div>
-              </div>
-              <img className="poster" src={bannerList[bannerIndex]?.image_url[0] || "https://elice-5th.s3.amazonaws.com/promotions%252F1707380134216_teeny-box-icon.png"} />
-            </div>
+              ))
+            )}
+            <ArrowBackIosRounded className="arrow-left pointer" onClick={handleClickLeftArrow} />
+            <ArrowForwardIosRounded className="arrow-right pointer" onClick={handleClickRightArrow} />
           </div>
-          <ArrowBackIosRounded className="arrow-left pointer" onClick={handleClickLeftArrow} />
-          <ArrowForwardIosRounded className="arrow-right pointer" onClick={handleClickRightArrow} />
         </div>
       )}
       <div className="header flex-box">

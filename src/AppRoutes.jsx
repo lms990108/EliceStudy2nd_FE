@@ -17,14 +17,20 @@ import PrivacyPolicy from "./pages/util/PrivacyPolicy";
 import { useEffect, useState } from "react";
 
 let currentPath = "";
+let reloard = true;
 
 export default function AppRoutes({ setPrevPlayListQuery }) {
   let location = useLocation();
 
   useEffect(() => {
-    if (currentPath === location.pathname) window.location.reload();
+    if (location.pathname === "/search" || location.pathname === "/mypages") return;
+    if (currentPath === location.pathname + location.search && reloard) {
+      reloard = false;
+      window.location.reload();
+    }
 
-    currentPath = location.pathname;
+    currentPath = location.pathname + location.search;
+    console.log(location);
   }, [location]);
 
   return (

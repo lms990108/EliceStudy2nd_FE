@@ -11,9 +11,11 @@ import MyComments from "../../components/mypage/MyComments";
 import { useNavigate } from "react-router";
 import { AppContext } from "../../App";
 import { CircularProgress } from "@mui/material";
+import { useSearchParams } from "react-router-dom";
 
 export default function MyPage() {
-  const [selectedComponent, setSelectedComponent] = useState("MemberInfo");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [selectedComponent, setSelectedComponent] = useState(searchParams.get("tab") || "MemberInfo");
   const { userData, setUserData } = useContext(AppContext);
   const nav = useNavigate();
 
@@ -45,9 +47,20 @@ export default function MyPage() {
   useEffect(() => {
     console.log(userData);
     if (userData && !userData.isLoggedIn) {
-      nav("/signup-in");
+      nav(`/signup-in`);
     }
   }, [userData]);
+
+  useEffect(() => {
+    console.log(searchParams.get("tab"));
+    searchParams.set("tab", selectedComponent);
+    setSearchParams(searchParams);
+  }, [selectedComponent]);
+
+  useEffect(() => {
+    console.log(searchParams.get("tab"));
+    setSelectedComponent(searchParams.get("tab") || "MemberInfo");
+  }, [searchParams]);
 
   return (
     <>

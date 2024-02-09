@@ -46,8 +46,8 @@ export function PostTop({ user, type, post, commentsCnt }) {
       console.log(data);
 
       if (res.ok) {
-        setIsLiked(true);
-        setLikes((cur) => cur + 1);
+        setIsLiked(false);
+        setLikes((cur) => cur - 1);
       } else if (res.status === 403) {
         setOpenLoginAlert(true);
       }

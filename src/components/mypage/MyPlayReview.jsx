@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import { CircularProgress } from "@mui/material";
 import ServerError from "../common/state/ServerError";
 import Empty from "../common/state/Empty";
+import TimeFormat from "../common/time/TimeFormat";
 
 const columns = [
   {
@@ -15,16 +16,24 @@ const columns = [
     headerName: "연극",
     width: 180,
     renderCell: (data) => (
-      //`/play/${data.row.showId}?tab=reviews`
-      <Link className="link" to={"/play/PF231931?tab=reviews"}>
+      <Link className="link" to={`/play/${data.row.show_id}?tab=reviews`}>
         {data.value}
       </Link>
     ),
   },
-  { field: "title", headerName: "제목", width: 200 },
+  {
+    field: "title",
+    headerName: "제목",
+    width: 200,
+    renderCell: (data) => (
+      <Link className="link" to={`/play/${data.row.show_id}?tab=reviews`}>
+        {data.value}
+      </Link>
+    ),
+  },
   { field: "content", headerName: "내용", width: 200 },
   { field: "rate", headerName: "별점", width: 100 },
-  { field: "created_at", headerName: "작성 시기", width: 150, valueGetter: (data) => data.value.split(".")[0].replaceAll("T", " ") },
+  { field: "created_at", headerName: "작성 시기", width: 150, renderCell: (data) => <TimeFormat time={data.row.createdAt} type={"time"} /> },
 ];
 
 function MyPlayReview({ user }) {

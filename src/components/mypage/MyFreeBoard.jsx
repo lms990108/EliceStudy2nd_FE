@@ -6,13 +6,36 @@ import { postUrl } from "../../apis/apiURLs";
 import { CircularProgress } from "@mui/material";
 import ServerError from "../common/state/ServerError";
 import Empty from "../common/state/Empty";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import TimeFormat from "../common/time/TimeFormat";
 
 const columns = [
-  { field: "id", headerName: "번호" },
-  { field: "tilte", headerName: "제목", width: 248 },
+  {
+    field: "post_number",
+    headerName: "번호",
+    renderCell: (data) => (
+      <Link className="link" to={`/community/${data.value}`}>
+        {data.value}
+      </Link>
+    ),
+  },
+  {
+    field: "title",
+    headerName: "제목",
+    width: 248,
+    renderCell: (data) => (
+      <Link className="link" to={`/community/${data.row.post_number}`}>
+        {data.value}
+      </Link>
+    ),
+  },
   { field: "content", headerName: "내용", width: 250 },
-  { field: "createdAt", headerName: "작성 시기", width: 150 },
+  {
+    field: "createdAt",
+    headerName: "작성 시기",
+    width: 150,
+    renderCell: (data) => <TimeFormat time={data.row.createdAt} type={"time"} />,
+  },
 ];
 
 function MyFreeBoard({ user }) {
@@ -27,7 +50,11 @@ function MyFreeBoard({ user }) {
     console.log(data);
 
     if (res.ok) {
-      setPosts(data);
+      setPosts(
+        data.posts.map((review) => {
+          return { ...review, id: review._id };
+        })
+      );
       setState("hasValue");
     } else {
       setState("hasError");

@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
 // <'OOO' 검색 결과> 띄우기 위한 컴포넌트 (공통)
 import SearchResultHeader from "../../components/search/common/SearchResultHeader";
 // 총 검색 결과 개수 띄우기 위한 컴포넌트 (공통)
@@ -10,17 +9,13 @@ import SearchResultTab from "../../components/search/common/SearchResultTab";
 import PlaySearchResult from "../../components/search/play-search-result/PlaySearchResult";
 import "./SearchResultPage.scss";
 import Loading from "../../components/common/state/Loading";
-import FreeBoardList from "../../components/board-free/FreeBoardList";
-import { postUrl, promotionUrl } from "../../apis/apiURLs";
 import PromotionSearchResult from "../../components/search/promotion-search-result/PromotionSearchResult";
 import CommunitySearchResult from "../../components/search/community-search-result/CommunitySearchResult";
 import { AlertCustom } from "../../components/common/alert/Alerts";
 import { useNavigate, useSearchParams } from "react-router-dom/dist";
 
 export default function SearchResultPage() {
-  const location = useLocation();
   const [searchParams, setSearchParams] = useSearchParams();
-  const nav = useNavigate();
   // 검색어
   const [searchKeyword, setSearchKeyword] = useState(searchParams.get("query"));
 
