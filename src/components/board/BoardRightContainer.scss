@@ -15,9 +15,52 @@
     }
 
     li {
-      margin: 14px 0;
+      margin: 12px 0;
       font-size: 12px;
       color: #505050;
+      width: 100%;
+      overflow: hidden;
+      display: flex;
+      height: 15px;
+
+      .category {
+        flex-shrink: 0;
+        margin-right: 3px;
+
+        &.promotion {
+          color: #b04c00;
+        }
+        &.community {
+          color: #4267b2;
+        }
+      }
+
+      p {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        flex-grow: 1;
+      }
+
+      .right {
+        font-size: 11px;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        justify-self: flex-end;
+        flex-shrink: 0;
+        color: #868686;
+        font-weight: 300;
+
+        .MuiSvgIcon-root {
+          margin-left: 8px;
+        }
+
+        span {
+          margin-left: 2px;
+          line-height: 14px;
+        }
+      }
     }
   }
 }

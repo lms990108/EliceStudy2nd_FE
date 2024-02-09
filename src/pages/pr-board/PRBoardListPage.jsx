@@ -39,9 +39,10 @@ export function PRBoardListPage() {
   const getPage = async (curPage, method) => {
     setState("loading");
     const [by, order] = sort.split(" ");
+    console.log(by, order);
     const res = await fetch(`${promotionUrl}?page=${curPage || page}&limit=20&sortBy=${by}&sortOrder=${order}&category=${category}`);
     const data = await res.json();
-    console.log(data);
+    console.log(res, data);
 
     if (res.ok) {
       if (data.totalCount) {

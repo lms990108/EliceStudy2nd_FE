@@ -6,9 +6,11 @@ import { useNavigate, useParams } from "react-router-dom";
 import { commentUrl, postUrl } from "../../apis/apiURLs";
 import { Button } from "@mui/material";
 import { BoardRightContainer } from "../../components/board/BoardRightContainer";
+import setStoreViewList from "../../utils/setStoreRecentViewList";
+import { NotFoundPage } from "../errorPage/NotFoundPage";
 
 export function FreeBoardDetailPage() {
-  const [post, setPost] = useState();
+  const [post, setPost] = useState({});
   const [comments, setComments] = useState([]);
   const [totalCount, setTotalCount] = useState(0);
   const [page, setPage] = useState(1);
@@ -23,6 +25,8 @@ export function FreeBoardDetailPage() {
 
     if (res.ok) {
       setPost(data);
+    } else {
+      setPost();
     }
   };
 
@@ -74,28 +78,35 @@ export function FreeBoardDetailPage() {
   useEffect(() => {
     if (post?._id) {
       getComments();
+      setStoreViewList(post);
     }
   }, [post]);
 
   useEffect(() => {
     getPost();
-  }, []);
+  }, [params]);
 
   return (
     <div className="free-board-detail page-margin">
-      <div className="free-board-left-container">
-        <BoardSecondHeader header="커뮤니티" onclick={() => nav("/community")} />
-        <div className="body">
-          {post && <FreeBoardPost data={post} totalCommentCount={totalCount} />}
-          <BoardNav point={totalCount} text="개의 댓글" onclick={handleRefreshComments} />
-          <CommentForm createComment={createComment} postId={post?._id} />
-          {comments && <CommentsList comments={comments} setComments={setComments} totalCount={totalCount} getComments={getComments} setTotalCount={setTotalCount} />}
-          <Button className="back-btn" color="inherit" variant="contained" onClick={() => nav(`/community`)}>
-            목록보기
-          </Button>
-        </div>
-      </div>
-      <BoardRightContainer />
+      {post ? (
+        <>
+          <div className="free-board-left-container">
+            <BoardSecondHeader header="커뮤니티" onclick={() => nav("/community")} />
+            <div className="body">
+              {post._id && <FreeBoardPost data={post} totalCommentCount={totalCount} />}
+              <BoardNav point={totalCount} text="개의 댓글" onclick={handleRefreshComments} />
+              <CommentForm createComment={createComment} postId={post?._id} />
+              {comments && <CommentsList comments={comments} setComments={setComments} totalCount={totalCount} getComments={getComments} setTotalCount={setTotalCount} />}
+              <Button className="back-btn" color="inherit" variant="contained" onClick={() => nav(`/community`)}>
+                목록보기
+              </Button>
+            </div>
+          </div>
+          <BoardRightContainer />
+        </>
+      ) : (
+        <NotFoundPage prev={true} />
+      )}
     </div>
   );
 }
