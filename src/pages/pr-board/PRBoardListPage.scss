@@ -1,5 +1,41 @@
 @import "../../App.scss";
 
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@-moz-keyframes fadein {
+  /* Firefox */
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@-webkit-keyframes fadein {
+  /* Safari and Chrome */
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@-o-keyframes fadein {
+  /* Opera */
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 .pr-board-page {
   font-family: "Noto Sans KR";
   max-width: 1110px;
@@ -11,6 +47,10 @@
     align-items: center;
   }
 
+  a {
+    color: inherit;
+  }
+
   .best-box {
     width: 100%;
     height: 420px;
@@ -18,6 +58,23 @@
     border-radius: 6px;
     position: relative;
     margin-bottom: 60px;
+    transition: all 1s ease-in-out;
+    background-color: #000;
+
+    .absolute {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: -10px;
+      left: 0;
+      opacity: 0;
+
+      &.visible {
+        opacity: 1;
+        top: 0;
+        transition: all 1s;
+      }
+    }
 
     .bg-img {
       width: 95%;

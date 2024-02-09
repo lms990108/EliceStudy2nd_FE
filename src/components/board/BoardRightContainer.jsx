@@ -209,7 +209,7 @@ export function BoardRightContainer() {
           {Children.toArray(
             latestCommentList.map((post, idx) => (
               <li>
-                <span className={`category ${post.category ? "promotion" : "community"}`}>{post.category ? `[홍보/${post.category}]` : "[커뮤니티]"}</span>
+                <span className={`category ${post.promotion ? "promotion" : "community"}`}>{post.promotion ? `[홍보/${post.category}]` : "[커뮤니티]"}</span>
                 <p>{post.content}</p>
                 <div className="right">
                   <LiveTimeDiff time={post.createdAt} />

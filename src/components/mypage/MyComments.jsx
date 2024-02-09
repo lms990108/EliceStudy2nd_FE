@@ -9,29 +9,58 @@ import { CircularProgress } from "@mui/material";
 import ServerError from "../common/state/ServerError";
 import Empty from "../common/state/Empty";
 import { Link } from "react-router-dom";
+import TimeFormat from "../common/time/TimeFormat";
 
 const columns = [
   { field: "id", headerName: "번호" },
-  { field: "tilte", headerName: "내용", width: 498 },
-  { field: "createdAt", headerName: "작성 시기", width: 150 },
+  { field: "content", headerName: "내용", width: 498 },
+  { field: "createdAt", headerName: "작성 시기", width: 150, renderCell: (data) => <TimeFormat time={data.row.createdAt} type={"time"} /> },
 ];
 
 function MyComments() {
   const [comments, setComments] = useState([]);
   const [state, setState] = useState("loading");
+  const [checkedList, setCheckedList] = useState([]);
   const nav = useNavigate();
 
   const getComments = async () => {
     setState("loading");
-    const res = await fetch(`${commentUrl}/users`, { credentials: "include" });
+    const res = await fetch(`${commentUrl}/users?limit=1000`, { credentials: "include" });
     const data = await res.json();
     console.log(data);
 
     if (res.ok) {
-      setComments(data);
+      setComments(
+        data.comments.map((review) => {
+          return { ...review, id: review._id };
+        })
+      );
       setState("hasValue");
     } else {
       setState("hasError");
+    }
+  };
+
+  const handleClickDeleteBtn = async () => {
+    const res = await fetch(`${commentUrl}`, {
+      method: "DELETE",
+      credentials: "include",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        commentIds: checkedList,
+      }),
+    });
+    const data = await res.json();
+    console.log(data);
+
+    if (res.ok) {
+      let newComments = [...comments];
+      checkedList.map((id) => {
+        let index = comments.findIndex((comment) => comment.id === id);
+        newComments.splice(index, 1);
+      });
+
+      setComments(newComments);
     }
   };
 
@@ -45,7 +74,7 @@ function MyComments() {
         <div className="header">
           <h1>MY 댓글</h1>
           {!comments.length || (
-            <Button variant="contained" color="orange" sx={{ width: "80px", height: "40px", color: "white" }}>
+            <Button onClick={handleClickDeleteBtn} variant="contained" color="orange" sx={{ width: "80px", height: "40px", color: "white" }}>
               <h4>삭제</h4>
             </Button>
           )}
@@ -65,6 +94,9 @@ function MyComments() {
                 },
               }}
               checkboxSelection
+              disableRowSelectionOnClick
+              rowSelectionModel={checkedList}
+              onRowSelectionModelChange={(e) => setCheckedList(e)}
             />
           ) : (
             <Empty>
