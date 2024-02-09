@@ -6,9 +6,11 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { commentUrl, promotionUrl } from "../../apis/apiURLs";
 import { Button } from "@mui/material";
 import { BoardRightContainer } from "../../components/board/BoardRightContainer";
+import setStoreViewList from "../../utils/setStoreRecentViewList";
+import { NotFoundPage } from "../errorPage/NotFoundPage";
 
 export function PRBoardDetailPage() {
-  const [post, setPost] = useState();
+  const [post, setPost] = useState({});
   const [comments, setComments] = useState([]);
   const [totalCount, setTotalCount] = useState(0);
   const [page, setPage] = useState(1);
@@ -23,6 +25,8 @@ export function PRBoardDetailPage() {
 
     if (res.ok) {
       setPost(data);
+    } else {
+      setPost();
     }
   };
 
@@ -62,28 +66,35 @@ export function PRBoardDetailPage() {
   useEffect(() => {
     if (post?._id) {
       getComments();
+      setStoreViewList(post);
     }
   }, [post]);
 
   useEffect(() => {
     getPromotion();
-  }, []);
+  }, [params]);
 
   return (
     <div className="pr-board-detail-page page-margin">
-      <div className="board-left-container">
-        <BoardSecondHeader header={"홍보게시판"} onclick={() => nav(-1)} />
-        <div className="body">
-          {post && <PRBoardPost data={post} totalCommentCount={totalCount} />}
-          <BoardNav point={totalCount} text="개의 댓글" onclick={getPromotion} />
-          <CommentForm createComment={createComment} postId={post?._id} />
-          {comments && <CommentsList comments={comments} totalCount={totalCount} getComments={getComments} setComments={setComments} setTotalCount={setTotalCount} />}
-          <Button className="back-btn" color="inherit" variant="contained" onClick={() => nav(`/promotion`)}>
-            목록보기
-          </Button>
-        </div>
-      </div>
-      <BoardRightContainer />
+      {post ? (
+        <>
+          <div className="board-left-container">
+            <BoardSecondHeader header={"홍보게시판"} onclick={() => nav(-1)} />
+            <div className="body">
+              {post._id && <PRBoardPost data={post} totalCommentCount={totalCount} />}
+              <BoardNav point={totalCount} text="개의 댓글" onclick={getPromotion} />
+              <CommentForm createComment={createComment} postId={post?._id} />
+              {comments && <CommentsList comments={comments} totalCount={totalCount} getComments={getComments} setComments={setComments} setTotalCount={setTotalCount} />}
+              <Button className="back-btn" color="inherit" variant="contained" onClick={() => nav(`/promotion`)}>
+                목록보기
+              </Button>
+            </div>
+          </div>
+          <BoardRightContainer />
+        </>
+      ) : (
+        <NotFoundPage prev={true} />
+      )}
     </div>
   );
 }

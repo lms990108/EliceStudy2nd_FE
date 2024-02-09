@@ -4,6 +4,7 @@ import { PostTop } from "../board";
 import empty_image from "../../assets/img/empty_img.svg";
 import { CalendarMonth, FormatQuote, LocationOn, MovieCreation } from "@mui/icons-material";
 import empty_img from "../../assets/img/empty_img.svg";
+import TimeFormat from "../common/time/TimeFormat";
 
 export default function PRBoardPost({ data, totalCommentCount }) {
   return (
@@ -18,20 +19,32 @@ export default function PRBoardPost({ data, totalCommentCount }) {
             <FormatQuote className="icon double" />
           </div>
           <div className="box">
-            <div className="lable">공연기간</div>
-            <div className="value">{data.start_date}</div>
+            <div className="lable">{data.category === "연극" ? "공연기간" : "행사기간"}</div>
+            <div className="value">
+              {data.start_date && <TimeFormat time={data.start_date} />} ~ {data.end_date && <TimeFormat time={data.end_date} />}
+            </div>
             <CalendarMonth className="icon" />
           </div>
         </div>
         <div className="flex-column">
           <div className="box">
             <div className="lable">장소</div>
-            <div className="value">{data.location}</div>
+            <div className="value">{data.location || <span className="undefined">본문참고</span>}</div>
             <LocationOn className="icon" />
           </div>
-          <div className="box">
-            <div className="lable">주최</div>
-            <div className="value">{data.host}</div>
+          <div className="box add">
+            <div className="lable">추가정보</div>
+            {data.category === "연극" && (
+              <div className="value">
+                <span className="sub-lable">러닝타임</span>
+                {data.runtime ? `${data.runtime}분` : <span className="undefined">본문참고</span>}
+              </div>
+            )}
+            <div className={`value ${data.category === "연극" && "mg-6"}`}>
+              <span className="sub-lable">주최</span>
+              {data.host || <span className="undefined">본문참고</span>}
+            </div>
+
             <MovieCreation className="icon" />
           </div>
         </div>
