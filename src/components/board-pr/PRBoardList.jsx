@@ -2,6 +2,7 @@ import "./PRBoardList.scss";
 import { Link } from "react-router-dom";
 import { SmsOutlined, ThumbUpOutlined, VisibilityOutlined } from "@mui/icons-material";
 import empty_img from "../../assets/img/empty_img.svg";
+import TimeFormat from "../common/time/TimeFormat";
 
 export default function PRBoardList({ newList }) {
   return (
@@ -12,7 +13,9 @@ export default function PRBoardList({ newList }) {
           <div className="post-card-content">
             <div className={`title ${post.tags?.length ? "" : "tl-2"}`}>{post.play_title}</div>
             <div className="date">
-              {post.start_date?.split("T")[0] || "2024-02-01"} ~ {post.end_date?.split("T")[0] || "2024-02-01"}
+              {post.start_date && <TimeFormat time={post.start_date} />}
+              {" ~ "}
+              {post.end_date && <TimeFormat time={post.end_date} />}
             </div>
             {post.tags && post.tags.length !== 0 && (
               <div className="tags">

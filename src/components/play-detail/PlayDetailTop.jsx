@@ -15,22 +15,9 @@ import classNames from "classnames";
 import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";
 import CloseIcon from "@mui/icons-material/Close";
 import { AlertContext } from "../../App";
+import TimeFormat from "../common/time/TimeFormat";
 
-export default function PlayDetailTop({
-  showId,
-  age,
-  start_date,
-  end_date,
-  location,
-  poster,
-  price,
-  runtime,
-  state,
-  title,
-  reviews,
-  isLoggedIn,
-  averageRate,
-}) {
+export default function PlayDetailTop({ showId, age, start_date, end_date, location, poster, price, runtime, state, title, reviews, isLoggedIn, averageRate }) {
   const navigate = useNavigate();
   // 현재 url 정보 객체
   const currentURL = useLocation();
@@ -143,9 +130,7 @@ export default function PlayDetailTop({
   const shareTwitter = () => {
     var sendText = `[🎫TeenyBox] ${title} 정보 공유`; // 전달할 텍스트
     var sendUrl = window.location.href; // 전달할 URL
-    window.open(
-      "https://twitter.com/intent/tweet?text=" + sendText + "&url=" + sendUrl
-    );
+    window.open("https://twitter.com/intent/tweet?text=" + sendText + "&url=" + sendUrl);
   };
 
   // 찜 버튼 클릭 시
@@ -223,15 +208,7 @@ export default function PlayDetailTop({
 
   return (
     <div className="play-detail-top-container">
-      {alert && (
-        <AlertCustom
-          title={alert.title}
-          content={alert.content}
-          open={alert.open}
-          onclose={alert.onclose}
-          severity={alert.severity}
-        />
-      )}
+      {alert && <AlertCustom title={alert.title} content={alert.content} open={alert.open} onclose={alert.onclose} severity={alert.severity} />}
       {/* {needLoginAlert && (
         <AlertCustom
           title={"로그인 필요"}
@@ -278,59 +255,32 @@ export default function PlayDetailTop({
               />
 
               {isShareBtnClicked ? (
-                <div
-                  className="share-options"
-                  style={{ top: title.length >= 31 ? "67px" : "36px" }}
-                >
+                <div className="share-options" style={{ top: title.length >= 31 ? "67px" : "36px" }}>
                   <div className="share-option">
                     <Tooltip title="링크 복사" arrow>
-                      <LinkIcon
-                        onClick={() =>
-                          handleLinkShareBtnClick(window.location.href)
-                        }
-                        style={{ cursor: "pointer", width: "31px" }}
-                      />
+                      <LinkIcon onClick={() => handleLinkShareBtnClick(window.location.href)} style={{ cursor: "pointer", width: "31px" }} />
                     </Tooltip>
                   </div>
                   <div className="share-option">
                     <Tooltip title="카카오톡" arrow>
                       <div className="SNS-img-box">
-                        <img
-                          id="btnKakaoShare"
-                          src={kakaoTalkImg}
-                          alt="kakaoTalk-icon"
-                          style={{ cursor: "pointer" }}
-                          onClick={() => shareKakao()}
-                        />
+                        <img id="btnKakaoShare" src={kakaoTalkImg} alt="kakaoTalk-icon" style={{ cursor: "pointer" }} onClick={() => shareKakao()} />
                       </div>
                     </Tooltip>
                   </div>
                   <div className="share-option">
                     <Tooltip title="X" arrow>
                       <div className="SNS-img-box">
-                        <img
-                          src={XImg}
-                          onClick={() => shareTwitter()}
-                          alt="X-icon"
-                          style={{ cursor: "pointer" }}
-                        />
+                        <img src={XImg} onClick={() => shareTwitter()} alt="X-icon" style={{ cursor: "pointer" }} />
                       </div>
                     </Tooltip>
                   </div>
                   <div className="share-option">
                     <Tooltip title="페이스북" arrow>
-                      <FacebookIcon
-                        fontSize="large"
-                        color="facebookBlue"
-                        onClick={() => shareFacebook()}
-                        style={{ cursor: "pointer" }}
-                      />
+                      <FacebookIcon fontSize="large" color="facebookBlue" onClick={() => shareFacebook()} style={{ cursor: "pointer" }} />
                     </Tooltip>
                   </div>
-                  <div
-                    className="close-icon"
-                    onClick={() => handleShareCloseBtnClick()}
-                  >
+                  <div className="close-icon" onClick={() => handleShareCloseBtnClick()}>
                     <CloseIcon
                       fontSize="small"
                       sx={{
@@ -349,7 +299,11 @@ export default function PlayDetailTop({
           <div className="play-summary-info">
             <div>
               <h3>기간</h3>
-              <p>{`${start_date.split("T")[0]} ~ ${end_date.split("T")[0]}`}</p>
+              <p>
+                {start_date && <TimeFormat time={start_date} />}
+                {" ~ "}
+                {end_date && <TimeFormat time={end_date} />}
+              </p>
             </div>
             <div>
               <h3>관람등급</h3>
@@ -386,13 +340,7 @@ export default function PlayDetailTop({
               <div className="another-btn">
                 <div className="dibs-btn">
                   {loadingBtn ? (
-                    <Button
-                      variant="outlined"
-                      color="error"
-                      size="large"
-                      loading="true"
-                      sx={{ height: "45px" }}
-                    >
+                    <Button variant="outlined" color="error" size="large" loading="true" sx={{ height: "45px" }}>
                       <CircularProgress
                         color="error"
                         className="dib-btn-loading"
@@ -404,46 +352,23 @@ export default function PlayDetailTop({
                       <span style={{ visibility: "hidden" }}>♥️ 찜하기</span>
                     </Button>
                   ) : (
-                    <Button
-                      variant={isDibbed ? "contained" : "outlined"}
-                      color="error"
-                      size="large"
-                      onClick={handleDibBtnClick}
-                    >
-                      <Typography className="button-text">
-                        {isDibbed ? "찜한 연극" : "♥️ 찜하기"}
-                      </Typography>
+                    <Button variant={isDibbed ? "contained" : "outlined"} color="error" size="large" onClick={handleDibBtnClick}>
+                      <Typography className="button-text">{isDibbed ? "찜한 연극" : "♥️ 찜하기"}</Typography>
                     </Button>
                   )}
                 </div>
                 <div className="reserve-btn">
                   {state !== "공연완료" ? (
-                    <a
-                      href={`https://tickets.interpark.com/contents/search?keyword=${title}&start=0&rows=20`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <Button
-                        variant="contained"
-                        color="secondary"
-                        size="large"
-                        disableElevation
-                      >
-                        <Typography className="button-text">
-                          예매하러 가기
-                        </Typography>
+                    <a href={`https://tickets.interpark.com/contents/search?keyword=${title}&start=0&rows=20`} target="_blank" rel="noopener noreferrer">
+                      <Button variant="contained" color="secondary" size="large" disableElevation>
+                        <Typography className="button-text">예매하러 가기</Typography>
                       </Button>
                     </a>
                   ) : (
-                    <Tooltip
-                      title="본 연극은 종료되어 예매 링크가 제공되지 않습니다."
-                      arrow
-                    >
+                    <Tooltip title="본 연극은 종료되어 예매 링크가 제공되지 않습니다." arrow>
                       <div>
                         <Button variant="contained" disabled>
-                          <Typography className="button-text">
-                            예매하러 가기
-                          </Typography>
+                          <Typography className="button-text">예매하러 가기</Typography>
                         </Button>
                       </div>
                     </Tooltip>

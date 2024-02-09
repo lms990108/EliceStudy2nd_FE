@@ -27,9 +27,7 @@ export default function SearchResultPage() {
   // 로딩중 여부
   const [isLoading, setIsLoading] = useState(true);
   // 연극/홍보게시물/자유게시물 선택 탭에서 현재 선택되어 있는 메뉴
-  const [selectedTabMenu, setSelectedTabMenu] = useState(
-    searchParams.get("category") || "연극"
-  );
+  const [selectedTabMenu, setSelectedTabMenu] = useState(searchParams.get("category") || "연극");
   // 연극 검색 결과
   const [playSearchResult, setPlaySearchResult] = useState(null);
   const [totalCnt, setTotalCnt] = useState(null);
@@ -49,9 +47,7 @@ export default function SearchResultPage() {
       setIsLoading(false);
     } else {
       try {
-        const res = await fetch(
-          `https://dailytopia2.shop/api/shows?title=${searchKeyword}&order=${sortStandard}&page=${playCurPage}&limit=10`
-        );
+        const res = await fetch(`https://dailytopia2.shop/api/shows?title=${searchKeyword}&order=${sortStandard}&page=${playCurPage}&limit=10`);
         const data = await res.json();
 
         if (res.ok) {
@@ -87,29 +83,21 @@ export default function SearchResultPage() {
   }, [sortStandard, playCurPage]);
 
   useEffect(() => {
+    if (selectedTabMenu === "연극") {
+      searchParams.delete("type");
+    }
     searchParams.set("category", selectedTabMenu);
     setSearchParams(searchParams);
   }, [selectedTabMenu]);
 
   return (
     <div className="bg-gray">
-      {alert && (
-        <AlertCustom
-          title={alert.title}
-          content={alert.content}
-          open={alert.open}
-          onclose={alert.onclose}
-          severity={alert.severity}
-        />
-      )}
+      {alert && <AlertCustom title={alert.title} content={alert.content} open={alert.open} onclose={alert.onclose} severity={alert.severity} />}
       {isLoading && !playSearchResult && <Loading />}
       {!isLoading && playSearchResult && (
         <div className="search-result-container">
           <SearchResultHeader searchKeyword={searchKeyword} />
-          <SearchResultTab
-            selectedTabMenu={selectedTabMenu}
-            setSelectedTabMenu={setSelectedTabMenu}
-          />
+          <SearchResultTab selectedTabMenu={selectedTabMenu} setSelectedTabMenu={setSelectedTabMenu} />
           {selectedTabMenu === "연극" && (
             <PlaySearchResult
               playSearchResult={playSearchResult}
@@ -122,12 +110,8 @@ export default function SearchResultPage() {
               setSortStandard={setSortStandard}
             />
           )}
-          {selectedTabMenu === "홍보게시글" && (
-            <PromotionSearchResult searchKeyword={searchKeyword} />
-          )}
-          {selectedTabMenu === "커뮤니티" && (
-            <CommunitySearchResult searchKeyword={searchKeyword} />
-          )}
+          {selectedTabMenu === "홍보게시글" && <PromotionSearchResult searchKeyword={searchKeyword} />}
+          {selectedTabMenu === "커뮤니티" && <CommunitySearchResult searchKeyword={searchKeyword} />}
         </div>
       )}
     </div>

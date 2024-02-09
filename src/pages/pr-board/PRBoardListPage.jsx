@@ -11,6 +11,7 @@ import Empty from "../../components/common/state/Empty";
 import { ArrowBackIosRounded, ArrowForwardIosRounded, SmsOutlined, ThumbUpOutlined, VisibilityOutlined } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom/dist";
 import getBestPromotionPlay from "../../utils/getBestPromotionPlay";
+import TimeFormat from "../../components/common/time/TimeFormat";
 
 export function PRBoardListPage() {
   const [boardList, setBoardList] = useState([]);
@@ -106,7 +107,9 @@ export function PRBoardListPage() {
                 <div className="sub-title">인기 소규모 연극</div>
                 <h2 className="title">{bannerList[bannerIndex]?.play_title}</h2>
                 <div className="date">
-                  {bannerList[bannerIndex]?.start_date?.split("T")[bannerIndex]} ~ {bannerList[bannerIndex]?.end_date?.split("T")[bannerIndex]}
+                  {bannerList[bannerIndex].start_date && <TimeFormat time={bannerList[bannerIndex].start_date} />}
+                  {" ~ "}
+                  {bannerList[bannerIndex].end_date && <TimeFormat time={bannerList[bannerIndex].end_date} />}
                 </div>
                 <div className="content">
                   <div className="ellipsis">{bannerList[bannerIndex]?.title}</div>
