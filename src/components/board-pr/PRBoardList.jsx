@@ -10,7 +10,7 @@ export default function PRBoardList({ newList }) {
         <Link className={`post-card pointer`} key={post._id} id={post._id} to={`${post.promotion_number}`}>
           <img src={Array.isArray(post.image_url) ? post.image_url[0] : ""} onError={(e) => (e.target.src = empty_img)} alt="" />
           <div className="post-card-content">
-            <div className={`title ${post.tags?.length ? "" : "tl-2"}`}>{post.title}</div>
+            <div className={`title ${post.tags?.length ? "" : "tl-2"}`}>{post.play_title}</div>
             <div className="date">
               {post.start_date?.split("T")[0] || "2024-02-01"} ~ {post.end_date?.split("T")[0] || "2024-02-01"}
             </div>

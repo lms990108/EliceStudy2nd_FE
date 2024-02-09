@@ -1,17 +1,18 @@
 import { Backdrop, Button, FormControlLabel, IconButton, Radio, RadioGroup } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { Children, useEffect, useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import DriveFolderUploadIcon from "@mui/icons-material/DriveFolderUpload";
 import "./PRBoardForm.scss";
 import { AlertCustom } from "../common/alert/Alerts";
 import { useNavigate } from "react-router-dom";
-import { promotionUrl, uploadImgUrl } from "../../apis/apiURLs";
+import { presignedUrl, promotionUrl, uploadImgUrl } from "../../apis/apiURLs";
 import dayjs from "dayjs";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import empty_img from "../../assets/img/empty_img.svg";
+import { Close } from "@mui/icons-material";
 
 export function PRBoardForm({ setInput, handleComplete, handleCancle }) {
   const [submit, setSubmit] = useState(false);
@@ -43,8 +44,9 @@ export function PRBoardForm({ setInput, handleComplete, handleCancle }) {
   const [tagList, setTagList] = useState([]);
   const [inputTag, setInputTag] = useState();
   // 사진
-  const [imageURL, setImageURL] = useState([""]); // 0인덱스 대표이미지
-  const [errorMainImage, setErrorMainImage] = useState("사진을 선택해주세요.");
+  const [mainImageURL, setMainImageURL] = useState(""); // 0인덱스 대표이미지
+  const [errorMainImage, setErrorMainImage] = useState("");
+  const [imageURL, setImageURL] = useState([]); // 0인덱스 대표이미지
   const [errorImage, setErrorImage] = useState("");
 
   const nav = useNavigate();
@@ -58,7 +60,7 @@ export function PRBoardForm({ setInput, handleComplete, handleCancle }) {
         title: inputTitle,
         content: inputContent,
         tags: tagList,
-        image_url: imageURL,
+        image_url: [mainImageURL, ...imageURL],
         start_date: inputStartDate || undefined,
         end_date: inputEndDate || undefined,
         category: inputCategory,
@@ -78,6 +80,10 @@ export function PRBoardForm({ setInput, handleComplete, handleCancle }) {
 
   const handleClickSubmitButton = (e) => {
     setSubmit(true);
+    if (!mainImageURL) {
+      setErrorMainImage("사진을 선택해주세요.");
+    }
+
     if (errorPlayTitle) {
       document.querySelector("#play-title").focus();
     } else if (errorDate) {
@@ -136,62 +142,87 @@ export function PRBoardForm({ setInput, handleComplete, handleCancle }) {
     }
   };
 
-  const handleChangeMainImage = async (e) => {
-    if (e.target.files[0]) {
-      if (e.target.files[0].size > 1024 * 1024 * 5) {
-        return setErrorMainImage("사진은 최대 1MB까지 업로드 가능합니다.");
-      }
+  const uploadImage = async (file) => {
+    let res = await fetch(presignedUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ key: file.name }),
+    });
+    const data = await res.json();
+    console.log(data);
 
-      let formData = new FormData();
-      formData.append("image_url", e.target.files[0]);
-
-      const res = await fetch(`${uploadImgUrl}`, {
-        method: "POST",
-        credentials: "include",
-        body: formData,
-      });
-      const data = await res.json();
-      console.log(data);
-
-      if (res.ok) {
-        const newImageUrl = [...imageURL];
-        newImageUrl[0] = data.imageUrl;
-
-        setImageURL(newImageUrl);
-        setErrorMainImage("");
-      } else {
-        setErrorMainImage("사진 업로드에 실패했습니다. 다시 시도해주세요");
-      }
+    if (!res.ok) {
+      return false;
     }
+
+    res = await fetch(data.presigned_url, {
+      method: "PUT",
+      headers: { "Content-Type": file.type },
+      body: file,
+    });
+
+    if (!res.ok) {
+      return false;
+    }
+    return data.public_url;
+  };
+
+  const handleChangeMainImage = async (e) => {
+    console.log(e.target.files);
+    if (!e.target.files.length) return;
+    const file = e.target.files[0];
+
+    if (file.size > 1024 * 1024 * 5) {
+      return setErrorMainImage("사진은 최대 5MB까지 업로드 가능합니다.");
+    }
+    const data = await uploadImage(file);
+
+    if (data) {
+      setMainImageURL(data);
+      setErrorMainImage("");
+    } else {
+      setErrorMainImage("사진 업로드에 실패했습니다. 다시 시도해주세요");
+    }
+    e.target.value = null;
+  };
+
+  const handleRemoveMainImage = async (e) => {
+    setMainImageURL();
+    setErrorMainImage("");
   };
 
   const handleChangeImage = async (e) => {
-    if (e.target.files[0]) {
-      if (e.target.files[0].size > 1024 * 1024 * 5) {
-        return setErrorImage("사진은 최대 1MB까지 업로드 가능합니다.");
+    if (!e.target.files.length) return;
+
+    let newImg = [];
+    let error = "";
+
+    let newImage = Array.from(e.target.files);
+    for (let file of newImage) {
+      if (file.size > 1024 * 1024 * 5) {
+        error = "사진은 최대 5MB까지 업로드 가능합니다.\n";
+        continue;
       }
+      const data = await uploadImage(file);
 
-      let formData = new FormData();
-      formData.append("image_url", e.target.files[0]);
-
-      const res = await fetch(`${uploadImgUrl}`, {
-        method: "POST",
-        credentials: "include",
-        body: formData,
-      });
-      const data = await res.json();
-      console.log(data);
-
-      if (res.ok) {
-        const newImageUrl = [...imageURL, data.imageUrl];
-        console.log(newImageUrl);
-
-        setImageURL(newImageUrl);
-        setErrorImage("");
+      if (data) {
+        newImg.push(data);
+        console.log(newImage);
       } else {
-        setErrorImage("사진 업로드에 실패했습니다. 다시 시도해주세요");
+        error = error || "사진 업로드에 실패했습니다. 다시 시도해주세요.";
       }
     }
+
+    setImageURL([...imageURL, ...newImg]);
+    setErrorImage(error);
+    e.target.value = null;
+  };
+
+  // 선택한 이미지 하나씩 삭제하는 기능
+  const handleRemoveImage = async (e) => {
+    const idx = Number(e.currentTarget.id);
+    const newImageURL = imageURL.filter((url, _idx) => idx !== _idx);
+    setImageURL(newImageURL);
   };
 
   const handleChangeTag = (e) => {
@@ -408,8 +439,20 @@ export function PRBoardForm({ setInput, handleComplete, handleCancle }) {
           <span className="placeholder">(세로 이미지 권장)</span>
           <input type="file" id="main-image" name="main-image" accept="image/*" onChange={handleChangeMainImage} required />
         </div>
-        {handleErrorPlaceholder(errorMainImage)}
-        {imageURL[0] && <img src={imageURL[0]} onError={(e) => (e.target.src = empty_img)} />}
+        {errorMainImage && (
+          <div className="error">
+            <ErrorOutlineIcon fontSize="inherit" />
+            {errorMainImage}
+          </div>
+        )}
+        {mainImageURL && (
+          <div className="main image">
+            <img src={mainImageURL} onError={(e) => (e.target.src = empty_img)} />
+            <IconButton className="icon" onClick={handleRemoveMainImage}>
+              <Close />
+            </IconButton>
+          </div>
+        )}
       </div>
 
       <div className="input image">
@@ -420,14 +463,26 @@ export function PRBoardForm({ setInput, handleComplete, handleCancle }) {
               파일 찾기
             </label>
           </Button>
-          <input type="file" id="image" name="image" accept="image/*" onChange={handleChangeImage} required />
+          <input type="file" id="image" name="image" accept="image/*" multiple onChange={handleChangeImage} required />
         </div>
-        {handleErrorPlaceholder(errorImage)}
-        {imageURL.length > 1 && (
+        {errorImage && (
+          <div className="error">
+            <ErrorOutlineIcon fontSize="inherit" />
+            {errorImage}
+          </div>
+        )}
+        {imageURL[0] && (
           <div className="preview-box">
-            {imageURL.slice(1).map((url) => (
-              <img src={url} key={url} onError={(e) => (e.target.src = empty_img)} />
-            ))}
+            {Children.toArray(
+              imageURL.map((url, idx) => (
+                <div className="image">
+                  <img src={url} />
+                  <IconButton id={idx.toString()} className="icon" onClick={handleRemoveImage}>
+                    <Close />
+                  </IconButton>
+                </div>
+              ))
+            )}
           </div>
         )}
       </div>
@@ -463,16 +518,16 @@ export function PRBoardForm({ setInput, handleComplete, handleCancle }) {
           open={openComplete}
           onclose={() => {
             setOpenComplete(false);
-            setTimeout(() => nav("/promotion"), 300);
+            nav("/promotion");
           }}
           onclick={() => {
             setOpenComplete(false);
-            setTimeout(() => nav("/promotion"), 300);
+            nav("/promotion");
           }}
           title={"teenybox.com 내용:"}
           content={"글 등록이 완료되었습니다!"}
           btnCloseHidden={true}
-          time={1200}
+          time={500}
         />
       </Backdrop>
     </div>

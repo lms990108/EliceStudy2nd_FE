@@ -2,7 +2,7 @@ import { Backdrop, Button, IconButton } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
-import "./FreeBoardForm.scss";
+import "../board-pr/PRBoardForm.scss";
 import { AlertCustom } from "../common/alert/Alerts";
 import { useNavigate } from "react-router-dom";
 import { postUrl } from "../../apis/apiURLs";

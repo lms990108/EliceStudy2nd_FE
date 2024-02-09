@@ -7,9 +7,9 @@ import FormControl from "@mui/material/FormControl";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormHelperText from "@mui/material/FormHelperText";
-import { userUrl, uploadImgUrl } from "../../apis/apiURLs";
+import { userUrl, uploadImgUrl, presignedUrl } from "../../apis/apiURLs";
 import { Alert, Backdrop, TextField } from "@mui/material";
-import { EditAttributes, ImageSearchRounded } from "@mui/icons-material";
+import { EditAttributes, ErrorOutline, ImageSearchRounded } from "@mui/icons-material";
 import { AlertCustom } from "../common/alert/Alerts";
 
 const regex = /[!@#$%^&*(),.?":{}|<>0-9]/;
@@ -17,6 +17,7 @@ const regex = /[!@#$%^&*(),.?":{}|<>0-9]/;
 function MemberInfo({ user, setUserData }) {
   const [inputNickname, setInputNickname] = useState(user?.nickname);
   const [profileURL, setProfileURL] = useState(user?.profile_url);
+  const [errorImage, setErrorImage] = useState("");
   const [selectedRegion, setSelectedRegion] = useState(user?.interested_area);
   const [errorNickname, setErrorNickname] = useState("");
   const [isUnique, setIsUnique] = useState(false);
@@ -24,27 +25,37 @@ function MemberInfo({ user, setUserData }) {
   const [openComplete, setOpenComplete] = useState(false);
 
   const handleChangeProfile = async (e) => {
-    if (e.target.files?.[0]) {
-      let formData = new FormData();
-      formData.append("image_url", e.target.files[0]);
-
-      const res = await fetch(`${uploadImgUrl}`, {
-        method: "POST",
-        credentials: "include",
-        body: formData,
-      });
-      const data = await res.json();
-      console.log(data);
-
-      if (res.ok) {
-        setProfileURL(data.imageUrl);
-      } else {
-        console.log(data);
-      }
-    } else {
-      setProfileURL(user.profile_url);
-    }
     setIsHovered(false);
+    if (!e.target.files.length) return;
+    const file = e.target.files[0];
+
+    if (file.size > 1024 * 1024 * 5) {
+      return setErrorImage("사진은 최대 5MB까지 업로드 가능합니다.");
+    }
+
+    let res = await fetch(presignedUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ key: file.name }),
+    });
+    const data = await res.json();
+    console.log(data);
+
+    if (!res.ok) {
+      return setErrorImage("사진 업로드에 실패했습니다. 다시 시도해주세요");
+    }
+
+    res = await fetch(data.presigned_url, {
+      method: "PUT",
+      headers: { "Content-Type": file.type },
+      body: file,
+    });
+
+    if (!res.ok) {
+      return setErrorImage("사진 업로드에 실패했습니다. 다시 시도해주세요");
+    }
+    setProfileURL(data.public_url);
+    setErrorImage("");
   };
 
   const handleChangeNickname = (e) => {
@@ -117,18 +128,26 @@ function MemberInfo({ user, setUserData }) {
             <h1>회원정보 수정</h1>
           </div>
           <div className="member-info-profile-box">
-            <div className="profile-photo" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
-              {user && <img src={profileURL} />}
-              {isHovered && (
-                <label className="profile-edit" htmlFor="inputFile">
-                  <ImageSearchRounded className="icon" fontSize="large" />
-                </label>
-              )}
-              <input type="file" id="inputFile" onChange={handleChangeProfile} />
+            <div className="flex-row">
+              <div className="profile-photo" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
+                {user && <img src={profileURL} />}
+                {isHovered && (
+                  <label className="profile-edit" htmlFor="inputFile">
+                    <ImageSearchRounded className="icon" fontSize="large" />
+                  </label>
+                )}
+                <input type="file" id="inputFile" onChange={handleChangeProfile} />
+              </div>
+              <div className="profile-nickname">
+                <p>"{user?.nickname || "user"}"님의 회원정보 페이지 입니다.</p>
+              </div>
             </div>
-            <div className="profile-nickname">
-              <p>"{user?.nickname || "user"}"님의 회원정보 페이지 입니다.</p>
-            </div>
+            {errorImage && (
+              <div className="error">
+                <ErrorOutline fontSize="inherit" />
+                {errorImage}
+              </div>
+            )}
           </div>
           <div className="member-info-box">
             <div className="member-id-box">
