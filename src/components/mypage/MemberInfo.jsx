@@ -7,7 +7,7 @@ import FormControl from "@mui/material/FormControl";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormHelperText from "@mui/material/FormHelperText";
-import { userUrl, uploadImgUrl } from "../../apis/apiURLs";
+import { userUrl, uploadImgUrl, presignedUrl } from "../../apis/apiURLs";
 import { Alert, Backdrop, TextField } from "@mui/material";
 import { EditAttributes, ImageSearchRounded } from "@mui/icons-material";
 import { AlertCustom } from "../common/alert/Alerts";
@@ -28,7 +28,7 @@ function MemberInfo({ user, setUserData }) {
       let formData = new FormData();
       formData.append("image_url", e.target.files[0]);
 
-      const res = await fetch(`${uploadImgUrl}`, {
+      const res = await fetch(`${presignedUrl}`, {
         method: "POST",
         credentials: "include",
         body: formData,
