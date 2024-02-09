@@ -23,7 +23,7 @@
       .box {
         position: relative;
         background-color: #f8f9fa;
-        padding: 20px 30px;
+        padding: 18px 24px;
         margin: 0 0 20px 20px;
         width: 260px;
         height: 150px;
@@ -44,6 +44,20 @@
           font-weight: 500;
           margin-top: 14px;
           line-height: 18px;
+          display: flex;
+
+          &.mg-6 {
+            margin-top: 6px;
+          }
+
+          .sub-lable {
+            color: #7e7e7e;
+            width: 60px;
+            flex-shrink: 0;
+          }
+          .undefined {
+            color: #7e7e7e;
+          }
         }
 
         .icon {
@@ -60,6 +74,10 @@
             bottom: 6px;
             right: 6px;
           }
+        }
+
+        &.add .value {
+          font-size: 13px;
         }
       }
     }

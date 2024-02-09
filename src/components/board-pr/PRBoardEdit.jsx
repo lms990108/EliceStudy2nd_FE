@@ -66,7 +66,7 @@ export function PRBoardEditForm({ setInput, handleCancle, post }) {
         end_date: inputEndDate || undefined,
         category: inputCategory,
         play_title: inputPlayTitle,
-        runtime: inputRuntime || 0,
+        runtime: Number(inputRuntime) || 0,
         location: inputLocation || "",
         host: inputHost || "",
       }),
@@ -108,7 +108,8 @@ export function PRBoardEditForm({ setInput, handleCancle, post }) {
   };
 
   const handleChangePlayTitle = (e) => {
-    setInputPlayTitle(e.target.value);
+    if (e.target.value.trim().length > 30) return;
+    setInputPlayTitle(e.target.value.trimStart());
     if (!e.target.value) {
       setErrorPlayTitle("연극명을 입력해주세요.");
     } else {
@@ -122,7 +123,8 @@ export function PRBoardEditForm({ setInput, handleCancle, post }) {
   };
 
   const handleChangeTitle = (e) => {
-    setInputTitle(e.target.value);
+    if (e.target.value.trim().length > 40) return;
+    setInputTitle(e.target.value.trimStart());
     if (e.target.value.length < 3) {
       setErrorTitle("제목을 최소 3자 이상 입력해주세요.");
     } else {
@@ -132,10 +134,22 @@ export function PRBoardEditForm({ setInput, handleCancle, post }) {
 
   const handleChangeContent = (e) => {
     setInputContent(e.target.value);
-    if (e.target.value.length < 3) {
+    if (e.target.value.trim().length < 3) {
       setErrorContent("내용을 최소 3자 이상 입력해주세요.");
     } else {
       setErrorContent("");
+    }
+  };
+
+  const handleChangeLocation = (e) => {
+    if (e.target.value.trim().length <= 40) {
+      setInputLocation(e.target.value.trimStart());
+    }
+  };
+
+  const handleChangeHost = (e) => {
+    if (e.target.value.trim().length <= 20) {
+      setInputHost(e.target.value.trimStart());
     }
   };
 
@@ -197,7 +211,7 @@ export function PRBoardEditForm({ setInput, handleCancle, post }) {
     let newImage = Array.from(e.target.files);
     for (let file of newImage) {
       if (file.size > 1024 * 1024 * 5) {
-        error = "사진은 최대 5MB까지 업로드 가능합니다.\n";
+        error = "사진은 최대 5MB까지 업로드 가능합니다.";
         continue;
       }
       const data = await uploadImage(file);
@@ -222,11 +236,17 @@ export function PRBoardEditForm({ setInput, handleCancle, post }) {
     setImageURL(newImageURL);
   };
 
-  const handleChangeTag = (e) => {
+  const handleOnKeyDownTag = (e) => {
     if (e.keyCode === 13) {
       if (!inputTag) return;
       setTagList((cur) => [...cur, inputTag]);
       setInputTag("");
+    }
+  };
+
+  const handleChangeTag = (e) => {
+    if (e.target.value.trim().length <= 15) {
+      setInputTag(e.target.value.trimStart());
     }
   };
 
@@ -246,7 +266,8 @@ export function PRBoardEditForm({ setInput, handleCancle, post }) {
   }, [inputStartDate, inputEndDate]);
 
   useEffect(() => {
-    if (inputTitle || inputContent || imageURL || inputTag || inputPlayTitle || inputLocation || inputHost || inputRuntime || inputStartDate || inputEndDate) setInput(true);
+    if (inputTitle || inputContent || imageURL || inputTag || tagList || inputPlayTitle || inputLocation || inputHost || inputRuntime || inputStartDate || inputEndDate)
+      setInput(true);
     else setInput(false);
   }, [inputTitle, inputContent, imageURL, inputTag, inputPlayTitle, inputLocation, inputHost, inputRuntime, inputStartDate, inputEndDate]);
 
@@ -270,7 +291,8 @@ export function PRBoardEditForm({ setInput, handleCancle, post }) {
         <div className="flex-box title">
           <div className="input">
             <label htmlFor="play-title">
-              연극명<span className="star">*</span>
+              {inputCategory === "연극" ? "연극명" : "행사명"}
+              <span className="star">*</span>
             </label>
             <input
               type="text"
@@ -279,7 +301,7 @@ export function PRBoardEditForm({ setInput, handleCancle, post }) {
               value={inputPlayTitle}
               onChange={handleChangePlayTitle}
               maxLength={30}
-              placeholder="연극명을 작성해 주세요."
+              placeholder={`${inputCategory === "연극" ? "연극명" : "행사명"}을 작성해 주세요.`}
               required
             />
           </div>
@@ -289,30 +311,14 @@ export function PRBoardEditForm({ setInput, handleCancle, post }) {
         <div className="flex-box">
           <div className="input">
             <label htmlFor="location">장소</label>
-            <input
-              type="text"
-              id="location"
-              name="location"
-              value={inputLocation}
-              onChange={(e) => setInputLocation(e.target.value)}
-              maxLength={30}
-              placeholder="장소를 작성해 주세요."
-            />
+            <input type="text" id="location" name="location" value={inputLocation} onChange={handleChangeLocation} maxLength={40} placeholder="장소를 작성해 주세요." />
           </div>
         </div>
 
         <div className="flex-box">
           <div className="input">
             <label htmlFor="host">주최</label>
-            <input
-              type="text"
-              id="host"
-              name="host"
-              value={inputHost}
-              onChange={(e) => setInputHost(e.target.value)}
-              maxLength={30}
-              placeholder="주최자 또는 기관을 작성해 주세요."
-            />
+            <input type="text" id="host" name="host" value={inputHost} onChange={handleChangeHost} maxLength={20} placeholder="주최자 또는 기관을 작성해 주세요." />
           </div>
         </div>
 
@@ -381,7 +387,7 @@ export function PRBoardEditForm({ setInput, handleCancle, post }) {
           <label htmlFor="title">
             글 제목<span className="star">*</span>
           </label>
-          <input type="text" id="title" name="title" value={inputTitle} onChange={handleChangeTitle} maxLength={30} placeholder="제목을 작성해 주세요." required />
+          <input type="text" id="title" name="title" value={inputTitle} onChange={handleChangeTitle} maxLength={40} placeholder="제목을 작성해 주세요." required />
         </div>
         {handleErrorPlaceholder(errorTitle)}
       </div>
@@ -401,11 +407,11 @@ export function PRBoardEditForm({ setInput, handleCancle, post }) {
             type="text"
             id="tags"
             name="tags"
-            onKeyDown={handleChangeTag}
+            onKeyDown={handleOnKeyDownTag}
             value={inputTag}
-            onChange={(e) => setInputTag(e.target.value)}
+            onChange={handleChangeTag}
             placeholder="엔터를 입력하여 태그를 등록할 수 있습니다."
-            maxLength={16}
+            maxLength={15}
           />
         </div>
         {tagList && (

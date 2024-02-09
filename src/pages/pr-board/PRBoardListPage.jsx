@@ -29,7 +29,7 @@ export function PRBoardListPage() {
 
   const getBannerList = async () => {
     let newList = await getBestPromotionPlay();
-    setBannerList(newList.slice(0, 4));
+    setBannerList(newList.slice(0, 5));
   };
 
   const addBoardList = (newList) => {
@@ -106,13 +106,35 @@ export function PRBoardListPage() {
               <div className="left-box">
                 <div className="sub-title">인기 소규모 연극</div>
                 <h2 className="title">{bannerList[bannerIndex]?.play_title}</h2>
-                <div className="date">
-                  {bannerList[bannerIndex].start_date && <TimeFormat time={bannerList[bannerIndex].start_date} />}
-                  {" ~ "}
-                  {bannerList[bannerIndex].end_date && <TimeFormat time={bannerList[bannerIndex].end_date} />}
-                </div>
+                <div className="ellipsis">{bannerList[bannerIndex]?.title}</div>
+
                 <div className="content">
-                  <div className="ellipsis">{bannerList[bannerIndex]?.title}</div>
+                  {bannerList[bannerIndex].start_date && bannerList[bannerIndex].end_date && (
+                    <div className="date">
+                      <span className="lable">공연기간</span>
+                      {bannerList[bannerIndex].start_date && <TimeFormat time={bannerList[bannerIndex].start_date} />}
+                      {" ~ "}
+                      {bannerList[bannerIndex].end_date && <TimeFormat time={bannerList[bannerIndex].end_date} />}
+                    </div>
+                  )}
+                  {bannerList[bannerIndex].location && (
+                    <div>
+                      <span className="lable">장소</span>
+                      {bannerList[bannerIndex].location}
+                    </div>
+                  )}
+                  {bannerList[bannerIndex].host && (
+                    <div>
+                      <span className="lable">주최</span>
+                      {bannerList[bannerIndex].host}
+                    </div>
+                  )}
+                  {!bannerList[bannerIndex].runtime || (
+                    <div>
+                      <span className="lable">런타임</span>
+                      {bannerList[bannerIndex].runtime} 분
+                    </div>
+                  )}
                 </div>
                 <div className="footer">
                   <VisibilityOutlined sx={{ fontSize: 20 }} />
