@@ -16,6 +16,8 @@ export function InputAdditionalInfo() {
   const [nicknameInfo, setNicknameInfo] = useState(null);
   // 프로필 이미지
   const [selectedImg, setSelectedImg] = useState(null);
+  // 삭제해야 할 이미지
+  const [toDeleteImg, setToDeleteImg] = useState([]);
   // 선호 지역
   const [selectedRegion, setSelectedRegion] = useState("서울");
 
@@ -51,6 +53,7 @@ export function InputAdditionalInfo() {
               setNicknameInfo={setNicknameInfo}
               profileUrl={info.profileUrl}
               user_id={info.id}
+              setToDeleteImg={setToDeleteImg}
             />
             <PreferredRegionsArea
               selectedRegion={selectedRegion}
@@ -63,6 +66,7 @@ export function InputAdditionalInfo() {
                 selectedImg,
                 selectedRegion,
                 socialProvider: info.socialProvider,
+                toDeleteImg,
               }}
             />
           </main>

@@ -9,6 +9,7 @@ export default function UserInfoArea({
   setNicknameInfo,
   profileUrl,
   user_id,
+  setToDeleteImg,
 }) {
   return (
     <>
@@ -17,6 +18,7 @@ export default function UserInfoArea({
           selectedImg={selectedImg}
           setSelectedImg={setSelectedImg}
           profileUrl={profileUrl}
+          setToDeleteImg={setToDeleteImg}
         />
         <NicknameContainer
           nicknameInfo={nicknameInfo}

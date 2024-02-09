@@ -7,6 +7,7 @@ export default function ProfileImgContainer({
   selectedImg,
   setSelectedImg,
   profileUrl,
+  setToDeleteImg,
 }) {
   const [alert, setAlert] = useState(null);
 
@@ -32,6 +33,7 @@ export default function ProfileImgContainer({
         "https://dailytopia2.shop/api/presigned-urls",
         {
           method: "POST",
+          credentials: "include",
           headers: {
             "Content-Type": "application/json",
           },
@@ -44,6 +46,7 @@ export default function ProfileImgContainer({
         const { presigned_url, public_url } = data;
         const uploadRes = await fetch(presigned_url, {
           method: "PUT",
+          credentials: "include",
           headers: {
             "Content-Type": file.type,
           },
@@ -79,7 +82,6 @@ export default function ProfileImgContainer({
         });
       }
     } catch (err) {
-      console.log(err);
       setAlert({
         severity: "error",
         title: "사진 등록 실패",
@@ -96,10 +98,14 @@ export default function ProfileImgContainer({
   };
 
   const handleBasicImgClick = () => {
+    if (selectedImg !== profileUrl && selectedImg !== "/basic-profile-img.png")
+      setToDeleteImg((pre) => [...pre, selectedImg]);
     setSelectedImg("/basic-profile-img.png");
   };
 
   const profileImgReset = () => {
+    if (selectedImg !== profileUrl && selectedImg !== "/basic-profile-img.png")
+      setToDeleteImg((pre) => [...pre, selectedImg]);
     setSelectedImg(profileUrl);
   };
 
@@ -122,7 +128,14 @@ export default function ProfileImgContainer({
         <input
           type="file"
           ref={imgInput}
-          onChange={(e) => getPresignedUrl(e.target.files[0])}
+          onChange={(e) => {
+            if (
+              selectedImg !== profileUrl &&
+              selectedImg !== "/basic-profile-img.png"
+            )
+              setToDeleteImg((pre) => [...pre, selectedImg]);
+            getPresignedUrl(e.target.files[0]);
+          }}
         />
         <div className="profile-img" onClick={() => handleProfileImgClick()}>
           {selectedImg === profileUrl ? (
