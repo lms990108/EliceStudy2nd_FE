@@ -14,7 +14,7 @@ export function BoardRightContainer() {
   const params = useParams();
 
   const getStoreViewList = () => {
-    const recentViewPosts = JSON.parse(localStorage.getItem("recentViewPosts"));
+    const recentViewPosts = JSON.parse(localStorage.getItem("recentViewPosts")) || [];
     setViewList(recentViewPosts);
   };
 
