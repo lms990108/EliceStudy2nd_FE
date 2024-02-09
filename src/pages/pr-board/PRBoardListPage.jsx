@@ -10,35 +10,42 @@ import ServerError from "../../components/common/state/ServerError";
 import Empty from "../../components/common/state/Empty";
 import { ArrowBackIosRounded, ArrowForwardIosRounded, SmsOutlined, ThumbUpOutlined, VisibilityOutlined } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom/dist";
-
-const MAX_BANNER_INDEX = 3;
+import getBestPromotionPlay from "../../utils/getBestPromotionPlay";
 
 export function PRBoardListPage() {
   const [boardList, setBoardList] = useState([]);
   const [totalCnt, setTotalCnt] = useState(0);
   const [page, setPage] = useState(1);
   const [state, setState] = useState("loading");
-  const [scrollRef, inView] = useInView();
-  const [bannerIndex, setBannerIndex] = useState(0);
-  const [selected, setSelected] = useState("");
+  const [category, setCategory] = useState("");
   const [sort, setSort] = useState("promotion_number desc");
+
+  const [bannerList, setBannerList] = useState([]);
+  const [bannerIndex, setBannerIndex] = useState(0);
+
+  const [scrollRef, inView] = useInView();
   const nav = useNavigate();
+
+  const getBannerList = async () => {
+    let newList = await getBestPromotionPlay();
+    setBannerList(newList.slice(0, 4));
+  };
 
   const addBoardList = (newList) => {
     setBoardList((cur) => [...cur, ...newList]);
   };
 
-  const getPage = async () => {
+  const getPage = async (curPage, method) => {
     setState("loading");
     const [by, order] = sort.split(" ");
-    const res = await fetch(`${promotionUrl}?page=${page}&limit=20&sortBy=${by}&sortOrder=${order}`);
+    const res = await fetch(`${promotionUrl}?page=${curPage || page}&limit=20&sortBy=${by}&sortOrder=${order}&category=${category}`);
     const data = await res.json();
     console.log(data);
 
     if (res.ok) {
       if (data.totalCount) {
-        addBoardList(data.promotions);
-        setPage(page + 1);
+        method === "add" ? addBoardList(data.promotions) : setBoardList(data.promotions);
+        setPage(curPage + 1);
         setTotalCnt(data.totalCount);
       }
       setState("hasValue");
@@ -49,14 +56,14 @@ export function PRBoardListPage() {
 
   const handleClickLeftArrow = () => {
     if (bannerIndex <= 0) {
-      setBannerIndex(MAX_BANNER_INDEX);
+      setBannerIndex(bannerList.length - 1);
     } else {
       setBannerIndex((cur) => cur - 1);
     }
   };
 
   const handleClickRightArrow = () => {
-    if (bannerIndex >= MAX_BANNER_INDEX) {
+    if (bannerIndex >= bannerList.length - 1) {
       setBannerIndex(0);
     } else {
       setBannerIndex((cur) => cur + 1);
@@ -64,7 +71,7 @@ export function PRBoardListPage() {
   };
 
   const handleClickDivision = (e) => {
-    setSelected(e.target.id);
+    setCategory(e.target.id);
   };
 
   const handleFormBtn = () => {
@@ -75,41 +82,45 @@ export function PRBoardListPage() {
     if (inView) {
       // 총 개수 받아서 page 넘어가면 api 호출 X
       if (totalCnt && boardList.length >= totalCnt) return;
-      getPage();
+      getPage(page, add);
     }
   }, [inView]);
 
   useEffect(() => {
-    getPage();
-  }, [sort, selected]);
+    getPage(1);
+  }, [sort, category]);
+
+  useEffect(() => {
+    getBannerList();
+  }, []);
 
   return (
     <div className="pr-board-page page-margin">
       <BoardListHeader header="홍보게시판" />
-      {!boardList.length || (
+      {!bannerList.length || (
         <div className="best-box">
-          <img className="bg-img" src={boardList[bannerIndex]?.image_url[0] || "https://elice-5th.s3.amazonaws.com/promotions%252F1707380134216_teeny-box-icon.png"} />
+          <img className="bg-img" src={bannerList[bannerIndex]?.image_url[0] || "https://elice-5th.s3.amazonaws.com/promotions%252F1707380134216_teeny-box-icon.png"} />
           <div className="bg-mask">
             <div className="contents-container">
               <div className="left-box">
                 <div className="sub-title">인기 소규모 연극</div>
-                <h2 className="title">{boardList[bannerIndex]?.play_title}</h2>
+                <h2 className="title">{bannerList[bannerIndex]?.play_title}</h2>
                 <div className="date">
-                  {boardList[bannerIndex]?.start_date?.split("T")[bannerIndex]} ~ {boardList[bannerIndex]?.end_date?.split("T")[bannerIndex]}
+                  {bannerList[bannerIndex]?.start_date?.split("T")[bannerIndex]} ~ {bannerList[bannerIndex]?.end_date?.split("T")[bannerIndex]}
                 </div>
                 <div className="content">
-                  <div className="ellipsis">{boardList[bannerIndex]?.title}</div>
+                  <div className="ellipsis">{bannerList[bannerIndex]?.title}</div>
                 </div>
                 <div className="footer">
                   <VisibilityOutlined sx={{ fontSize: 20 }} />
-                  <span>{boardList[bannerIndex]?.views || 0}</span>
+                  <span>{bannerList[bannerIndex]?.views || 0}</span>
                   <ThumbUpOutlined sx={{ fontSize: 20 }} />
-                  <span>{boardList[bannerIndex]?.likes || 0}</span>
+                  <span>{bannerList[bannerIndex]?.likes || 0}</span>
                   <SmsOutlined sx={{ fontSize: 20 }} />
-                  <span>{boardList[bannerIndex]?.comments || 0}</span>
+                  <span>{bannerList[bannerIndex]?.comments || 0}</span>
                 </div>
               </div>
-              <img className="poster" src={boardList[bannerIndex]?.image_url[0] || "https://elice-5th.s3.amazonaws.com/promotions%252F1707380134216_teeny-box-icon.png"} />
+              <img className="poster" src={bannerList[bannerIndex]?.image_url[0] || "https://elice-5th.s3.amazonaws.com/promotions%252F1707380134216_teeny-box-icon.png"} />
             </div>
           </div>
           <ArrowBackIosRounded className="arrow-left pointer" onClick={handleClickLeftArrow} />
@@ -118,13 +129,13 @@ export function PRBoardListPage() {
       )}
       <div className="header flex-box">
         <div className="division flex-box">
-          <div id="" className={selected === "" ? "selected" : ""} onClick={handleClickDivision}>
+          <div id="" className={category === "" ? "selected" : ""} onClick={handleClickDivision}>
             전체보기
           </div>
-          <div id="play" className={selected === "play" ? "selected" : ""} onClick={handleClickDivision}>
+          <div id="연극" className={category === "연극" ? "selected" : ""} onClick={handleClickDivision}>
             연극
           </div>
-          <div id="athor" className={selected === "athor" ? "selected" : ""} onClick={handleClickDivision}>
+          <div id="기타" className={category === "기타" ? "selected" : ""} onClick={handleClickDivision}>
             기타
           </div>
         </div>

@@ -180,6 +180,7 @@ export function PRBoardEditForm({ setInput, handleCancle, post }) {
     } else {
       setErrorMainImage("사진 업로드에 실패했습니다. 다시 시도해주세요");
     }
+    e.target.value = null;
   };
 
   const handleRemoveMainImage = async (e) => {
@@ -211,6 +212,7 @@ export function PRBoardEditForm({ setInput, handleCancle, post }) {
 
     setImageURL([...imageURL, ...newImg]);
     setErrorImage(error);
+    e.target.value = null;
   };
 
   // 선택한 이미지 하나씩 삭제하는 기능
