@@ -43,6 +43,7 @@ export default function PreferredRegionsArea({
                 }
                 sx={{ marginRight: "50px" }}
                 label={region}
+                key={idx}
               />
             ))}
           </FormGroup>

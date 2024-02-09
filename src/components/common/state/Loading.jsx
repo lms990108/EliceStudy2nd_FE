@@ -1,7 +1,8 @@
+import Modal from "@mui/material/Modal";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 
-export default function Loading() {
+export default function Loading({ isLogin }) {
   const style = {
     position: "absolute",
     top: "50%",
@@ -16,8 +17,18 @@ export default function Loading() {
   };
 
   return (
-    <Box sx={style}>
-      <CircularProgress color="secondary" />
-    </Box>
+    <>
+      {isLogin ? (
+        <Box sx={style}>
+          <CircularProgress color="secondary" />
+        </Box>
+      ) : (
+        <Modal open={true}>
+          <Box sx={style}>
+            <CircularProgress color="secondary" />
+          </Box>
+        </Modal>
+      )}
+    </>
   );
 }

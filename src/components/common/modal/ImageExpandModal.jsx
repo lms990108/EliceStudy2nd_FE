@@ -28,6 +28,7 @@ export default function ImageExpandModal({ imgSrc, setClickedPhoto }) {
     maxHeight: "100%",
     width: "500px",
     height: "450px",
+    objectFit: "cover",
   };
 
   const closeIconStyle = {

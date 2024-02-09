@@ -30,7 +30,12 @@ export default function Kakao() {
     <>
       {alert && (
         <>
-          {alert.title !== "정보 제공 동의 필수" ? <Loading /> : null}
+          {alert.title === "정보 제공 동의 필수" ? null : alert.title ===
+            "로그인 성공" ? (
+            <Loading isLogin={true} />
+          ) : (
+            <Loading />
+          )}
           <AlertCustom
             open={true}
             title={alert.title}

@@ -6,8 +6,14 @@ import { useNavigate } from "react-router-dom";
 
 export default function SubmitBtnsArea({ additionalUserInfo }) {
   const navigate = useNavigate();
-  const { id, nicknameInfo, selectedImg, selectedRegion, socialProvider } =
-    additionalUserInfo;
+  const {
+    id,
+    nicknameInfo,
+    selectedImg,
+    selectedRegion,
+    socialProvider,
+    toDeleteImg,
+  } = additionalUserInfo;
 
   const [alert, setAlert] = useState(null);
 
@@ -31,6 +37,7 @@ export default function SubmitBtnsArea({ additionalUserInfo }) {
     formData.append("social_provider", socialProvider);
     formData.append("nickname", nicknameInfo.nickname);
     formData.append("interested_area", selectedRegion);
+    formData.append("imageUrlsToDelete", toDeleteImg);
 
     fetch("https://dailytopia2.shop/api/users", {
       method: "POST",
