@@ -20,6 +20,15 @@
         margin-right: 30px;
         font-size: 16px;
       }
+
+      div {
+        position: relative;
+        top: 5px;
+
+        p {
+          margin-top: 7px;
+        }
+      }
     }
 
     .review-author-box {
