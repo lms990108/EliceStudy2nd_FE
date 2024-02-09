@@ -6,8 +6,10 @@ export default function SearchResultTab({ selectedTabMenu, setSelectedTabMenu })
 
   const handleChangeTabMenu = (menu) => {
     setSelectedTabMenu(menu);
-    searchParams.delete("type");
-    setSearchParams(searchParams);
+    if (searchParams.get("type") !== "tag") {
+      searchParams.delete("type");
+      setSearchParams(searchParams);
+    }
   };
 
   return (

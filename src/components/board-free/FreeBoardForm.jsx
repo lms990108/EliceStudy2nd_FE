@@ -29,6 +29,7 @@ export function FreeBoardForm({ setInput, handleCancle }) {
       body: JSON.stringify({
         title: inputTitle,
         content: inputContent,
+        tags: tagList,
       }),
     });
     const data = await res.json();
