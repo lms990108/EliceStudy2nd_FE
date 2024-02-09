@@ -7,6 +7,7 @@ import { Checkbox, CircularProgress, Pagination, Tooltip, Typography } from "@mu
 import { Link } from "react-router-dom";
 import ServerError from "../common/state/ServerError";
 import Empty from "../common/state/Empty";
+import TimeFormat from "../common/time/TimeFormat";
 
 function MyPickList({ user }) {
   const [bookmarks, setBookmarks] = useState([]);
@@ -127,7 +128,9 @@ function MyPickList({ user }) {
                           </Link>
                           <p className="place">{location || "극장 정보"}</p>
                           <p>
-                            {startDate?.split("T")[0] || "2024.01.01"} ~ {endDate?.split("T")[0] || "2024.01.01"}
+                            {startDate && <TimeFormat time={startDate} />}
+                            {" ~ "}
+                            {endDate && <TimeFormat time={endDate} />}
                           </p>
                           <div className="reservation-btn">
                             {(state || "") !== "공연완료" ? (

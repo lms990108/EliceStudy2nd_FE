@@ -8,6 +8,7 @@ import { postUrl, promotionUrl } from "../../apis/apiURLs";
 import { format } from "date-fns";
 import { AlertContext, AppContext } from "../../App";
 import { Backdrop, Button, Tooltip } from "@mui/material";
+import LiveTimeDiff from "../common/time/LiveTimeDiff";
 
 export function PostTop({ user, type, post, commentsCnt }) {
   const [openURLCopyAlert, setOpenURLCopyAlert] = useState(false);
@@ -94,7 +95,7 @@ export function PostTop({ user, type, post, commentsCnt }) {
           <div className="flex-box">
             <div className="user-id">{user.nickname}</div>
             <div className="date">
-              {post.createdAt?.split("T")[0]}
+              <LiveTimeDiff time={post.createdAt} />
               <span className="dot">•</span>
               <div className="view-cnt">
                 <VisibilityOutlined sx={{ fontSize: 16 }} />

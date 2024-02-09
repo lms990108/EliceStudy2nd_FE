@@ -7,15 +7,9 @@ import PlayReviewListBox from "./play-review-metrials/PlayReviewListBox";
 import PaginationBox from "./play-review-metrials/PaginationBox";
 import { AlertCustom } from "../common/alert/Alerts";
 import CircularProgress from "@mui/material/CircularProgress";
+import dayjs from "dayjs";
 
-export default function PlayReview({
-  showId,
-  isLoggedIn,
-  author,
-  averageRate,
-  state,
-  userId,
-}) {
+export default function PlayReview({ showId, isLoggedIn, author, averageRate, state, userId }) {
   const scrollRef = useRef(null);
 
   // 로딩중 여부
@@ -37,12 +31,8 @@ export default function PlayReview({
 
   // 리뷰 가져오기
   const getReviews = () => {
-    console.log(
-      `https://dailytopia2.shop/api/reviews?showId=${showId}&order=${sortStandard}&page=${curPage}&limit=10`
-    );
-    fetch(
-      `https://dailytopia2.shop/api/reviews?showId=${showId}&order=${sortStandard}&page=${curPage}&limit=10`
-    )
+    console.log(`https://dailytopia2.shop/api/reviews?showId=${showId}&order=${sortStandard}&page=${curPage}&limit=10`);
+    fetch(`https://dailytopia2.shop/api/reviews?showId=${showId}&order=${sortStandard}&page=${curPage}&limit=10`)
       .then((res) => res.json())
       .then((data) => {
         setReviews(data.data);
@@ -62,9 +52,7 @@ export default function PlayReview({
   // 현재 로그인한 유저가 작성한 리뷰 가져오기
   const getUserReview = () => {
     if (userId) {
-      fetch(
-        `https://dailytopia2.shop/api/reviews?showId=${showId}&userId=${userId}`
-      )
+      fetch(`https://dailytopia2.shop/api/reviews?showId=${showId}&userId=${userId}`)
         .then((res) => res.json())
         .then((data) => {
           let userReviewData = null;
@@ -102,15 +90,7 @@ export default function PlayReview({
 
   return (
     <>
-      {alert && (
-        <AlertCustom
-          title={alert.title}
-          content={alert.content}
-          severity={alert.severity}
-          open={alert.open}
-          onclose={alert.onclose}
-        />
-      )}
+      {alert && <AlertCustom title={alert.title} content={alert.content} severity={alert.severity} open={alert.open} onclose={alert.onclose} />}
       <div className="play-review-container">
         {!isLoading && userReview && reviews && (
           <>
@@ -139,12 +119,7 @@ export default function PlayReview({
               />
             ) : null}
 
-            <PlayReviewHeader
-              count={totalCount}
-              sortStandard={sortStandard}
-              setSortStandard={setSortStandard}
-              setCurPage={setCurPage}
-            />
+            <PlayReviewHeader count={totalCount} sortStandard={sortStandard} setSortStandard={setSortStandard} setCurPage={setCurPage} />
 
             {reviews.length ? (
               <div className="play-review-list">
@@ -152,13 +127,10 @@ export default function PlayReview({
                   <PlayReviewListBox
                     reviewInfo={{
                       isAuthorLogined: author == review.user_nickname,
-                      author: review.user_nickname
-                        ? review.user_nickname
-                        : "작성자",
-                      date: review.created_at.split("T")[0],
+                      author: review.user_nickname ? review.user_nickname : "작성자",
+                      date: dayjs(review.created_at).format("YYYY-MM-DD"),
                       title: review.title,
-                      isContentExsist:
-                        review.content !== "null" && review.content,
+                      isContentExsist: review.content !== "null" && review.content,
                       isPhotoExsist: Boolean(review.image_urls.length),
                       rating: review.rate,
                       photo: review.image_urls,
@@ -172,16 +144,10 @@ export default function PlayReview({
                     key={review._id}
                   />
                 ))}
-                <PaginationBox
-                  curPage={curPage}
-                  setCurPage={setCurPage}
-                  totalCount={totalCount}
-                />
+                <PaginationBox curPage={curPage} setCurPage={setCurPage} totalCount={totalCount} />
               </div>
             ) : (
-              <div className="play-review-not-exsist">
-                리뷰가 존재하지 않습니다.
-              </div>
+              <div className="play-review-not-exsist">리뷰가 존재하지 않습니다.</div>
             )}
           </>
         )}

@@ -4,6 +4,7 @@ import { AppContext } from "../../App";
 import { Backdrop, Button } from "@mui/material";
 import { commentUrl } from "../../apis/apiURLs";
 import { AlertCustom } from "../common/alert/Alerts";
+import LiveTimeDiff from "../common/time/LiveTimeDiff";
 
 export function Comment({ commentData, deleteComment }) {
   const [comment, setComment] = useState(commentData);
@@ -52,7 +53,9 @@ export function Comment({ commentData, deleteComment }) {
           <img className="user-profile-img" src={comment.user_profile_url || "https://elice-5th.s3.amazonaws.com/promotions/1706717302540_KakaoTalk_20240131_164754169_05.jpg"} />
           <div className="flex-box">
             <div className="user-id">{comment.user_nickname}</div>
-            <div className="time">{comment.createdAt}</div>
+            <div className="time">
+              <LiveTimeDiff time={comment.createdAt} />
+            </div>
           </div>
           {userData?.user?.nickname === comment.user_nickname && (
             <>

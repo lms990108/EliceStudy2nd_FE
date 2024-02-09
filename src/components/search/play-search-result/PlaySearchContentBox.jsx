@@ -4,6 +4,7 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Tooltip from "@mui/material/Tooltip";
 import empty_img from "../../../assets/img/empty_img.svg";
+import TimeFormat from "../../common/time/TimeFormat";
 
 export default function PlaySearchContentBox({ showId, imgSrc, location, title, startDate, endDate, price, state }) {
   return (
@@ -18,7 +19,9 @@ export default function PlaySearchContentBox({ showId, imgSrc, location, title, 
           <h3>{title}</h3>
           <p className="location">{location.length >= 30 ? `${location.slice(0, 28)}...` : location}</p>
           <p>
-            {startDate.split("T")[0]} ~ {endDate.split("T")[0]}
+            {startDate && <TimeFormat time={startDate} />}
+            {" ~ "}
+            {endDate && <TimeFormat time={endDate} />}
           </p>
           <p className="price">{price.length >= 45 ? `${price.slice(0, 45)}...` : price}</p>
         </Link>
