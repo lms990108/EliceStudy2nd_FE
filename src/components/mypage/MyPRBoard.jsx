@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import "./MyPRBoard.scss";
 import Button from "@mui/material/Button";
-import { promotionUrl } from "../../apis/apiURLs";
+import { promotionUrl, userUrl } from "../../apis/apiURLs";
 import { CircularProgress } from "@mui/material";
 import { ErrorOutline } from "@mui/icons-material";
 import ServerError from "../common/state/ServerError";
@@ -40,7 +40,7 @@ const columns = [
   },
 ];
 
-function MyPRBoard({ user }) {
+function MyPRBoard({ user, setUserData }) {
   const [posts, setPosts] = useState([]);
   const [state, setState] = useState("loading");
   const [checkedList, setCheckedList] = useState([]);
@@ -75,8 +75,8 @@ function MyPRBoard({ user }) {
         promotionNumbers: checkedList,
       }),
     });
-    const data = await res.json();
-    console.log(data);
+    // const data = await res.json();
+    // console.log(data);
 
     if (res.ok) {
       let newPosts = [...posts];
@@ -86,6 +86,16 @@ function MyPRBoard({ user }) {
       });
 
       setPosts(newPosts);
+    } else if (res.status === 401 || res.status === 403) {
+      const loginRes = await fetch(`${userUrl}`, { credentials: "include" });
+      if (loginRes.ok) {
+        const data = await loginRes.json();
+        setUserData({ isLoggedIn: true, user: data.user });
+        handleClickDeleteBtn();
+      } else {
+        setUserData({ isLoggedIn: false });
+        return nav(`/signup-in`);
+      }
     }
   };
 

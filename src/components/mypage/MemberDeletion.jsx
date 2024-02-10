@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import "./MemberDeletion.scss";
 import Button from "@mui/material/Button";
 import { AlertCustom } from "../common/alert/Alerts";
@@ -6,9 +6,8 @@ import { userUrl } from "../../apis/apiURLs";
 import { useNavigate } from "react-router";
 import { Backdrop, Checkbox } from "@mui/material";
 import { Link } from "react-router-dom";
-import { Check } from "@mui/icons-material";
 
-function MemberDeletion() {
+function MemberDeletion({ user, setUserData }) {
   const [openAlert, setOpenAlert] = useState(false);
   const [checked, setChecked] = useState(false);
   const nav = useNavigate();
@@ -19,7 +18,16 @@ function MemberDeletion() {
     console.log(data);
 
     if (res.ok) {
+      setUserData({ isLoggedIn: false });
       nav(`/`);
+    } else if (res.status === 401 || res.status === 403) {
+      const loginRes = await fetch(`${userUrl}`, { credentials: "include" });
+      if (loginRes.ok) {
+        handleDelete();
+      } else {
+        setUserData({ isLoggedIn: false });
+        return nav(`/signup-in`);
+      }
     }
   };
 

@@ -2,9 +2,9 @@
 import { DataGrid } from "@mui/x-data-grid";
 import "./MyPlayReview.scss";
 import Button from "@mui/material/Button";
-import { reviewUrl } from "../../apis/apiURLs";
+import { reviewUrl, userUrl } from "../../apis/apiURLs";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { CircularProgress } from "@mui/material";
 import ServerError from "../common/state/ServerError";
 import Empty from "../common/state/Empty";
@@ -36,10 +36,11 @@ const columns = [
   { field: "created_at", headerName: "작성 시기", width: 150, renderCell: (data) => <TimeFormat time={data.row.createdAt} type={"time"} /> },
 ];
 
-function MyPlayReview({ user }) {
+function MyPlayReview({ user, setUserData }) {
   const [reviews, setReviews] = useState([]);
   const [checkedList, setCheckedList] = useState([]);
   const [state, setState] = useState("loading");
+  const nav = useNavigate();
 
   const getReviews = async () => {
     setState("loading");
@@ -61,6 +62,7 @@ function MyPlayReview({ user }) {
   };
 
   const handleClickDeleteBtn = async () => {
+    console.log(checkedList);
     const res = await fetch(`${reviewUrl}`, {
       method: "DELETE",
       credentials: "include",
@@ -80,6 +82,16 @@ function MyPlayReview({ user }) {
       });
 
       setReviews(newReviews);
+    } else if (res.status === 401 || res.status === 403) {
+      const loginRes = await fetch(`${userUrl}`, { credentials: "include" });
+      if (loginRes.ok) {
+        const data = await loginRes.json();
+        setUserData({ isLoggedIn: true, user: data.user });
+        handleClickDeleteBtn();
+      } else {
+        setUserData({ isLoggedIn: false });
+        return nav(`/signup-in`);
+      }
     }
   };
 

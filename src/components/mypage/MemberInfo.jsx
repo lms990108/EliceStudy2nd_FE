@@ -1,5 +1,5 @@
 /* 마이페이지 - 회원정보 조회/수정/탈퇴 컴포넌트 */
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./MemberInfo.scss";
 import Button from "@mui/material/Button";
 import Checkbox from "@mui/material/Checkbox";
@@ -11,6 +11,7 @@ import { userUrl, uploadImgUrl, presignedUrl } from "../../apis/apiURLs";
 import { Alert, Backdrop, TextField } from "@mui/material";
 import { EditAttributes, ErrorOutline, ImageSearchRounded } from "@mui/icons-material";
 import { AlertCustom } from "../common/alert/Alerts";
+import { useNavigate } from "react-router-dom";
 
 const regex = /[!@#$%^&*(),.?":{}|<>0-9]/;
 
@@ -23,6 +24,7 @@ function MemberInfo({ user, setUserData }) {
   const [isUnique, setIsUnique] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [openComplete, setOpenComplete] = useState(false);
+  const nav = useNavigate();
 
   const handleChangeProfile = async (e) => {
     setIsHovered(false);
@@ -42,6 +44,16 @@ function MemberInfo({ user, setUserData }) {
     console.log(data);
 
     if (!res.ok) {
+      if (res.status === 401 || res.status === 403) {
+        const loginRes = await fetch(`${userUrl}`, { credentials: "include" });
+        if (loginRes.ok) {
+          const data = await loginRes.json();
+          setUserData({ isLoggedIn: true, user: data.user });
+        } else {
+          setUserData({ isLoggedIn: false });
+          return nav(`/signup-in`);
+        }
+      }
       return setErrorImage("사진 업로드에 실패했습니다. 다시 시도해주세요");
     }
 
@@ -52,6 +64,16 @@ function MemberInfo({ user, setUserData }) {
     });
 
     if (!res.ok) {
+      if (res.status === 401 || res.status === 403) {
+        const loginRes = await fetch(`${userUrl}`, { credentials: "include" });
+        if (loginRes.ok) {
+          const data = await loginRes.json();
+          setUserData({ isLoggedIn: true, user: data.user });
+        } else {
+          setUserData({ isLoggedIn: false });
+          return nav(`/signup-in`);
+        }
+      }
       return setErrorImage("사진 업로드에 실패했습니다. 다시 시도해주세요");
     }
     setProfileURL(data.public_url);
@@ -109,6 +131,16 @@ function MemberInfo({ user, setUserData }) {
       setUserData({ isLoggedIn: true, user: { ...user, ...bodyData } });
       setOpenComplete(true);
       setIsUnique(false);
+    } else if (res.status === 401 || res.status === 403) {
+      const loginRes = await fetch(`${userUrl}`, { credentials: "include" });
+      if (loginRes.ok) {
+        const data = await loginRes.json();
+        setUserData({ isLoggedIn: true, user: data.user });
+        handleSubmit();
+      } else {
+        setUserData({ isLoggedIn: false });
+        return nav(`/signup-in`);
+      }
     }
   };
 

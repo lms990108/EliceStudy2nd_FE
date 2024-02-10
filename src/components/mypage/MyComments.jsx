@@ -3,11 +3,11 @@ import { useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import "./MyComments.scss";
 import Button from "@mui/material/Button";
-import { commentUrl } from "../../apis/apiURLs";
+import { commentUrl, userUrl } from "../../apis/apiURLs";
 import { CircularProgress } from "@mui/material";
 import ServerError from "../common/state/ServerError";
 import Empty from "../common/state/Empty";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import TimeFormat from "../common/time/TimeFormat";
 
 const columns = [
@@ -17,10 +17,11 @@ const columns = [
   { field: "createdAt", headerName: "작성 시기", width: 150, renderCell: (data) => <TimeFormat time={data.row.createdAt} type={"time"} /> },
 ];
 
-function MyComments() {
+function MyComments({ user, setUserData }) {
   const [comments, setComments] = useState([]);
   const [state, setState] = useState("loading");
   const [checkedList, setCheckedList] = useState([]);
+  const nav = useNavigate();
 
   const getComments = async () => {
     setState("loading");
@@ -60,6 +61,16 @@ function MyComments() {
       });
 
       setComments(newComments);
+    } else if (res.status === 401 || res.status === 403) {
+      const loginRes = await fetch(`${userUrl}`, { credentials: "include" });
+      if (loginRes.ok) {
+        const data = await loginRes.json();
+        setUserData({ isLoggedIn: true, user: data.user });
+        handleClickDeleteBtn();
+      } else {
+        setUserData({ isLoggedIn: false });
+        return nav(`/signup-in`);
+      }
     }
   };
 

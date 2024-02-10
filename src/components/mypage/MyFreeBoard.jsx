@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import "./MyFreeBoard.scss";
 import Button from "@mui/material/Button";
-import { postUrl } from "../../apis/apiURLs";
+import { postUrl, userUrl } from "../../apis/apiURLs";
 import { CircularProgress } from "@mui/material";
 import ServerError from "../common/state/ServerError";
 import Empty from "../common/state/Empty";
@@ -38,7 +38,7 @@ const columns = [
   },
 ];
 
-function MyFreeBoard({ user }) {
+function MyFreeBoard({ user, setUserData }) {
   const [posts, setPosts] = useState([]);
   const [state, setState] = useState("loading");
   const [checkedList, setCheckedList] = useState([]);
@@ -72,8 +72,8 @@ function MyFreeBoard({ user }) {
         postNumbers: checkedList,
       }),
     });
-    const data = await res.json();
-    console.log(data);
+    // const data = await res.json();
+    // console.log(data);
 
     if (res.ok) {
       let newPosts = [...posts];
@@ -83,6 +83,16 @@ function MyFreeBoard({ user }) {
       });
 
       setPosts(newPosts);
+    } else if (res.status === 401 || res.status === 403) {
+      const loginRes = await fetch(`${userUrl}`, { credentials: "include" });
+      if (loginRes.ok) {
+        const data = await loginRes.json();
+        setUserData({ isLoggedIn: true, user: data.user });
+        handleClickDeleteBtn();
+      } else {
+        setUserData({ isLoggedIn: false });
+        return nav(`/signup-in`);
+      }
     }
   };
 
