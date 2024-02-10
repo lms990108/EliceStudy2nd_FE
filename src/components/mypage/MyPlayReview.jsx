@@ -64,7 +64,6 @@ function MyPlayReview({ user, setUserData }) {
   };
 
   const handleDelete = async () => {
-    console.log(checkedList);
     const res = await fetch(`${reviewUrl}`, {
       method: "DELETE",
       credentials: "include",
@@ -78,10 +77,10 @@ function MyPlayReview({ user, setUserData }) {
 
     if (res.ok) {
       let newReviews = [...reviews];
-      checkedList.map((id) => {
-        let index = reviews.findIndex((review) => review.id === id);
+      for (let id of checkedList) {
+        let index = newReviews.findIndex((review) => review.id === id);
         newReviews.splice(index, 1);
-      });
+      }
 
       setReviews(newReviews);
     } else if (res.status === 401 || res.status === 403) {

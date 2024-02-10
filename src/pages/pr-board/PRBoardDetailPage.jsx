@@ -78,6 +78,7 @@ export function PRBoardDetailPage() {
         const data = await loginRes.json();
         setUserData({ isLoggedIn: true, user: data.user });
       } else {
+        setUserData({ isLoggedIn: false });
         setOpenLoginAlertBack(true);
       }
     }

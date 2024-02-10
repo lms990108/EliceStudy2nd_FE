@@ -58,7 +58,7 @@ function MyComments({ user, setUserData }) {
     if (res.ok) {
       let newComments = [...comments];
       checkedList.map((id) => {
-        let index = comments.findIndex((comment) => comment.id === id);
+        let index = newComments.findIndex((comment) => comment.id === id);
         newComments.splice(index, 1);
       });
 

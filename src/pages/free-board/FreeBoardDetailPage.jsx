@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import FreeBoardPost from "../../components/board-free/FreeBoardPost";
 import "./FreeBoardDetailPage.scss";
 import { BoardSecondHeader, BoardNav, CommentForm, CommentsList } from "../../components/board";
 import { useNavigate, useParams } from "react-router-dom";
-import { commentUrl, postUrl } from "../../apis/apiURLs";
+import { commentUrl, postUrl, userUrl } from "../../apis/apiURLs";
 import { Button, CircularProgress } from "@mui/material";
 import { BoardRightContainer } from "../../components/board/BoardRightContainer";
 import setStoreViewList from "../../utils/setStoreRecentViewList";
 import { NotFoundPage } from "../errorPage/NotFoundPage";
+import { AlertContext, AppContext } from "../../App";
 
 export function FreeBoardDetailPage() {
   const [post, setPost] = useState({});
@@ -18,6 +19,8 @@ export function FreeBoardDetailPage() {
   const [commentState, setCommentState] = useState("loading");
   const nav = useNavigate();
   const params = useParams();
+  const { userData, setUserData } = useContext(AppContext);
+  const { setOpenLoginAlertBack } = useContext(AlertContext);
 
   const getPost = async () => {
     setState("loading");
@@ -75,6 +78,7 @@ export function FreeBoardDetailPage() {
         const data = await loginRes.json();
         setUserData({ isLoggedIn: true, user: data.user });
       } else {
+        setUserData({ isLoggedIn: false });
         setOpenLoginAlertBack(true);
       }
     }
@@ -132,7 +136,7 @@ export function FreeBoardDetailPage() {
               </div>
             )}
           </div>
-          <BoardRightContainer post={post} />
+          {/* <BoardRightContainer post={post} /> */}
         </>
       )}
     </div>

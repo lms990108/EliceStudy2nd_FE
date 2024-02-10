@@ -80,7 +80,7 @@ function MyFreeBoard({ user, setUserData }) {
     if (res.ok) {
       let newPosts = [...posts];
       checkedList.map((id) => {
-        let index = posts.findIndex((post) => post.id === id);
+        let index = newPosts.findIndex((post) => post.id === id);
         newPosts.splice(index, 1);
       });
 
