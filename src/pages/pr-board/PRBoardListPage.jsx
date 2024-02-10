@@ -33,7 +33,13 @@ export function PRBoardListPage() {
   };
 
   const addBoardList = (newList) => {
-    setBoardList((cur) => [...cur, ...newList]);
+    const uniqueList = [...boardList, ...newList].reduce(function (newArr, current) {
+      if (newArr.findIndex(({ _id }) => _id === current._id) === -1) {
+        newArr.push(current);
+      }
+      return newArr;
+    }, []);
+    setBoardList(uniqueList);
   };
 
   const getPage = async (curPage, method) => {
