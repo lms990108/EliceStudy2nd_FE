@@ -5,6 +5,7 @@ import { Backdrop, Button } from "@mui/material";
 import { commentUrl } from "../../apis/apiURLs";
 import { AlertCustom } from "../common/alert/Alerts";
 import LiveTimeDiff from "../common/time/LiveTimeDiff";
+import default_user_img from "../../assets/img/default_user_img.svg";
 
 export function Comment({ commentData, deleteComment }) {
   const [comment, setComment] = useState(commentData);
@@ -50,7 +51,7 @@ export function Comment({ commentData, deleteComment }) {
     <>
       <div className="comment-box" id={`comment${comment._id}`}>
         <div className="top">
-          <img className="user-profile-img" src={comment.user_profile_url || "https://elice-5th.s3.amazonaws.com/promotions/1706717302540_KakaoTalk_20240131_164754169_05.jpg"} />
+          <img className="user-profile-img" src={comment.user_profile_url || default_user_img} onError={(e) => (e.target.src = default_user_img)} />
           <div className="flex-box">
             <div className="user-id">{comment.user_nickname}</div>
             <div className="time">

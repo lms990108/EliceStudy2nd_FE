@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import "./FreeBoardList.scss";
 import { Link, useNavigate } from "react-router-dom";
-import { format } from "date-fns";
 import { SmsOutlined, ThumbUpOutlined, VisibilityOutlined } from "@mui/icons-material";
+import LiveTimeDiff from "../common/time/LiveTimeDiff";
+import default_user_img from "../../assets/img/default_user_img.svg";
 
 export default function FreeBoardList({ boardList }) {
   const nav = useNavigate();
@@ -20,10 +20,12 @@ export default function FreeBoardList({ boardList }) {
         <div className="content-box" key={post._id} id={post.post_number}>
           <div className="flex-box top">
             <div className="user">
-              {post.user ? <img className="user-img" src={post.user.profile_url} /> : <AccountCircleIcon sx={{ fontSize: 24 }} />}
-              <span>{post.user?.nickname || "nickname"}</span>
+              <img className="user-img" src={post.user?.profile_url || ""} onError={(e) => (e.target.src = default_user_img)} />
+              <span>{post.user?.nickname || "익명"}</span>
             </div>
-            <div className="time">{format(new Date(post.createdAt), "yyyy-MM-dd")}</div>
+            <div className="time">
+              <LiveTimeDiff time={post.createdAt} />
+            </div>
           </div>
           <div>
             <Link className="title" to={`/community/${post.post_number}`}>

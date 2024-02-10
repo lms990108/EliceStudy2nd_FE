@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import PRBoardPost from "../../components/board-pr/PRBoardPost";
 import { BoardSecondHeader, BoardNav, CommentForm, CommentsList } from "../../components/board";
 import "./PRBoardDetailPage.scss";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { commentUrl, promotionUrl } from "../../apis/apiURLs";
+import { commentUrl, promotionUrl, userUrl } from "../../apis/apiURLs";
 import { Button } from "@mui/material";
 import { BoardRightContainer } from "../../components/board/BoardRightContainer";
 import setStoreViewList from "../../utils/setStoreRecentViewList";
 import { NotFoundPage } from "../errorPage/NotFoundPage";
+import { AlertContext, AppContext } from "../../App";
 
 export function PRBoardDetailPage() {
   const [post, setPost] = useState({});
@@ -16,6 +17,8 @@ export function PRBoardDetailPage() {
   const [page, setPage] = useState(1);
   const nav = useNavigate();
   const params = useParams();
+  const { userData, setUserData } = useContext(AppContext);
+  const { setOpenLoginAlertBack } = useContext(AlertContext);
 
   const getPromotion = async () => {
     const postId = params.postId;
@@ -60,6 +63,14 @@ export function PRBoardDetailPage() {
     if (res.ok) {
       setComments([data, ...comments]);
       setTotalCount(totalCount + 1);
+    } else if (res.status === 401 || res.status === 403) {
+      const loginRes = await fetch(`${userUrl}`, { credentials: "include" });
+      if (loginRes.ok) {
+        const data = await loginRes.json();
+        setUserData({ isLoggedIn: true, user: data.user });
+      } else {
+        setOpenLoginAlertBack(true);
+      }
     }
   };
 
