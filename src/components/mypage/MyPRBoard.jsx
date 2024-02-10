@@ -106,7 +106,7 @@ function MyPRBoard({ user }) {
         </div>
         <div className="body">
           {state === "loading" ? (
-            <CircularProgress className="loading" />
+            <CircularProgress className="loading" color="secondary" />
           ) : state === "hasError" ? (
             <ServerError onClickBtn={() => getPosts()} />
           ) : posts.length ? (

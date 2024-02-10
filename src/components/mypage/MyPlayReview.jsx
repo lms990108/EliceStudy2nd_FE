@@ -100,7 +100,7 @@ function MyPlayReview({ user }) {
         </div>
         <div className="body">
           {state === "loading" ? (
-            <CircularProgress className="loading" />
+            <CircularProgress className="loading" color="secondary" />
           ) : state === "hasError" ? (
             <ServerError onClickBtn={() => getReviews()} />
           ) : reviews.length ? (
