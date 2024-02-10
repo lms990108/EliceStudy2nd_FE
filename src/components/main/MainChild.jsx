@@ -63,7 +63,6 @@ function MainChild() {
     fetch("https://dailytopia2.shop/api/shows/children")
       .then((res) => res.json())
       .then((data) => {
-        console.log(data)
         let sortedShows = data.shows;
         // 상위 18개 공연만 선택
         sortedShows = sortedShows.slice(0, 18);
