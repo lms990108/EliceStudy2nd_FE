@@ -4,7 +4,7 @@ import { BoardSecondHeader, BoardNav, CommentForm, CommentsList } from "../../co
 import "./PRBoardDetailPage.scss";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { commentUrl, promotionUrl, userUrl } from "../../apis/apiURLs";
-import { Button } from "@mui/material";
+import { Button, CircularProgress } from "@mui/material";
 import { BoardRightContainer } from "../../components/board/BoardRightContainer";
 import setStoreViewList from "../../utils/setStoreRecentViewList";
 import { NotFoundPage } from "../errorPage/NotFoundPage";
@@ -15,12 +15,15 @@ export function PRBoardDetailPage() {
   const [comments, setComments] = useState([]);
   const [totalCount, setTotalCount] = useState(0);
   const [page, setPage] = useState(1);
+  const [state, setState] = useState("loading");
+  const [commentState, setCommentState] = useState("loading");
   const nav = useNavigate();
   const params = useParams();
   const { userData, setUserData } = useContext(AppContext);
   const { setOpenLoginAlertBack } = useContext(AlertContext);
 
   const getPromotion = async () => {
+    setState("loading");
     const postId = params.postId;
     const res = await fetch(`${promotionUrl}/${postId}`);
     const data = await res.json();
@@ -28,15 +31,18 @@ export function PRBoardDetailPage() {
 
     if (res.ok) {
       setPost(data);
+      setState("hasValue");
     } else {
       setPost();
+      setState("hasError");
     }
   };
 
   const getComments = async () => {
     if (totalCount !== 0 && totalCount <= comments.length) return;
+    setCommentState("loading");
 
-    const res = await fetch(`${commentUrl}/promotions/${post._id}?page=${page}&limit=2`);
+    const res = await fetch(`${commentUrl}/promotions/${post._id}?page=${page}&limit=20`);
     const data = await res.json();
     console.log(data);
 
@@ -44,6 +50,9 @@ export function PRBoardDetailPage() {
       setComments([...comments, ...data.comments]);
       setTotalCount(data.totalComments);
       setPage(page + 1);
+      setCommentState("hasValue");
+    } else {
+      setCommentState("hasError");
     }
   };
 
@@ -87,24 +96,35 @@ export function PRBoardDetailPage() {
 
   return (
     <div className="pr-board-detail-page page-margin">
-      {post ? (
+      {state === "hasError" ? (
+        <NotFoundPage prev={true} />
+      ) : (
         <>
           <div className="board-left-container">
             <BoardSecondHeader header={"홍보게시판"} onclick={() => nav(-1)} />
-            <div className="body">
-              {post._id && <PRBoardPost data={post} totalCommentCount={totalCount} />}
-              <BoardNav point={totalCount} text="개의 댓글" onclick={getPromotion} />
-              <CommentForm createComment={createComment} postId={post?._id} />
-              {comments && <CommentsList comments={comments} totalCount={totalCount} getComments={getComments} setComments={setComments} setTotalCount={setTotalCount} />}
-              <Button className="back-btn" color="inherit" variant="contained" onClick={() => nav(`/promotion`)}>
-                목록보기
-              </Button>
-            </div>
+            {state === "loading" ? (
+              <div className="progress-box">
+                <CircularProgress color="secondary" className="progress" />
+              </div>
+            ) : (
+              <div className="body">
+                {post._id && <PRBoardPost data={post} totalCommentCount={totalCount} />}
+                <BoardNav point={totalCount} text="개의 댓글" onclick={getPromotion} />
+                <CommentForm createComment={createComment} postId={post?._id} />
+                {!comments.length || <CommentsList comments={comments} totalCount={totalCount} getComments={getComments} setComments={setComments} setTotalCount={setTotalCount} />}
+                {commentState === "loading" && (
+                  <div className="progress-box">
+                    <CircularProgress color="secondary" className="progress-100" />
+                  </div>
+                )}
+                <Button className="back-btn" color="inherit" variant="contained" onClick={() => nav(`/promotion`)}>
+                  목록보기
+                </Button>
+              </div>
+            )}
           </div>
           <BoardRightContainer />
         </>
-      ) : (
-        <NotFoundPage prev={true} />
       )}
     </div>
   );
