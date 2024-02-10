@@ -17,6 +17,7 @@ export default function PlayReviewListBox({
   scrollRef,
   getReviews,
   getUserReview,
+  getPlayDetailInfo,
 }) {
   const {
     isAuthorLogined,
@@ -61,17 +62,20 @@ export default function PlayReviewListBox({
             open: true,
             onclose: () => {
               setAlert(null);
+              getPlayDetailInfo();
               getReviews();
               getUserReview();
             },
             onclick: () => {
               setAlert(null);
+              getPlayDetailInfo();
               getReviews();
               getUserReview();
             },
             severity: "success",
             checkBtn: "확인",
             btnCloseHidden: true,
+            time: 500,
           });
         } else if (res.status === 401 || res.status === 403) {
           setAlert({
@@ -99,7 +103,6 @@ export default function PlayReviewListBox({
         }
       })
       .catch((err) => {
-        console.log(err);
         setAlert({
           title: `삭제 실패`,
           content: `리뷰 삭제에 실패하였습니다.`,
@@ -129,11 +132,16 @@ export default function PlayReviewListBox({
         <div className="review-author-and-date">
           <p>
             {isAuthorLogined ? "(MY)" : ""}
-            {author.length >= 10 ? `${author.slice(0, 9)}...` : author}
+            {author}
           </p>
           <p>{date}</p>
         </div>
-        <div className="play-review-title">
+        <div
+          className="play-review-title"
+          onClick={() => {
+            setExpended(!expended);
+          }}
+        >
           {isPhotoExsist ? <CameraAltIcon /> : ""} {title}
         </div>
         <div className="play-review-accordion">

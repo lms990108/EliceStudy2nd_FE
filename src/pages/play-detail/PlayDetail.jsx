@@ -30,7 +30,7 @@ export function PlayDetail() {
   const [error, setError] = useState(null);
 
   // 현재 연극 하나 데이터 받아오기
-  useEffect(() => {
+  const getPlayDetailInfo = () => {
     fetch(`https://dailytopia2.shop/api/shows/${playId}`)
       .then((res) => res.json())
       .then((data) => {
@@ -41,6 +41,10 @@ export function PlayDetail() {
         setIsLoading(false);
         setPlayInfo(null);
       });
+  };
+
+  useEffect(() => {
+    getPlayDetailInfo();
   }, []);
 
   const handleDetailNavMenuClick = (e) => {
@@ -114,6 +118,7 @@ export function PlayDetail() {
                   averageRate={playInfo.avg_rating}
                   state={playInfo.state}
                   userId={userData.user?.user_id}
+                  getPlayDetailInfo={getPlayDetailInfo}
                 />
               )}
               {detailNavMenu === "location-info" && (
