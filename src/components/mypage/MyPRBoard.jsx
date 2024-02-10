@@ -43,6 +43,7 @@ const columns = [
 function MyPRBoard({ user }) {
   const [posts, setPosts] = useState([]);
   const [state, setState] = useState("loading");
+  const [checkedList, setCheckedList] = useState([]);
   const nav = useNavigate();
 
   const getPosts = async () => {
@@ -54,13 +55,37 @@ function MyPRBoard({ user }) {
 
     if (res.ok) {
       setPosts(
-        data.promotions.map((review) => {
-          return { ...review, id: review._id };
+        data.promotions.map((promotion) => {
+          return { ...promotion, id: promotion.promotion_number };
         })
       );
       setState("hasValue");
     } else {
       setState("hasError");
+    }
+  };
+
+  const handleClickDeleteBtn = async () => {
+    console.log(checkedList);
+    const res = await fetch(`${promotionUrl}/bulk`, {
+      method: "DELETE",
+      credentials: "include",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        promotionNumbers: checkedList,
+      }),
+    });
+    const data = await res.json();
+    console.log(data);
+
+    if (res.ok) {
+      let newPosts = [...posts];
+      checkedList.map((id) => {
+        let index = posts.findIndex((post) => post.id === id);
+        newPosts.splice(index, 1);
+      });
+
+      setPosts(newPosts);
     }
   };
 
@@ -74,7 +99,7 @@ function MyPRBoard({ user }) {
         <div className="header">
           <h1>MY 홍보 게시글</h1>
           {!posts.length || (
-            <Button variant="contained" color="orange" sx={{ width: "80px", height: "40px", color: "white" }}>
+            <Button onClick={handleClickDeleteBtn} variant="contained" color="orange" sx={{ width: "80px", height: "40px", color: "white" }}>
               <h4>삭제</h4>
             </Button>
           )}
@@ -94,6 +119,9 @@ function MyPRBoard({ user }) {
                 },
               }}
               checkboxSelection
+              disableRowSelectionOnClick
+              rowSelectionModel={checkedList}
+              onRowSelectionModelChange={(e) => setCheckedList(e)}
             />
           ) : (
             <Empty onClickBtn={() => nav(`/promotion/write`)} />

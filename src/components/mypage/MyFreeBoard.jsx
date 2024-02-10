@@ -41,6 +41,7 @@ const columns = [
 function MyFreeBoard({ user }) {
   const [posts, setPosts] = useState([]);
   const [state, setState] = useState("loading");
+  const [checkedList, setCheckedList] = useState([]);
   const nav = useNavigate();
 
   const getPosts = async () => {
@@ -51,13 +52,37 @@ function MyFreeBoard({ user }) {
 
     if (res.ok) {
       setPosts(
-        data.posts.map((review) => {
-          return { ...review, id: review._id };
+        data.posts.map((post) => {
+          return { ...post, id: post.post_number };
         })
       );
       setState("hasValue");
     } else {
       setState("hasError");
+    }
+  };
+
+  const handleClickDeleteBtn = async () => {
+    console.log(checkedList);
+    const res = await fetch(`${postUrl}/bulk`, {
+      method: "DELETE",
+      credentials: "include",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        postNumbers: checkedList,
+      }),
+    });
+    const data = await res.json();
+    console.log(data);
+
+    if (res.ok) {
+      let newPosts = [...posts];
+      checkedList.map((id) => {
+        let index = posts.findIndex((post) => post.id === id);
+        newPosts.splice(index, 1);
+      });
+
+      setPosts(newPosts);
     }
   };
 
@@ -71,7 +96,7 @@ function MyFreeBoard({ user }) {
         <div className="header">
           <h1>MY 커뮤니티</h1>
           {!posts.length || (
-            <Button variant="contained" color="orange" sx={{ width: "80px", height: "40px", color: "white" }}>
+            <Button onClick={handleClickDeleteBtn} variant="contained" color="orange" sx={{ width: "80px", height: "40px", color: "white" }}>
               삭제
             </Button>
           )}
@@ -91,6 +116,9 @@ function MyFreeBoard({ user }) {
                 },
               }}
               checkboxSelection
+              disableRowSelectionOnClick
+              rowSelectionModel={checkedList}
+              onRowSelectionModelChange={(e) => setCheckedList(e)}
             />
           ) : (
             <Empty onClickBtn={() => nav(`/community/write`)} />

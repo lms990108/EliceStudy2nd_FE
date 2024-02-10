@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import "./MyComments.scss";
 import Button from "@mui/material/Button";
-import { useNavigate } from "react-router";
 import { commentUrl } from "../../apis/apiURLs";
 import { CircularProgress } from "@mui/material";
 import ServerError from "../common/state/ServerError";
@@ -21,7 +20,6 @@ function MyComments() {
   const [comments, setComments] = useState([]);
   const [state, setState] = useState("loading");
   const [checkedList, setCheckedList] = useState([]);
-  const nav = useNavigate();
 
   const getComments = async () => {
     setState("loading");
