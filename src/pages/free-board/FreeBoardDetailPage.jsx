@@ -132,7 +132,7 @@ export function FreeBoardDetailPage() {
               </div>
             )}
           </div>
-          <BoardRightContainer />
+          <BoardRightContainer post={post} />
         </>
       )}
     </div>

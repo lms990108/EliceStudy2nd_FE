@@ -86,7 +86,6 @@ export function PRBoardDetailPage() {
   useEffect(() => {
     if (post?._id) {
       getComments();
-      setStoreViewList(post);
     }
   }, [post]);
 
@@ -123,7 +122,7 @@ export function PRBoardDetailPage() {
               </div>
             )}
           </div>
-          <BoardRightContainer />
+          <BoardRightContainer post={post} />
         </>
       )}
     </div>

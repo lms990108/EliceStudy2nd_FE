@@ -5,8 +5,9 @@ import dayjs from "dayjs";
 import { Link, useParams } from "react-router-dom";
 import { ThumbUpOutlined, VisibilityOutlined } from "@mui/icons-material";
 import LiveTimeDiff from "../common/time/LiveTimeDiff";
+import setStoreViewList from "../../utils/setStoreRecentViewList";
 
-export function BoardRightContainer() {
+export function BoardRightContainer({ post }) {
   const [viewList, setViewList] = useState([]);
   const [popularList, setPopularList] = useState([]);
   const [latestList, setLatestList] = useState([]);
@@ -130,8 +131,11 @@ export function BoardRightContainer() {
     getPopularList();
     getLatestList();
     getLatesTCommentList();
+    if (post?._id) {
+      setStoreViewList(post);
+    }
     getStoreViewList();
-  }, [params]);
+  }, [params, post]);
 
   return (
     <div className="free-board-right-container">
