@@ -99,7 +99,7 @@ function MyPRBoard({ user }) {
         <div className="header">
           <h1>MY 홍보 게시글</h1>
           {!posts.length || (
-            <Button onClick={handleClickDeleteBtn} variant="contained" color="orange" sx={{ width: "80px", height: "40px", color: "white" }}>
+            <Button onClick={handleClickDeleteBtn} variant="contained" color="orange" sx={{ width: "70px", height: "36px", color: "white" }}>
               <h4>삭제</h4>
             </Button>
           )}

@@ -1,56 +1,56 @@
 .admin-template {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 .admin-container {
-    display: flex;
-    justify-content: center;
-    margin: 30px 0;
-    width: 1110px;
-    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: center;
+  margin: 30px 0;
+  width: 1110px;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
 }
 .admin-nav {
-    width: 210px;
-    height: 800px;
-    background-color: #eee;
+  width: 210px;
+  height: 800px;
+  background-color: #eee;
 }
 .admin-nav-header {
-    height: 190px;
-    padding-top: 20px;
-    padding-left: 24px;
-    background-color: #282828;
-    color: white;
-    font-size: 24px;
-    font-weight: 600;
+  height: 190px;
+  padding-top: 20px;
+  padding-left: 24px;
+  background-color: #282828;
+  color: white;
+  font-size: 24px;
+  font-weight: 600;
 }
 .admin-nav-body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .admin-nav-box {
-    width: 160px;
-    padding: 12px 0;
-    h3 {
-        font-size: 16px;
-        font-weight: 600;
-    }
-    p {
-        font-size: 14px;
-        margin-bottom: 4px;
-        font-weight: 600;
-        color: #878d95;
-    }
-    p:hover {
-        cursor: pointer;
-    }
-    .selected {
-        color: #5b5b5b;
-        font-weight: 900;
-      }
+  width: 160px;
+  padding: 12px 0;
+  h3 {
+    font-size: 16px;
+    font-weight: 600;
+  }
+  p {
+    font-size: 14px;
+    margin-bottom: 10px;
+    font-weight: 500;
+    color: #878d95;
+  }
+  p:hover {
+    cursor: pointer;
+  }
+  .selected {
+    color: #5b5b5b;
+    font-weight: 900;
+  }
 }
 .admin-content-area {
-    width: 900px;
-    height: 800px;
-    background-color: white;
+  width: 900px;
+  height: 800px;
+  background-color: white;
 }

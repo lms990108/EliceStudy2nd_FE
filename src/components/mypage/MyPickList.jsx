@@ -97,13 +97,7 @@ function MyPickList({ user }) {
         <div className="header">
           <h1>찜한 연극 LIST</h1>
           {!bookmarks.length || (
-            <Button
-              disabled={!checkedList.length}
-              onClick={handleClickDeleteBtn}
-              variant="contained"
-              color="orange"
-              sx={{ width: "80px", height: "40px", color: "white", fontWeight: "600" }}
-            >
+            <Button disabled={!checkedList.length} onClick={handleClickDeleteBtn} variant="contained" color="orange" sx={{ width: "70px", height: "36px", color: "white" }}>
               삭제
             </Button>
           )}

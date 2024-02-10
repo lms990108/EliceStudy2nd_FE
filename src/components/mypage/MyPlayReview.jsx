@@ -93,7 +93,7 @@ function MyPlayReview({ user }) {
         <div className="header">
           <h1>MY 연극 리뷰</h1>
           {!reviews.length || (
-            <Button onClick={handleClickDeleteBtn} disabled={!checkedList.length} variant="contained" color="orange" sx={{ width: "80px", height: "40px", color: "white" }}>
+            <Button onClick={handleClickDeleteBtn} disabled={!checkedList.length} variant="contained" color="orange" sx={{ width: "70px", height: "36px", color: "white" }}>
               삭제
             </Button>
           )}

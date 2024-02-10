@@ -111,7 +111,7 @@ export default function MyPage() {
           </div>
         </div>
       ) : (
-        <CircularProgress color="inherit" />
+        <CircularProgress className="mypage-progress" color="inherit" />
       )}
     </>
   );

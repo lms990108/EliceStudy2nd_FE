@@ -96,7 +96,7 @@ function MyFreeBoard({ user }) {
         <div className="header">
           <h1>MY 커뮤니티</h1>
           {!posts.length || (
-            <Button onClick={handleClickDeleteBtn} variant="contained" color="orange" sx={{ width: "80px", height: "40px", color: "white" }}>
+            <Button onClick={handleClickDeleteBtn} variant="contained" color="orange" sx={{ width: "70px", height: "36px", color: "white" }}>
               삭제
             </Button>
           )}

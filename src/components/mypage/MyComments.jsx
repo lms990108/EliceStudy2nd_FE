@@ -11,8 +11,9 @@ import { Link } from "react-router-dom";
 import TimeFormat from "../common/time/TimeFormat";
 
 const columns = [
-  { field: "id", headerName: "번호" },
-  { field: "content", headerName: "내용", width: 498 },
+  { field: "category", headerName: "카테고리", width: 120 },
+  { field: "title", headerName: "글 제목", width: 200 },
+  { field: "content", headerName: "내용", width: 400 },
   { field: "createdAt", headerName: "작성 시기", width: 150, renderCell: (data) => <TimeFormat time={data.row.createdAt} type={"time"} /> },
 ];
 
@@ -29,8 +30,8 @@ function MyComments() {
 
     if (res.ok) {
       setComments(
-        data.comments.map((review) => {
-          return { ...review, id: review._id };
+        data.comments.map((comment) => {
+          return { ...comment, id: comment._id, category: comment.promotion ? "홍보게시판" : "커뮤니티", title: comment.promotion?.title || comment.post?.title };
         })
       );
       setState("hasValue");
@@ -72,7 +73,7 @@ function MyComments() {
         <div className="header">
           <h1>MY 댓글</h1>
           {!comments.length || (
-            <Button onClick={handleClickDeleteBtn} variant="contained" color="orange" sx={{ width: "80px", height: "40px", color: "white" }}>
+            <Button onClick={handleClickDeleteBtn} variant="contained" color="orange" sx={{ width: "70px", height: "36px", color: "white" }}>
               <h4>삭제</h4>
             </Button>
           )}
