@@ -151,7 +151,7 @@ export default function PlayReview({
                 {reviews.map((review) => (
                   <PlayReviewListBox
                     reviewInfo={{
-                      isAuthorLogined: author == review.user_nickname,
+                      isAuthorLogined: userId == review.user_id,
                       author: review.user_nickname
                         ? review.user_nickname
                         : "작성자",
