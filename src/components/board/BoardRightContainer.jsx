@@ -5,8 +5,10 @@ import dayjs from "dayjs";
 import { Link, useParams } from "react-router-dom";
 import { ThumbUpOutlined, VisibilityOutlined } from "@mui/icons-material";
 import LiveTimeDiff from "../common/time/LiveTimeDiff";
+import setStoreViewList from "../../utils/setStoreRecentViewList";
+import numberFormat from "../../utils/numberFormat";
 
-export function BoardRightContainer() {
+export function BoardRightContainer({ post }) {
   const [viewList, setViewList] = useState([]);
   const [popularList, setPopularList] = useState([]);
   const [latestList, setLatestList] = useState([]);
@@ -130,8 +132,11 @@ export function BoardRightContainer() {
     getPopularList();
     getLatestList();
     getLatesTCommentList();
+    if (post?._id) {
+      setStoreViewList(post);
+    }
     getStoreViewList();
-  }, [params]);
+  }, [params, post]);
 
   return (
     <div className="free-board-right-container">
@@ -147,9 +152,9 @@ export function BoardRightContainer() {
                     <p>{post.title}</p>
                     <div className="right">
                       <VisibilityOutlined sx={{ fontSize: 12 }} />
-                      <span>{post.views || 0}</span>
+                      <span>{numberFormat(post.views || 0)}</span>
                       <ThumbUpOutlined sx={{ fontSize: 12 }} />
-                      <span>{post.likes || 0}</span>
+                      <span>{numberFormat(post.likes || 0)}</span>
                     </div>
                   </li>
                 </Link>
@@ -173,9 +178,9 @@ export function BoardRightContainer() {
                   <p>{post.title}</p>
                   <div className="right">
                     <VisibilityOutlined sx={{ fontSize: 12 }} />
-                    <span>{post.views || 0}</span>
+                    <span>{numberFormat(post.views || 0)}</span>
                     <ThumbUpOutlined sx={{ fontSize: 12 }} />
-                    <span>{post.likes || 0}</span>
+                    <span>{numberFormat(post.likes || 0)}</span>
                   </div>
                 </li>
               </Link>
@@ -208,13 +213,15 @@ export function BoardRightContainer() {
         <ul>
           {Children.toArray(
             latestCommentList.map((post, idx) => (
-              <li>
-                <span className={`category ${post.promotion ? "promotion" : "community"}`}>{post.promotion ? `[홍보/${post.category}]` : "[커뮤니티]"}</span>
-                <p>{post.content}</p>
-                <div className="right">
-                  <LiveTimeDiff time={post.createdAt} />
-                </div>
-              </li>
+              <Link to={`${post.promotion ? `/promotion/${post.promotion.promotion_number}` : `/community/${post.post.post_number}`}`}>
+                <li>
+                  <span className={`category ${post.promotion ? "promotion" : "community"}`}>{post.promotion ? `[홍보/${post.promotion.category}]` : "[커뮤니티]"}</span>
+                  <p>{post.content}</p>
+                  <div className="right">
+                    <LiveTimeDiff time={post.createdAt} />
+                  </div>
+                </li>
+              </Link>
             ))
           )}
         </ul>

@@ -17,8 +17,8 @@ export default function SearchResultTab({ selectedTabMenu, setSelectedTabMenu })
       <div className={`menu ${selectedTabMenu === "연극" ? "active-tab" : null}`} onClick={() => handleChangeTabMenu("연극")}>
         연극
       </div>
-      <div className={`menu ${selectedTabMenu === "홍보게시글" ? "active-tab" : null}`} onClick={() => handleChangeTabMenu("홍보게시글")}>
-        홍보게시글
+      <div className={`menu ${selectedTabMenu === "홍보게시판" ? "active-tab" : null}`} onClick={() => handleChangeTabMenu("홍보게시판")}>
+        홍보게시판
       </div>
       <div className={`menu ${selectedTabMenu === "커뮤니티" ? "active-tab" : null}`} onClick={() => handleChangeTabMenu("커뮤니티")}>
         커뮤니티

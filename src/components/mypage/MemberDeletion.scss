@@ -15,27 +15,53 @@
     padding: 34px 0 16px;
     h1 {
       margin: 0;
+      font-size: 24px;
     }
   }
 
   h4 {
     color: white;
   }
+
+  .check-box {
+    display: flex;
+    width: 800px;
+    height: 42px;
+    line-height: 42px;
+    margin-bottom: 40px;
+    font-size: 14px;
+    color: #4e4e4e;
+  }
+
+  .MuiButtonBase-root.Mui-disabled {
+    background-color: #fa282849;
+  }
 }
+
 .member-deletion-text-box {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
   width: 800px;
-  height: 160px;
-  margin: 40px 0;
+  margin: 40px 0 10px;
+  padding: 34px 40px;
+  box-sizing: border-box;
   background-color: #f5f6f9;
+
   p {
-    font-size: 19px;
-    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+    margin-bottom: 8px;
+    font-weight: 400;
+    color: #4e4e4e;
   }
   .member-deletion-red-text {
     color: #fa2828;
+  }
+
+  a {
+    text-decoration: underline;
+    color: #2196f3;
+    font-weight: 600;
   }
 }

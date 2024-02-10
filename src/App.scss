@@ -82,10 +82,31 @@ h6 {
 }
 
 .page-margin {
-  margin: 40px auto 100px;
+  margin: 40px auto 200px;
 }
 
 .page-margin-bottom {
   margin: 0 auto;
-  margin-bottom: 100px;
+  margin-bottom: 200px;
+}
+
+.progress {
+  justify-self: center;
+  align-self: center;
+  margin: 200px auto;
+
+  &-100 {
+    margin: 100px auto;
+  }
+
+  &-300 {
+    margin: 300px auto;
+  }
+}
+
+.progress-box {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

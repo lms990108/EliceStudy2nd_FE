@@ -5,13 +5,14 @@ import PRBoardList from "../../components/board-pr/PRBoardList";
 import { UpButton } from "../../components/common/button/UpButton";
 import { useInView } from "react-intersection-observer";
 import { promotionUrl } from "../../apis/apiURLs";
-import { Button, CircularProgress, FormControl, MenuItem, Select } from "@mui/material";
+import { Button, CircularProgress, FormControl, MenuItem, Select, Skeleton } from "@mui/material";
 import ServerError from "../../components/common/state/ServerError";
 import Empty from "../../components/common/state/Empty";
 import { ArrowBackIosRounded, ArrowForwardIosRounded, SmsOutlined, ThumbUpOutlined, VisibilityOutlined } from "@mui/icons-material";
 import { Link, useNavigate } from "react-router-dom/dist";
 import getBestPromotionPlay from "../../utils/getBestPromotionPlay";
 import TimeFormat from "../../components/common/time/TimeFormat";
+import numberFormat from "../../utils/numberFormat";
 
 export function PRBoardListPage() {
   const [boardList, setBoardList] = useState([]);
@@ -23,7 +24,6 @@ export function PRBoardListPage() {
 
   const [bannerList, setBannerList] = useState([]);
   const [bannerIndex, setBannerIndex] = useState(0);
-  const [fadeIn, setFadeIn] = useState("fade-in");
 
   const [scrollRef, inView] = useInView();
   const nav = useNavigate();
@@ -34,7 +34,13 @@ export function PRBoardListPage() {
   };
 
   const addBoardList = (newList) => {
-    setBoardList((cur) => [...cur, ...newList]);
+    const uniqueList = [...boardList, ...newList].reduce(function (newArr, current) {
+      if (newArr.findIndex(({ _id }) => _id === current._id) === -1) {
+        newArr.push(current);
+      }
+      return newArr;
+    }, []);
+    setBoardList(uniqueList);
   };
 
   const getPage = async (curPage, method) => {
@@ -56,21 +62,13 @@ export function PRBoardListPage() {
       setState("hasError");
     }
   };
-  const removeClassName = () => {
-    setFadeIn("");
-  };
-  const addClassName = () => {
-    setFadeIn("fade-in");
-  };
 
   const handleClickLeftArrow = () => {
-    removeClassName();
     if (bannerIndex <= 0) {
       setBannerIndex(bannerList.length - 1);
     } else {
       setBannerIndex((cur) => cur - 1);
     }
-    addClassName();
   };
 
   const handleClickRightArrow = () => {
@@ -110,7 +108,7 @@ export function PRBoardListPage() {
   return (
     <div className="pr-board-page page-margin">
       <BoardListHeader header="홍보게시판" />
-      {!bannerList.length || (
+      {bannerList.length ? (
         <div className="best-box ">
           <img className="bg-img" src={bannerList[bannerIndex]?.image_url[0] || "https://elice-5th.s3.amazonaws.com/promotions%252F1707380134216_teeny-box-icon.png"} />
           <div className="bg-mask">
@@ -157,11 +155,11 @@ export function PRBoardListPage() {
                       </div>
                       <div className="footer">
                         <VisibilityOutlined sx={{ fontSize: 20 }} />
-                        <span>{bannerList[bannerIndex]?.views || 0}</span>
+                        <span>{numberFormat(bannerList[bannerIndex]?.views || 0)}</span>
                         <ThumbUpOutlined sx={{ fontSize: 20 }} />
-                        <span>{bannerList[bannerIndex]?.likes || 0}</span>
+                        <span>{numberFormat(bannerList[bannerIndex]?.likes || 0)}</span>
                         <SmsOutlined sx={{ fontSize: 20 }} />
-                        <span>{bannerList[bannerIndex]?.comments || 0}</span>
+                        <span>{numberFormat(bannerList[bannerIndex]?.comments || 0)}</span>
                       </div>
                     </div>
                     <Link to={`/promotion/${bannerList[bannerIndex].promotion_number}`}>
@@ -175,6 +173,8 @@ export function PRBoardListPage() {
             <ArrowForwardIosRounded className="arrow-right pointer" onClick={handleClickRightArrow} />
           </div>
         </div>
+      ) : (
+        <Skeleton variant="rectangular" width={1110} height={420} sx={{ borderRadius: "6px", marginBottom: "60px" }} />
       )}
       <div className="header flex-box">
         <div className="division flex-box">
@@ -204,7 +204,7 @@ export function PRBoardListPage() {
       </div>
       {state === "loading" ? (
         <div className={`state box`}>
-          <CircularProgress />
+          <CircularProgress color="secondary" />
         </div>
       ) : state === "hasError" ? (
         <div className={`state box`}>

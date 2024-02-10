@@ -3,24 +3,26 @@ import { useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import "./MyComments.scss";
 import Button from "@mui/material/Button";
-import { useNavigate } from "react-router";
-import { commentUrl } from "../../apis/apiURLs";
-import { CircularProgress } from "@mui/material";
+import { commentUrl, userUrl } from "../../apis/apiURLs";
+import { Backdrop, CircularProgress } from "@mui/material";
 import ServerError from "../common/state/ServerError";
 import Empty from "../common/state/Empty";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import TimeFormat from "../common/time/TimeFormat";
+import { AlertCustom } from "../common/alert/Alerts";
 
 const columns = [
-  { field: "id", headerName: "번호" },
-  { field: "content", headerName: "내용", width: 498 },
+  { field: "category", headerName: "카테고리", width: 120 },
+  { field: "title", headerName: "글 제목", width: 200 },
+  { field: "content", headerName: "내용", width: 400 },
   { field: "createdAt", headerName: "작성 시기", width: 150, renderCell: (data) => <TimeFormat time={data.row.createdAt} type={"time"} /> },
 ];
 
-function MyComments() {
+function MyComments({ user, setUserData }) {
   const [comments, setComments] = useState([]);
   const [state, setState] = useState("loading");
   const [checkedList, setCheckedList] = useState([]);
+  const [openAlert, setOpenAlert] = useState(false);
   const nav = useNavigate();
 
   const getComments = async () => {
@@ -31,8 +33,8 @@ function MyComments() {
 
     if (res.ok) {
       setComments(
-        data.comments.map((review) => {
-          return { ...review, id: review._id };
+        data.comments.map((comment) => {
+          return { ...comment, id: comment._id, category: comment.promotion ? "홍보게시판" : "커뮤니티", title: comment.promotion?.title || comment.post?.title };
         })
       );
       setState("hasValue");
@@ -41,7 +43,7 @@ function MyComments() {
     }
   };
 
-  const handleClickDeleteBtn = async () => {
+  const handleDelete = async () => {
     const res = await fetch(`${commentUrl}`, {
       method: "DELETE",
       credentials: "include",
@@ -56,11 +58,21 @@ function MyComments() {
     if (res.ok) {
       let newComments = [...comments];
       checkedList.map((id) => {
-        let index = comments.findIndex((comment) => comment.id === id);
+        let index = newComments.findIndex((comment) => comment.id === id);
         newComments.splice(index, 1);
       });
 
       setComments(newComments);
+    } else if (res.status === 401 || res.status === 403) {
+      const loginRes = await fetch(`${userUrl}`, { credentials: "include" });
+      if (loginRes.ok) {
+        const data = await loginRes.json();
+        setUserData({ isLoggedIn: true, user: data.user });
+        handleDelete();
+      } else {
+        setUserData({ isLoggedIn: false });
+        return nav(`/signup-in`);
+      }
     }
   };
 
@@ -74,14 +86,14 @@ function MyComments() {
         <div className="header">
           <h1>MY 댓글</h1>
           {!comments.length || (
-            <Button onClick={handleClickDeleteBtn} variant="contained" color="orange" sx={{ width: "80px", height: "40px", color: "white" }}>
+            <Button onClick={() => setOpenAlert(true)} variant="contained" color="orange" sx={{ width: "70px", height: "36px", color: "white" }}>
               <h4>삭제</h4>
             </Button>
           )}
         </div>
         <div className="body">
           {state === "loading" ? (
-            <CircularProgress className="loading" />
+            <CircularProgress className="loading" color="secondary" />
           ) : state === "hasError" ? (
             <ServerError onClickBtn={() => getComments()} />
           ) : comments.length ? (
@@ -110,6 +122,19 @@ function MyComments() {
           )}
         </div>
       </div>
+      <Backdrop open={openAlert} sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
+        <AlertCustom
+          severity="error"
+          open={openAlert}
+          onclose={() => setOpenAlert(false)}
+          onclick={() => handleDelete()}
+          checkBtn={"확인"}
+          closeBtn={"취소"}
+          checkBtnColor={"#fa2828"}
+          title={"teenybox.com 내용:"}
+          content={"정말 삭제하시겠습니까?"}
+        />
+      </Backdrop>
     </>
   );
 }

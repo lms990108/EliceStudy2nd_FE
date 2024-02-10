@@ -5,6 +5,7 @@ import empty_image from "../../assets/img/empty_img.svg";
 import { CalendarMonth, FormatQuote, LocationOn, MovieCreation } from "@mui/icons-material";
 import empty_img from "../../assets/img/empty_img.svg";
 import TimeFormat from "../common/time/TimeFormat";
+import { Link } from "react-router-dom";
 
 export default function PRBoardPost({ data, totalCommentCount }) {
   return (
@@ -60,7 +61,7 @@ export default function PRBoardPost({ data, totalCommentCount }) {
         <div className="tags">
           {data.tags.map((tag, idx) => (
             <div className="tag" key={idx}>
-              # {tag}
+              <Link to={`/search?query=${tag}&category=홍보게시판&type=tag`}># {tag}</Link>
             </div>
           ))}
         </div>

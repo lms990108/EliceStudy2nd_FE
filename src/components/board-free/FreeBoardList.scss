@@ -1,3 +1,7 @@
+.progress {
+  margin: auto;
+}
+
 .free-board-list-box {
   display: flex;
   flex-direction: column;
@@ -9,7 +13,7 @@
     flex-direction: column;
     border-bottom: #6b72804d solid 1px;
     box-sizing: border-box;
-    padding: 16px 8px;
+    padding: 16px 2px;
     background-color: #fff;
 
     .flex-box {
@@ -41,7 +45,7 @@
       color: #111827;
       font-size: 17px;
       font-weight: 500;
-      margin: 8px 0;
+      margin: 8px 0 5px;
       height: 26px;
       line-height: 26px;
     }
@@ -50,33 +54,39 @@
       .content {
         width: 70%;
         max-width: 500px;
-        height: 16px;
+        height: 22px;
         font-size: small;
         text-overflow: ellipsis;
         white-space: nowrap;
         overflow: hidden;
+        line-height: 22px;
       }
 
       .tags {
         width: 70%;
         display: flex;
         flex-wrap: wrap;
-        max-height: 18px;
+        max-height: 22px;
         @media (max-width: 992px) {
           max-height: 26px;
         }
         overflow: hidden;
 
-        * {
+        .tag {
           flex: 0 0 auto;
           box-sizing: border-box;
-          background-color: #ebebeb;
+          background-color: #f3f4f6;
           margin-right: 6px;
-          padding: 3px;
-          border-radius: 4px;
-          font-weight: 400;
-          font-size: 12px;
-          color: #62676c;
+          padding: 2px 9px;
+          border-radius: 10px;
+          box-sizing: border-box;
+          height: 22px;
+          a {
+            font-weight: 400;
+            font-size: 12px;
+            color: #62676c;
+            height: min-content;
+          }
         }
       }
 

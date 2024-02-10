@@ -2,13 +2,14 @@ import React, { useContext, useEffect, useState } from "react";
 import "./PostTop.scss";
 import { AlertCustom } from "../common/alert/Alerts";
 import copyUrl from "../../utils/copyUrl";
-import { AccountCircle, DeleteOutline, EditOutlined, ShareOutlined, SmsOutlined, ThumbUpAlt, ThumbUpAltOutlined, VisibilityOutlined } from "@mui/icons-material";
+import { DeleteOutline, EditOutlined, ShareOutlined, SmsOutlined, ThumbUpAlt, ThumbUpAltOutlined, VisibilityOutlined } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import { postUrl, promotionUrl } from "../../apis/apiURLs";
-import { format } from "date-fns";
 import { AlertContext, AppContext } from "../../App";
 import { Backdrop, Button, Tooltip } from "@mui/material";
 import LiveTimeDiff from "../common/time/LiveTimeDiff";
+import default_user_img from "../../assets/img/default_user_img.svg";
+import numberFormat from "../../utils/numberFormat";
 
 export function PostTop({ user, type, post, commentsCnt }) {
   const [openURLCopyAlert, setOpenURLCopyAlert] = useState(false);
@@ -91,15 +92,15 @@ export function PostTop({ user, type, post, commentsCnt }) {
     <>
       {user && (
         <div className="board-post-top">
-          {user.profile_url ? <img className="user-img" src={user.profile_url} /> : <AccountCircle sx={{ fontSize: 50 }} />}
+          <img className="user-img" src={user?.profile_url || default_user_img} onError={(e) => (e.target.src = default_user_img)} />
           <div className="flex-box">
-            <div className="user-id">{user.nickname}</div>
+            <div className="user-id">{user?.nickname || "익명"}</div>
             <div className="date">
               <LiveTimeDiff time={post.createdAt} />
               <span className="dot">•</span>
               <div className="view-cnt">
                 <VisibilityOutlined sx={{ fontSize: 16 }} />
-                <span>{post.views || 0}</span>
+                <span>{numberFormat(post.views || 0)}</span>
               </div>
             </div>
           </div>
@@ -108,7 +109,7 @@ export function PostTop({ user, type, post, commentsCnt }) {
             {type === "community" && (
               <div className="comments-icon" onClick={handleCommentsButtonClick}>
                 <SmsOutlined />
-                <span>{commentsCnt}</span>
+                <span>{numberFormat(commentsCnt)}</span>
               </div>
             )}
             {isWriter && (
@@ -119,7 +120,7 @@ export function PostTop({ user, type, post, commentsCnt }) {
             )}
             <Tooltip title={isLiked ? "추천됨" : "추천하기"} arrow>
               <Button onClick={handleClickLikes} variant={"outlined"} size="small" startIcon={isLiked ? <ThumbUpAlt /> : <ThumbUpAltOutlined />} disableElevation>
-                {likes}
+                {numberFormat(likes)}
               </Button>
             </Tooltip>
           </div>

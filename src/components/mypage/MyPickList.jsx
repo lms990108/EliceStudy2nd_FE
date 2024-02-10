@@ -4,17 +4,18 @@ import "./MyPickList.scss";
 import Button from "@mui/material/Button";
 import { userUrl } from "../../apis/apiURLs";
 import { Checkbox, CircularProgress, Pagination, Tooltip, Typography } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ServerError from "../common/state/ServerError";
 import Empty from "../common/state/Empty";
 import TimeFormat from "../common/time/TimeFormat";
 
-function MyPickList({ user }) {
+function MyPickList({ user, setUserData }) {
   const [bookmarks, setBookmarks] = useState([]);
   const [page, setPage] = useState(1);
   const [totalCount, setTotalCount] = useState(0);
   const [checkedList, setCheckedList] = useState([]);
   const [state, setState] = useState("loading");
+  const nav = useNavigate();
 
   const getBookmarks = async () => {
     setState("loading");
@@ -62,6 +63,16 @@ function MyPickList({ user }) {
       }
       setCheckedList([]);
       getBookmarks();
+    } else if (res.status === 401 || res.status === 403) {
+      const loginRes = await fetch(`${userUrl}`, { credentials: "include" });
+      if (loginRes.ok) {
+        const data = await loginRes.json();
+        setUserData({ isLoggedIn: true, user: data.user });
+        handleClickDeleteBtn();
+      } else {
+        setUserData({ isLoggedIn: false });
+        return nav(`/signup-in`);
+      }
     }
   };
 
@@ -97,13 +108,7 @@ function MyPickList({ user }) {
         <div className="header">
           <h1>찜한 연극 LIST</h1>
           {!bookmarks.length || (
-            <Button
-              disabled={!checkedList.length}
-              onClick={handleClickDeleteBtn}
-              variant="contained"
-              color="orange"
-              sx={{ width: "80px", height: "40px", color: "white", fontWeight: "600" }}
-            >
+            <Button disabled={!checkedList.length} onClick={handleClickDeleteBtn} variant="contained" color="orange" sx={{ width: "70px", height: "36px", color: "white" }}>
               삭제
             </Button>
           )}

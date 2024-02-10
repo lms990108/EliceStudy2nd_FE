@@ -2,13 +2,14 @@ import React, { useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import "./MyPRBoard.scss";
 import Button from "@mui/material/Button";
-import { promotionUrl } from "../../apis/apiURLs";
-import { CircularProgress } from "@mui/material";
+import { promotionUrl, userUrl } from "../../apis/apiURLs";
+import { Backdrop, CircularProgress } from "@mui/material";
 import { ErrorOutline } from "@mui/icons-material";
 import ServerError from "../common/state/ServerError";
 import Empty from "../common/state/Empty";
 import { Link, useNavigate } from "react-router-dom";
 import TimeFormat from "../common/time/TimeFormat";
+import { AlertCustom } from "../common/alert/Alerts";
 
 const columns = [
   {
@@ -40,9 +41,11 @@ const columns = [
   },
 ];
 
-function MyPRBoard({ user }) {
+function MyPRBoard({ user, setUserData }) {
   const [posts, setPosts] = useState([]);
   const [state, setState] = useState("loading");
+  const [checkedList, setCheckedList] = useState([]);
+  const [openAlert, setOpenAlert] = useState(false);
   const nav = useNavigate();
 
   const getPosts = async () => {
@@ -54,13 +57,47 @@ function MyPRBoard({ user }) {
 
     if (res.ok) {
       setPosts(
-        data.promotions.map((review) => {
-          return { ...review, id: review._id };
+        data.promotions.map((promotion) => {
+          return { ...promotion, id: promotion.promotion_number };
         })
       );
       setState("hasValue");
     } else {
       setState("hasError");
+    }
+  };
+
+  const handleDelete = async () => {
+    console.log(checkedList);
+    const res = await fetch(`${promotionUrl}/bulk`, {
+      method: "DELETE",
+      credentials: "include",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        promotionNumbers: checkedList,
+      }),
+    });
+    // const data = await res.json();
+    // console.log(data);
+
+    if (res.ok) {
+      let newPosts = [...posts];
+      checkedList.map((id) => {
+        let index = newPosts.findIndex((post) => post.id === id);
+        newPosts.splice(index, 1);
+      });
+
+      setPosts(newPosts);
+    } else if (res.status === 401 || res.status === 403) {
+      const loginRes = await fetch(`${userUrl}`, { credentials: "include" });
+      if (loginRes.ok) {
+        const data = await loginRes.json();
+        setUserData({ isLoggedIn: true, user: data.user });
+        handleDelete();
+      } else {
+        setUserData({ isLoggedIn: false });
+        return nav(`/signup-in`);
+      }
     }
   };
 
@@ -74,14 +111,14 @@ function MyPRBoard({ user }) {
         <div className="header">
           <h1>MY 홍보 게시글</h1>
           {!posts.length || (
-            <Button variant="contained" color="orange" sx={{ width: "80px", height: "40px", color: "white" }}>
+            <Button onClick={() => setOpenAlert(true)} variant="contained" color="orange" sx={{ width: "70px", height: "36px", color: "white" }}>
               <h4>삭제</h4>
             </Button>
           )}
         </div>
         <div className="body">
           {state === "loading" ? (
-            <CircularProgress className="loading" />
+            <CircularProgress className="loading" color="secondary" />
           ) : state === "hasError" ? (
             <ServerError onClickBtn={() => getPosts()} />
           ) : posts.length ? (
@@ -94,12 +131,28 @@ function MyPRBoard({ user }) {
                 },
               }}
               checkboxSelection
+              disableRowSelectionOnClick
+              rowSelectionModel={checkedList}
+              onRowSelectionModelChange={(e) => setCheckedList(e)}
             />
           ) : (
             <Empty onClickBtn={() => nav(`/promotion/write`)} />
           )}
         </div>
       </div>
+      <Backdrop open={openAlert} sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
+        <AlertCustom
+          severity="error"
+          open={openAlert}
+          onclose={() => setOpenAlert(false)}
+          onclick={() => handleDelete()}
+          checkBtn={"확인"}
+          closeBtn={"취소"}
+          checkBtnColor={"#fa2828"}
+          title={"teenybox.com 내용:"}
+          content={"정말 삭제하시겠습니까?"}
+        />
+      </Backdrop>
     </>
   );
 }

@@ -2,13 +2,14 @@
 import { DataGrid } from "@mui/x-data-grid";
 import "./MyPlayReview.scss";
 import Button from "@mui/material/Button";
-import { reviewUrl } from "../../apis/apiURLs";
+import { reviewUrl, userUrl } from "../../apis/apiURLs";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { CircularProgress } from "@mui/material";
+import { Link, useNavigate } from "react-router-dom";
+import { Backdrop, CircularProgress } from "@mui/material";
 import ServerError from "../common/state/ServerError";
 import Empty from "../common/state/Empty";
 import TimeFormat from "../common/time/TimeFormat";
+import { AlertCustom } from "../common/alert/Alerts";
 
 const columns = [
   {
@@ -36,10 +37,12 @@ const columns = [
   { field: "created_at", headerName: "작성 시기", width: 150, renderCell: (data) => <TimeFormat time={data.row.createdAt} type={"time"} /> },
 ];
 
-function MyPlayReview({ user }) {
+function MyPlayReview({ user, setUserData }) {
   const [reviews, setReviews] = useState([]);
   const [checkedList, setCheckedList] = useState([]);
   const [state, setState] = useState("loading");
+  const [openAlert, setOpenAlert] = useState(false);
+  const nav = useNavigate();
 
   const getReviews = async () => {
     setState("loading");
@@ -60,7 +63,7 @@ function MyPlayReview({ user }) {
     }
   };
 
-  const handleClickDeleteBtn = async () => {
+  const handleDelete = async () => {
     const res = await fetch(`${reviewUrl}`, {
       method: "DELETE",
       credentials: "include",
@@ -74,12 +77,22 @@ function MyPlayReview({ user }) {
 
     if (res.ok) {
       let newReviews = [...reviews];
-      checkedList.map((id) => {
-        let index = reviews.findIndex((review) => review.id === id);
+      for (let id of checkedList) {
+        let index = newReviews.findIndex((review) => review.id === id);
         newReviews.splice(index, 1);
-      });
+      }
 
       setReviews(newReviews);
+    } else if (res.status === 401 || res.status === 403) {
+      const loginRes = await fetch(`${userUrl}`, { credentials: "include" });
+      if (loginRes.ok) {
+        const data = await loginRes.json();
+        setUserData({ isLoggedIn: true, user: data.user });
+        handleDelete();
+      } else {
+        setUserData({ isLoggedIn: false });
+        return nav(`/signup-in`);
+      }
     }
   };
 
@@ -93,14 +106,14 @@ function MyPlayReview({ user }) {
         <div className="header">
           <h1>MY 연극 리뷰</h1>
           {!reviews.length || (
-            <Button onClick={handleClickDeleteBtn} disabled={!checkedList.length} variant="contained" color="orange" sx={{ width: "80px", height: "40px", color: "white" }}>
+            <Button onClick={() => setOpenAlert(true)} disabled={!checkedList.length} variant="contained" color="orange" sx={{ width: "70px", height: "36px", color: "white" }}>
               삭제
             </Button>
           )}
         </div>
         <div className="body">
           {state === "loading" ? (
-            <CircularProgress className="loading" />
+            <CircularProgress className="loading" color="secondary" />
           ) : state === "hasError" ? (
             <ServerError onClickBtn={() => getReviews()} />
           ) : reviews.length ? (
@@ -122,6 +135,19 @@ function MyPlayReview({ user }) {
           )}
         </div>
       </div>
+      <Backdrop open={openAlert} sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
+        <AlertCustom
+          severity="error"
+          open={openAlert}
+          onclose={() => setOpenAlert(false)}
+          onclick={() => handleDelete()}
+          checkBtn={"확인"}
+          closeBtn={"취소"}
+          checkBtnColor={"#fa2828"}
+          title={"teenybox.com 내용:"}
+          content={"정말 삭제하시겠습니까?"}
+        />
+      </Backdrop>
     </>
   );
 }

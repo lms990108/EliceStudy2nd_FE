@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import "./FreeBoardList.scss";
 import { Link, useNavigate } from "react-router-dom";
-import { format } from "date-fns";
 import { SmsOutlined, ThumbUpOutlined, VisibilityOutlined } from "@mui/icons-material";
+import LiveTimeDiff from "../common/time/LiveTimeDiff";
+import default_user_img from "../../assets/img/default_user_img.svg";
+import formatLargeNumber from "../../utils/numberFormat";
+import numberFormat from "../../utils/numberFormat";
 
 export default function FreeBoardList({ boardList }) {
   const nav = useNavigate();
@@ -20,10 +22,12 @@ export default function FreeBoardList({ boardList }) {
         <div className="content-box" key={post._id} id={post.post_number}>
           <div className="flex-box top">
             <div className="user">
-              {post.user ? <img className="user-img" src={post.user.profile_url} /> : <AccountCircleIcon sx={{ fontSize: 24 }} />}
-              <span>{post.user?.nickname || "nickname"}</span>
+              <img className="user-img" src={post.user?.profile_url || ""} onError={(e) => (e.target.src = default_user_img)} />
+              <span>{post.user?.nickname || "익명"}</span>
             </div>
-            <div className="time">{format(new Date(post.createdAt), "yyyy-MM-dd")}</div>
+            <div className="time">
+              <LiveTimeDiff time={post.createdAt} />
+            </div>
           </div>
           <div>
             <Link className="title" to={`/community/${post.post_number}`}>
@@ -34,7 +38,9 @@ export default function FreeBoardList({ boardList }) {
             {post.tags?.length ? (
               <div className="tags">
                 {post.tags.map((tag, idx) => (
-                  <div key={idx}># {tag}</div>
+                  <div className="tag" key={idx}>
+                    <Link to={`/search?query=${tag}&category=커뮤니티&type=tag`}># {tag}</Link>
+                  </div>
                 ))}
               </div>
             ) : (
@@ -42,11 +48,11 @@ export default function FreeBoardList({ boardList }) {
             )}
             <div className="flex-box post-card-footer">
               <VisibilityOutlined sx={{ fontSize: 16 }} />
-              <span>{post.views || 0}</span>
+              <span>{numberFormat(post.views || 0)}</span>
               <ThumbUpOutlined sx={{ fontSize: 16 }} />
-              <span>{post.likes || 0}</span>
+              <span>{numberFormat(post.likes || 0)}</span>
               <SmsOutlined sx={{ fontSize: 16 }} />
-              <span>{post.commentsCount || 0}</span>
+              <span>{numberFormat(post.commentsCount || 0)}</span>
             </div>
           </div>
         </div>

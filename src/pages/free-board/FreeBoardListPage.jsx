@@ -70,7 +70,7 @@ export function FreeBoardListPage() {
         <BoardListHeader header="커뮤니티" />
         <div className="header flex-box">
           <div className="left">
-            <span className="point">{totalCnt}</span>개의 글
+            <span className="point">{totalCnt.toLocaleString("ko-KR")}</span>개의 글
             <Loop onClick={handleClick} color="secondary" className={`refresh pointer ${toggle && "start"}`} />
           </div>
           <div className="buttons">
@@ -90,7 +90,7 @@ export function FreeBoardListPage() {
         <div className="main">
           {state === "loading" ? (
             <div className="state">
-              <CircularProgress />
+              <CircularProgress color="secondary" className="progress" />
             </div>
           ) : state === "hasError" ? (
             <div className="state">

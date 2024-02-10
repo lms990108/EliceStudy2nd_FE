@@ -12,6 +12,7 @@ import { useNavigate } from "react-router";
 import { AppContext } from "../../App";
 import { CircularProgress } from "@mui/material";
 import { useSearchParams } from "react-router-dom";
+import { userUrl } from "../../apis/apiURLs";
 
 export default function MyPage() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -28,15 +29,15 @@ export default function MyPage() {
       case "MemberInfo":
         return <MemberInfo user={userData.user} setUserData={setUserData} />;
       case "MemberDeletion":
-        return <MemberDeletion />;
+        return <MemberDeletion user={userData.user} setUserData={setUserData} />;
       case "MyPickList":
-        return <MyPickList user={userData.user} />;
+        return <MyPickList user={userData.user} setUserData={setUserData} />;
       case "MyPlayReview":
-        return <MyPlayReview user={userData.user} />;
+        return <MyPlayReview user={userData.user} setUserData={setUserData} />;
       case "MyPRBoard":
-        return <MyPRBoard user={userData.user} />;
+        return <MyPRBoard user={userData.user} setUserData={setUserData} />;
       case "MyFreeBoard":
-        return <MyFreeBoard user={userData.user} />;
+        return <MyFreeBoard user={userData.user} setUserData={setUserData} />;
       case "MyComments":
         return <MyComments />;
       default:
@@ -44,10 +45,21 @@ export default function MyPage() {
     }
   };
 
+  const isLoggedIn = async () => {
+    const loginRes = await fetch(`${userUrl}`, { credentials: "include" });
+    if (loginRes.ok) {
+      const data = await loginRes.json();
+      setUserData({ isLoggedIn: true, user: data.user });
+    } else {
+      setUserData({ isLoggedIn: false });
+      return nav(`/signup-in`);
+    }
+  };
+
   useEffect(() => {
     console.log(userData);
     if (userData && !userData.isLoggedIn) {
-      nav(`/signup-in`);
+      isLoggedIn();
     }
   }, [userData]);
 
@@ -111,7 +123,7 @@ export default function MyPage() {
           </div>
         </div>
       ) : (
-        <CircularProgress color="inherit" />
+        <CircularProgress className="mypage-progress" color="inherit" />
       )}
     </>
   );
