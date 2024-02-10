@@ -31,17 +31,23 @@ export default function SubmitBtnsArea({ additionalUserInfo }) {
     }
 
     // 회원가입 로직
-    const formData = new FormData();
-    formData.append("profile_url", selectedImg);
-    formData.append("user_id", String(id));
-    formData.append("social_provider", socialProvider);
-    formData.append("nickname", nicknameInfo.nickname);
-    formData.append("interested_area", selectedRegion);
-    formData.append("imageUrlsToDelete", toDeleteImg);
+    const body = {
+      user_id: String(id),
+      social_provider: socialProvider,
+      nickname: nicknameInfo.nickname,
+      interested_area: selectedRegion,
+      profile_url: selectedImg,
+      imageUrlsToDelete: toDeleteImg,
+    };
+
+    console.log(body);
 
     fetch("https://dailytopia2.shop/api/users", {
       method: "POST",
-      body: formData,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
     })
       .then((res) => {
         if (res.ok) {
