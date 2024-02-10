@@ -92,7 +92,7 @@ export function PRBoardForm({ setInput, handleComplete, handleCancle }) {
       document.querySelector("#title").focus();
     } else if (errorContent) {
       document.querySelector("#content").focus();
-    } else if (image && errorMainImage) {
+    } else if (!mainImageURL) {
       document.querySelector("#imageBtn").focus();
     } else {
       setOpenSubmit(true);

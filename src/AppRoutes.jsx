@@ -39,7 +39,6 @@ export default function AppRoutes({ setPrevPlayListQuery }) {
       {/* 에러 페이지 */}
       <Route path="/forbidden" element={<ForbiddenPage />} />
       <Route path="/not-found" element={<NotFoundPage />} />
-      <Route path="/privacy-policy" element={<PrivacyPolicy />} />
 
       {/* 로그인 관련 페이지 */}
       <Route path="/user/kakao-login" element={<KakaoRedirection />} />
@@ -55,6 +54,7 @@ export default function AppRoutes({ setPrevPlayListQuery }) {
             <ScrollToTop />
             <CommonLayout setPrevPlayListQuery={setPrevPlayListQuery}>
               <Routes>
+                <Route path="/privacy-policy" element={<PrivacyPolicy />} />
                 <Route path="/signup-in" element={<SignUp_In />} />
                 <Route path="/additional-user-info" element={<InputAdditionalInfo />} />
 
