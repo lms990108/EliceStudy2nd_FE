@@ -4,7 +4,7 @@ import Button from "@mui/material/Button";
 import { AlertCustom } from "../common/alert/Alerts";
 import { userUrl } from "../../apis/apiURLs";
 import { useNavigate } from "react-router";
-import { Backdrop, Checkbox } from "@mui/material";
+import { Backdrop, Checkbox, FormControlLabel } from "@mui/material";
 import { Link } from "react-router-dom";
 
 function MemberDeletion({ user, setUserData }) {
@@ -51,8 +51,7 @@ function MemberDeletion({ user, setUserData }) {
           <p>작성된 게시물은 삭제되지 않으며, 익명처리 후 OKKY 로 소유권이 귀속됩니다.</p>
         </div>
         <div className="check-box">
-          <Checkbox checked={checked} onChange={handleChangCheck} />
-          <p>계정 삭제에 관한 정책을 읽고 이에 동의합니다.</p>
+          <FormControlLabel label="계정 삭제에 관한 정책을 읽고 이에 동의합니다." control={<Checkbox checked={checked} onChange={handleChangCheck} />} />
         </div>
         <Button disabled={!checked} onClick={() => setOpenAlert(true)} variant="contained" color="red" sx={{ width: "180px", height: "48px" }}>
           <h4>티니박스 서비스 탈퇴</h4>
@@ -66,8 +65,15 @@ function MemberDeletion({ user, setUserData }) {
           onclick={() => handleDelete()}
           checkBtn={"확인"}
           closeBtn={"취소"}
+          checkBtnColor={"#fa2828"}
           title={"teenybox.com 내용:"}
-          content={"정말 탈퇴하시겠습니까? 탈퇴시 회원정보는 삭제되며 복구가 불가능합니다."}
+          width={500}
+          content={
+            <p>
+              탈퇴시 회원정보는 삭제되며 복구가 불가능합니다.
+              <br /> 정말 탈퇴하시겠습니까?
+            </p>
+          }
         />
       </Backdrop>
     </>

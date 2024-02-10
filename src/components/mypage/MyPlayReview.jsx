@@ -5,10 +5,11 @@ import Button from "@mui/material/Button";
 import { reviewUrl, userUrl } from "../../apis/apiURLs";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { CircularProgress } from "@mui/material";
+import { Backdrop, CircularProgress } from "@mui/material";
 import ServerError from "../common/state/ServerError";
 import Empty from "../common/state/Empty";
 import TimeFormat from "../common/time/TimeFormat";
+import { AlertCustom } from "../common/alert/Alerts";
 
 const columns = [
   {
@@ -40,6 +41,7 @@ function MyPlayReview({ user, setUserData }) {
   const [reviews, setReviews] = useState([]);
   const [checkedList, setCheckedList] = useState([]);
   const [state, setState] = useState("loading");
+  const [openAlert, setOpenAlert] = useState(false);
   const nav = useNavigate();
 
   const getReviews = async () => {
@@ -61,7 +63,7 @@ function MyPlayReview({ user, setUserData }) {
     }
   };
 
-  const handleClickDeleteBtn = async () => {
+  const handleDelete = async () => {
     console.log(checkedList);
     const res = await fetch(`${reviewUrl}`, {
       method: "DELETE",
@@ -87,7 +89,7 @@ function MyPlayReview({ user, setUserData }) {
       if (loginRes.ok) {
         const data = await loginRes.json();
         setUserData({ isLoggedIn: true, user: data.user });
-        handleClickDeleteBtn();
+        handleDelete();
       } else {
         setUserData({ isLoggedIn: false });
         return nav(`/signup-in`);
@@ -105,7 +107,7 @@ function MyPlayReview({ user, setUserData }) {
         <div className="header">
           <h1>MY 연극 리뷰</h1>
           {!reviews.length || (
-            <Button onClick={handleClickDeleteBtn} disabled={!checkedList.length} variant="contained" color="orange" sx={{ width: "70px", height: "36px", color: "white" }}>
+            <Button onClick={() => setOpenAlert(true)} disabled={!checkedList.length} variant="contained" color="orange" sx={{ width: "70px", height: "36px", color: "white" }}>
               삭제
             </Button>
           )}
@@ -134,6 +136,19 @@ function MyPlayReview({ user, setUserData }) {
           )}
         </div>
       </div>
+      <Backdrop open={openAlert} sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
+        <AlertCustom
+          severity="error"
+          open={openAlert}
+          onclose={() => setOpenAlert(false)}
+          onclick={() => handleDelete()}
+          checkBtn={"확인"}
+          closeBtn={"취소"}
+          checkBtnColor={"#fa2828"}
+          title={"teenybox.com 내용:"}
+          content={"정말 삭제하시겠습니까?"}
+        />
+      </Backdrop>
     </>
   );
 }

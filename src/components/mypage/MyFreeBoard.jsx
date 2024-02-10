@@ -3,11 +3,12 @@ import { DataGrid } from "@mui/x-data-grid";
 import "./MyFreeBoard.scss";
 import Button from "@mui/material/Button";
 import { postUrl, userUrl } from "../../apis/apiURLs";
-import { CircularProgress } from "@mui/material";
+import { Backdrop, CircularProgress } from "@mui/material";
 import ServerError from "../common/state/ServerError";
 import Empty from "../common/state/Empty";
 import { Link, useNavigate } from "react-router-dom";
 import TimeFormat from "../common/time/TimeFormat";
+import { AlertCustom } from "../common/alert/Alerts";
 
 const columns = [
   {
@@ -42,6 +43,7 @@ function MyFreeBoard({ user, setUserData }) {
   const [posts, setPosts] = useState([]);
   const [state, setState] = useState("loading");
   const [checkedList, setCheckedList] = useState([]);
+  const [openAlert, setOpenAlert] = useState(false);
   const nav = useNavigate();
 
   const getPosts = async () => {
@@ -62,7 +64,7 @@ function MyFreeBoard({ user, setUserData }) {
     }
   };
 
-  const handleClickDeleteBtn = async () => {
+  const handleDelete = async () => {
     console.log(checkedList);
     const res = await fetch(`${postUrl}/bulk`, {
       method: "DELETE",
@@ -88,7 +90,7 @@ function MyFreeBoard({ user, setUserData }) {
       if (loginRes.ok) {
         const data = await loginRes.json();
         setUserData({ isLoggedIn: true, user: data.user });
-        handleClickDeleteBtn();
+        handleDelete();
       } else {
         setUserData({ isLoggedIn: false });
         return nav(`/signup-in`);
@@ -106,7 +108,7 @@ function MyFreeBoard({ user, setUserData }) {
         <div className="header">
           <h1>MY 커뮤니티</h1>
           {!posts.length || (
-            <Button onClick={handleClickDeleteBtn} variant="contained" color="orange" sx={{ width: "70px", height: "36px", color: "white" }}>
+            <Button onClick={() => setOpenAlert(true)} variant="contained" color="orange" sx={{ width: "70px", height: "36px", color: "white" }}>
               삭제
             </Button>
           )}
@@ -135,6 +137,19 @@ function MyFreeBoard({ user, setUserData }) {
           )}
         </div>
       </div>
+      <Backdrop open={openAlert} sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
+        <AlertCustom
+          severity="error"
+          open={openAlert}
+          onclose={() => setOpenAlert(false)}
+          onclick={() => handleDelete()}
+          checkBtn={"확인"}
+          closeBtn={"취소"}
+          checkBtnColor={"#fa2828"}
+          title={"teenybox.com 내용:"}
+          content={"정말 삭제하시겠습니까?"}
+        />
+      </Backdrop>
     </>
   );
 }
