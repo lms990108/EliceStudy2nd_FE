@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { SmsOutlined, ThumbUpOutlined, VisibilityOutlined } from "@mui/icons-material";
 import empty_img from "../../assets/img/empty_img.svg";
 import TimeFormat from "../common/time/TimeFormat";
+import numberFormat from "../../utils/numberFormat";
 
 export default function PRBoardList({ newList }) {
   return (
@@ -34,11 +35,11 @@ export default function PRBoardList({ newList }) {
           </div>
           <div className="flex-box post-card-footer">
             <VisibilityOutlined sx={{ fontSize: 16 }} />
-            <span>{post.views || 0}</span>
+            <span>{numberFormat(post.views || 0)}</span>
             <ThumbUpOutlined sx={{ fontSize: 16 }} />
-            <span>{post.likes || 0}</span>
+            <span>{numberFormat(post.likes || 0)}</span>
             <SmsOutlined sx={{ fontSize: 16 }} />
-            <span>{post.comments || 0}</span>
+            <span>{numberFormat(post.comments || 0)}</span>
           </div>
         </div>
       ))}

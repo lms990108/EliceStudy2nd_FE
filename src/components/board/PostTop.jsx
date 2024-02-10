@@ -9,6 +9,7 @@ import { AlertContext, AppContext } from "../../App";
 import { Backdrop, Button, Tooltip } from "@mui/material";
 import LiveTimeDiff from "../common/time/LiveTimeDiff";
 import default_user_img from "../../assets/img/default_user_img.svg";
+import numberFormat from "../../utils/numberFormat";
 
 export function PostTop({ user, type, post, commentsCnt }) {
   const [openURLCopyAlert, setOpenURLCopyAlert] = useState(false);
@@ -99,7 +100,7 @@ export function PostTop({ user, type, post, commentsCnt }) {
               <span className="dot">•</span>
               <div className="view-cnt">
                 <VisibilityOutlined sx={{ fontSize: 16 }} />
-                <span>{post.views || 0}</span>
+                <span>{numberFormat(post.views || 0)}</span>
               </div>
             </div>
           </div>
@@ -108,7 +109,7 @@ export function PostTop({ user, type, post, commentsCnt }) {
             {type === "community" && (
               <div className="comments-icon" onClick={handleCommentsButtonClick}>
                 <SmsOutlined />
-                <span>{commentsCnt}</span>
+                <span>{numberFormat(commentsCnt)}</span>
               </div>
             )}
             {isWriter && (
@@ -119,7 +120,7 @@ export function PostTop({ user, type, post, commentsCnt }) {
             )}
             <Tooltip title={isLiked ? "추천됨" : "추천하기"} arrow>
               <Button onClick={handleClickLikes} variant={"outlined"} size="small" startIcon={isLiked ? <ThumbUpAlt /> : <ThumbUpAltOutlined />} disableElevation>
-                {likes}
+                {numberFormat(likes)}
               </Button>
             </Tooltip>
           </div>

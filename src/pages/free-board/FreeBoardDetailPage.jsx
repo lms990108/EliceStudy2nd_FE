@@ -118,7 +118,7 @@ export function FreeBoardDetailPage() {
             ) : (
               <div className="body">
                 {post._id && <FreeBoardPost data={post} totalCommentCount={totalCount} />}
-                <BoardNav point={totalCount} text="개의 댓글" onclick={handleRefreshComments} />
+                <BoardNav point={totalCount.toLocaleString("ko-KR")} text="개의 댓글" onclick={handleRefreshComments} />
                 <CommentForm createComment={createComment} postId={post?._id} />
                 {!comments.length || <CommentsList comments={comments} setComments={setComments} totalCount={totalCount} getComments={getComments} setTotalCount={setTotalCount} />}
                 {commentState === "loading" && (

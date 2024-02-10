@@ -4,6 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { SmsOutlined, ThumbUpOutlined, VisibilityOutlined } from "@mui/icons-material";
 import LiveTimeDiff from "../common/time/LiveTimeDiff";
 import default_user_img from "../../assets/img/default_user_img.svg";
+import formatLargeNumber from "../../utils/numberFormat";
+import numberFormat from "../../utils/numberFormat";
 
 export default function FreeBoardList({ boardList }) {
   const nav = useNavigate();
@@ -46,11 +48,11 @@ export default function FreeBoardList({ boardList }) {
             )}
             <div className="flex-box post-card-footer">
               <VisibilityOutlined sx={{ fontSize: 16 }} />
-              <span>{post.views || 0}</span>
+              <span>{numberFormat(post.views || 0)}</span>
               <ThumbUpOutlined sx={{ fontSize: 16 }} />
-              <span>{post.likes || 0}</span>
+              <span>{numberFormat(post.likes || 0)}</span>
               <SmsOutlined sx={{ fontSize: 16 }} />
-              <span>{post.commentsCount || 0}</span>
+              <span>{numberFormat(post.commentsCount || 0)}</span>
             </div>
           </div>
         </div>

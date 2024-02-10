@@ -6,6 +6,7 @@ import { Link, useParams } from "react-router-dom";
 import { ThumbUpOutlined, VisibilityOutlined } from "@mui/icons-material";
 import LiveTimeDiff from "../common/time/LiveTimeDiff";
 import setStoreViewList from "../../utils/setStoreRecentViewList";
+import numberFormat from "../../utils/numberFormat";
 
 export function BoardRightContainer({ post }) {
   const [viewList, setViewList] = useState([]);
@@ -151,9 +152,9 @@ export function BoardRightContainer({ post }) {
                     <p>{post.title}</p>
                     <div className="right">
                       <VisibilityOutlined sx={{ fontSize: 12 }} />
-                      <span>{post.views || 0}</span>
+                      <span>{numberFormat(post.views || 0)}</span>
                       <ThumbUpOutlined sx={{ fontSize: 12 }} />
-                      <span>{post.likes || 0}</span>
+                      <span>{numberFormat(post.likes || 0)}</span>
                     </div>
                   </li>
                 </Link>
@@ -177,9 +178,9 @@ export function BoardRightContainer({ post }) {
                   <p>{post.title}</p>
                   <div className="right">
                     <VisibilityOutlined sx={{ fontSize: 12 }} />
-                    <span>{post.views || 0}</span>
+                    <span>{numberFormat(post.views || 0)}</span>
                     <ThumbUpOutlined sx={{ fontSize: 12 }} />
-                    <span>{post.likes || 0}</span>
+                    <span>{numberFormat(post.likes || 0)}</span>
                   </div>
                 </li>
               </Link>

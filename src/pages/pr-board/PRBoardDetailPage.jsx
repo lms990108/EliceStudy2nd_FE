@@ -108,7 +108,7 @@ export function PRBoardDetailPage() {
             ) : (
               <div className="body">
                 {post._id && <PRBoardPost data={post} totalCommentCount={totalCount} />}
-                <BoardNav point={totalCount} text="개의 댓글" onclick={getPromotion} />
+                <BoardNav point={totalCount.toLocaleString("ko-KR")} text="개의 댓글" onclick={getPromotion} />
                 <CommentForm createComment={createComment} postId={post?._id} />
                 {!comments.length || <CommentsList comments={comments} totalCount={totalCount} getComments={getComments} setComments={setComments} setTotalCount={setTotalCount} />}
                 {commentState === "loading" && (

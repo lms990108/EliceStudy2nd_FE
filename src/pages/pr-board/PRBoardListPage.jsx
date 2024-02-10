@@ -12,6 +12,7 @@ import { ArrowBackIosRounded, ArrowForwardIosRounded, SmsOutlined, ThumbUpOutlin
 import { Link, useNavigate } from "react-router-dom/dist";
 import getBestPromotionPlay from "../../utils/getBestPromotionPlay";
 import TimeFormat from "../../components/common/time/TimeFormat";
+import numberFormat from "../../utils/numberFormat";
 
 export function PRBoardListPage() {
   const [boardList, setBoardList] = useState([]);
@@ -154,11 +155,11 @@ export function PRBoardListPage() {
                       </div>
                       <div className="footer">
                         <VisibilityOutlined sx={{ fontSize: 20 }} />
-                        <span>{bannerList[bannerIndex]?.views || 0}</span>
+                        <span>{numberFormat(bannerList[bannerIndex]?.views || 0)}</span>
                         <ThumbUpOutlined sx={{ fontSize: 20 }} />
-                        <span>{bannerList[bannerIndex]?.likes || 0}</span>
+                        <span>{numberFormat(bannerList[bannerIndex]?.likes || 0)}</span>
                         <SmsOutlined sx={{ fontSize: 20 }} />
-                        <span>{bannerList[bannerIndex]?.comments || 0}</span>
+                        <span>{numberFormat(bannerList[bannerIndex]?.comments || 0)}</span>
                       </div>
                     </div>
                     <Link to={`/promotion/${bannerList[bannerIndex].promotion_number}`}>
