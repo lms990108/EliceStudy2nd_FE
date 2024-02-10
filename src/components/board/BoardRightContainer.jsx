@@ -208,13 +208,15 @@ export function BoardRightContainer() {
         <ul>
           {Children.toArray(
             latestCommentList.map((post, idx) => (
-              <li>
-                <span className={`category ${post.promotion ? "promotion" : "community"}`}>{post.promotion ? `[홍보/${post.category}]` : "[커뮤니티]"}</span>
-                <p>{post.content}</p>
-                <div className="right">
-                  <LiveTimeDiff time={post.createdAt} />
-                </div>
-              </li>
+              <Link to={`${post.promotion ? `/promotion/${post.promotion.promotion_number}` : `/community/${post.post.post_number}`}`}>
+                <li>
+                  <span className={`category ${post.promotion ? "promotion" : "community"}`}>{post.promotion ? `[홍보/${post.promotion.category}]` : "[커뮤니티]"}</span>
+                  <p>{post.content}</p>
+                  <div className="right">
+                    <LiveTimeDiff time={post.createdAt} />
+                  </div>
+                </li>
+              </Link>
             ))
           )}
         </ul>
