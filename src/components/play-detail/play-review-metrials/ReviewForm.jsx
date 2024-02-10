@@ -21,6 +21,7 @@ export default function ReviewForm({
   showId,
   getReviews,
   getUserReview,
+  getPlayDetailInfo,
 }) {
   const navigate = useNavigate();
   const [title, setTitle] = useState(review_title || "");
@@ -31,9 +32,7 @@ export default function ReviewForm({
   const [photo, setPhoto] = useState(
     review_image_urls?.length ? review_image_urls : []
   );
-  console.log(photo);
   const [deletedPhoto, setDeletedPhoto] = useState([]);
-  console.log(deletedPhoto);
   // fixed된 알림을 띄우기 위한 상태
   const [alert, setAlert] = useState(null);
   // 리뷰 에러 box에 담을 에러 문구
@@ -49,7 +48,6 @@ export default function ReviewForm({
     }
 
     try {
-      console.log(file);
       const presignRes = await fetch(
         "https://dailytopia2.shop/api/presigned-urls",
         {
@@ -91,7 +89,6 @@ export default function ReviewForm({
         setReviewErrorText("사진 등록에 실패하였습니다. 다시 시도해 주세요.");
       }
     } catch (err) {
-      console.log(err);
       setReviewErrorText("사진 등록에 실패하였습니다. 다시 시도해 주세요.");
     }
   };
@@ -151,8 +148,6 @@ export default function ReviewForm({
       imageUrlsToDelete: deletedPhoto,
     };
 
-    console.log(body);
-
     if (purpose === "작성") postReview(body);
     else if (purpose === "수정") patchReview(body);
   };
@@ -168,7 +163,6 @@ export default function ReviewForm({
       body: JSON.stringify(body),
     })
       .then((res) => {
-        console.log(res);
         if (res.ok) {
           setAlert({
             title: `리뷰 ${purpose} 완료`,
@@ -177,17 +171,20 @@ export default function ReviewForm({
             onclose: () => {
               setAlert(null);
               setIsReviewFormOpened(false);
+              getPlayDetailInfo();
               getReviews();
               getUserReview();
             },
             onclick: () => {
               setIsReviewFormOpened(false);
+              getPlayDetailInfo();
               getReviews();
               getUserReview();
             },
             severity: "success",
             checkBtn: "확인",
             btnCloseHidden: true,
+            time: 1000,
           });
         } else if (res.status === 401 || res.status === 403) {
           setAlert({
@@ -224,7 +221,6 @@ export default function ReviewForm({
         }
       })
       .catch((err) => {
-        console.log(err);
         setAlert({
           title: "리뷰 업로드 실패",
           content: "리뷰 업로드에 실패하였습니다.",
@@ -254,17 +250,20 @@ export default function ReviewForm({
             onclose: () => {
               setAlert(null);
               setIsReviewFormOpened(false);
+              getPlayDetailInfo();
               getReviews();
               getUserReview();
             },
             onclick: () => {
               setIsReviewFormOpened(false);
+              getPlayDetailInfo();
               getReviews();
               getUserReview();
             },
             severity: "success",
             checkBtn: "확인",
             btnCloseHidden: true,
+            time: 1000,
           });
         } else if (res.status === 401 || res.status === 403) {
           setAlert({
@@ -300,7 +299,6 @@ export default function ReviewForm({
         }
       })
       .catch((err) => {
-        console.log(err);
         setAlert({
           title: "리뷰 업로드 실패",
           content: "리뷰 업로드에 실패하였습니다.",
@@ -324,6 +322,7 @@ export default function ReviewForm({
           checkBtn={alert.checkBtn}
           closeBtn={alert.closeBtn}
           btnCloseHidden={alert.btnCloseHidden}
+          time={alert.time}
         />
       )}
       {/* <ReviewErrorBox errorText="제목과 별점은 필수 입력값입니다." /> */}
