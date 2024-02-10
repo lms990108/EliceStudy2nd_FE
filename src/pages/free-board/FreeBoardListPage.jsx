@@ -90,7 +90,7 @@ export function FreeBoardListPage() {
         <div className="main">
           {state === "loading" ? (
             <div className="state">
-              <CircularProgress />
+              <CircularProgress color="secondary" className="progress" />
             </div>
           ) : state === "hasError" ? (
             <div className="state">

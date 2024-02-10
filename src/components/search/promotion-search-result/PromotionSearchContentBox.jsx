@@ -27,12 +27,12 @@ export default function PromotionSearchContentBox({ content }) {
             기간 : {dayjs(content.start_date).format("YYYY-MM-DD")} ~ {dayjs(content.end_date).format("YYYY-MM-DD")}
           </p>
           {content.location && <p>장소 : {content.location}</p>}
-          {content.runtime && <p>러닝타임 : {content.runtime}</p>}
+          {!content.runtime || <p>러닝타임 : {content.runtime}</p>}
           {content.host && <p>주최 : {content.host}</p>}
         </div>
         <div className="tags">
           {content.tags.map((tag, idx) => (
-            <Link className="tag" key={idx}>
+            <Link className="tag" to={`/search?query=${tag}&category=홍보게시판&type=tag`} key={idx + tag}>
               # {tag}
             </Link>
           ))}

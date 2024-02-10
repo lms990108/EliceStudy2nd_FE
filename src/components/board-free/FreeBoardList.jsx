@@ -34,7 +34,9 @@ export default function FreeBoardList({ boardList }) {
             {post.tags?.length ? (
               <div className="tags">
                 {post.tags.map((tag, idx) => (
-                  <div key={idx}># {tag}</div>
+                  <div className="tag" key={idx}>
+                    <Link to={`/search?query=${tag}&category=커뮤니티&type=tag`}># {tag}</Link>
+                  </div>
                 ))}
               </div>
             ) : (

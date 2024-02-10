@@ -1,6 +1,7 @@
 import React from "react";
 import "./FreeBoardPost.scss";
 import { PostTop } from "../board";
+import { Link } from "react-router-dom";
 
 export default function FreeBoardPost({ data, totalCommentCount }) {
   return (
@@ -16,7 +17,7 @@ export default function FreeBoardPost({ data, totalCommentCount }) {
         <div className="tags">
           {data.tags.map((tag, idx) => (
             <div className="tag" key={idx}>
-              # {tag}
+              <Link to={`/search?query=${tag}&category=커뮤니티&type=tag`}># {tag}</Link>
             </div>
           ))}
         </div>

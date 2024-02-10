@@ -204,7 +204,7 @@ export function PRBoardListPage() {
       </div>
       {state === "loading" ? (
         <div className={`state box`}>
-          <CircularProgress />
+          <CircularProgress color="secondary" />
         </div>
       ) : state === "hasError" ? (
         <div className={`state box`}>

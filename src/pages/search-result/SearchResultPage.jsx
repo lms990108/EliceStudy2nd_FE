@@ -105,7 +105,7 @@ export default function SearchResultPage() {
               setSortStandard={setSortStandard}
             />
           )}
-          {selectedTabMenu === "홍보게시글" && <PromotionSearchResult searchKeyword={searchKeyword} />}
+          {selectedTabMenu === "홍보게시판" && <PromotionSearchResult searchKeyword={searchKeyword} />}
           {selectedTabMenu === "커뮤니티" && <CommunitySearchResult searchKeyword={searchKeyword} />}
         </div>
       )}

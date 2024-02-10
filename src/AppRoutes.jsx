@@ -23,14 +23,15 @@ export default function AppRoutes({ setPrevPlayListQuery }) {
   let location = useLocation();
 
   useEffect(() => {
-    if (location.pathname === "/search" || location.pathname === "/mypages") return;
+    if (location.pathname === "/search" || location.pathname === "/mypages") {
+      currentPath = location.pathname + location.search;
+      return;
+    }
     if (currentPath === location.pathname + location.search && reloard) {
       reloard = false;
       window.location.reload();
     }
-
     currentPath = location.pathname + location.search;
-    console.log(location);
   }, [location]);
 
   return (
