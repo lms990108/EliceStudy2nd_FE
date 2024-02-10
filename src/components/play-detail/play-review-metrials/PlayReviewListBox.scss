@@ -13,6 +13,8 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        text-align: center;
+        line-height: 1.2;
       }
 
       p:nth-child(2) {
@@ -27,6 +29,7 @@
       align-items: center;
       padding-left: 30px;
       flex-wrap: wrap;
+      cursor: pointer;
 
       svg {
         padding-right: 10px;
