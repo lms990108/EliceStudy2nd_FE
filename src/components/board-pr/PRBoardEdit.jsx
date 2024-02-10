@@ -81,6 +81,10 @@ export function PRBoardEditForm({ setInput, handleCancle, post }) {
 
   const handleClickSubmitButton = (e) => {
     setSubmit(true);
+    if (!mainImageURL) {
+      setErrorMainImage("사진을 선택해주세요.");
+    }
+
     if (errorPlayTitle) {
       document.querySelector("#play-title").focus();
     } else if (errorDate) {
@@ -89,7 +93,7 @@ export function PRBoardEditForm({ setInput, handleCancle, post }) {
       document.querySelector("#title").focus();
     } else if (errorContent) {
       document.querySelector("#content").focus();
-    } else if (image && errorMainImage) {
+    } else if (!mainImageURL) {
       document.querySelector("#imageBtn").focus();
     } else {
       setOpenSubmit(true);

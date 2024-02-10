@@ -11,7 +11,7 @@ export default function PRBoardList({ newList }) {
       {newList.map((post) => (
         <div className={`post-card`} key={post._id} id={post._id}>
           <Link to={`${post.promotion_number}`}>
-            <img src={Array.isArray(post.image_url) ? post.image_url[0] : ""} onError={(e) => (e.target.src = empty_img)} alt="" />
+            <img src={post.image_url[0] || empty_img} onError={(e) => (e.target.src = empty_img)} alt="" />
           </Link>
           <div className="post-card-content">
             <div className={`title ${post.tags?.length ? "" : "tl-2"}`}>
