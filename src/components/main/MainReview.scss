@@ -6,11 +6,14 @@
         display: flex;
         flex-direction: column;
         width: 310px;
-        margin: 0 0 220px 50px;
+        margin: 0 0 260px 50px;
         color: #eee;
     }
 }
 .review-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     height: 400px;
     width: 280px;
     padding: 10px;
@@ -21,9 +24,10 @@
     border-radius: 30px;
     box-shadow: 8px 8px 8px rgba(0, 0, 0, 0.3);
     h3 {
-        font-size: 20px;
-        margin: 28px 0 16px 0;
+        font-size: 16px;
+        margin: 24px 0 16px 0;
         text-align: center;
+        color: #414141;
     }
 
     p {
@@ -31,12 +35,25 @@
         word-wrap: break-word;
         padding: 10px;
         line-height: 24px;
+        color: #414141;
     }
     .stars {
-        text-align: center;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        margin: 0 0 20px 8px;
         color: rgb(135, 135, 135);
+        font-size: 14px;
     }
-
+}
+.review-box:hover {
+    cursor: pointer;
+    filter: brightness(0.9);
+}
+.main-review-nickname {
+    width: 100px;
+    display: flex;
+    justify-content: center;
 }
 
 .review-h2 {

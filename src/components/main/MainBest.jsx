@@ -61,7 +61,6 @@ function MainBest() {
     fetch("https://dailytopia2.shop/api/shows/rank")
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         const rankedShows = data.shows
         // 연극을 rank에 따라 정렬
         rankedShows.sort((a, b) => a.rank - b.rank);

@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from 'react-router-dom'; // useNavigate 추가
 import "./MainPublicity.scss";
 
 function MainPublicity() {
   const [promotions, setPromotions] = useState([]);
+  const navigate = useNavigate(); // useNavigate 추가
 
   useEffect(() => {
-    fetch("https://dailytopia2.shop/api/promotions?limit=100")
+    fetch("https://dailytopia2.shop/api/promotions?limit=7")
       .then((res) => res.json())
       .then((data) => {
         setPromotions(data.promotions);
-        console.log(data);
       })
       .catch((err) => console.error(err));
   }, []);
@@ -28,6 +29,12 @@ function MainPublicity() {
     return title;
   };
 
+  // publicity-product 클릭 시 라우팅 처리하는 함수
+  const handleProductClick = (promotionNumber) => {
+    const route = `/promotion/${promotionNumber}`;
+    navigate(route);
+  };
+
   return (
     <div className="main-layout-container">
       <div className="main-title-box">
@@ -37,9 +44,9 @@ function MainPublicity() {
         <div>
           <div className="publicity-box1">
             {promotions.length > 0 && (
-              <div className="publicity-product1">
+              <div className="publicity-product1" onClick={() => handleProductClick(promotions[0].promotion_number)}>
                 <div className="main-publicity1-img-box">
-                  {promotions[0]?.image_url && ( // image_url이 존재하는지 확인
+                  {promotions[0]?.image_url && (
                     <img
                       src={promotions[0]?.image_url[0]}
                       alt={promotions[0]?.title}
@@ -47,7 +54,7 @@ function MainPublicity() {
                   )}
                 </div>
                 <p className="promotions-title">
-                  {limitTitleLength(promotions[0]?.title, 30)}
+                  {limitTitleLength(promotions[0]?.title, 24)}
                 </p>
                 <p className="promotions-period">
                   {formatDate(promotions[0]?.start_date)} ~{" "}
@@ -60,10 +67,10 @@ function MainPublicity() {
         <div className="publicity-box2">
           {promotions.length > 1 &&
             promotions.slice(1, 4).map((promotion, index) => (
-              <div key={index} className="publicity-product">
+              <div key={index} className="publicity-product" onClick={() => handleProductClick(promotion.promotion_number)}>
                 <div className="main-publicity-img-box">
                   {promotion.image_url &&
-                    promotion.image_url[0] && ( // image_url이 존재하는지 확인
+                    promotion.image_url[0] && (
                       <img src={promotion.image_url[0]} alt={promotion.title} />
                     )}
                 </div>
@@ -79,10 +86,10 @@ function MainPublicity() {
         </div>
         <div className="publicity-box3">
           {promotions.slice(4, 7).map((promotion, index) => (
-            <div key={index} className="publicity-product">
+            <div key={index} className="publicity-product" onClick={() => handleProductClick(promotion.promotion_number)}>
               <div className="main-publicity-img-box">
                 {promotion.image_url &&
-                  promotion.image_url[0] && ( // image_url이 존재하는지 확인
+                  promotion.image_url[0] && (
                     <img src={promotion.image_url[0]} alt={promotion.title} />
                   )}
               </div>
