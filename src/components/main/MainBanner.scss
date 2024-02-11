@@ -8,21 +8,19 @@
 }
 @keyframes tiltHover {
   0%, 100% {
-    transform: rotate(0deg);
+    transform: rotate(-13deg);
   }
-  20% {
-    transform: rotate(-2deg);
-  }
-  65% {
-    transform: rotate(5deg);
+  40% {
+    transform: rotate(-3deg);
   }
 }
 
 .banner-img {
   rotate: 2deg;
-  width: 240px;
+  width: 212px;
   padding-top: 4px;
   user-select: none;
+  transform: rotate(-13deg);
   &:hover {
     cursor:grabbing;
     animation: tiltHover 1s ease;
@@ -69,7 +67,7 @@
 }
 .banner-point-text {
   margin-left: 4px;
-  font-size: 40px;
+  font-size: 44px;
   font-weight: 800;
   color: #006eff;
 }

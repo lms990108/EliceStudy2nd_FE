@@ -127,33 +127,36 @@ const Header = () => {
           <div className="vertical-box2">
             <div className="header-tab-box">
               <div className="header-tab-box">
-                <Link to="/play" className="header-tab">
-                  <p
-                    className={`header-tab-text ${
+                <div className="header-tab">
+                  <Link
+                    to="/play"
+                    className={`header-tab-text1 ${
                       activeTab === "play" && "active"
                     }`}
                   >
                     연극
-                  </p>
-                </Link>
-                <Link to="/promotion" className="header-tab">
-                  <p
-                    className={`header-tab-text ${
+                  </Link>
+                </div>
+                <div className="header-tab">
+                  <Link
+                    to="/promotion"
+                    className={`header-tab-text1 ${
                       activeTab === "promotion" && "active"
                     }`}
                   >
                     홍보
-                  </p>
-                </Link>
-                <Link to="/community" className="header-tab">
-                  <p
-                    className={`header-tab-text ${
+                  </Link>
+                </div>
+                <div className="header-tab">
+                  <Link
+                    to="/community"
+                    className={`header-tab-text2 ${
                       activeTab === "community" && "active"
                     }`}
                   >
                     커뮤니티
-                  </p>
-                </Link>
+                  </Link>
+                </div>
               </div>
             </div>
             <div className="search-container">

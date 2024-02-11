@@ -30,8 +30,6 @@
   flex-direction: column;
   align-items: center;
   gap: 6px;
-  width: 100%;
-  max-height: 720px; /* 최대 높이 설정 */
   position: sticky;
   top: 0;
   left: 0;
@@ -40,9 +38,13 @@
 
 .publicity-product1 img {
   width: 100%;
-  height: auto; /* 이미지 비율 유지 */
+  height: 612px;
+  object-fit: cover; /* 이미지 비율 유지 */
   max-height: 100%; /* 최대 높이 설정 */
   transition: transform 0.2s ease-in-out;
+  &:hover {
+    transform: scale(1.05);
+  }
 }
 
 .publicity-product {
@@ -50,27 +52,28 @@
   flex-direction: column;
   align-items: center;
   gap: 6px;
-  width: 100%;
-  max-height: 520px; /* 최대 높이 설정 */
   cursor: pointer;
 }
 
 .publicity-product img {
   width: 100%;
-  height: auto; /* 이미지 비율 유지 */
-  max-height: 100%; /* 최대 높이 설정 */
+  object-fit: cover;
+  height: 424px;
   transition: transform 0.2s ease-in-out;
+  &:hover {
+    transform: scale(1.05);
+  }
 }
 .main-publicity1-img-box {
   width: 460px;
-  border-radius: 10px;
+  border-radius: 22px;
   overflow: hidden;
   margin-bottom: 8px;
   box-shadow: 7px 7px 7px rgba(0, 0, 0, 0.3);
 }
 .main-publicity-img-box {
   width: 320px;
-  border-radius: 10px;
+  border-radius: 15px;
   overflow: hidden;
   margin-bottom: 4px;
   box-shadow: 6px 6px 6px rgba(0, 0, 0, 0.3);

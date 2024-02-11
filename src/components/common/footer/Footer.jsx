@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import LinkIcon from "@mui/icons-material/Link";
 import Tooltip from "@mui/material/Tooltip";
 import { AlertCustom } from "../alert/Alerts";
+import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";
 
 const Footer = () => {
   // 알람
@@ -60,7 +61,11 @@ const Footer = () => {
       <div className="footer-container">
         <div className="footer-inner-box">
           <p className="footer-comment">
-            사이트 이용 중에 불편한 점이나 피드백이 있으시면 위 링크를 통해
+            사이트 이용 중에 불편한 점이나 피드백이 있으시면 <a className="footer-text-link"
+            href="https://docs.google.com/forms/d/e/1FAIpQLSfVEaTNtLfpYnCg1RFbDj77CI-2yrTLam9f8LoruiFaLi44Yw/viewform?usp=sf_link"
+            target="_blank"
+            rel="noopener noreferrer"
+          >위 링크</a>를 통해
             의견을 보내주시면 감사하겠습니다.
           </p>
           <p className="footer-inner">
@@ -69,7 +74,7 @@ const Footer = () => {
           <p className="footer-inner">
             <span className="footer-span1">대표: 이민섭</span>
             <span className="footer-span2">
-              E-mail : teenybox2023@gmail.com
+              E-mail: teenybox2023@gmail.com
             </span>
           </p>
           <p className="footer-copyright">
@@ -88,9 +93,9 @@ const Footer = () => {
           </Link>
           <div className="footer-share">
             <Tooltip title="URL 복사" arrow>
-              <LinkIcon
+              <ShareOutlinedIcon
                 onClick={() => handleLinkShareBtnClick(window.location.href)}
-                style={{ cursor: "pointer", width: "30px", height: "30px" }}
+                style={{ cursor: "pointer", width: "24px", height: "24px" }}
               />
             </Tooltip>
           </div>
