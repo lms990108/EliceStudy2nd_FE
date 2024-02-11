@@ -11,6 +11,7 @@ function MainPublicity() {
       .then((res) => res.json())
       .then((data) => {
         setPromotions(data.promotions);
+        console.log(data);
       })
       .catch((err) => console.error(err));
   }, []);
@@ -49,12 +50,12 @@ function MainPublicity() {
                   {promotions[0]?.image_url && (
                     <img
                       src={promotions[0]?.image_url[0]}
-                      alt={promotions[0]?.title}
+                      alt={promotions[0]?.play_title}
                     />
                   )}
                 </div>
                 <p className="promotions-title">
-                  {limitTitleLength(promotions[0]?.title, 24)}
+                  {limitTitleLength(promotions[0]?.play_title, 24)}
                 </p>
                 <p className="promotions-period">
                   {formatDate(promotions[0]?.start_date)} ~{" "}
@@ -71,11 +72,11 @@ function MainPublicity() {
                 <div className="main-publicity-img-box">
                   {promotion.image_url &&
                     promotion.image_url[0] && (
-                      <img src={promotion.image_url[0]} alt={promotion.title} />
+                      <img src={promotion.image_url[0]} alt={promotion.play_title} />
                     )}
                 </div>
                 <p className="promotions-title">
-                  {limitTitleLength(promotion.title, 20)}
+                  {limitTitleLength(promotion.play_title, 20)}
                 </p>
                 <p className="promotions-period">
                   {formatDate(promotion.start_date)} ~{" "}
@@ -90,11 +91,11 @@ function MainPublicity() {
               <div className="main-publicity-img-box">
                 {promotion.image_url &&
                   promotion.image_url[0] && (
-                    <img src={promotion.image_url[0]} alt={promotion.title} />
+                    <img src={promotion.image_url[0]} alt={promotion.play_title} />
                   )}
               </div>
               <p className="promotions-title">
-                {limitTitleLength(promotion.title, 20)}
+                {limitTitleLength(promotion.play_title, 20)}
               </p>
               <p className="promotions-period">
                 {formatDate(promotion.start_date)} ~{" "}

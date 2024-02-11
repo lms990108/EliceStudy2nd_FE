@@ -18,8 +18,11 @@ const MainReview = () => {
         throw new Error("Failed to fetch reviews");
       }
       const data = await response.json();
-      const filteredReviews = data.data.filter(review => review.rate >= 4);
+      const filteredReviews = data.data.filter(
+        (review) => review.rate >= 3 && review.image_urls.length > 0
+      ); // 별점이 3점 이상이고 이미지 URL 배열이 비어 있지 않은 리뷰 필터링
       setReviews(filteredReviews.slice(0, 3));
+      console.log(data);
     } catch (error) {
       console.error(error);
     }
@@ -33,21 +36,33 @@ const MainReview = () => {
     }
   };
 
-  const handleClickReview = (showId) => { // 클릭 이벤트 핸들러 추가
+  const handleClickReview = (showId) => {
+    // 클릭 이벤트 핸들러 추가
     navigate(`/play/${showId}?tab=reviews`); // 해당 리뷰에 대한 URL로 이동
   };
 
   return (
     <div className="main-review-container">
       {reviews.map((review, index) => (
-        <div key={index} className="review-box" onClick={() => handleClickReview(review.show_id)}> {/* 클릭 이벤트 추가 */}
+        <div
+          key={index}
+          className="review-box"
+          onClick={() => handleClickReview(review.show_id)}
+        >
+          {" "}
+          {/* 클릭 이벤트 추가 */}
           <div>
             <h3>{trimText(review.show_title, 18)}</h3>
-            <p>{trimText(review.content, 224)}</p>
+            <div className="main-review-img-box">
+              <img src={review.image_urls[0]} alt="review-thumbnail" />
+            </div>
+            <p>{trimText(review.content, 34)}</p>
           </div>
           <div className="stars">
             <Rating value={review.rate} readOnly precision={0.5} />{" "}
-            <div className="main-review-nickname">{trimText(review.user_nickname, 6)}</div>
+            <div className="main-review-nickname">
+              {trimText(review.user_nickname, 6)}
+            </div>
           </div>
         </div>
       ))}

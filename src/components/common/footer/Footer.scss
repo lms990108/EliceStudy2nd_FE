@@ -20,28 +20,39 @@
   align-items: center;
   gap: 20px;
   width: 1110px;
-  p {
-    color: #aaa;
-    font-size: 16px;
-  }
-  p:hover {
-    color: #bbb;
-    font-weight: 600;
-    cursor: pointer;
-  }
 }
 .footer-nav-tab1 {
   display: flex;
   align-items: center;
   height: 20px;
   width: 140px;
+  color: #aaa;
+  font-size: 16px;
   border-right: 1px solid rgba(187, 187, 187, 0.5);
+  p {
+    color: #aaa;
+    font-size: 16px;
+  }
+  p:hover {
+    font-weight: 600;
+    cursor: pointer;
+  }
 }
 .footer-nav-tab2 {
   display: flex;
   align-items: center;
   height: 40px;
   width: 120px;
+  color: #aaa;
+  font-size: 16px;
+  p {
+    color: #e6a100;
+    font-size: 16px;
+  }
+  p:hover {
+    font-weight: 600;
+    cursor: pointer;
+  }
 }
 .footer-container {
   display: flex;
@@ -72,6 +83,11 @@
   color: #e6a100;
   margin-bottom: 6px;
   font-size: 14px;
+}
+.footer-text-link {
+  color: rgb(30, 143, 235);
+  font-weight: 600;
+  text-decoration: underline;
 }
 .footer-copyright {
   margin-top: 20px;

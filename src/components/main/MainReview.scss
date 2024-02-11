@@ -1,66 +1,77 @@
 .main-review-container {
-    display: flex;
-    align-items: flex-end;
-    width: 1160px;
-    .review-title-box {
-        display: flex;
-        flex-direction: column;
-        width: 310px;
-        margin: 0 0 260px 50px;
-        color: #eee;
-    }
-}
-.review-box {
+  display: flex;
+  align-items: flex-end;
+  width: 1160px;
+  .review-title-box {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    height: 400px;
-    width: 280px;
+    width: 310px;
+    margin: 0 0 300px 50px;
+    color: #eee;
+  }
+}
+.review-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 400px;
+  width: 280px;
+  padding: 10px;
+  margin-bottom: 24px;
+  margin-right: 20px;
+  background-color: #eee;
+  border: black solid 1px;
+  border-radius: 28px;
+  box-shadow: 8px 8px 8px rgba(0, 0, 0, 0.3);
+  transition: transform 0.25s ease;
+  h3 {
+    font-size: 16px;
+    margin: 24px 0 16px 0;
+    text-align: center;
+    color: #414141;
+  }
+  img {
+    width: 220px;
+    max-height: 220px;
+    object-fit: cover;
+    border-radius: 16px;
+    border: 1px solid rgb(135, 135, 135);
+  }
+  p {
+    font-size: 14px;
+    word-wrap: break-word;
     padding: 10px;
-    margin-bottom: 24px;
-    margin-right: 20px;
-    background-color: #eee;
-    border: black solid 1px;
-    border-radius: 30px;
-    box-shadow: 8px 8px 8px rgba(0, 0, 0, 0.3);
-    h3 {
-        font-size: 16px;
-        margin: 24px 0 16px 0;
-        text-align: center;
-        color: #414141;
-    }
-
-    p {
-        font-size: 14px;
-        word-wrap: break-word;
-        padding: 10px;
-        line-height: 24px;
-        color: #414141;
-    }
-    .stars {
-        display: flex;
-        align-items: center;
-        gap: 4px;
-        margin: 0 0 20px 8px;
-        color: rgb(135, 135, 135);
-        font-size: 14px;
-    }
+    line-height: 24px;
+    color: #414141;
+  }
+  .stars {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin: 0 0 20px 8px;
+    color: rgb(135, 135, 135);
+    font-size: 14px;
+  }
 }
-.review-box:hover {
-    cursor: pointer;
-    filter: brightness(0.9);
-}
-.main-review-nickname {
-    width: 100px;
+.main-review-img-box {
     display: flex;
     justify-content: center;
 }
+.review-box:hover {
+  cursor: pointer;
+  transform: translateY(-24px);
+}
+.main-review-nickname {
+  width: 100px;
+  display: flex;
+  justify-content: center;
+}
 
 .review-h2 {
-    font-size: 26px;
-    color: white;
-    margin-bottom: 8px;
+  font-size: 26px;
+  color: white;
+  margin-bottom: 8px;
 }
 .review-p {
-    font-size: 16px;
+  font-size: 16px;
 }
