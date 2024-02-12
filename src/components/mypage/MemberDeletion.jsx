@@ -43,13 +43,13 @@ function MemberDeletion({ user, setUserData }) {
         </div>
         <div className="member-deletion-text-box">
           <p>
-            회원 탈퇴일로부터 계정과 닉네임을 포함한 계정 정보(아이디/이메일/닉네임)는
+            회원 탈퇴일로부터 계정과 닉네임을 포함한 계정 정보(아이디/닉네임/프로필사진)는
             <br />
             <Link to={"/privacy-policy"}>개인정보 처리방침</Link>에 따라 6개월간 보관(잠김)되며, 6개월 경과된 후에는 모든 개인 정보는 완전히 삭제되며
             <br /> 더 이상 복구할 수 없게 됩니다.
           </p>
-          <p>단, 6개월 이내에 재가입 시 기존 데이터는 유지됩니다.</p>
-          <p>작성된 게시물은 삭제되지 않으며, 익명처리 후 OKKY 로 소유권이 귀속됩니다.</p>
+          <p>단, 6개월 이내에 재가입 시 기존의 모든 데이터는 유지됩니다.</p>
+          <p>작성된 게시물은 삭제되지 않으며, 익명처리 후 TeenyBox 로 소유권이 귀속됩니다.</p>
         </div>
         <div className="check-box">
           <FormControlLabel label="계정 삭제에 관한 정책을 읽고 이에 동의합니다." control={<Checkbox checked={checked} onChange={handleChangCheck} />} />

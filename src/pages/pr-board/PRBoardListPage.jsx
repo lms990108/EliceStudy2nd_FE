@@ -47,18 +47,22 @@ export function PRBoardListPage() {
     setState("loading");
     const [by, order] = sort.split(" ");
     console.log(by, order);
-    const res = await fetch(`${promotionUrl}?page=${curPage || page}&limit=20&sortBy=${by}&sortOrder=${order}&category=${category}`);
-    const data = await res.json();
-    console.log(res, data);
+    try {
+      const res = await fetch(`${promotionUrl}?page=${curPage || page}&limit=20&sortBy=${by}&sortOrder=${order}&category=${category}`);
+      const data = await res.json();
+      console.log(data);
 
-    if (res.ok) {
-      if (data.totalCount) {
-        method === "add" ? addBoardList(data.promotions) : setBoardList(data.promotions);
-        setPage(curPage + 1);
-        setTotalCnt(data.totalCount);
+      if (res.ok) {
+        if (data.totalCount) {
+          method === "add" ? addBoardList(data.promotions) : setBoardList(data.promotions);
+          setPage(curPage + 1);
+          setTotalCnt(data.totalCount);
+        }
+        setState("hasValue");
+      } else {
+        setState("hasError");
       }
-      setState("hasValue");
-    } else {
+    } catch (err) {
       setState("hasError");
     }
   };
@@ -93,7 +97,7 @@ export function PRBoardListPage() {
     if (inView) {
       // 총 개수 받아서 page 넘어가면 api 호출 X
       if (totalCnt && boardList.length >= totalCnt) return;
-      getPage(page, add);
+      getPage(page, "add");
     }
   }, [inView]);
 

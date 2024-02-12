@@ -9,6 +9,7 @@ import { BoardRightContainer } from "../../components/board/BoardRightContainer"
 import setStoreViewList from "../../utils/setStoreRecentViewList";
 import { NotFoundPage } from "../errorPage/NotFoundPage";
 import { AlertContext, AppContext } from "../../App";
+import { COMMENTS_LIMIT } from "../../utils/const";
 
 export function PRBoardDetailPage() {
   const [post, setPost] = useState({});
@@ -24,16 +25,21 @@ export function PRBoardDetailPage() {
 
   const getPromotion = async () => {
     setState("loading");
-    const postId = params.postId;
-    const res = await fetch(`${promotionUrl}/${postId}`);
-    const data = await res.json();
-    console.log(data);
 
-    if (res.ok) {
-      setPost(data);
-      setState("hasValue");
-    } else {
-      setPost();
+    try {
+      const postId = params.postId;
+      const res = await fetch(`${promotionUrl}/${postId}`);
+      const data = await res.json();
+      console.log(data);
+
+      if (res.ok) {
+        setPost(data);
+        setState("hasValue");
+      } else {
+        setPost();
+        setState("hasError");
+      }
+    } catch (err) {
       setState("hasError");
     }
   };
@@ -42,45 +48,74 @@ export function PRBoardDetailPage() {
     if (totalCount !== 0 && totalCount <= comments.length) return;
     setCommentState("loading");
 
-    const res = await fetch(`${commentUrl}/promotions/${post._id}?page=${page}&limit=20`);
-    const data = await res.json();
-    console.log(data);
+    try {
+      const res = await fetch(`${commentUrl}/promotions/${post._id}?page=${page}&limit=${COMMENTS_LIMIT}`);
+      const data = await res.json();
+      console.log(data);
 
-    if (res.ok) {
-      setComments([...comments, ...data.comments]);
-      setTotalCount(data.totalComments);
-      setPage(page + 1);
-      setCommentState("hasValue");
-    } else {
+      if (res.ok) {
+        setComments([...comments, ...data.comments]);
+        setTotalCount(data.totalComments);
+        setPage(page + 1);
+        setCommentState("hasValue");
+      } else {
+        setCommentState("hasError");
+      }
+    } catch (err) {
       setCommentState("hasError");
     }
   };
 
   const createComment = async (inputText) => {
-    const res = await fetch(`${commentUrl}`, {
-      method: "POST",
-      credentials: "include",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        content: inputText,
-        promotion: post._id,
-      }),
-    });
-    const data = await res.json();
-    console.log(data);
+    try {
+      const res = await fetch(`${commentUrl}`, {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          content: inputText,
+          promotion: post._id,
+        }),
+      });
+      const data = await res.json();
+      console.log(data);
 
-    if (res.ok) {
-      setComments([data, ...comments]);
-      setTotalCount(totalCount + 1);
-    } else if (res.status === 401 || res.status === 403) {
-      const loginRes = await fetch(`${userUrl}`, { credentials: "include" });
-      if (loginRes.ok) {
-        const data = await loginRes.json();
-        setUserData({ isLoggedIn: true, user: data.user });
-      } else {
-        setUserData({ isLoggedIn: false });
-        setOpenLoginAlertBack(true);
+      if (res.ok) {
+        setComments([data, ...comments]);
+        setTotalCount(totalCount + 1);
+      } else if (res.status === 401 || res.status === 403) {
+        const loginRes = await fetch(`${userUrl}`, { credentials: "include" });
+        if (loginRes.ok) {
+          const data = await loginRes.json();
+          setUserData({ isLoggedIn: true, user: data.user });
+        } else {
+          setUserData({ isLoggedIn: false });
+          setOpenLoginAlertBack(true);
+        }
       }
+    } catch (err) {
+      setState("hasError");
+    }
+  };
+
+  const handleRefreshComments = async () => {
+    setCommentState("loading");
+
+    try {
+      const res = await fetch(`${commentUrl}/posts/${post._id}?page=1&limit=${COMMENTS_LIMIT}`);
+      const data = await res.json();
+      console.log(data);
+
+      if (res.ok) {
+        setComments(data.comments);
+        setTotalCount(data.totalComments);
+        setPage(2);
+        setCommentState("hasValue");
+      } else {
+        setCommentState("hasError");
+      }
+    } catch (err) {
+      setCommentState("hasError");
     }
   };
 
@@ -101,7 +136,7 @@ export function PRBoardDetailPage() {
       ) : (
         <>
           <div className="board-left-container">
-            <BoardSecondHeader header={"홍보게시판"} onclick={() => nav(-1)} />
+            <BoardSecondHeader header={"홍보게시판"} onclick={() => nav("/promotion")} />
             {state === "loading" ? (
               <div className="progress-box">
                 <CircularProgress color="secondary" className="progress" />
@@ -109,7 +144,7 @@ export function PRBoardDetailPage() {
             ) : (
               <div className="body">
                 {post._id && <PRBoardPost data={post} totalCommentCount={totalCount} />}
-                <BoardNav point={totalCount.toLocaleString("ko-KR")} text="개의 댓글" onclick={getPromotion} />
+                <BoardNav point={totalCount.toLocaleString("ko-KR")} text="개의 댓글" onclick={handleRefreshComments} />
                 <CommentForm createComment={createComment} postId={post?._id} />
                 {!comments.length || <CommentsList comments={comments} totalCount={totalCount} getComments={getComments} setComments={setComments} setTotalCount={setTotalCount} />}
                 {commentState === "loading" && (

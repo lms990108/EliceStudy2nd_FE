@@ -1,11 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
 import "./Comment.scss";
-import { AppContext } from "../../App";
+import { AlertContext, AppContext } from "../../App";
 import { Backdrop, Button } from "@mui/material";
 import { commentUrl } from "../../apis/apiURLs";
 import { AlertCustom } from "../common/alert/Alerts";
 import LiveTimeDiff from "../common/time/LiveTimeDiff";
 import default_user_img from "../../assets/img/default_user_img.svg";
+import { useNavigate } from "react-router-dom";
 
 export function Comment({ commentData, deleteComment }) {
   const [comment, setComment] = useState(commentData);
@@ -14,7 +15,9 @@ export function Comment({ commentData, deleteComment }) {
   const [isEditing, setIsEditing] = useState(false);
   const [inputComment, setInputComment] = useState(comment.content);
   const [openAlertDelete, setOpenAlertDelete] = useState(false);
-  const { userData } = useContext(AppContext);
+  const { userData, setUserData } = useContext(AppContext);
+  const { setOpenLoginAlertBack } = useContext(AlertContext);
+  const nav = useNavigate();
 
   const handleSeeMore = (e) => {
     const textBox = e.target.closest(".text");
@@ -23,18 +26,25 @@ export function Comment({ commentData, deleteComment }) {
   };
 
   const handleClickUpdateBtn = async () => {
-    const res = await fetch(`${commentUrl}/${comment._id}`, {
-      method: "PUT",
-      credentials: "include",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ content: inputComment }),
-    });
-    const data = await res.json();
-    console.log(data);
+    try {
+      const res = await fetch(`${commentUrl}/${comment._id}`, {
+        method: "PUT",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ content: inputComment }),
+      });
+      const data = await res.json();
+      console.log(data);
 
-    if (res.ok) {
-      setComment(data);
-      setIsEditing(false);
+      if (res.ok) {
+        setComment(data);
+        setIsEditing(false);
+      } else if (res.status === 401 || res.status === 403) {
+        setUserData({ isLoggedIn: false });
+        nav("/signup-in");
+      }
+    } catch (err) {
+      console.log(err);
     }
   };
 

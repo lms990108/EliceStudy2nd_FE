@@ -6,13 +6,21 @@ import { CalendarMonth, FormatQuote, LocationOn, MovieCreation } from "@mui/icon
 import empty_img from "../../assets/img/empty_img.svg";
 import TimeFormat from "../common/time/TimeFormat";
 import { Link } from "react-router-dom";
+import { Backdrop } from "@mui/material";
 
 export default function PRBoardPost({ data, totalCommentCount }) {
+  const [openMainImg, setOpenMainImg] = useState(false);
   return (
     <div className="pr-board-post">
       <PostTop user={data.user_id || { nickname: "user" }} type={"promotion"} post={data} totalCommentCount={totalCommentCount} />
       <div className="top-container">
-        <img className="main-img" src={data.image_url[0] || empty_image} onError={(e) => (e.target.src = empty_image)} alt="홍보 포스터" />
+        <img
+          className="main-img pointer"
+          src={data.image_url[0] || empty_image}
+          onError={(e) => (e.target.src = empty_image)}
+          alt="홍보 포스터"
+          onClick={() => setOpenMainImg(true)}
+        />
         <div className="flex-column">
           <div className="box">
             <div className="lable">타이틀</div>
@@ -66,13 +74,16 @@ export default function PRBoardPost({ data, totalCommentCount }) {
           ))}
         </div>
       )}
-      {data.image_url.length > 1 && (
+      {data.image_url.length && (
         <div className="images">
-          {data.image_url.slice(1).map((url) => (
+          {data.image_url.map((url) => (
             <img src={url} key={url} onError={(e) => (e.target.src = empty_img)} />
           ))}
         </div>
       )}
+      <Backdrop open={openMainImg} onClick={() => setOpenMainImg(false)}>
+        <img className="zoom" src={data.image_url[0]} />
+      </Backdrop>
     </div>
   );
 }

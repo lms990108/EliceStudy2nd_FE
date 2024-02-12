@@ -22,18 +22,22 @@ export function PRBoardEdit() {
   };
 
   const getPost = async () => {
-    const res = await fetch(`${promotionUrl}/${params.postId}`);
-    const data = await res.json();
-    console.log(data);
-    if (!res.ok) {
+    try {
+      const res = await fetch(`${promotionUrl}/${params.postId}`);
+      const data = await res.json();
+      console.log(data);
+      if (!res.ok) {
+        nav("/not-found");
+        return;
+      }
+      if (data.user_id.nickname !== userData.user.nickname) {
+        nav("/forbidden");
+        return;
+      }
+      setPost(data);
+    } catch (err) {
       nav("/not-found");
-      return;
     }
-    if (data.user_id.nickname !== userData.user.nickname) {
-      nav("/forbidden");
-      return;
-    }
-    setPost(data);
   };
 
   useEffect(() => {

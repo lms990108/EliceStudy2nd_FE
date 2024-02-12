@@ -192,7 +192,7 @@ export function FreeBoardEditForm({ setInput, handleCancle, post }) {
           title={"teenybox.com 내용:"}
           content={"글 수정이 완료되었습니다!"}
           btnCloseHidden={true}
-          time={300}
+          time={1000}
         />
       </Backdrop>
     </div>

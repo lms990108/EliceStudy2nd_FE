@@ -170,6 +170,11 @@
         font-size: 14px;
         color: #898989;
         margin-left: 4px;
+
+        &.red {
+          color: red;
+          font-weight: 500;
+        }
       }
 
       .image {

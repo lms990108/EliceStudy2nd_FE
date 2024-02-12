@@ -47,18 +47,22 @@ function MyPlayReview({ user, setUserData }) {
   const getReviews = async () => {
     setState("loading");
     console.log(user.user_id);
-    const res = await fetch(`${reviewUrl}?userId=${user.user_id}`);
-    const data = await res.json();
-    console.log(data);
+    try {
+      const res = await fetch(`${reviewUrl}?userId=${user.user_id}`);
+      const data = await res.json();
+      console.log(data);
 
-    if (res.ok) {
-      setReviews(
-        data.data.map((review) => {
-          return { ...review, id: review._id };
-        })
-      );
-      setState("hasValue");
-    } else {
+      if (res.ok) {
+        setReviews(
+          data.data.map((review) => {
+            return { ...review, id: review._id };
+          })
+        );
+        setState("hasValue");
+      } else {
+        setState("hasError");
+      }
+    } catch (err) {
       setState("hasError");
     }
   };

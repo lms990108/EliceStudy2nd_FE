@@ -10,6 +10,7 @@ import Empty from "../common/state/Empty";
 import { Link, useNavigate } from "react-router-dom";
 import TimeFormat from "../common/time/TimeFormat";
 import { AlertCustom } from "../common/alert/Alerts";
+import { COMMENTS_LIMIT } from "../../utils/const";
 
 const columns = [
   { field: "category", headerName: "카테고리", width: 120 },
@@ -42,18 +43,22 @@ function MyComments({ user, setUserData }) {
 
   const getComments = async () => {
     setState("loading");
-    const res = await fetch(`${commentUrl}/users?limit=1000`, { credentials: "include" });
-    const data = await res.json();
-    console.log(data);
+    try {
+      const res = await fetch(`${commentUrl}/users`, { credentials: "include" });
+      const data = await res.json();
+      console.log(data);
 
-    if (res.ok) {
-      setComments(
-        data.comments.map((comment) => {
-          return { ...comment, id: comment._id, category: comment.promotion ? "홍보게시판" : "커뮤니티", title: comment.promotion?.title || comment.post?.title };
-        })
-      );
-      setState("hasValue");
-    } else {
+      if (res.ok) {
+        setComments(
+          data.comments.map((comment) => {
+            return { ...comment, id: comment._id, category: comment.promotion ? "홍보게시판" : "커뮤니티", title: comment.promotion?.title || comment.post?.title };
+          })
+        );
+        setState("hasValue");
+      } else {
+        setState("hasError");
+      }
+    } catch (err) {
       setState("hasError");
     }
   };

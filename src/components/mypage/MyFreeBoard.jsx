@@ -48,18 +48,22 @@ function MyFreeBoard({ user, setUserData }) {
 
   const getPosts = async () => {
     setState("loading");
-    const res = await fetch(`${postUrl}/user/${user._id}`);
-    const data = await res.json();
-    console.log(data);
+    try {
+      const res = await fetch(`${postUrl}/user/${user._id}`);
+      const data = await res.json();
+      console.log(data);
 
-    if (res.ok) {
-      setPosts(
-        data.posts.map((post) => {
-          return { ...post, id: post.post_number };
-        })
-      );
-      setState("hasValue");
-    } else {
+      if (res.ok) {
+        setPosts(
+          data.posts.map((post) => {
+            return { ...post, id: post.post_number };
+          })
+        );
+        setState("hasValue");
+      } else {
+        setState("hasError");
+      }
+    } catch (err) {
       setState("hasError");
     }
   };
