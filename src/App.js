@@ -16,7 +16,6 @@ function App() {
   const [openLoginAlert, setOpenLoginAlert] = useState(false);
   const [openLoginAlertBack, setOpenLoginAlertBack] = useState(false);
   const [prevPlayListQuery, setPrevPlayListQuery] = useState(null);
-  console.log(userData);
 
   const getUserData = async () => {
     try {
@@ -59,7 +58,11 @@ function App() {
   return (
     <div className="App">
       <Helmet>
-        <script type="text/javascript" defer src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.REACT_APP_KAKAO_MAP_API_KEY}&autoload=false`} />
+        <script
+          type="text/javascript"
+          defer
+          src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.REACT_APP_KAKAO_MAP_API_KEY}&autoload=false`}
+        />
       </Helmet>
       <ThemeProvider theme={theme}>
         <AppContext.Provider
@@ -70,7 +73,14 @@ function App() {
             setPrevPlayListQuery,
           }}
         >
-          <AlertContext.Provider value={{ openLoginAlert, setOpenLoginAlert, openLoginAlertBack, setOpenLoginAlertBack }}>
+          <AlertContext.Provider
+            value={{
+              openLoginAlert,
+              setOpenLoginAlert,
+              openLoginAlertBack,
+              setOpenLoginAlertBack,
+            }}
+          >
             <BrowserRouter>
               <AppRoutes setPrevPlayListQuery={setPrevPlayListQuery} />
               <LoginAlert />

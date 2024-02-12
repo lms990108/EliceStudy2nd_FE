@@ -33,9 +33,12 @@ export function SignUp_In() {
         <>
           <DisableModal />
 
-          <Backdrop open={true} sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
+          <Backdrop
+            open={true}
+            sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          >
             <AlertCustom
-              title={"로그인 불가"}
+              title="tennybox.com 내용:"
               content={"로그아웃 후 로그인 페이지 이용이 가능합니다."}
               severity="error"
               open={true}
@@ -49,7 +52,9 @@ export function SignUp_In() {
       )}
       <section className="signupInContainer inner">
         <h1 className="signup-title">SIGN UP / LOGIN </h1>
-        <p className="signup-description">소셜 로그인 및 이메일 계정으로 가입이 가능합니다.</p>
+        <p className="signup-description">
+          소셜 로그인 및 이메일 계정으로 가입이 가능합니다.
+        </p>
 
         <div className="social-buttons">
           <fromPageContext.Provider value={pageFrom}>

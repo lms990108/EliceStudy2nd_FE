@@ -40,8 +40,6 @@ export default function SubmitBtnsArea({ additionalUserInfo }) {
       imageUrlsToDelete: toDeleteImg,
     };
 
-    console.log(body);
-
     fetch("https://dailytopia2.shop/api/users", {
       method: "POST",
       headers: {

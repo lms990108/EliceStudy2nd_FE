@@ -9,6 +9,7 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import PlayReviewContentBox from "./PlayReviewContentBox";
 import { AlertCustom } from "../../common/alert/Alerts";
+import Backdrop from "@mui/material/Backdrop";
 
 export default function PlayReviewListBox({
   reviewInfo,
@@ -38,11 +39,14 @@ export default function PlayReviewListBox({
 
   const handleDeleteBtnClick = () => {
     setAlert({
-      title: `리뷰 삭제`,
+      title: `tennybox.com 내용:`,
       content: `리뷰를 정말 삭제하시겠습니까?`,
       open: true,
       onclose: () => setAlert(null),
-      onclick: () => deleteReview(review_id),
+      onclick: () => {
+        setAlert(null);
+        deleteReview(review_id);
+      },
       severity: "warning",
       checkBtn: "확인",
       closeBtn: "취소",
@@ -57,7 +61,7 @@ export default function PlayReviewListBox({
       .then((res) => {
         if (res.ok) {
           setAlert({
-            title: `삭제 성공`,
+            title: `tennybox.com 내용:`,
             content: `리뷰 삭제에 성공하였습니다.`,
             open: true,
             onclose: () => {
@@ -75,26 +79,31 @@ export default function PlayReviewListBox({
             severity: "success",
             checkBtn: "확인",
             btnCloseHidden: true,
-            time: 500,
           });
+          // 알림이 열린 후 1000ms(1초) 후에 닫히도록 설정
+          setTimeout(() => {
+            setAlert(null);
+            getPlayDetailInfo();
+            getReviews();
+            getUserReview();
+          }, 1000);
         } else if (res.status === 401 || res.status === 403) {
           setAlert({
-            title: "로그인 필요",
-            content:
-              "로그인이 필요한 기능입니다. 로그인 페이지로 이동하시겠습니까?",
+            title: "tennybox.com 내용:",
+            content: "로그인이 필요한 서비스입니다. 로그인 하시겠습니까?",
             open: true,
             onclose: () => setAlert(null),
             onclick: () =>
               navigate("/signup-in", {
                 state: { from: `${location.pathname}${location.search}` },
               }),
-            severity: "warning",
+            severity: "info",
             checkBtn: "확인",
             closeBtn: "취소",
           });
         } else {
           setAlert({
-            title: `삭제 실패`,
+            title: `tennybox.com 내용:`,
             content: `리뷰 삭제에 실패하였습니다.`,
             open: true,
             onclose: () => setAlert(null),
@@ -104,7 +113,7 @@ export default function PlayReviewListBox({
       })
       .catch((err) => {
         setAlert({
-          title: `삭제 실패`,
+          title: `tennybox.com 내용:`,
           content: `리뷰 삭제에 실패하였습니다.`,
           open: true,
           onclose: () => setAlert(null),
@@ -116,17 +125,23 @@ export default function PlayReviewListBox({
   return (
     <>
       {alert && (
-        <AlertCustom
-          title={alert.title}
-          content={alert.content}
-          open={alert.open}
-          onclose={alert.onclose}
-          onclick={alert.onclick}
-          severity={alert.severity}
-          checkBtn={alert.checkBtn}
-          closeBtn={alert.closeBtn}
-          btnCloseHidden={alert.btnCloseHidden}
-        />
+        <Backdrop
+          sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          open={open}
+          onClick={() => setAlert(null)}
+        >
+          <AlertCustom
+            title={alert.title}
+            content={alert.content}
+            open={alert.open}
+            onclose={alert.onclose}
+            onclick={alert.onclick}
+            severity={alert.severity}
+            checkBtn={alert.checkBtn}
+            closeBtn={alert.closeBtn}
+            btnCloseHidden={alert.btnCloseHidden}
+          />
+        </Backdrop>
       )}
       <div className="play-review-list-box">
         <div className="review-author-and-date">

@@ -17,69 +17,41 @@
       }
     }
 
-    .sort-by {
-      width: 120px;
-      height: 40px;
-      font-size: 16px;
-      text-align: center;
-      border: 1px solid rgba(188, 188, 188, 0.7);
-      border-radius: 8px;
-      font-family: "Noto Sans KR", sans-serif;
-    }
-  }
-}
+    .sort {
+      position: relative;
 
-@media (min-width: 481px) and (max-width: 1129px) {
-  .play-list-header {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 80px;
+      button {
+        margin-left: 10px;
 
-    .number-of-plays {
-      font-weight: 700;
-      font-size: 28px;
+        .MuiButton-startIcon {
+          margin-right: 2px;
+        }
 
-      span {
-        color: #ffb400;
+        &.MuiButton-outlinedDarkGray:hover {
+          border-color: #89898980;
+        }
       }
-    }
 
-    .sort-by {
-      width: 120px;
-      height: 40px;
-      font-size: 16px;
-      font-family: "Nanum Gothic", sans-serif;
-      text-align: center;
-      border: 1px solid rgba(188, 188, 188, 0.7);
-      border-radius: 8px;
-    }
-  }
-}
+      .MuiFormControl-root {
+        height: 30px;
+        margin: 0;
 
-/*(반응형) 핸드폰 사이즈에서 적용될 CSS*/
-@media (max-width: 480px) {
-  .play-list-header {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 80px;
+        .MuiInputBase-root {
+          color: #898989;
+          font-size: 13px;
+          font-weight: 500;
+          line-height: 24px;
 
-    .number-of-plays {
-      font-weight: 700;
-      font-size: 26px;
+          &.Mui-focused .MuiOutlinedInput-notchedOutline {
+            border-color: rgba(137, 137, 137, 0.5019607843);
+          }
 
-      span {
-        color: #ffb400;
+          .MuiSelect-select {
+            padding: 3px 9px;
+            height: 24px;
+          }
+        }
       }
-    }
-
-    .sort-by {
-      width: 120px;
-      height: 40px;
-      font-size: 16px;
-      font-family: "Nanum Gothic", sans-serif;
-      text-align: center;
-      border: 1px solid rgba(188, 188, 188, 0.7);
-      border-radius: 8px;
     }
   }
 }

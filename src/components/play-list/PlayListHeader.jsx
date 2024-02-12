@@ -1,4 +1,5 @@
 import "./PlayListHeader.scss";
+import { FormControl, MenuItem, Select } from "@mui/material";
 
 // 연극 개수와 정렬 기준
 export default function PlayListHeader({
@@ -13,15 +14,18 @@ export default function PlayListHeader({
           <span>{count}개</span>의 연극
         </div>
       </div>
-      <select
-        className="sort-by"
-        onChange={(e) => setSortStandard(e.target.value)}
-        value={sortStandard}
-      >
-        {/* select에서 e.target.value는 option에 부여해준 value가 됨. */}
-        <option value="recent">최신순</option>
-        <option value="rate">높은 평점순</option>
-      </select>
+      <div className="sort">
+        <FormControl sx={{ m: 1, minWidth: 120 }}>
+          <Select
+            value={sortStandard}
+            onChange={(e) => setSortStandard(e.target.value)}
+            displayEmpty
+          >
+            <MenuItem value="recent">최신순</MenuItem>
+            <MenuItem value="rate">높은 평점순</MenuItem>
+          </Select>
+        </FormControl>
+      </div>
     </div>
   );
 }
