@@ -13,7 +13,22 @@ import { AlertCustom } from "../common/alert/Alerts";
 
 const columns = [
   { field: "category", headerName: "카테고리", width: 120 },
-  { field: "title", headerName: "글 제목", width: 200 },
+  {
+    field: "title",
+    headerName: "글 제목",
+    width: 200,
+    renderCell: (data) => (
+      <>
+        {data.row.post || data.row.promotion ? (
+          <Link className="link" to={data.row.post ? `/community/${data.row.post.post_number}` : `/promotion/${data.row.promotion.promotion_number}`}>
+            {data.value}
+          </Link>
+        ) : (
+          <span className="placeholder">삭제된 글입니다.</span>
+        )}
+      </>
+    ),
+  },
   { field: "content", headerName: "내용", width: 400 },
   { field: "createdAt", headerName: "작성 시기", width: 150, renderCell: (data) => <TimeFormat time={data.row.createdAt} type={"time"} /> },
 ];

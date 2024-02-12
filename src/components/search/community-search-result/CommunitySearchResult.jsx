@@ -54,7 +54,10 @@ export default function CommunitySearchResult({ searchKeyword }) {
   return (
     <div className="community-search-result-container">
       <div className="search-header">
-        <span className="title">커뮤니티 검색결과</span>
+        <div>
+          <span className="title">커뮤니티 검색결과</span>
+          <span className="title count">({totalCnt.toLocaleString("ko-KR")})</span>
+        </div>
         <div>
           <span>검색 범위 : </span>
           <select className="sort-by" value={type} onChange={handleChangeType}>

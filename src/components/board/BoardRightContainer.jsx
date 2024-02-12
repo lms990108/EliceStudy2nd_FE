@@ -213,9 +213,21 @@ export function BoardRightContainer({ post }) {
         <ul>
           {Children.toArray(
             latestCommentList.map((post, idx) => (
-              <Link to={`${post.promotion ? `/promotion/${post.promotion.promotion_number}` : `/community/${post.post.post_number}`}`}>
+              <Link
+                to={
+                  post.promotion === null
+                    ? "/promotion/not-found"
+                    : post.promotion
+                    ? `/promotion/${post.promotion.promotion_number}`
+                    : post.post === null
+                    ? "/community/not-found"
+                    : `/community/${post.post.post_number}`
+                }
+              >
                 <li>
-                  <span className={`category ${post.promotion ? "promotion" : "community"}`}>{post.promotion ? `[홍보/${post.promotion.category}]` : "[커뮤니티]"}</span>
+                  <span className={`category ${post.promotion === null || post.promotion ? "promotion" : "community"}`}>
+                    {post.promotion === null ? "[홍보]" : post.promotion ? `[홍보/${post.promotion.category}]` : "[커뮤니티]"}
+                  </span>
                   <p>{post.content}</p>
                   <div className="right">
                     <LiveTimeDiff time={post.createdAt} />

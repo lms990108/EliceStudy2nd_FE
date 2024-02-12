@@ -6,6 +6,7 @@ import LiveTimeDiff from "../common/time/LiveTimeDiff";
 import default_user_img from "../../assets/img/default_user_img.svg";
 import formatLargeNumber from "../../utils/numberFormat";
 import numberFormat from "../../utils/numberFormat";
+import { DELETE_USER_NICKNAME } from "../../utils/const";
 
 export default function FreeBoardList({ boardList }) {
   const nav = useNavigate();
@@ -23,7 +24,7 @@ export default function FreeBoardList({ boardList }) {
           <div className="flex-box top">
             <div className="user">
               <img className="user-img" src={post.user?.profile_url || ""} onError={(e) => (e.target.src = default_user_img)} />
-              <span>{post.user?.nickname || "익명"}</span>
+              <span>{post.user?.nickname || DELETE_USER_NICKNAME}</span>
             </div>
             <div className="time">
               <LiveTimeDiff time={post.createdAt} />

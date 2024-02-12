@@ -5,13 +5,12 @@
 .mypage-container {
   display: flex;
   justify-content: center;
-  margin: 30px 0;
   width: 1110px;
-  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
+  box-shadow: 2px 3px 6px 2px rgba(0, 0, 0, 0.2);
 }
 .mypage-nav {
   width: 210px;
-  height: 800px;
+  height: 810px;
   background-color: #eee;
 }
 .nav-header {
@@ -50,8 +49,12 @@
 }
 .mypage-content-area {
   width: 900px;
-  height: 800px;
+  height: 810px;
   background-color: white;
+
+  .body {
+    height: 647px;
+  }
 }
 
 .mypage-progress {

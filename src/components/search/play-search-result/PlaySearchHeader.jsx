@@ -1,9 +1,12 @@
 import "./PlaySearchHeader.scss";
 
-export default function PlaySearchHeader({ setSortStandard, setCurPage }) {
+export default function PlaySearchHeader({ setSortStandard, setCurPage, resultCnt }) {
   return (
     <div className="play-search-header">
-      <span>연극 검색결과</span>
+      <div>
+        <span>연극 검색결과</span>
+        <span className="count">({resultCnt.toLocaleString("ko-KR")})</span>
+      </div>
       <select
         className="sort-by"
         onChange={(e) => {
