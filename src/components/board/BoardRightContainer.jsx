@@ -213,7 +213,7 @@ export function BoardRightContainer({ post }) {
         <ul>
           {Children.toArray(
             latestCommentList.map((post, idx) => (
-              <Link to={`${post.promotion ? `/promotion/${post.promotion.promotion_number}` : `/community/${post.post.post_number}`}`}>
+              <Link to={post.promotion ? `/promotion/${post.promotion.promotion_number}` : post.post ? `/community/${post.post.post_number}` : "/community/not-found"}>
                 <li>
                   <span className={`category ${post.promotion ? "promotion" : "community"}`}>{post.promotion ? `[홍보/${post.promotion.category}]` : "[커뮤니티]"}</span>
                   <p>{post.content}</p>
