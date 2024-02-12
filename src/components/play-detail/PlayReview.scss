@@ -17,22 +17,3 @@
     padding: 30px 0;
   }
 }
-
-@media (max-width: 480px) {
-  .play-review-container {
-    margin: 30px 0;
-  }
-
-  .play-review-container .play-review-list {
-    padding: 10px 30px 0 30px;
-  }
-
-  .play-review-not-exsist {
-    font-weight: 700;
-    font-size: 18px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 30px 0;
-  }
-}

@@ -8,6 +8,8 @@ import TextField from "@mui/material/TextField";
 import ReviewErrorBox from "./ReviewErrorBox";
 import DriveFolderUploadIcon from "@mui/icons-material/DriveFolderUpload";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
+import IconButton from "@mui/material/IconButton";
+import Backdrop from "@mui/material/Backdrop";
 
 export default function ReviewForm({
   purpose,
@@ -99,7 +101,7 @@ export default function ReviewForm({
 
   const handleCancelBtnClick = () => {
     setAlert({
-      title: `리뷰 ${purpose} 취소`,
+      title: `tennybox.com 내용:`,
       content: `리뷰 ${purpose}을 취소하시겠습니까? ${purpose}한 글 내용은 저장되지 않습니다.`,
       open: true,
       onclose: () => setAlert(null),
@@ -165,86 +167,7 @@ export default function ReviewForm({
       .then((res) => {
         if (res.ok) {
           setAlert({
-            title: `리뷰 ${purpose} 완료`,
-            content: `리뷰 ${purpose}이 완료되었습니다.`,
-            open: true,
-            onclose: () => {
-              setAlert(null);
-              setIsReviewFormOpened(false);
-              getPlayDetailInfo();
-              getReviews();
-              getUserReview();
-            },
-            onclick: () => {
-              setIsReviewFormOpened(false);
-              getPlayDetailInfo();
-              getReviews();
-              getUserReview();
-            },
-            severity: "success",
-            checkBtn: "확인",
-            btnCloseHidden: true,
-            time: 1000,
-          });
-        } else if (res.status === 401 || res.status === 403) {
-          setAlert({
-            title: "로그인 필요",
-            content:
-              "로그인이 필요한 기능입니다. 로그인 페이지로 이동하시겠습니까?",
-            open: true,
-            onclose: () => setAlert(null),
-            onclick: () =>
-              navigate("/signup-in", {
-                state: { from: `${location.pathname}${location.search}` },
-              }),
-            severity: "warning",
-            checkBtn: "확인",
-            closeBtn: "취소",
-          });
-        } else if (res.status === 413) {
-          setAlert({
-            title: "리뷰 업로드 실패",
-            content:
-              "파일 크기가 제한을 초과하였습니다. 파일 용량을 확인해 주세요.",
-            open: true,
-            onclose: () => setAlert(null),
-            severity: "error",
-          });
-        } else {
-          setAlert({
-            title: "리뷰 업로드 실패",
-            content: "리뷰 업로드에 실패하였습니다.",
-            open: true,
-            onclose: () => setAlert(null),
-            severity: "error",
-          });
-        }
-      })
-      .catch((err) => {
-        setAlert({
-          title: "리뷰 업로드 실패",
-          content: "리뷰 업로드에 실패하였습니다.",
-          open: true,
-          onclose: () => setAlert(null),
-          severity: "error",
-        });
-      });
-  };
-
-  // 리뷰 '수정' 시의 fetch
-  const patchReview = (body) => {
-    fetch(`https://dailytopia2.shop/api/reviews/${review_id}`, {
-      credentials: "include",
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(body),
-    })
-      .then((res) => {
-        if (res.ok) {
-          setAlert({
-            title: `리뷰 ${purpose} 완료`,
+            title: `tennybox.com 내용:`,
             content: `리뷰 ${purpose}이 완료되었습니다.`,
             open: true,
             onclose: () => {
@@ -281,7 +204,7 @@ export default function ReviewForm({
           });
         } else if (res.status === 413) {
           setAlert({
-            title: "리뷰 업로드 실패",
+            title: "tennybox.com 내용:",
             content:
               "파일 크기가 제한을 초과하였습니다. 파일 용량을 확인해 주세요.",
             open: true,
@@ -290,7 +213,7 @@ export default function ReviewForm({
           });
         } else {
           setAlert({
-            title: "리뷰 업로드 실패",
+            title: "tennybox.com 내용:",
             content: "리뷰 업로드에 실패하였습니다.",
             open: true,
             onclose: () => setAlert(null),
@@ -300,7 +223,85 @@ export default function ReviewForm({
       })
       .catch((err) => {
         setAlert({
-          title: "리뷰 업로드 실패",
+          title: "tennybox.com 내용:",
+          content: "리뷰 업로드에 실패하였습니다.",
+          open: true,
+          onclose: () => setAlert(null),
+          severity: "error",
+        });
+      });
+  };
+
+  // 리뷰 '수정' 시의 fetch
+  const patchReview = (body) => {
+    fetch(`https://dailytopia2.shop/api/reviews/${review_id}`, {
+      credentials: "include",
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    })
+      .then((res) => {
+        if (res.ok) {
+          setAlert({
+            title: `tennybox.com 내용:`,
+            content: `리뷰 ${purpose}이 완료되었습니다.`,
+            open: true,
+            onclose: () => {
+              setAlert(null);
+              setIsReviewFormOpened(false);
+              getPlayDetailInfo();
+              getReviews();
+              getUserReview();
+            },
+            onclick: () => {
+              setIsReviewFormOpened(false);
+              getPlayDetailInfo();
+              getReviews();
+              getUserReview();
+            },
+            severity: "success",
+            checkBtn: "확인",
+            btnCloseHidden: true,
+            time: 1000,
+          });
+        } else if (res.status === 401 || res.status === 403) {
+          setAlert({
+            title: "tennybox.com 내용:",
+            content: "로그인이 필요한 서비스입니다. 로그인 하시겠습니까?",
+            open: true,
+            onclose: () => setAlert(null),
+            onclick: () =>
+              navigate("/signup-in", {
+                state: { from: `${location.pathname}${location.search}` },
+              }),
+            severity: "info",
+            checkBtn: "확인",
+            closeBtn: "취소",
+          });
+        } else if (res.status === 413) {
+          setAlert({
+            title: "tennybox.com 내용:",
+            content:
+              "파일 크기가 제한을 초과하였습니다. 파일 용량을 확인해 주세요.",
+            open: true,
+            onclose: () => setAlert(null),
+            severity: "error",
+          });
+        } else {
+          setAlert({
+            title: "tennybox.com 내용:",
+            content: "리뷰 업로드에 실패하였습니다.",
+            open: true,
+            onclose: () => setAlert(null),
+            severity: "error",
+          });
+        }
+      })
+      .catch((err) => {
+        setAlert({
+          title: "tennybox.com 내용:",
           content: "리뷰 업로드에 실패하였습니다.",
           open: true,
           onclose: () => setAlert(null),
@@ -311,21 +312,43 @@ export default function ReviewForm({
 
   return (
     <>
-      {alert && (
-        <AlertCustom
-          title={alert.title}
-          content={alert.content}
-          open={alert.open}
-          onclose={alert.onclose}
-          onclick={alert.onclick}
-          severity={alert.severity}
-          checkBtn={alert.checkBtn}
-          closeBtn={alert.closeBtn}
-          btnCloseHidden={alert.btnCloseHidden}
-          time={alert.time}
-        />
-      )}
-      {/* <ReviewErrorBox errorText="제목과 별점은 필수 입력값입니다." /> */}
+      {alert &&
+        (alert.content ===
+          "로그인이 필요한 서비스입니다. 로그인 하시겠습니까?" ||
+        alert.content ===
+          `리뷰 ${purpose}을 취소하시겠습니까? ${purpose}한 글 내용은 저장되지 않습니다.` ? (
+          <Backdrop
+            sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+            open={open}
+            onClick={() => setAlert(null)}
+          >
+            <AlertCustom
+              title={alert.title}
+              content={alert.content}
+              open={alert.open}
+              onclose={alert.onclose}
+              onclick={alert.onclick}
+              severity={alert.severity}
+              checkBtn={alert.checkBtn}
+              closeBtn={alert.closeBtn}
+              btnCloseHidden={alert.btnCloseHidden}
+              time={alert.time}
+            />
+          </Backdrop>
+        ) : (
+          <AlertCustom
+            title={alert.title}
+            content={alert.content}
+            open={alert.open}
+            onclose={alert.onclose}
+            onclick={alert.onclick}
+            severity={alert.severity}
+            checkBtn={alert.checkBtn}
+            closeBtn={alert.closeBtn}
+            btnCloseHidden={alert.btnCloseHidden}
+            time={alert.time}
+          />
+        ))}
       <form className="review-form-container">
         <h2>관람 후기 {purpose}</h2>
         <div className="review-author-box">
@@ -405,18 +428,23 @@ export default function ReviewForm({
                     }
                     alt="리뷰 첨부 이미지"
                   />
-                  <HighlightOffIcon
-                    color="ourGray"
+                  <IconButton
                     sx={{
-                      cursor: "pointer",
                       position: "relative",
-                      width: "27px",
-                      height: "27px",
-                      bottom: "120px",
-                      right: "32px",
+                      bottom: "125px",
+                      right: "36px",
+                      padding: 0,
                     }}
-                    onClick={() => handleDeletePhoto(idx)}
-                  />
+                  >
+                    <HighlightOffIcon
+                      color="ourGray"
+                      sx={{
+                        width: "27px",
+                        height: "27px",
+                      }}
+                      onClick={() => handleDeletePhoto(idx)}
+                    />
+                  </IconButton>
                 </div>
               ))
             : null}

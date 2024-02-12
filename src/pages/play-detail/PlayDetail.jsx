@@ -8,9 +8,9 @@ import PlayReview from "../../components/play-detail/PlayReview";
 import TheaterLocation from "../../components/play-detail/TheaterLocation";
 import { UpButton } from "../../components/common/button/UpButton";
 import { AlertCustom } from "../../components/common/alert/Alerts";
-import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import Loading from "../../components/common/state/Loading";
 import { AppContext } from "../../App";
+import { NotFoundPage } from "../errorPage/NotFoundPage";
 
 export function PlayDetail() {
   // 유저 로그인 여부 + 정보 확인
@@ -64,7 +64,7 @@ export function PlayDetail() {
       <div className="play-detail-container">
         {error && (
           <AlertCustom
-            title={"Error"}
+            title="tennybox.com 내용:"
             content={error}
             open={true}
             onclose={
@@ -135,8 +135,7 @@ export function PlayDetail() {
         )}
         {!isLoading && !playInfo && (
           <div className="get-playInfo-error">
-            <ErrorOutlineIcon fontSize="large" />
-            <h2>연극 정보 가져오기에 실패하였거나 존재하지 않는 연극입니다.</h2>
+            <NotFoundPage />
           </div>
         )}
         {!error && isLoading && <Loading />}
