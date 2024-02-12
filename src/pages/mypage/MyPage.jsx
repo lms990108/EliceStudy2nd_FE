@@ -57,13 +57,6 @@ export default function MyPage() {
   };
 
   useEffect(() => {
-    console.log(userData);
-    if (userData && !userData.isLoggedIn) {
-      isLoggedIn();
-    }
-  }, [userData]);
-
-  useEffect(() => {
     console.log(searchParams.get("tab"));
     searchParams.set("tab", selectedComponent);
     setSearchParams(searchParams);
@@ -72,6 +65,7 @@ export default function MyPage() {
   useEffect(() => {
     console.log(searchParams.get("tab"));
     setSelectedComponent(searchParams.get("tab") || "MemberInfo");
+    isLoggedIn();
   }, [searchParams]);
 
   return (
