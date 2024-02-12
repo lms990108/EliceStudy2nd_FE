@@ -2,11 +2,12 @@ import React from "react";
 import "./FreeBoardPost.scss";
 import { PostTop } from "../board";
 import { Link } from "react-router-dom";
+import { DELETE_USER_NICKNAME } from "../../utils/const";
 
 export default function FreeBoardPost({ data, totalCommentCount }) {
   return (
     <div className="free-board-post">
-      <PostTop user={data.user_id || { nickname: "익명" }} type={"community"} post={data} commentsCnt={totalCommentCount || 0} />
+      <PostTop user={data.user_id || { nickname: DELETE_USER_NICKNAME }} type={"community"} post={data} commentsCnt={totalCommentCount || 0} />
       <h2 className="title">{data.title}</h2>
       <div className="content">
         {data.content?.split("\n").map((text, idx) => (

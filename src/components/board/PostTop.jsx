@@ -10,6 +10,7 @@ import { Backdrop, Button, Tooltip } from "@mui/material";
 import LiveTimeDiff from "../common/time/LiveTimeDiff";
 import default_user_img from "../../assets/img/default_user_img.svg";
 import numberFormat from "../../utils/numberFormat";
+import { DELETE_USER_NICKNAME } from "../../utils/const";
 
 export function PostTop({ user, type, post, commentsCnt }) {
   const [openURLCopyAlert, setOpenURLCopyAlert] = useState(false);
@@ -94,7 +95,7 @@ export function PostTop({ user, type, post, commentsCnt }) {
         <div className="board-post-top">
           <img className="user-img" src={user?.profile_url || default_user_img} onError={(e) => (e.target.src = default_user_img)} />
           <div className="flex-box">
-            <div className="user-id">{user?.nickname || "익명"}</div>
+            <div className="user-id">{user?.nickname || DELETE_USER_NICKNAME}</div>
             <div className="date">
               <LiveTimeDiff time={post.createdAt} />
               <span className="dot">•</span>

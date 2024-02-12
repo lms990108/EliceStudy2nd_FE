@@ -1,7 +1,7 @@
 import { Route, Routes, useLocation } from "react-router-dom";
 import Header from "./components/common/header/Header";
 import Footer from "./components/common/footer/Footer";
-import ScrollToTop from "./utils/ScrollToTop";
+import ScrollToTop from "./hooks/useScrollToTop";
 import CommonLayout from "./pages/common/CommonLayout";
 import { PRBoardListPage, PRBoardDetailPage, PRBoardFormPage, FreeBoardEdit, PRBoardEdit } from "./pages";
 import { FreeBoardDetailPage, FreeBoardFormPage, FreeBoardListPage } from "./pages";
@@ -15,12 +15,14 @@ import { KakaoRedirection, GoogleRedirection, NaverRedirection } from "./pages";
 import { ForbiddenPage, NotFoundPage, NotFoundRedirect } from "./pages";
 import PrivacyPolicy from "./pages/util/PrivacyPolicy";
 import { useEffect, useState } from "react";
+import useScrollToTop from "./hooks/useScrollToTop";
 
 let currentPath = "";
 let reloard = true;
 
 export default function AppRoutes({ setPrevPlayListQuery }) {
   let location = useLocation();
+  useScrollToTop();
 
   useEffect(() => {
     if (location.pathname === "/search" || location.pathname === "/mypages") {
@@ -51,7 +53,6 @@ export default function AppRoutes({ setPrevPlayListQuery }) {
         element={
           <>
             <Header />
-            <ScrollToTop />
             <CommonLayout setPrevPlayListQuery={setPrevPlayListQuery}>
               <Routes>
                 <Route path="/privacy-policy" element={<PrivacyPolicy />} />

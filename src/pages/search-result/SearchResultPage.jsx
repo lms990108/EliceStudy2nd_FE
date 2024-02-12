@@ -13,6 +13,7 @@ import PromotionSearchResult from "../../components/search/promotion-search-resu
 import CommunitySearchResult from "../../components/search/community-search-result/CommunitySearchResult";
 import { AlertCustom } from "../../components/common/alert/Alerts";
 import { useNavigate, useSearchParams } from "react-router-dom/dist";
+import ScrollToTop from "../../hooks/useScrollToTop";
 
 export default function SearchResultPage() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -49,6 +50,7 @@ export default function SearchResultPage() {
           setPlaySearchResult(data.shows);
           setTotalCnt(data.total);
           setIsLoading(false);
+          window.scrollTo(0, 0);
         } else {
           setAlert({
             title: "오류",

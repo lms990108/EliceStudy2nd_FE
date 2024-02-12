@@ -8,7 +8,7 @@ export default function PlaySearchResult({ playSearchResult, setPlaySearchResult
   return (
     <>
       <section className="play-search-result-container">
-        <PlaySearchHeader setSortStandard={setSortStandard} setCurPage={setCurPage} />
+        <PlaySearchHeader setSortStandard={setSortStandard} setCurPage={setCurPage} resultCnt={playTotalCnt} />
         <div className="play-search-content">
           {playSearchResult.length ? (
             <>
