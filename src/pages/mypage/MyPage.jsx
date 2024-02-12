@@ -39,9 +39,9 @@ export default function MyPage() {
       case "MyFreeBoard":
         return <MyFreeBoard user={userData.user} setUserData={setUserData} />;
       case "MyComments":
-        return <MyComments />;
+        return <MyComments user={userData.user} setUserData={setUserData} />;
       default:
-        return <MemberInfo />;
+        return <MemberInfo user={userData.user} setUserData={setUserData} />;
     }
   };
 

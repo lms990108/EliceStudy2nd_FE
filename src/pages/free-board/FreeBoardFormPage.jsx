@@ -22,7 +22,7 @@ export function FreeBoardFormPage() {
 
   useEffect(() => {
     if (!user?.isLoggedIn) {
-      // setOpenLoginAlertBack(true);
+      setOpenLoginAlertBack(true);
     }
   }, []);
 

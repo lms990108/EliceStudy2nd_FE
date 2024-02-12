@@ -48,6 +48,7 @@ export function PRBoardForm({ setInput, handleComplete, handleCancle }) {
   const [errorMainImage, setErrorMainImage] = useState("");
   const [imageURL, setImageURL] = useState([]); // 0인덱스 대표이미지
   const [errorImage, setErrorImage] = useState("");
+  const [warningMainImage, setWarningMainImage] = useState("");
 
   const nav = useNavigate();
 
@@ -194,6 +195,17 @@ export function PRBoardForm({ setInput, handleComplete, handleCancle }) {
     if (data) {
       setMainImageURL(data);
       setErrorMainImage("");
+
+      let image = new Image();
+      image.src = data;
+      image.onload = function () {
+        console.log(image, image.width, image.height);
+        if (image.width > image.height) {
+          setWarningMainImage("red");
+        } else {
+          setWarningMainImage("");
+        }
+      };
     } else {
       setErrorMainImage("사진 업로드에 실패했습니다. 다시 시도해주세요");
     }
@@ -203,6 +215,7 @@ export function PRBoardForm({ setInput, handleComplete, handleCancle }) {
   const handleRemoveMainImage = async (e) => {
     setMainImageURL();
     setErrorMainImage("");
+    setWarningMainImage("");
   };
 
   const handleChangeImage = async (e) => {
@@ -441,7 +454,7 @@ export function PRBoardForm({ setInput, handleComplete, handleCancle }) {
               파일 찾기
             </label>
           </Button>
-          <span className="placeholder">(세로 이미지 권장)</span>
+          <span className={"placeholder " + warningMainImage}>(세로 이미지 권장)</span>
           <input type="file" id="main-image" name="main-image" accept="image/*" onChange={handleChangeMainImage} required />
         </div>
         {errorMainImage && (

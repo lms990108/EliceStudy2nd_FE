@@ -51,18 +51,22 @@ function MyPRBoard({ user, setUserData }) {
   const getPosts = async () => {
     setState("loading");
     console.log(user.user_id);
-    const res = await fetch(`${promotionUrl}/user/${user._id}`);
-    const data = await res.json();
-    console.log(data);
+    try {
+      const res = await fetch(`${promotionUrl}/user/${user._id}`);
+      const data = await res.json();
+      console.log(data);
 
-    if (res.ok) {
-      setPosts(
-        data.promotions.map((promotion) => {
-          return { ...promotion, id: promotion.promotion_number };
-        })
-      );
-      setState("hasValue");
-    } else {
+      if (res.ok) {
+        setPosts(
+          data.promotions.map((promotion) => {
+            return { ...promotion, id: promotion.promotion_number };
+          })
+        );
+        setState("hasValue");
+      } else {
+        setState("hasError");
+      }
+    } catch (err) {
       setState("hasError");
     }
   };

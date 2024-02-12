@@ -48,6 +48,7 @@ export function PRBoardEditForm({ setInput, handleCancle, post }) {
   const [errorMainImage, setErrorMainImage] = useState("");
   const [imageURL, setImageURL] = useState(post?.image_url.slice(1));
   const [errorImage, setErrorImage] = useState("");
+  const [warningMainImage, setWarningMainImage] = useState("");
 
   const nav = useNavigate();
 
@@ -195,6 +196,17 @@ export function PRBoardEditForm({ setInput, handleCancle, post }) {
     if (data) {
       setMainImageURL(data);
       setErrorMainImage("");
+
+      let image = new Image();
+      image.src = data;
+      image.onload = function () {
+        console.log(image, image.width, image.height);
+        if (image.width > image.height) {
+          setWarningMainImage("red");
+        } else {
+          setWarningMainImage("");
+        }
+      };
     } else {
       setErrorMainImage("사진 업로드에 실패했습니다. 다시 시도해주세요");
     }
@@ -204,6 +216,7 @@ export function PRBoardEditForm({ setInput, handleCancle, post }) {
   const handleRemoveMainImage = async (e) => {
     setMainImageURL();
     setErrorMainImage("");
+    setWarningMainImage("");
   };
 
   const handleChangeImage = async (e) => {
@@ -442,7 +455,7 @@ export function PRBoardEditForm({ setInput, handleCancle, post }) {
               파일 찾기
             </label>
           </Button>
-          <span className="placeholder">(세로 이미지 권장)</span>
+          <span className={"placeholder " + warningMainImage}>(세로 이미지 권장)</span>
           <input type="file" id="main-image" name="main-image" accept="image/*" onChange={handleChangeMainImage} required />
         </div>
         {errorMainImage && (
@@ -533,7 +546,7 @@ export function PRBoardEditForm({ setInput, handleCancle, post }) {
           title={"teenybox.com 내용:"}
           content={"글 수정이 완료되었습니다!"}
           btnCloseHidden={true}
-          time={500}
+          time={1000}
         />
       </Backdrop>
     </div>

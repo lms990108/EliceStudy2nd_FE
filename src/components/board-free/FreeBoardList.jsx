@@ -23,8 +23,8 @@ export default function FreeBoardList({ boardList }) {
         <div className="content-box" key={post._id} id={post.post_number}>
           <div className="flex-box top">
             <div className="user">
-              <img className="user-img" src={post.user?.profile_url || ""} onError={(e) => (e.target.src = default_user_img)} />
-              <span>{post.user?.nickname || DELETE_USER_NICKNAME}</span>
+              <img className="user-img" src={(post.user?.state === "가입" && post.user?.profile_url) || default_user_img} onError={(e) => (e.target.src = default_user_img)} />
+              <span>{(post.user?.state === "가입" && post.user?.nickname) || DELETE_USER_NICKNAME}</span>
             </div>
             <div className="time">
               <LiveTimeDiff time={post.createdAt} />

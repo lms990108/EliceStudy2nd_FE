@@ -19,15 +19,19 @@ function MyPickList({ user, setUserData }) {
 
   const getBookmarks = async () => {
     setState("loading");
-    const res = await fetch(`${userUrl}/bookmarks?page=${page}&limit=6`, { credentials: "include" });
-    const data = await res.json();
-    console.log(data);
+    try {
+      const res = await fetch(`${userUrl}/bookmarks?page=${page}&limit=6`, { credentials: "include" });
+      const data = await res.json();
+      console.log(data);
 
-    if (res.ok) {
-      setBookmarks(data.bookmarks.validShows);
-      setTotalCount(data.bookmarks.totalCount);
-      setState("hasValue");
-    } else {
+      if (res.ok) {
+        setBookmarks(data.bookmarks.validShows);
+        setTotalCount(data.bookmarks.totalCount);
+        setState("hasValue");
+      } else {
+        setState("hasError");
+      }
+    } catch (err) {
       setState("hasError");
     }
   };

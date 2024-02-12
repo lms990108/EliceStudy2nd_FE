@@ -32,9 +32,7 @@
     flex-wrap: wrap;
 
     .loading {
-      .MuiCircularProgress-root {
-        margin: 200px auto 200px;
-      }
+      margin: 200px auto;
     }
 
     a {
@@ -49,7 +47,7 @@
     margin-top: 30px;
   }
 
-  .no-result {
+  .state {
     margin: 80px auto;
   }
 }

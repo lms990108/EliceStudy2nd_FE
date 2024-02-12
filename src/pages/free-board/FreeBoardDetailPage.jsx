@@ -9,6 +9,7 @@ import { BoardRightContainer } from "../../components/board/BoardRightContainer"
 import setStoreViewList from "../../utils/setStoreRecentViewList";
 import { NotFoundPage } from "../errorPage/NotFoundPage";
 import { AlertContext, AppContext } from "../../App";
+import { COMMENTS_LIMIT } from "../../utils/const";
 
 export function FreeBoardDetailPage() {
   const [post, setPost] = useState({});
@@ -24,16 +25,20 @@ export function FreeBoardDetailPage() {
 
   const getPost = async () => {
     setState("loading");
-    const postId = params.postId;
-    const res = await fetch(`${postUrl}/${postId}`);
-    const data = await res.json();
-    console.log(data);
+    try {
+      const postId = params.postId;
+      const res = await fetch(`${postUrl}/${postId}`);
+      const data = await res.json();
+      console.log(data);
 
-    if (res.ok) {
-      setPost(data);
-      setState("hasValue");
-    } else {
-      setPost();
+      if (res.ok) {
+        setPost(data);
+        setState("hasValue");
+      } else {
+        setPost();
+        setState("hasError");
+      }
+    } catch (err) {
       setState("hasError");
     }
   };
@@ -42,16 +47,20 @@ export function FreeBoardDetailPage() {
     if (totalCount !== 0 && totalCount <= comments.length) return;
     setCommentState("loading");
 
-    const res = await fetch(`${commentUrl}/posts/${post._id}?page=${page}&limit=10`);
-    const data = await res.json();
-    console.log(data);
+    try {
+      const res = await fetch(`${commentUrl}/posts/${post._id}?page=${page}&limit=${COMMENTS_LIMIT}`);
+      const data = await res.json();
+      console.log(data);
 
-    if (res.ok) {
-      setComments([...comments, ...data.comments]);
-      setTotalCount(data.totalComments);
-      setPage(page + 1);
-      setCommentState("hasValue");
-    } else {
+      if (res.ok) {
+        setComments([...comments, ...data.comments]);
+        setTotalCount(data.totalComments);
+        setPage(page + 1);
+        setCommentState("hasValue");
+      } else {
+        setCommentState("hasError");
+      }
+    } catch (err) {
       setCommentState("hasError");
     }
   };
@@ -85,14 +94,23 @@ export function FreeBoardDetailPage() {
   };
 
   const handleRefreshComments = async () => {
-    const res = await fetch(`${commentUrl}/posts/${post._id}?page=1&limit=2`);
-    const data = await res.json();
-    console.log(data);
+    setCommentState("loading");
 
-    if (res.ok) {
-      setComments(data.comments);
-      setTotalCount(data.totalComments);
-      setPage(2);
+    try {
+      const res = await fetch(`${commentUrl}/posts/${post._id}?page=1&limit=${COMMENTS_LIMIT}`);
+      const data = await res.json();
+      console.log(data);
+
+      if (res.ok) {
+        setComments(data.comments);
+        setTotalCount(data.totalComments);
+        setPage(2);
+        setCommentState("hasValue");
+      } else {
+        setCommentState("hasError");
+      }
+    } catch (err) {
+      setCommentState("hasError");
     }
   };
 

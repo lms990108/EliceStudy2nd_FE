@@ -211,30 +211,34 @@ export function BoardRightContainer({ post }) {
       <div className="right-box">
         <h4>최근 댓글</h4>
         <ul>
-          {Children.toArray(
-            latestCommentList.map((post, idx) => (
-              <Link
-                to={
-                  post.promotion === null
-                    ? "/promotion/not-found"
-                    : post.promotion
-                    ? `/promotion/${post.promotion.promotion_number}`
-                    : post.post === null
-                    ? "/community/not-found"
-                    : `/community/${post.post.post_number}`
-                }
-              >
-                <li>
-                  <span className={`category ${post.promotion === null || post.promotion ? "promotion" : "community"}`}>
-                    {post.promotion === null ? "[홍보]" : post.promotion ? `[홍보/${post.promotion.category}]` : "[커뮤니티]"}
-                  </span>
-                  <p>{post.content}</p>
-                  <div className="right">
-                    <LiveTimeDiff time={post.createdAt} />
-                  </div>
-                </li>
-              </Link>
-            ))
+          {latestCommentList.length ? (
+            Children.toArray(
+              latestCommentList.map((post, idx) => (
+                <Link
+                  to={
+                    post.promotion === null
+                      ? "/promotion/not-found"
+                      : post.promotion
+                      ? `/promotion/${post.promotion.promotion_number}`
+                      : post.post === null
+                      ? "/community/not-found"
+                      : `/community/${post.post.post_number}`
+                  }
+                >
+                  <li>
+                    <span className={`category ${post.promotion === null || post.promotion ? "promotion" : "community"}`}>
+                      {post.promotion === null ? "[홍보]" : post.promotion ? `[홍보/${post.promotion.category}]` : "[커뮤니티]"}
+                    </span>
+                    <p>{post.content}</p>
+                    <div className="right">
+                      <LiveTimeDiff time={post.createdAt} />
+                    </div>
+                  </li>
+                </Link>
+              ))
+            )
+          ) : (
+            <li>아직 댓글이 없습니다. </li>
           )}
         </ul>
       </div>

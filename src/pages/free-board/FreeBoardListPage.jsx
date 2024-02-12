@@ -29,16 +29,20 @@ export function FreeBoardListPage() {
 
   const getPage = async () => {
     setState("loading");
-    const [by, order] = sort.split(" ");
-    const res = await fetch(`${postUrl}?page=${page}&limit=10&sortBy=${by}&sortOrder=${order}`);
-    const data = await res.json();
-    console.log(data);
+    try {
+      const [by, order] = sort.split(" ");
+      const res = await fetch(`${postUrl}?page=${page}&limit=10&sortBy=${by}&sortOrder=${order}`);
+      const data = await res.json();
+      console.log(data);
 
-    if (res.ok) {
-      setBoardList(data.posts);
-      setTotalCnt(data.totalCount);
-      setState("hasValue");
-    } else {
+      if (res.ok) {
+        setBoardList(data.posts);
+        setTotalCnt(data.totalCount);
+        setState("hasValue");
+      } else {
+        setState("hasError");
+      }
+    } catch (err) {
       setState("hasError");
     }
   };

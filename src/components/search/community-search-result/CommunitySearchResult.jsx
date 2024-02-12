@@ -5,6 +5,7 @@ import { postUrl } from "../../../apis/apiURLs";
 import { CircularProgress, Pagination } from "@mui/material";
 import EmptySearchResult from "../../common/state/EmptySearchResult";
 import { useSearchParams } from "react-router-dom/dist";
+import ServerError from "../../common/state/ServerError";
 
 const TYPES = ["title", "tag"];
 
@@ -18,15 +19,19 @@ export default function CommunitySearchResult({ searchKeyword }) {
 
   const getCommunitySearchResult = async () => {
     setState("loading");
-    const res = await fetch(`${postUrl}/search?type=${type}&query=${searchKeyword}&page=${page}&limit=10`);
-    const data = await res.json();
-    console.log(data);
+    try {
+      const res = await fetch(`${postUrl}/search?type=${type}&query=${searchKeyword}&page=${page}&limit=10`);
+      const data = await res.json();
+      console.log(data);
 
-    if (res.ok) {
-      setSearchResult(data.posts);
-      setTotalCnt(data.totalCount);
-      setState("hasValue");
-    } else {
+      if (res.ok) {
+        setSearchResult(data.posts);
+        setTotalCnt(data.totalCount);
+        setState("hasValue");
+      } else {
+        setState("hasError");
+      }
+    } catch (err) {
       setState("hasError");
     }
   };
@@ -71,8 +76,12 @@ export default function CommunitySearchResult({ searchKeyword }) {
           <div className="loading">
             <CircularProgress color="secondary" />
           </div>
+        ) : state === "hasError" ? (
+          <div className={`state`}>
+            <ServerError onClickBtn={getCommunitySearchResult} />
+          </div>
         ) : !searchResult?.length ? (
-          <div className="no-result">
+          <div className="state">
             <EmptySearchResult type={true} />
           </div>
         ) : (
