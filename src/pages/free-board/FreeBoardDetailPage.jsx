@@ -21,7 +21,7 @@ export function FreeBoardDetailPage() {
   const nav = useNavigate();
   const params = useParams();
   const { userData, setUserData } = useContext(AppContext);
-  const { setOpenLoginAlertBack } = useContext(AlertContext);
+  const { setOpenLoginAlertBack, setOpenFetchErrorAlert } = useContext(AlertContext);
 
   const getPost = async () => {
     setState("loading");
@@ -66,30 +66,34 @@ export function FreeBoardDetailPage() {
   };
 
   const createComment = async (inputText) => {
-    const res = await fetch(`${commentUrl}`, {
-      method: "POST",
-      credentials: "include",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        content: inputText,
-        post: post._id,
-      }),
-    });
-    const data = await res.json();
-    console.log(data);
+    try {
+      const res = await fetch(`${commentUrl}`, {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          content: inputText,
+          post: post._id,
+        }),
+      });
+      const data = await res.json();
+      console.log(data);
 
-    if (res.ok) {
-      setComments([data, ...comments]);
-      setTotalCount(totalCount + 1);
-    } else if (res.status === 401 || res.status === 403) {
-      const loginRes = await fetch(`${userUrl}`, { credentials: "include" });
-      if (loginRes.ok) {
-        const data = await loginRes.json();
-        setUserData({ isLoggedIn: true, user: data.user });
-      } else {
-        setUserData({ isLoggedIn: false });
-        setOpenLoginAlertBack(true);
+      if (res.ok) {
+        setComments([data, ...comments]);
+        setTotalCount(totalCount + 1);
+      } else if (res.status === 401 || res.status === 403) {
+        const loginRes = await fetch(`${userUrl}`, { credentials: "include" });
+        if (loginRes.ok) {
+          const data = await loginRes.json();
+          setUserData({ isLoggedIn: true, user: data.user });
+        } else {
+          setUserData({ isLoggedIn: false });
+          setOpenLoginAlertBack(true);
+        }
       }
+    } catch (e) {
+      setOpenFetchErrorAlert(true);
     }
   };
 
@@ -132,7 +136,7 @@ export function FreeBoardDetailPage() {
       ) : (
         <>
           <div className="free-board-left-container">
-            <BoardSecondHeader header="커뮤니티" onclick={() => nav(-1)} />
+            <BoardSecondHeader header="커뮤니티" onclick={() => nav("/community")} />
             {state === "loading" ? (
               <div className="progress-box">
                 <CircularProgress color="secondary" className="progress" />

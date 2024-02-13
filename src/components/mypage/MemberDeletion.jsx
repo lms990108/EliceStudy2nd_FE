@@ -13,21 +13,25 @@ function MemberDeletion({ user, setUserData }) {
   const nav = useNavigate();
 
   const handleDelete = async () => {
-    const res = await fetch(`${userUrl}`, { method: "DELETE", credentials: "include" });
-    const data = await res.json();
-    console.log(data);
+    try {
+      const res = await fetch(`${userUrl}`, { method: "DELETE", credentials: "include" });
+      const data = await res.json();
+      console.log(data);
 
-    if (res.ok) {
-      setUserData({ isLoggedIn: false });
-      nav(`/`);
-    } else if (res.status === 401 || res.status === 403) {
-      const loginRes = await fetch(`${userUrl}`, { credentials: "include" });
-      if (loginRes.ok) {
-        handleDelete();
-      } else {
+      if (res.ok) {
         setUserData({ isLoggedIn: false });
-        return nav(`/signup-in`);
+        nav(`/`);
+      } else if (res.status === 401 || res.status === 403) {
+        const loginRes = await fetch(`${userUrl}`, { credentials: "include" });
+        if (loginRes.ok) {
+          handleDelete();
+        } else {
+          setUserData({ isLoggedIn: false });
+          return nav(`/signup-in`);
+        }
       }
+    } catch (e) {
+      setOpenFetchErrorAlert(true);
     }
   };
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import "./MyFreeBoard.scss";
 import Button from "@mui/material/Button";
@@ -9,6 +9,7 @@ import Empty from "../common/state/Empty";
 import { Link, useNavigate } from "react-router-dom";
 import TimeFormat from "../common/time/TimeFormat";
 import { AlertCustom } from "../common/alert/Alerts";
+import { AlertContext } from "../../App";
 
 const columns = [
   {
@@ -45,6 +46,7 @@ function MyFreeBoard({ user, setUserData }) {
   const [checkedList, setCheckedList] = useState([]);
   const [openAlert, setOpenAlert] = useState(false);
   const nav = useNavigate();
+  const { setOpenFetchErrorAlert } = useContext(AlertContext);
 
   const getPosts = async () => {
     setState("loading");
@@ -70,35 +72,39 @@ function MyFreeBoard({ user, setUserData }) {
 
   const handleDelete = async () => {
     console.log(checkedList);
-    const res = await fetch(`${postUrl}/bulk`, {
-      method: "DELETE",
-      credentials: "include",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        postNumbers: checkedList,
-      }),
-    });
-    // const data = await res.json();
-    // console.log(data);
-
-    if (res.ok) {
-      let newPosts = [...posts];
-      checkedList.map((id) => {
-        let index = newPosts.findIndex((post) => post.id === id);
-        newPosts.splice(index, 1);
+    try {
+      const res = await fetch(`${postUrl}/bulk`, {
+        method: "DELETE",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          postNumbers: checkedList,
+        }),
       });
+      // const data = await res.json();
+      // console.log(data);
 
-      setPosts(newPosts);
-    } else if (res.status === 401 || res.status === 403) {
-      const loginRes = await fetch(`${userUrl}`, { credentials: "include" });
-      if (loginRes.ok) {
-        const data = await loginRes.json();
-        setUserData({ isLoggedIn: true, user: data.user });
-        handleDelete();
-      } else {
-        setUserData({ isLoggedIn: false });
-        return nav(`/signup-in`);
+      if (res.ok) {
+        let newPosts = [...posts];
+        checkedList.map((id) => {
+          let index = newPosts.findIndex((post) => post.id === id);
+          newPosts.splice(index, 1);
+        });
+
+        setPosts(newPosts);
+      } else if (res.status === 401 || res.status === 403) {
+        const loginRes = await fetch(`${userUrl}`, { credentials: "include" });
+        if (loginRes.ok) {
+          const data = await loginRes.json();
+          setUserData({ isLoggedIn: true, user: data.user });
+          handleDelete();
+        } else {
+          setUserData({ isLoggedIn: false });
+          return nav(`/signup-in`);
+        }
       }
+    } catch (e) {
+      setOpenFetchErrorAlert(true);
     }
   };
 

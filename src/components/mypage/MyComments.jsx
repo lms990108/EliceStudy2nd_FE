@@ -1,5 +1,5 @@
 /* 마이페이지 - My 댓글 */
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import "./MyComments.scss";
 import Button from "@mui/material/Button";
@@ -11,6 +11,7 @@ import { Link, useNavigate } from "react-router-dom";
 import TimeFormat from "../common/time/TimeFormat";
 import { AlertCustom } from "../common/alert/Alerts";
 import { COMMENTS_LIMIT } from "../../utils/const";
+import { AlertContext } from "../../App";
 
 const columns = [
   { field: "category", headerName: "카테고리", width: 120 },
@@ -40,6 +41,7 @@ function MyComments({ user, setUserData }) {
   const [checkedList, setCheckedList] = useState([]);
   const [openAlert, setOpenAlert] = useState(false);
   const nav = useNavigate();
+  const { setOpenFetchErrorAlert } = useContext(AlertContext);
 
   const getComments = async () => {
     setState("loading");
@@ -64,35 +66,39 @@ function MyComments({ user, setUserData }) {
   };
 
   const handleDelete = async () => {
-    const res = await fetch(`${commentUrl}`, {
-      method: "DELETE",
-      credentials: "include",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        commentIds: checkedList,
-      }),
-    });
-    const data = await res.json();
-    console.log(data);
-
-    if (res.ok) {
-      let newComments = [...comments];
-      checkedList.map((id) => {
-        let index = newComments.findIndex((comment) => comment.id === id);
-        newComments.splice(index, 1);
+    try {
+      const res = await fetch(`${commentUrl}`, {
+        method: "DELETE",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          commentIds: checkedList,
+        }),
       });
+      const data = await res.json();
+      console.log(data);
 
-      setComments(newComments);
-    } else if (res.status === 401 || res.status === 403) {
-      const loginRes = await fetch(`${userUrl}`, { credentials: "include" });
-      if (loginRes.ok) {
-        const data = await loginRes.json();
-        setUserData({ isLoggedIn: true, user: data.user });
-        handleDelete();
-      } else {
-        setUserData({ isLoggedIn: false });
-        return nav(`/signup-in`);
+      if (res.ok) {
+        let newComments = [...comments];
+        checkedList.map((id) => {
+          let index = newComments.findIndex((comment) => comment.id === id);
+          newComments.splice(index, 1);
+        });
+
+        setComments(newComments);
+      } else if (res.status === 401 || res.status === 403) {
+        const loginRes = await fetch(`${userUrl}`, { credentials: "include" });
+        if (loginRes.ok) {
+          const data = await loginRes.json();
+          setUserData({ isLoggedIn: true, user: data.user });
+          handleDelete();
+        } else {
+          setUserData({ isLoggedIn: false });
+          return nav(`/signup-in`);
+        }
       }
+    } catch (e) {
+      setOpenFetchErrorAlert(true);
     }
   };
 

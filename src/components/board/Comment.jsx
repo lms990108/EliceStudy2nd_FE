@@ -7,6 +7,7 @@ import { AlertCustom } from "../common/alert/Alerts";
 import LiveTimeDiff from "../common/time/LiveTimeDiff";
 import default_user_img from "../../assets/img/default_user_img.svg";
 import { useNavigate } from "react-router-dom";
+import { DELETE_USER_NICKNAME } from "../../utils/const";
 
 export function Comment({ commentData, deleteComment }) {
   const [comment, setComment] = useState(commentData);
@@ -16,7 +17,7 @@ export function Comment({ commentData, deleteComment }) {
   const [inputComment, setInputComment] = useState(comment.content);
   const [openAlertDelete, setOpenAlertDelete] = useState(false);
   const { userData, setUserData } = useContext(AppContext);
-  const { setOpenLoginAlertBack } = useContext(AlertContext);
+  const { setOpenFetchErrorAlert } = useContext(AlertContext);
   const nav = useNavigate();
 
   const handleSeeMore = (e) => {
@@ -44,7 +45,7 @@ export function Comment({ commentData, deleteComment }) {
         nav("/signup-in");
       }
     } catch (err) {
-      console.log(err);
+      setOpenFetchErrorAlert(true);
     }
   };
 
@@ -61,14 +62,14 @@ export function Comment({ commentData, deleteComment }) {
     <>
       <div className="comment-box" id={`comment${comment._id}`}>
         <div className="top">
-          <img className="user-profile-img" src={comment.user_profile_url || default_user_img} onError={(e) => (e.target.src = default_user_img)} />
+          <img className="user-profile-img" src={comment.user.profile_url || default_user_img} onError={(e) => (e.target.src = default_user_img)} />
           <div className="flex-box">
-            <div className="user-id">{comment.user_nickname}</div>
+            <div className="user-id">{comment.user.nickname || DELETE_USER_NICKNAME}</div>
             <div className="time">
               <LiveTimeDiff time={comment.createdAt} />
             </div>
           </div>
-          {userData?.user?.nickname === comment.user_nickname && (
+          {userData?.user?.nickname === comment.user.nickname && (
             <>
               {isEditing ? (
                 <div className="buttons editing">

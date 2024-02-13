@@ -1,11 +1,12 @@
 import { Backdrop, Button, IconButton } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import "../board-pr/PRBoardForm.scss";
 import { AlertCustom } from "../common/alert/Alerts";
 import { useNavigate } from "react-router-dom";
 import { postUrl } from "../../apis/apiURLs";
+import { AlertContext } from "../../App";
 
 export function FreeBoardForm({ setInput, handleCancle }) {
   const [submit, setSubmit] = useState(false);
@@ -19,24 +20,29 @@ export function FreeBoardForm({ setInput, handleCancle }) {
   const [tagList, setTagList] = useState([]);
   const [inputTag, setInputTag] = useState();
 
+  const { setOpenFetchErrorAlert } = useContext(AlertContext);
   const nav = useNavigate();
 
   const handleSubmit = async (e) => {
-    const res = await fetch(`${postUrl}`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
-      body: JSON.stringify({
-        title: inputTitle,
-        content: inputContent,
-        tags: tagList,
-      }),
-    });
-    const data = await res.json();
-    console.log(data);
+    try {
+      const res = await fetch(`${postUrl}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({
+          title: inputTitle,
+          content: inputContent,
+          tags: tagList,
+        }),
+      });
+      const data = await res.json();
+      console.log(data);
 
-    if (res.ok) {
-      setOpenComplete(true);
+      if (res.ok) {
+        setOpenComplete(true);
+      }
+    } catch (e) {
+      setOpenFetchErrorAlert(true);
     }
   };
 

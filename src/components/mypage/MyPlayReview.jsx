@@ -3,13 +3,14 @@ import { DataGrid } from "@mui/x-data-grid";
 import "./MyPlayReview.scss";
 import Button from "@mui/material/Button";
 import { reviewUrl, userUrl } from "../../apis/apiURLs";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Backdrop, CircularProgress } from "@mui/material";
 import ServerError from "../common/state/ServerError";
 import Empty from "../common/state/Empty";
 import TimeFormat from "../common/time/TimeFormat";
 import { AlertCustom } from "../common/alert/Alerts";
+import { AlertContext } from "../../App";
 
 const columns = [
   {
@@ -43,6 +44,7 @@ function MyPlayReview({ user, setUserData }) {
   const [state, setState] = useState("loading");
   const [openAlert, setOpenAlert] = useState(false);
   const nav = useNavigate();
+  const { setOpenFetchErrorAlert } = useContext(AlertContext);
 
   const getReviews = async () => {
     setState("loading");
@@ -68,35 +70,39 @@ function MyPlayReview({ user, setUserData }) {
   };
 
   const handleDelete = async () => {
-    const res = await fetch(`${reviewUrl}`, {
-      method: "DELETE",
-      credentials: "include",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        reviewIds: checkedList,
-      }),
-    });
-    const data = await res.json();
-    console.log(data);
+    try {
+      const res = await fetch(`${reviewUrl}`, {
+        method: "DELETE",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          reviewIds: checkedList,
+        }),
+      });
+      const data = await res.json();
+      console.log(data);
 
-    if (res.ok) {
-      let newReviews = [...reviews];
-      for (let id of checkedList) {
-        let index = newReviews.findIndex((review) => review.id === id);
-        newReviews.splice(index, 1);
-      }
+      if (res.ok) {
+        let newReviews = [...reviews];
+        for (let id of checkedList) {
+          let index = newReviews.findIndex((review) => review.id === id);
+          newReviews.splice(index, 1);
+        }
 
-      setReviews(newReviews);
-    } else if (res.status === 401 || res.status === 403) {
-      const loginRes = await fetch(`${userUrl}`, { credentials: "include" });
-      if (loginRes.ok) {
-        const data = await loginRes.json();
-        setUserData({ isLoggedIn: true, user: data.user });
-        handleDelete();
-      } else {
-        setUserData({ isLoggedIn: false });
-        return nav(`/signup-in`);
+        setReviews(newReviews);
+      } else if (res.status === 401 || res.status === 403) {
+        const loginRes = await fetch(`${userUrl}`, { credentials: "include" });
+        if (loginRes.ok) {
+          const data = await loginRes.json();
+          setUserData({ isLoggedIn: true, user: data.user });
+          handleDelete();
+        } else {
+          setUserData({ isLoggedIn: false });
+          return nav(`/signup-in`);
+        }
       }
+    } catch (e) {
+      setOpenFetchErrorAlert(true);
     }
   };
 

@@ -58,6 +58,7 @@ export function FreeBoardListPage() {
 
   useEffect(() => {
     getPage();
+    window.scrollTo({ top: 0 });
   }, [page]);
 
   useEffect(() => {

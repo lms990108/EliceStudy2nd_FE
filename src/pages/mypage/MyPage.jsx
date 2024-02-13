@@ -9,7 +9,7 @@ import MyPRBoard from "../../components/mypage/MyPRBoard";
 import MyFreeBoard from "../../components/mypage/MyFreeBoard";
 import MyComments from "../../components/mypage/MyComments";
 import { useNavigate } from "react-router";
-import { AppContext } from "../../App";
+import { AlertContext, AppContext } from "../../App";
 import { CircularProgress } from "@mui/material";
 import { useSearchParams } from "react-router-dom";
 import { userUrl } from "../../apis/apiURLs";
@@ -18,6 +18,7 @@ export default function MyPage() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [selectedComponent, setSelectedComponent] = useState(searchParams.get("tab") || "MemberInfo");
   const { userData, setUserData } = useContext(AppContext);
+  const { setOpenFetchErrorAlert } = useContext(AlertContext);
   const nav = useNavigate();
 
   const isSelected = (componentName) => {
@@ -46,13 +47,17 @@ export default function MyPage() {
   };
 
   const isLoggedIn = async () => {
-    const loginRes = await fetch(`${userUrl}`, { credentials: "include" });
-    if (loginRes.ok) {
-      const data = await loginRes.json();
-      setUserData({ isLoggedIn: true, user: data.user });
-    } else {
-      setUserData({ isLoggedIn: false });
-      return nav(`/signup-in`);
+    try {
+      const loginRes = await fetch(`${userUrl}`, { credentials: "include" });
+      if (loginRes.ok) {
+        const data = await loginRes.json();
+        setUserData({ isLoggedIn: true, user: data.user });
+      } else {
+        setUserData({ isLoggedIn: false });
+        return nav(`/signup-in`);
+      }
+    } catch (e) {
+      setOpenFetchErrorAlert(true);
     }
   };
 
