@@ -21,7 +21,7 @@ export function PRBoardDetailPage() {
   const nav = useNavigate();
   const params = useParams();
   const { userData, setUserData } = useContext(AppContext);
-  const { setOpenLoginAlertBack } = useContext(AlertContext);
+  const { setOpenLoginAlertBack, setOpenFetchErrorAlert } = useContext(AlertContext);
 
   const getPromotion = async () => {
     setState("loading");
@@ -94,7 +94,7 @@ export function PRBoardDetailPage() {
         }
       }
     } catch (err) {
-      setState("hasError");
+      setOpenFetchErrorAlert(true);
     }
   };
 

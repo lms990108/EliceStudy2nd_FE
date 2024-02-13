@@ -15,6 +15,7 @@ function App() {
   const [userData, setUserData] = useState(null);
   const [openLoginAlert, setOpenLoginAlert] = useState(false);
   const [openLoginAlertBack, setOpenLoginAlertBack] = useState(false);
+  const [openFetchErrorAlert, setOpenFetchErrorAlert] = useState(false);
   const [prevPlayListQuery, setPrevPlayListQuery] = useState(null);
 
   const getUserData = async () => {
@@ -58,11 +59,7 @@ function App() {
   return (
     <div className="App">
       <Helmet>
-        <script
-          type="text/javascript"
-          defer
-          src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.REACT_APP_KAKAO_MAP_API_KEY}&autoload=false`}
-        />
+        <script type="text/javascript" defer src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.REACT_APP_KAKAO_MAP_API_KEY}&autoload=false`} />
       </Helmet>
       <ThemeProvider theme={theme}>
         <AppContext.Provider
@@ -79,6 +76,8 @@ function App() {
               setOpenLoginAlert,
               openLoginAlertBack,
               setOpenLoginAlertBack,
+              openFetchErrorAlert,
+              setOpenFetchErrorAlert,
             }}
           >
             <BrowserRouter>

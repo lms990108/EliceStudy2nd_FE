@@ -17,7 +17,7 @@ export function Comment({ commentData, deleteComment }) {
   const [inputComment, setInputComment] = useState(comment.content);
   const [openAlertDelete, setOpenAlertDelete] = useState(false);
   const { userData, setUserData } = useContext(AppContext);
-  const { setOpenLoginAlertBack } = useContext(AlertContext);
+  const { setOpenFetchErrorAlert } = useContext(AlertContext);
   const nav = useNavigate();
 
   const handleSeeMore = (e) => {
@@ -45,7 +45,7 @@ export function Comment({ commentData, deleteComment }) {
         nav("/signup-in");
       }
     } catch (err) {
-      console.log(err);
+      setOpenFetchErrorAlert(true);
     }
   };
 

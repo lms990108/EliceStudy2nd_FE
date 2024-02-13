@@ -12,8 +12,9 @@ import { Alert, Backdrop, TextField } from "@mui/material";
 import { EditAttributes, ErrorOutline, ImageSearchRounded, WarningRounded } from "@mui/icons-material";
 import { AlertCustom } from "../common/alert/Alerts";
 import { useNavigate } from "react-router-dom";
+import { AlertContext } from "../../App";
 
-const regex = /[0-9]|[ \[\]{}()<>?|`~!@#$%^&*-_+=,.;:\"'\\]/;
+const regex = /[0-9]|[\[\]{}()<>?|`~!@#$%^&*-_+=,.;:\"'\\]/;
 
 function MemberInfo({ user, setUserData }) {
   const [inputNickname, setInputNickname] = useState(user?.nickname);
@@ -24,6 +25,8 @@ function MemberInfo({ user, setUserData }) {
   const [isUnique, setIsUnique] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [openComplete, setOpenComplete] = useState(false);
+
+  const { setOpenFetchErrorAlert } = useContext(AlertContext);
   const nav = useNavigate();
 
   const handleChangeProfile = async (e) => {
@@ -35,53 +38,57 @@ function MemberInfo({ user, setUserData }) {
       return setErrorImage("사진은 최대 5MB까지 업로드 가능합니다.");
     }
 
-    let res = await fetch(presignedUrl, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ key: file.name }),
-    });
-    const data = await res.json();
-    console.log(data);
+    try {
+      let res = await fetch(presignedUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ key: file.name }),
+      });
+      const data = await res.json();
+      console.log(data);
 
-    if (!res.ok) {
-      if (res.status === 401 || res.status === 403) {
-        const loginRes = await fetch(`${userUrl}`, { credentials: "include" });
-        if (loginRes.ok) {
-          const data = await loginRes.json();
-          setUserData({ isLoggedIn: true, user: data.user });
-        } else {
-          setUserData({ isLoggedIn: false });
-          return nav(`/signup-in`);
+      if (!res.ok) {
+        if (res.status === 401 || res.status === 403) {
+          const loginRes = await fetch(`${userUrl}`, { credentials: "include" });
+          if (loginRes.ok) {
+            const data = await loginRes.json();
+            setUserData({ isLoggedIn: true, user: data.user });
+          } else {
+            setUserData({ isLoggedIn: false });
+            return nav(`/signup-in`);
+          }
         }
+        return setErrorImage("사진 업로드에 실패했습니다. 다시 시도해주세요");
       }
-      return setErrorImage("사진 업로드에 실패했습니다. 다시 시도해주세요");
-    }
 
-    res = await fetch(data.presigned_url, {
-      method: "PUT",
-      headers: { "Content-Type": file.type },
-      body: file,
-    });
+      res = await fetch(data.presigned_url, {
+        method: "PUT",
+        headers: { "Content-Type": file.type },
+        body: file,
+      });
 
-    if (!res.ok) {
-      if (res.status === 401 || res.status === 403) {
-        const loginRes = await fetch(`${userUrl}`, { credentials: "include" });
-        if (loginRes.ok) {
-          const data = await loginRes.json();
-          setUserData({ isLoggedIn: true, user: data.user });
-        } else {
-          setUserData({ isLoggedIn: false });
-          return nav(`/signup-in`);
+      if (!res.ok) {
+        if (res.status === 401 || res.status === 403) {
+          const loginRes = await fetch(`${userUrl}`, { credentials: "include" });
+          if (loginRes.ok) {
+            const data = await loginRes.json();
+            setUserData({ isLoggedIn: true, user: data.user });
+          } else {
+            setUserData({ isLoggedIn: false });
+            return nav(`/signup-in`);
+          }
         }
+        return setErrorImage("사진 업로드에 실패했습니다. 다시 시도해주세요");
       }
-      return setErrorImage("사진 업로드에 실패했습니다. 다시 시도해주세요");
+      setProfileURL(data.public_url);
+      setErrorImage("");
+    } catch (e) {
+      setOpenFetchErrorAlert(true);
     }
-    setProfileURL(data.public_url);
-    setErrorImage("");
   };
 
   const handleChangeNickname = (e) => {
-    const input = e.target.value;
+    const input = e.target.value.trimStart();
     setInputNickname(input);
     setIsUnique(false);
 
@@ -95,59 +102,67 @@ function MemberInfo({ user, setUserData }) {
   };
 
   const handleCheckNickname = async (e) => {
-    const res = await fetch(`${userUrl}/nickname`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        user_id: user.user_id,
-        nickname: inputNickname,
-      }),
-    });
-    const data = await res.json();
-    console.log(data);
-    if (res.ok) {
-      setIsUnique(true);
-    } else {
-      setErrorNickname(
-        <div className="nick-err">
-          <WarningRounded sx={{ fontSize: 16, marginRight: "6px" }} />
-          중복된 닉네임 입니다.
-        </div>
-      );
+    try {
+      const res = await fetch(`${userUrl}/nickname`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          user_id: user.user_id,
+          nickname: inputNickname.trim(),
+        }),
+      });
+      const data = await res.json();
+      console.log(data);
+      if (res.ok) {
+        setIsUnique(true);
+      } else {
+        setErrorNickname(
+          <div className="nick-err">
+            <WarningRounded sx={{ fontSize: 16, marginRight: "6px" }} />
+            중복된 닉네임 입니다.
+          </div>
+        );
+      }
+    } catch (e) {
+      setOpenFetchErrorAlert(true);
     }
   };
 
   const handleSubmit = async () => {
-    const bodyData = {
-      user_id: user.user_id,
-      nickname: inputNickname,
-      social_provider: user.social_provider,
-      profile_url: profileURL,
-      interested_area: selectedRegion,
-    };
-    const res = await fetch(`${userUrl}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
-      body: JSON.stringify(bodyData),
-    });
-    const data = await res.json();
+    try {
+      const bodyData = {
+        user_id: user.user_id,
+        nickname: inputNickname.trim(),
+        social_provider: user.social_provider,
+        profile_url: profileURL,
+        interested_area: selectedRegion,
+      };
+      const res = await fetch(`${userUrl}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify(bodyData),
+      });
+      const data = await res.json();
 
-    console.log(data);
-    if (res.ok) {
-      setUserData({ isLoggedIn: true, user: { ...user, ...bodyData } });
-      setOpenComplete(true);
-      setIsUnique(false);
-    } else if (res.status === 401 || res.status === 403) {
-      const loginRes = await fetch(`${userUrl}`, { credentials: "include" });
-      if (loginRes.ok) {
-        const data = await loginRes.json();
-        setUserData({ isLoggedIn: true, user: data.user });
-        handleSubmit();
-      } else {
-        setUserData({ isLoggedIn: false });
-        return nav(`/signup-in`);
+      console.log(data);
+      if (res.ok) {
+        setUserData({ isLoggedIn: true, user: { ...user, ...bodyData } });
+        setOpenComplete(true);
+        setIsUnique(false);
+      } else if (res.status === 401 || res.status === 403) {
+        const loginRes = await fetch(`${userUrl}`, { credentials: "include" });
+        if (loginRes.ok) {
+          const data = await loginRes.json();
+          setUserData({ isLoggedIn: true, user: data.user });
+          handleSubmit();
+        } else {
+          setUserData({ isLoggedIn: false });
+          return nav(`/signup-in`);
+        }
       }
+    } catch (e) {
+      setOpenFetchErrorAlert(true);
     }
   };
 

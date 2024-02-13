@@ -1,5 +1,5 @@
 /* 마이페이지 - 찜한 연극 LIST */
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./MyPickList.scss";
 import Button from "@mui/material/Button";
 import { userUrl } from "../../apis/apiURLs";
@@ -8,6 +8,7 @@ import { Link, useNavigate } from "react-router-dom";
 import ServerError from "../common/state/ServerError";
 import Empty from "../common/state/Empty";
 import TimeFormat from "../common/time/TimeFormat";
+import { AlertContext } from "../../App";
 
 function MyPickList({ user, setUserData }) {
   const [bookmarks, setBookmarks] = useState([]);
@@ -16,6 +17,7 @@ function MyPickList({ user, setUserData }) {
   const [checkedList, setCheckedList] = useState([]);
   const [state, setState] = useState("loading");
   const nav = useNavigate();
+  const { setOpenFetchErrorAlert } = useContext(AlertContext);
 
   const getBookmarks = async () => {
     setState("loading");
@@ -50,33 +52,37 @@ function MyPickList({ user, setUserData }) {
   };
 
   const handleClickDeleteBtn = async (e) => {
-    const res = await fetch(`${userUrl}/bookmarks`, {
-      method: "DELETE",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
-      body: JSON.stringify({
-        showIds: checkedList,
-      }),
-    });
-    const data = await res.json();
-    console.log(data);
+    try {
+      const res = await fetch(`${userUrl}/bookmarks`, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({
+          showIds: checkedList,
+        }),
+      });
+      const data = await res.json();
+      console.log(data);
 
-    if (res.ok) {
-      if (bookmarks.length <= checkedList.length) {
-        setPage(page - 1);
+      if (res.ok) {
+        if (bookmarks.length <= checkedList.length) {
+          setPage(page - 1);
+        }
+        setCheckedList([]);
+        getBookmarks();
+      } else if (res.status === 401 || res.status === 403) {
+        const loginRes = await fetch(`${userUrl}`, { credentials: "include" });
+        if (loginRes.ok) {
+          const data = await loginRes.json();
+          setUserData({ isLoggedIn: true, user: data.user });
+          handleClickDeleteBtn();
+        } else {
+          setUserData({ isLoggedIn: false });
+          return nav(`/signup-in`);
+        }
       }
-      setCheckedList([]);
-      getBookmarks();
-    } else if (res.status === 401 || res.status === 403) {
-      const loginRes = await fetch(`${userUrl}`, { credentials: "include" });
-      if (loginRes.ok) {
-        const data = await loginRes.json();
-        setUserData({ isLoggedIn: true, user: data.user });
-        handleClickDeleteBtn();
-      } else {
-        setUserData({ isLoggedIn: false });
-        return nav(`/signup-in`);
-      }
+    } catch (e) {
+      setOpenFetchErrorAlert(true);
     }
   };
 

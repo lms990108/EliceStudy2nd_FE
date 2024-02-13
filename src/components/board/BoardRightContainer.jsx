@@ -1,4 +1,4 @@
-import { Children, useEffect, useState } from "react";
+import { Children, useContext, useEffect, useState } from "react";
 import "./BoardRightContainer.scss";
 import { commentUrl, postUrl, promotionUrl } from "../../apis/apiURLs";
 import dayjs from "dayjs";
@@ -7,6 +7,7 @@ import { ThumbUpOutlined, VisibilityOutlined } from "@mui/icons-material";
 import LiveTimeDiff from "../common/time/LiveTimeDiff";
 import setStoreViewList from "../../utils/setStoreRecentViewList";
 import numberFormat from "../../utils/numberFormat";
+import { AlertContext } from "../../App";
 
 export function BoardRightContainer({ post }) {
   const [viewList, setViewList] = useState([]);
@@ -14,6 +15,7 @@ export function BoardRightContainer({ post }) {
   const [latestList, setLatestList] = useState([]);
   const [latestCommentList, setLatestCommentList] = useState([]);
   const params = useParams();
+  const { setOpenFetchErrorAlert } = useContext(AlertContext);
 
   const getStoreViewList = () => {
     const recentViewPosts = JSON.parse(localStorage.getItem("recentViewPosts")) || [];
@@ -129,13 +131,17 @@ export function BoardRightContainer({ post }) {
   };
 
   useEffect(() => {
-    getPopularList();
-    getLatestList();
-    getLatesTCommentList();
-    if (post?._id) {
-      setStoreViewList(post);
+    try {
+      getPopularList();
+      getLatestList();
+      getLatesTCommentList();
+      if (post?._id) {
+        setStoreViewList(post);
+      }
+      getStoreViewList();
+    } catch (e) {
+      setOpenFetchErrorAlert(true);
     }
-    getStoreViewList();
   }, [params, post]);
 
   return (
@@ -166,47 +172,51 @@ export function BoardRightContainer({ post }) {
         </ul>
       </div>
 
-      <div className="right-box">
-        <h4>인기 글</h4>
-        <ul>
-          {Children.toArray(
-            popularList.map((post, idx) => (
-              <Link to={`${post.category ? `/promotion/${post.promotion_number}` : `/community/${post.post_number}`}`}>
-                <li>
-                  <span>{idx + 1}.&nbsp;</span>
-                  <span className={`category ${post.category ? "promotion" : "community"}`}>{post.category ? `[홍보/${post.category}]` : "[커뮤니티]"}</span>
-                  <p>{post.title}</p>
-                  <div className="right">
-                    <VisibilityOutlined sx={{ fontSize: 12 }} />
-                    <span>{numberFormat(post.views || 0)}</span>
-                    <ThumbUpOutlined sx={{ fontSize: 12 }} />
-                    <span>{numberFormat(post.likes || 0)}</span>
-                  </div>
-                </li>
-              </Link>
-            ))
-          )}
-        </ul>
-      </div>
+      {!popularList.length || (
+        <div className="right-box">
+          <h4>인기 글</h4>
+          <ul>
+            {Children.toArray(
+              popularList.map((post, idx) => (
+                <Link to={`${post.category ? `/promotion/${post.promotion_number}` : `/community/${post.post_number}`}`}>
+                  <li>
+                    <span>{idx + 1}.&nbsp;</span>
+                    <span className={`category ${post.category ? "promotion" : "community"}`}>{post.category ? `[홍보/${post.category}]` : "[커뮤니티]"}</span>
+                    <p>{post.title}</p>
+                    <div className="right">
+                      <VisibilityOutlined sx={{ fontSize: 12 }} />
+                      <span>{numberFormat(post.views || 0)}</span>
+                      <ThumbUpOutlined sx={{ fontSize: 12 }} />
+                      <span>{numberFormat(post.likes || 0)}</span>
+                    </div>
+                  </li>
+                </Link>
+              ))
+            )}
+          </ul>
+        </div>
+      )}
 
-      <div className="right-box">
-        <h4>최신 글</h4>
-        <ul>
-          {Children.toArray(
-            latestList.map((post) => (
-              <Link to={`${post.category ? `/promotion/${post.promotion_number}` : `/community/${post.post_number}`}`}>
-                <li>
-                  <span className={`category ${post.category ? "promotion" : "community"}`}>{post.category ? `[홍보/${post.category}]` : "[커뮤니티]"}</span>
-                  <p>{post.title}</p>
-                  <div className="right">
-                    <LiveTimeDiff time={post.createdAt} />
-                  </div>
-                </li>
-              </Link>
-            ))
-          )}
-        </ul>
-      </div>
+      {!latestList.length || (
+        <div className="right-box">
+          <h4>최신 글</h4>
+          <ul>
+            {Children.toArray(
+              latestList.map((post) => (
+                <Link to={`${post.category ? `/promotion/${post.promotion_number}` : `/community/${post.post_number}`}`}>
+                  <li>
+                    <span className={`category ${post.category ? "promotion" : "community"}`}>{post.category ? `[홍보/${post.category}]` : "[커뮤니티]"}</span>
+                    <p>{post.title}</p>
+                    <div className="right">
+                      <LiveTimeDiff time={post.createdAt} />
+                    </div>
+                  </li>
+                </Link>
+              ))
+            )}
+          </ul>
+        </div>
+      )}
 
       <div className="right-box">
         <h4>최근 댓글</h4>

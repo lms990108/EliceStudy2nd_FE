@@ -21,7 +21,7 @@ export function PostTop({ user, type, post, commentsCnt }) {
   const [isLiked, setIsLiked] = useState(false);
   const [likes, setLikes] = useState(post.likes);
   const { userData } = useContext(AppContext);
-  const { setOpenLoginAlert } = useContext(AlertContext);
+  const { setOpenLoginAlert, setOpenFetchErrorAlert } = useContext(AlertContext);
   const nav = useNavigate();
 
   // 공유 버튼이 클릭되었는지 여부 (소셜 공유 버튼을 띄우기 위한)
@@ -49,40 +49,50 @@ export function PostTop({ user, type, post, commentsCnt }) {
 
   const handleClickLikes = async () => {
     const url = type === "community" ? `${postUrl}/${post.post_number}/like` : `${promotionUrl}/${post.promotion_number}/like`;
-    if (isLiked) {
-      const res = await fetch(url, { method: "DELETE", credentials: "include" });
-      const data = await res.json();
-      console.log(data);
+    try {
+      if (isLiked) {
+        const res = await fetch(url, { method: "DELETE", credentials: "include" });
+        const data = await res.json();
+        console.log(data);
 
-      if (res.ok) {
-        setIsLiked(false);
-        setLikes((cur) => cur - 1);
-      } else if (res.status === 403) {
-        setOpenLoginAlert(true);
-      }
-    } else {
-      const res = await fetch(url, { method: "POST", credentials: "include" });
-      const data = await res.json();
-      console.log(data);
+        if (res.ok) {
+          setIsLiked(false);
+          setLikes((cur) => cur - 1);
+        } else if (res.status === 403) {
+          setOpenLoginAlert(true);
+        }
+      } else {
+        const res = await fetch(url, { method: "POST", credentials: "include" });
+        const data = await res.json();
+        console.log(data);
 
-      if (res.ok) {
-        setIsLiked(true);
-        setLikes((cur) => cur + 1);
-      } else if (res.status === 403) {
-        setOpenLoginAlert(true);
+        if (res.ok) {
+          setIsLiked(true);
+          setLikes((cur) => cur + 1);
+        } else if (res.status === 403) {
+          setOpenLoginAlert(true);
+        }
       }
+    } catch (e) {
+      setOpenFetchErrorAlert(true);
     }
   };
 
   const deletePost = async () => {
-    const url = type === "community" ? `${postUrl}/${post.post_number}` : `${promotionUrl}/${post.promotion_number}`;
-    const res = await fetch(url, {
-      method: "DELETE",
-      credentials: "include",
-    });
-    const data = await res.json();
-    console.log(data);
-    nav(`/${type}`);
+    try {
+      const url = type === "community" ? `${postUrl}/${post.post_number}` : `${promotionUrl}/${post.promotion_number}`;
+      const res = await fetch(url, {
+        method: "DELETE",
+        credentials: "include",
+      });
+      const data = await res.json();
+      console.log(data);
+      if (res.ok) {
+        nav(`/${type}`);
+      }
+    } catch (e) {
+      setOpenFetchErrorAlert(true);
+    }
   };
 
   const shareKakao = () => {

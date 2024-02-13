@@ -1,5 +1,5 @@
 import { Backdrop, Button, FormControlLabel, IconButton, Radio, RadioGroup } from "@mui/material";
-import React, { Children, useEffect, useState } from "react";
+import React, { Children, useContext, useEffect, useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import DriveFolderUploadIcon from "@mui/icons-material/DriveFolderUpload";
@@ -13,6 +13,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import empty_img from "../../assets/img/empty_img.svg";
 import { Close } from "@mui/icons-material";
+import { AlertContext } from "../../App";
 
 export function PRBoardForm({ setInput, handleComplete, handleCancle }) {
   const [submit, setSubmit] = useState(false);
@@ -50,32 +51,37 @@ export function PRBoardForm({ setInput, handleComplete, handleCancle }) {
   const [errorImage, setErrorImage] = useState("");
   const [warningMainImage, setWarningMainImage] = useState("");
 
+  const { setOpenFetchErrorAlert } = useContext(AlertContext);
   const nav = useNavigate();
 
   const handleSubmit = async (e) => {
-    const res = await fetch(`${promotionUrl}`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
-      body: JSON.stringify({
-        title: inputTitle,
-        content: inputContent,
-        tags: tagList,
-        image_url: [mainImageURL, ...imageURL],
-        start_date: inputStartDate || undefined,
-        end_date: inputEndDate || undefined,
-        category: inputCategory,
-        play_title: inputPlayTitle,
-        runtime: Number(inputRuntime) || 0,
-        location: inputLocation || "",
-        host: inputHost || "",
-      }),
-    });
-    const data = await res.json();
-    console.log(data);
+    try {
+      const res = await fetch(`${promotionUrl}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({
+          title: inputTitle,
+          content: inputContent,
+          tags: tagList,
+          image_url: [mainImageURL, ...imageURL],
+          start_date: inputStartDate || undefined,
+          end_date: inputEndDate || undefined,
+          category: inputCategory,
+          play_title: inputPlayTitle,
+          runtime: Number(inputRuntime) || 0,
+          location: inputLocation || "",
+          host: inputHost || "",
+        }),
+      });
+      const data = await res.json();
+      console.log(data);
 
-    if (res.ok) {
-      setOpenComplete(true);
+      if (res.ok) {
+        setOpenComplete(true);
+      }
+    } catch (e) {
+      setOpenFetchErrorAlert(true);
     }
   };
 
@@ -158,28 +164,32 @@ export function PRBoardForm({ setInput, handleComplete, handleCancle }) {
   };
 
   const uploadImage = async (file) => {
-    let res = await fetch(presignedUrl, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ key: file.name }),
-    });
-    const data = await res.json();
-    console.log(data);
+    try {
+      let res = await fetch(presignedUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ key: file.name }),
+      });
+      const data = await res.json();
+      console.log(data);
 
-    if (!res.ok) {
-      return false;
+      if (!res.ok) {
+        return false;
+      }
+
+      res = await fetch(data.presigned_url, {
+        method: "PUT",
+        headers: { "Content-Type": file.type },
+        body: file,
+      });
+
+      if (!res.ok) {
+        return false;
+      }
+      return data.public_url;
+    } catch (e) {
+      setOpenFetchErrorAlert(true);
     }
-
-    res = await fetch(data.presigned_url, {
-      method: "PUT",
-      headers: { "Content-Type": file.type },
-      body: file,
-    });
-
-    if (!res.ok) {
-      return false;
-    }
-    return data.public_url;
   };
 
   const handleChangeMainImage = async (e) => {

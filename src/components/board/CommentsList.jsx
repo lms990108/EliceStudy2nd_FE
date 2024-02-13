@@ -4,26 +4,31 @@ import { Button } from "@mui/material";
 import "./CommentsList.scss";
 import { commentUrl } from "../../apis/apiURLs";
 import { useNavigate } from "react-router-dom";
-import { AppContext } from "../../App";
+import { AlertContext, AppContext } from "../../App";
 
 export function CommentsList({ comments, totalCount, getComments, setComments, setTotalCount }) {
   const [uniqueComments, setUniqueComments] = useState(comments);
   const { setUserData } = useContext(AppContext);
+  const { setOpenFetchErrorAlert } = useContext(AlertContext);
   const nav = useNavigate();
 
   const deleteOneComment = async (_id) => {
-    const res = await fetch(`${commentUrl}/${_id}`, { method: "DELETE", credentials: "include" });
-    const data = await res.json();
-    console.log(data);
+    try {
+      const res = await fetch(`${commentUrl}/${_id}`, { method: "DELETE", credentials: "include" });
+      const data = await res.json();
+      console.log(data);
 
-    if (res.ok) {
-      const newComments = uniqueComments.filter((current) => current._id !== _id);
-      setComments(newComments);
-      setUniqueComments(newComments);
-      setTotalCount(totalCount - 1);
-    } else if (res.status === 401 || res.status === 403) {
-      setUserData({ isLoggedIn: false });
-      nav("/signup-in");
+      if (res.ok) {
+        const newComments = uniqueComments.filter((current) => current._id !== _id);
+        setComments(newComments);
+        setUniqueComments(newComments);
+        setTotalCount(totalCount - 1);
+      } else if (res.status === 401 || res.status === 403) {
+        setUserData({ isLoggedIn: false });
+        nav("/signup-in");
+      }
+    } catch {
+      setOpenFetchErrorAlert(true);
     }
   };
 
