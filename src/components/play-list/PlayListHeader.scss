@@ -1,55 +1,52 @@
-/*(반응형) 컴퓨터 사이즈에서 적용될 CSS*/
-@media (min-width: 1130px) {
-  .play-list-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 80px;
+.play-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 80px;
 
-    .number-of-plays {
-      font-weight: 700;
-      font-size: 24px;
+  .number-of-plays {
+    font-weight: 700;
+    font-size: 24px;
 
-      .play-count {
-        span {
-          color: #ffb400;
-        }
+    .play-count {
+      span {
+        color: #ffb400;
+      }
+    }
+  }
+
+  .sort {
+    position: relative;
+
+    button {
+      margin-left: 10px;
+
+      .MuiButton-startIcon {
+        margin-right: 2px;
+      }
+
+      &.MuiButton-outlinedDarkGray:hover {
+        border-color: #89898980;
       }
     }
 
-    .sort {
-      position: relative;
+    .MuiFormControl-root {
+      height: 30px;
+      margin: 0;
 
-      button {
-        margin-left: 10px;
+      .MuiInputBase-root {
+        color: #898989;
+        font-size: 13px;
+        font-weight: 500;
+        line-height: 24px;
 
-        .MuiButton-startIcon {
-          margin-right: 2px;
+        &.Mui-focused .MuiOutlinedInput-notchedOutline {
+          border-color: rgba(137, 137, 137, 0.5019607843);
         }
 
-        &.MuiButton-outlinedDarkGray:hover {
-          border-color: #89898980;
-        }
-      }
-
-      .MuiFormControl-root {
-        height: 30px;
-        margin: 0;
-
-        .MuiInputBase-root {
-          color: #898989;
-          font-size: 13px;
-          font-weight: 500;
-          line-height: 24px;
-
-          &.Mui-focused .MuiOutlinedInput-notchedOutline {
-            border-color: rgba(137, 137, 137, 0.5019607843);
-          }
-
-          .MuiSelect-select {
-            padding: 3px 9px;
-            height: 24px;
-          }
+        .MuiSelect-select {
+          padding: 3px 9px;
+          height: 24px;
         }
       }
     }

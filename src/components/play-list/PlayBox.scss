@@ -3,93 +3,90 @@
   flex-wrap: wrap;
 }
 
-/*(반응형) 컴퓨터 사이즈에서 적용될 CSS*/
-@media (min-width: 1130px) {
-  .play-box {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 30px 36px 50px 0;
-    transition: margin 0.5s;
+.play-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 30px 36px 50px 0;
+  transition: margin 0.5s;
 
-    &:hover {
-      cursor: pointer;
-      margin: 22px 36px 58px 0;
-    }
+  &:hover {
+    cursor: pointer;
+    margin: 22px 36px 58px 0;
+  }
 
-    &:nth-child(4n) {
-      margin-right: 0;
-    }
+  &:nth-child(4n) {
+    margin-right: 0;
+  }
 
-    .play-img-box {
+  .play-img-box {
+    width: 248px;
+    height: 330px;
+    border: 1px solid rgba(188, 188, 188, 0.5);
+    border-radius: 8px;
+
+    img {
       width: 248px;
       height: 330px;
-      border: 1px solid rgba(188, 188, 188, 0.5);
       border-radius: 8px;
+    }
+  }
 
-      img {
-        width: 248px;
-        height: 330px;
-        border-radius: 8px;
-      }
+  .play-title {
+    margin: 20px 0 13px 0;
+    font-size: 18px;
+    font-weight: 500;
+    width: 250px;
+    @include play-box-flex-wrap;
+  }
+
+  .play-place {
+    font-size: 14px;
+    font-weight: 500;
+    width: 250px;
+    color: #808080;
+    @include play-box-flex-wrap;
+  }
+
+  .play-period {
+    margin: 7px 0 13px;
+    font-size: 14px;
+    width: 250px;
+    color: #808080;
+    @include play-box-flex-wrap;
+  }
+
+  .play-price {
+    font-size: 17px;
+    font-weight: 500;
+    width: 250px;
+    @include play-box-flex-wrap;
+  }
+
+  .end-show-design {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 240px;
+    height: 320px;
+    position: absolute;
+    background-color: rgb(0, 0, 0, 0.5);
+    font-family: "Noto Sans KR";
+    border-radius: 8px;
+
+    img {
+      width: 200px;
+      height: 200px;
     }
 
-    .play-title {
-      margin: 20px 0 13px 0;
-      font-size: 18px;
-      font-weight: 500;
-      width: 250px;
-      @include play-box-flex-wrap;
-    }
-
-    .play-place {
-      font-size: 14px;
-      font-weight: 500;
-      width: 250px;
-      color: #808080;
-      @include play-box-flex-wrap;
-    }
-
-    .play-period {
-      margin: 7px 0 13px;
-      font-size: 14px;
-      width: 250px;
-      color: #808080;
-      @include play-box-flex-wrap;
-    }
-
-    .play-price {
-      font-size: 17px;
-      font-weight: 500;
-      width: 250px;
-      @include play-box-flex-wrap;
-    }
-
-    .end-show-design {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 240px;
-      height: 320px;
+    .end-show-text {
       position: absolute;
-      background-color: rgb(0, 0, 0, 0.5);
-      font-family: "Noto Sans KR";
-      border-radius: 8px;
-
-      img {
-        width: 200px;
-        height: 200px;
-      }
-
-      .end-show-text {
-        position: absolute;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: bold;
-        color: #ffffff;
-        font-size: 45px;
-      }
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      color: #ffffff;
+      font-size: 45px;
     }
   }
 }

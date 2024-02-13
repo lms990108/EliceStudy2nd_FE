@@ -1,229 +1,227 @@
-@media (min-width: 1130px) {
-  .play-detail-top-container {
-    .play-detail-top {
+.play-detail-top-container {
+  .play-detail-top {
+    display: flex;
+    align-items: center;
+
+    .title-container {
       display: flex;
-      align-items: center;
+      justify-content: space-between;
 
-      .title-container {
+      .share-btn {
         display: flex;
-        justify-content: space-between;
-
-        .share-btn {
-          display: flex;
-          align-items: flex-end;
-          position: relative;
-          top: 25px;
-
-          p {
-            font-size: 17px;
-            margin: 0;
-            padding-right: 20px;
-            position: relative;
-            bottom: 13px;
-          }
-
-          .share-options {
-            right: 0px;
-            border: 1.5px solid #ffb400;
-            border-radius: 8px;
-            padding: 25px 10px 0;
-            display: flex;
-            position: absolute;
-            z-index: 100;
-            background-color: #ffffff;
-
-            .share-option {
-              display: flex;
-              flex-direction: column;
-              justify-content: center;
-              align-items: center;
-              position: relative;
-              bottom: 12px;
-              margin: 0 10px;
-              flex-grow: 1;
-
-              .SNS-img-box {
-                height: 50px;
-                display: flex;
-                align-items: center;
-
-                img {
-                  width: 30px;
-                  height: 30px;
-                }
-              }
-            }
-
-            .share-option:nth-child(3) {
-              img {
-                height: 27px;
-                width: 27px;
-              }
-            }
-
-            .close-icon {
-              position: relative;
-              top: 15px;
-            }
-          }
-        }
-      }
-
-      .play-poster {
-        display: flex;
-
-        .poster-box {
-          width: 290px;
-          height: 390px;
-          border-radius: 8px;
-          box-shadow: 5px 5px 10px #bcbcbc;
-
-          .end-show-design {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 290px;
-            height: 390px;
-            position: absolute;
-            background-color: rgb(0, 0, 0, 0.5);
-            font-family: "Noto Sans KR";
-            border-radius: 8px;
-
-            img {
-              width: 230px;
-              height: 290px;
-            }
-
-            .end-show-text {
-              position: absolute;
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              font-weight: bold;
-              color: #ffffff;
-              font-size: 50px;
-            }
-          }
-
-          img {
-            width: 290px;
-            height: 390px;
-            border-radius: 8px;
-            object-fit: cover;
-          }
-        }
-      }
-
-      .play-info {
-        margin-left: 60px;
-        width: 800px;
-
-        h1 {
-          height: 45px;
-          display: flex;
-          flex-wrap: wrap;
-          font-family: "Noto Sans KR";
-          font-size: 26px;
-          height: auto;
-          margin-bottom: 5px;
-        }
-
-        .play-summary-info {
-          display: grid;
-
-          div:first-child,
-          div:nth-child(3) {
-            grid-column-start: 1;
-            grid-column-end: 2;
-          }
-
-          div:nth-child(2),
-          div:nth-child(4) {
-            grid-column-start: 2;
-            grid-column-end: 3;
-          }
-
-          div:nth-child(5),
-          div:nth-child(6) {
-            grid-column-start: 1;
-            grid-column-end: 3;
-          }
-
-          div {
-            height: 45px;
-            display: flex;
-            flex-wrap: wrap;
-            margin: 0;
-
-            h3 {
-              margin: 0;
-              font-size: 16px;
-              color: #666666;
-              font-weight: 400;
-            }
-          }
-
-          .play-detail-buttons {
-            flex-wrap: nowrap;
-            grid-column-start: 1;
-            grid-column-end: 3;
-            position: relative;
-            bottom: 12px;
-            display: flex;
-            justify-content: flex-end;
-          }
-
-          .price {
-            flex-wrap: nowrap;
-            margin-bottom: 30px;
-
-            h3 {
-              width: 30px;
-            }
-          }
-        }
+        align-items: flex-end;
+        position: relative;
+        top: 25px;
 
         p {
-          margin-left: 35px;
-          font-size: 16px;
-          line-height: 1.2;
-          font-weight: 500;
+          font-size: 17px;
+          margin: 0;
+          padding-right: 20px;
+          position: relative;
+          bottom: 13px;
         }
 
-        hr {
-          margin: 15px 0 30px;
+        .share-options {
+          right: 0px;
+          border: 1.5px solid #ffb400;
+          border-radius: 8px;
+          padding: 25px 10px 0;
+          display: flex;
+          position: absolute;
+          z-index: 100;
+          background-color: #ffffff;
+
+          .share-option {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            bottom: 12px;
+            margin: 0 10px;
+            flex-grow: 1;
+
+            .SNS-img-box {
+              height: 50px;
+              display: flex;
+              align-items: center;
+
+              img {
+                width: 30px;
+                height: 30px;
+              }
+            }
+          }
+
+          .share-option:nth-child(3) {
+            img {
+              height: 27px;
+              width: 27px;
+            }
+          }
+
+          .close-icon {
+            position: relative;
+            top: 15px;
+          }
         }
       }
     }
 
-    .play-detail-buttons {
-      height: 60px;
-      margin-top: 40px;
+    .play-poster {
       display: flex;
-      justify-content: space-between;
 
-      /* mui 버튼에서의 text는 p tag 안에 담겨 있으므로 위 .play-info p 땜에 이상하게 css가 적용되었음!*/
-      /* 이 점 주의하기! */
-      p {
-        font-weight: 700;
-        font-size: 23px;
-        margin: 0;
-        padding: 5px;
+      .poster-box {
+        width: 290px;
+        height: 390px;
+        border-radius: 8px;
+        box-shadow: 5px 5px 10px #bcbcbc;
+
+        .end-show-design {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 290px;
+          height: 390px;
+          position: absolute;
+          background-color: rgb(0, 0, 0, 0.5);
+          font-family: "Noto Sans KR";
+          border-radius: 8px;
+
+          img {
+            width: 230px;
+            height: 290px;
+          }
+
+          .end-show-text {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #ffffff;
+            font-size: 50px;
+          }
+        }
+
+        img {
+          width: 290px;
+          height: 390px;
+          border-radius: 8px;
+          object-fit: cover;
+        }
+      }
+    }
+
+    .play-info {
+      margin-left: 60px;
+      width: 800px;
+
+      h1 {
+        height: 45px;
+        display: flex;
+        flex-wrap: wrap;
+        font-family: "Noto Sans KR";
+        font-size: 26px;
+        height: auto;
+        margin-bottom: 5px;
       }
 
-      .another-btn {
-        position: relative;
-        bottom: 10px;
-        display: flex;
-        justify-content: flex-end;
+      .play-summary-info {
+        display: grid;
 
-        p {
+        div:first-child,
+        div:nth-child(3) {
+          grid-column-start: 1;
+          grid-column-end: 2;
+        }
+
+        div:nth-child(2),
+        div:nth-child(4) {
+          grid-column-start: 2;
+          grid-column-end: 3;
+        }
+
+        div:nth-child(5),
+        div:nth-child(6) {
+          grid-column-start: 1;
+          grid-column-end: 3;
+        }
+
+        div {
+          height: 45px;
+          display: flex;
+          flex-wrap: wrap;
           margin: 0;
+
+          h3 {
+            margin: 0;
+            font-size: 16px;
+            color: #666666;
+            font-weight: 400;
+          }
         }
 
-        .reserve-btn {
-          padding-left: 20px;
+        .play-detail-buttons {
+          flex-wrap: nowrap;
+          grid-column-start: 1;
+          grid-column-end: 3;
+          position: relative;
+          bottom: 12px;
+          display: flex;
+          justify-content: flex-end;
         }
+
+        .price {
+          flex-wrap: nowrap;
+          margin-bottom: 30px;
+
+          h3 {
+            width: 30px;
+          }
+        }
+      }
+
+      p {
+        margin-left: 35px;
+        font-size: 16px;
+        line-height: 1.2;
+        font-weight: 500;
+      }
+
+      hr {
+        margin: 15px 0 30px;
+      }
+    }
+  }
+
+  .play-detail-buttons {
+    height: 60px;
+    margin-top: 40px;
+    display: flex;
+    justify-content: space-between;
+
+    /* mui 버튼에서의 text는 p tag 안에 담겨 있으므로 위 .play-info p 땜에 이상하게 css가 적용되었음!*/
+    /* 이 점 주의하기! */
+    p {
+      font-weight: 700;
+      font-size: 23px;
+      margin: 0;
+      padding: 5px;
+    }
+
+    .another-btn {
+      position: relative;
+      bottom: 10px;
+      display: flex;
+      justify-content: flex-end;
+
+      p {
+        margin: 0;
+      }
+
+      .reserve-btn {
+        padding-left: 20px;
       }
     }
   }

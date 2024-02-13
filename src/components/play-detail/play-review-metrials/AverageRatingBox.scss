@@ -1,50 +1,48 @@
-@media (min-width: 800px) {
-  .average-rating-box {
-    display: flex;
-    padding: 5px 30px;
-    justify-content: space-between;
-    border: 1.5px solid rgba(188, 188, 188, 0.5);
-    border-radius: 8px;
-    margin-bottom: 50px;
+.average-rating-box {
+  display: flex;
+  padding: 5px 30px;
+  justify-content: space-between;
+  border: 1.5px solid rgba(188, 188, 188, 0.5);
+  border-radius: 8px;
+  margin-bottom: 50px;
 
-    .star-and-rating {
-      h2 {
-        font-size: 18px;
-      }
-
-      .rating {
-        font-size: 22px;
-        font-weight: 700;
-        padding-left: 20px;
-        position: relative;
-        bottom: 7px;
-      }
-
-      .rating-addtional-text {
-        font-size: 14px;
-        padding: 15px 0;
-        color: #808080;
-      }
+  .star-and-rating {
+    h2 {
+      font-size: 18px;
     }
 
-    .review-button {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 65px;
+    .rating {
+      font-size: 22px;
+      font-weight: 700;
+      padding-left: 20px;
       position: relative;
-      top: 32px;
+      bottom: 7px;
     }
 
-    .review-button button {
-      width: 180px;
-      height: 45.2px;
+    .rating-addtional-text {
+      font-size: 14px;
+      padding: 15px 0;
+      color: #808080;
     }
+  }
 
-    .review-button button p {
-      font-weight: 500;
-      font-size: 16px;
-      font-family: "Noto Sans KR", sans-serif;
-    }
+  .review-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 65px;
+    position: relative;
+    top: 32px;
+  }
+
+  .review-button button {
+    width: 180px;
+    height: 45.2px;
+  }
+
+  .review-button button p {
+    font-weight: 500;
+    font-size: 16px;
+    font-family: "Noto Sans KR", sans-serif;
   }
 }

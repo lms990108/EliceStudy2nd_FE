@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import "./NicknameContainer.scss";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import Button from "@mui/material/Button";
@@ -13,8 +13,10 @@ export default function NicknameContainer({
 
   // 닉네임 중복 확인
   const duplicationCheck = () => {
+    const nickname = nicknameInfo.nickname.trimStart();
+
     // 닉네임 길이부터 확인
-    if (nicknameInfo.nickname.length === 0) {
+    if (nickname.length === 0) {
       setAlert({
         severity: "error",
         message: "닉네임은 최소 1자 이상 적어주세요.",
@@ -23,8 +25,8 @@ export default function NicknameContainer({
     }
 
     // 특수 문자나 숫자가 닉네임에 포함되어 있는지를 확인
-    const regex = /[!@#$%^&*(),.?":{}|<>0-9]/;
-    if (regex.test(nicknameInfo.nickname)) {
+    const regex = /[ !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?0-9`]/;
+    if (regex.test(nickname)) {
       setAlert({
         severity: "error",
         message: "닉네임에 특수 문자나 숫자는 사용이 불가합니다.",
@@ -40,7 +42,7 @@ export default function NicknameContainer({
       },
       body: JSON.stringify({
         user_id,
-        nickname: nicknameInfo.nickname,
+        nickname: nickname.trim(),
       }),
     })
       .then((res) => {

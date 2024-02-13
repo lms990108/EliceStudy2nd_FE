@@ -1,62 +1,60 @@
-@media (min-width: 925px) {
-  .play-review-list-box {
-    border-bottom: 1px solid rgb(188, 188, 188, 0.5);
-    padding: 5px 20px;
-    display: flex;
-    align-items: center;
+.play-review-list-box {
+  border-bottom: 1px solid rgb(188, 188, 188, 0.5);
+  padding: 5px 20px;
+  display: flex;
+  align-items: center;
 
-    .review-author-and-date {
-      width: 17%;
+  .review-author-and-date {
+    width: 17%;
 
-      p {
-        margin: 10px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-        line-height: 1.2;
-      }
-
-      p:nth-child(2) {
-        color: #808080;
-        font-size: 14px;
-      }
-    }
-
-    .play-review-title {
-      width: 54%;
-      display: flex;
-      align-items: center;
-      padding-left: 30px;
-      flex-wrap: wrap;
-      cursor: pointer;
-
-      svg {
-        padding-right: 10px;
-      }
-    }
-
-    .play-review-accordion {
-      width: 5%;
+    p {
+      margin: 10px;
       display: flex;
       justify-content: center;
       align-items: center;
-      cursor: pointer;
+      text-align: center;
+      line-height: 1.2;
     }
 
-    .play-review-rating {
-      width: 15%;
-      display: flex;
-      justify-items: center;
-      align-items: center;
+    p:nth-child(2) {
+      color: #808080;
+      font-size: 14px;
     }
+  }
 
-    .play-review-remove {
-      display: flex;
-      justify-items: center;
-      align-items: center;
-      cursor: pointer;
-      padding-left: 20px;
+  .play-review-title {
+    width: 54%;
+    display: flex;
+    align-items: center;
+    padding-left: 30px;
+    flex-wrap: wrap;
+    cursor: pointer;
+
+    svg {
+      padding-right: 10px;
     }
+  }
+
+  .play-review-accordion {
+    width: 5%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  .play-review-rating {
+    width: 15%;
+    display: flex;
+    justify-items: center;
+    align-items: center;
+  }
+
+  .play-review-remove {
+    display: flex;
+    justify-items: center;
+    align-items: center;
+    cursor: pointer;
+    padding-left: 20px;
   }
 }
