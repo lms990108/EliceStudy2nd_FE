@@ -55,7 +55,7 @@ function MainPublicity() {
                   )}
                 </div>
                 <p className="promotions-title">
-                  {limitTitleLength(promotions[0]?.play_title, 24)}
+                  {limitTitleLength(promotions[0]?.play_title, 20)}
                 </p>
                 <p className="promotions-period">
                   {formatDate(promotions[0]?.start_date)} ~{" "}
@@ -76,7 +76,7 @@ function MainPublicity() {
                     )}
                 </div>
                 <p className="promotions-title">
-                  {limitTitleLength(promotion.play_title, 20)}
+                  {limitTitleLength(promotion.play_title, 16)}
                 </p>
                 <p className="promotions-period">
                   {formatDate(promotion.start_date)} ~{" "}
@@ -95,7 +95,7 @@ function MainPublicity() {
                   )}
               </div>
               <p className="promotions-title">
-                {limitTitleLength(promotion.play_title, 20)}
+                {limitTitleLength(promotion.play_title, 16)}
               </p>
               <p className="promotions-period">
                 {formatDate(promotion.start_date)} ~{" "}
