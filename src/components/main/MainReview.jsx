@@ -22,7 +22,6 @@ const MainReview = () => {
         (review) => review.rate >= 3 && review.image_urls.length > 0
       ); // 별점이 3점 이상이고 이미지 URL 배열이 비어 있지 않은 리뷰 필터링
       setReviews(filteredReviews.slice(0, 3));
-      console.log(data);
     } catch (error) {
       console.error(error);
     }
