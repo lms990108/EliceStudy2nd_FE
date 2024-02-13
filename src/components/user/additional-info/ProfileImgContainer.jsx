@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import "./ProfileImgContainer.scss";
 import Button from "@mui/material/Button";
 import { AlertCustom } from "../../common/alert/Alerts";
+import DefaultUserImg from "../../../assets/img/default_user_img.svg";
 
 export default function ProfileImgContainer({
   selectedImg,
@@ -98,13 +99,13 @@ export default function ProfileImgContainer({
   };
 
   const handleBasicImgClick = () => {
-    if (selectedImg !== profileUrl && selectedImg !== "/basic-profile-img.png")
+    if (selectedImg !== profileUrl && selectedImg !== DefaultUserImg)
       setToDeleteImg((pre) => [...pre, selectedImg]);
-    setSelectedImg("/basic-profile-img.png");
+    setSelectedImg(DefaultUserImg);
   };
 
   const profileImgReset = () => {
-    if (selectedImg !== profileUrl && selectedImg !== "/basic-profile-img.png")
+    if (selectedImg !== profileUrl && selectedImg !== DefaultUserImg)
       setToDeleteImg((pre) => [...pre, selectedImg]);
     setSelectedImg(profileUrl);
   };
@@ -129,10 +130,7 @@ export default function ProfileImgContainer({
           type="file"
           ref={imgInput}
           onChange={(e) => {
-            if (
-              selectedImg !== profileUrl &&
-              selectedImg !== "/basic-profile-img.png"
-            )
+            if (selectedImg !== profileUrl && selectedImg !== DefaultUserImg)
               setToDeleteImg((pre) => [...pre, selectedImg]);
             getPresignedUrl(e.target.files[0]);
           }}
@@ -140,8 +138,8 @@ export default function ProfileImgContainer({
         <div className="profile-img" onClick={() => handleProfileImgClick()}>
           {selectedImg === profileUrl ? (
             <img src={profileUrl} alt="기존 프로필 이미지" />
-          ) : selectedImg === "/basic-profile-img.png" ? (
-            <img src="/basic-profile-img.png" alt="기본 제공 프로필 이미지" />
+          ) : selectedImg === DefaultUserImg ? (
+            <img src={DefaultUserImg} alt="기본 제공 프로필 이미지" />
           ) : (
             <img src={selectedImg} alt="사용자가 선택한 프로필 이미지" />
           )}

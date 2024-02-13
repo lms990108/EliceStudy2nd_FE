@@ -1,60 +1,58 @@
-@media (min-width: 480px) {
-  .play-review-header-container {
-    margin: 20px 0 15px;
+.play-review-header-container {
+  margin: 20px 0 15px;
+  display: flex;
+  justify-content: space-between;
+
+  .number-of-plays {
+    font-weight: 700;
+    font-size: 20px;
     display: flex;
-    justify-content: space-between;
+    align-items: center;
 
-    .number-of-plays {
-      font-weight: 700;
+    span {
+      color: #ffb400;
       font-size: 20px;
-      display: flex;
-      align-items: center;
+    }
+  }
 
-      span {
-        color: #ffb400;
-        font-size: 20px;
+  .sort {
+    position: relative;
+
+    button {
+      margin-left: 10px;
+
+      .MuiButton-startIcon {
+        margin-right: 2px;
+      }
+
+      &.MuiButton-outlinedDarkGray:hover {
+        border-color: #89898980;
       }
     }
 
-    .sort {
-      position: relative;
+    .MuiFormControl-root {
+      height: 30px;
+      margin: 0;
 
-      button {
-        margin-left: 10px;
+      .MuiInputBase-root {
+        color: #898989;
+        font-size: 13px;
+        font-weight: 500;
+        line-height: 24px;
 
-        .MuiButton-startIcon {
-          margin-right: 2px;
+        &.Mui-focused .MuiOutlinedInput-notchedOutline {
+          border-color: rgba(137, 137, 137, 0.5019607843);
         }
 
-        &.MuiButton-outlinedDarkGray:hover {
-          border-color: #89898980;
-        }
-      }
-
-      .MuiFormControl-root {
-        height: 30px;
-        margin: 0;
-
-        .MuiInputBase-root {
-          color: #898989;
-          font-size: 13px;
-          font-weight: 500;
-          line-height: 24px;
-
-          &.Mui-focused .MuiOutlinedInput-notchedOutline {
-            border-color: rgba(137, 137, 137, 0.5019607843);
-          }
-
-          .MuiSelect-select {
-            padding: 3px 9px;
-            height: 24px;
-          }
+        .MuiSelect-select {
+          padding: 3px 9px;
+          height: 24px;
         }
       }
     }
   }
+}
 
-  .review-header-line {
-    border-bottom: 1px solid #bcbcbc;
-  }
+.review-header-line {
+  border-bottom: 1px solid #bcbcbc;
 }

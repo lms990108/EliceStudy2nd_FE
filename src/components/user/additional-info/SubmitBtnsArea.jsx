@@ -3,6 +3,7 @@ import "./SubmitBtnsArea.scss";
 import Button from "@mui/material/Button";
 import { AlertCustom } from "../../common/alert/Alerts";
 import { useNavigate } from "react-router-dom";
+import Backdrop from "@mui/material/Backdrop";
 
 export default function SubmitBtnsArea({ additionalUserInfo }) {
   const navigate = useNavigate();
@@ -75,17 +76,32 @@ export default function SubmitBtnsArea({ additionalUserInfo }) {
   return (
     <>
       {alert && (
-        <AlertCustom
-          severity={alert.severity}
-          title={alert.title}
-          content={alert.content}
-          open={Boolean(alert)}
-          checkBtn="확인"
-          onclick={alert.onclick}
-          closeBtn={alert.closeBtn ? "취소" : null}
-          onclose={alert.onclose}
-          btnCloseHidden={!alert.closeBtn}
-        />
+        <Backdrop
+          sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          open={open}
+          onClick={
+            alert.severity === "success"
+              ? () => navigate("/signup-in")
+              : () => setAlert(null)
+          }
+          onClose={
+            alert.severity === "success"
+              ? () => navigate("/signup-in")
+              : () => setAlert(null)
+          }
+        >
+          <AlertCustom
+            severity={alert.severity}
+            title={alert.title}
+            content={alert.content}
+            open={Boolean(alert)}
+            checkBtn="확인"
+            onclick={alert.onclick}
+            closeBtn={alert.closeBtn ? "취소" : null}
+            onclose={alert.onclose}
+            btnCloseHidden={!alert.closeBtn}
+          />
+        </Backdrop>
       )}
       <div className="submit-btns-area">
         <Button

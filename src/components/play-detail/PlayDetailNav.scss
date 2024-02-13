@@ -3,27 +3,25 @@
   border-bottom: 2px solid #222222;
 }
 
-@media (min-width: 900px) {
-  .play-detail-nav {
-    display: flex;
-    margin-top: 80px;
+.play-detail-nav {
+  display: flex;
+  margin-top: 80px;
 
-    div {
-      font-size: 20px;
-      font-weight: 700;
-      padding: 0 10px 15px 10px;
-      flex-grow: 1;
-      text-align: center;
+  div {
+    font-size: 20px;
+    font-weight: 700;
+    padding: 0 10px 15px 10px;
+    flex-grow: 1;
+    text-align: center;
 
-      &:hover {
-        cursor: pointer;
-        color: #222222;
-      }
+    &:hover {
+      cursor: pointer;
+      color: #222222;
     }
+  }
 
-    .unselected {
-      color: #bcbcbc;
-      border-bottom: 2px solid #bcbcbc;
-    }
+  .unselected {
+    color: #bcbcbc;
+    border-bottom: 2px solid #bcbcbc;
   }
 }

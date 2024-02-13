@@ -2,114 +2,42 @@
   display: none;
 }
 
-/*(반응형) 컴퓨터 사이즈에서 적용될 CSS*/
-@media (min-width: 1130px) {
-  .flex-layout {
+.flex-layout {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 5px 0;
+  border-bottom: 1px solid rgba(188, 188, 188, 0.5);
+
+  .condition-label {
+    width: 100px;
     display: flex;
+    justify-content: center;
     align-items: center;
-    flex-wrap: wrap;
-    padding: 5px 0;
-    border-bottom: 1px solid rgba(188, 188, 188, 0.5);
+    padding: 0 20px;
+    font-weight: 500;
+    border-right: 1.5px solid rgba(188, 188, 188, 0.5);
+  }
+
+  .condition-checkbox {
+    padding-left: 30px;
+    display: flex;
+    padding: 5px 0 5px 30px;
 
     .condition-label {
-      width: 100px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 0 20px;
-      font-weight: 500;
-      border-right: 1.5px solid rgba(188, 188, 188, 0.5);
+      margin: 0;
+      padding-right: 36px;
     }
 
-    .condition-checkbox {
-      padding-left: 30px;
-      display: flex;
-      padding: 5px 0 5px 30px;
-
-      .condition-label {
-        margin: 0;
-        padding-right: 36px;
-      }
-
-      label {
-        margin-right: 45px;
-      }
-    }
-
-    .date-picker {
-      input {
-        padding: 10px 0 10px 15px;
-        width: 150px;
-      }
+    label {
+      margin-right: 45px;
     }
   }
-}
 
-@media (min-width: 481px) and (max-width: 1129px) {
-  .flex-layout {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    padding: 5px 0;
-    border-bottom: 1px solid rgba(188, 188, 188, 0.5);
-
-    .condition-label {
-      width: 100px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 5px;
-      margin-left: 15px;
-      font-weight: 700;
-      border-bottom: 1.5px solid rgba(188, 188, 188, 0.5);
-    }
-
-    .condition-checkbox {
-      padding-left: 20px;
-      display: flex;
-      flex-wrap: wrap;
-
-      .condition-label {
-        margin: 0;
-        padding-right: 36px;
-      }
-
-      label {
-        margin-right: 45px;
-      }
-    }
-  }
-}
-
-@media (max-width: 480px) {
-  .flex-layout {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    padding: 15px 0;
-    border-bottom: 1px solid rgba(188, 188, 188, 0.5);
-
-    .condition-label {
-      width: 100px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding-bottom: 10px;
-      margin: 0 20px;
-      font-weight: 700;
-      border-bottom: 1.5px solid rgba(188, 188, 188, 0.5);
-    }
-
-    .condition-checkbox {
-      padding: 5px 0 0 20px;
-      width: 85%;
-      display: flex;
-      flex-wrap: wrap;
-
-      .condition-label {
-        margin: 0;
-        padding-right: 5px;
-      }
+  .date-picker {
+    input {
+      padding: 10px 0 10px 15px;
+      width: 150px;
     }
   }
 }

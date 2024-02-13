@@ -2,42 +2,40 @@
   display: none;
 }
 
-@media (min-width: 700px) {
-  .play-review-content-container {
-    background-color: #ffffff;
-    border-radius: 8px;
-    border: 1px solid rgba(188, 188, 188, 0.5);
-    margin: 20px 0;
-    padding: 15px 30px;
+.play-review-content-container {
+  background-color: #ffffff;
+  border-radius: 8px;
+  border: 1px solid rgba(188, 188, 188, 0.5);
+  margin: 20px 0;
+  padding: 15px 30px;
+  display: flex;
+  flex-direction: column;
+
+  .play-review-content {
+    line-height: 160%;
+  }
+
+  .review-photos {
     display: flex;
-    flex-direction: column;
 
-    .play-review-content {
-      line-height: 160%;
+    .play-review-photo {
+      width: 150px;
+      height: 150px;
+      padding-top: 15px;
+      padding-right: 15px;
+      cursor: zoom-in;
+      object-fit: cover;
     }
+  }
 
-    .review-photos {
-      display: flex;
+  .play-review-modify-btn {
+    display: flex;
+    justify-content: flex-end;
 
-      .play-review-photo {
-        width: 150px;
-        height: 150px;
-        padding-top: 15px;
-        padding-right: 15px;
-        cursor: zoom-in;
-        object-fit: cover;
-      }
-    }
-
-    .play-review-modify-btn {
-      display: flex;
-      justify-content: flex-end;
-
-      button {
-        width: 130px;
-        height: 40px;
-        font-size: 16px;
-      }
+    button {
+      width: 130px;
+      height: 40px;
+      font-size: 16px;
     }
   }
 }
