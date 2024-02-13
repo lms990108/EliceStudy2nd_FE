@@ -13,7 +13,7 @@ export default function NicknameContainer({
 
   // 닉네임 중복 확인
   const duplicationCheck = () => {
-    const nickname = nicknameInfo.nickname.trimStart();
+    const nickname = nicknameInfo.nickname;
 
     // 닉네임 길이부터 확인
     if (nickname.length === 0) {
@@ -25,7 +25,7 @@ export default function NicknameContainer({
     }
 
     // 특수 문자나 숫자가 닉네임에 포함되어 있는지를 확인
-    const regex = /[ !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?0-9`]/;
+    const regex = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?0-9`]/;
     if (regex.test(nickname)) {
       setAlert({
         severity: "error",
@@ -77,7 +77,10 @@ export default function NicknameContainer({
           inputProps={{ maxLength: 10 }}
           value={nicknameInfo.nickname}
           onChange={(e) =>
-            setNicknameInfo((pre) => ({ ...pre, nickname: e.target.value }))
+            setNicknameInfo((pre) => ({
+              ...pre,
+              nickname: e.target.value.trimStart(),
+            }))
           }
           disabled={alert && alert.severity === "success"}
         />

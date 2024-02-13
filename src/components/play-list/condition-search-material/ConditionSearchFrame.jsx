@@ -23,7 +23,7 @@ const marks = [
   { value: 70, label: "7만원" },
   { value: 80, label: "8만원" },
   { value: 90, label: "9만원" },
-  { value: 100, label: "전체" },
+  { value: 100, label: "10만원 이상" },
 ];
 
 function valuetext(value) {
