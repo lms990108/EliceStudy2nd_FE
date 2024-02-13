@@ -132,7 +132,7 @@ export function FreeBoardDetailPage() {
       ) : (
         <>
           <div className="free-board-left-container">
-            <BoardSecondHeader header="커뮤니티" onclick={() => nav(-1)} />
+            <BoardSecondHeader header="커뮤니티" onclick={() => nav("/community")} />
             {state === "loading" ? (
               <div className="progress-box">
                 <CircularProgress color="secondary" className="progress" />
