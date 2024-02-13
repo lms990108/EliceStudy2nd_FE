@@ -194,7 +194,7 @@ export function FreeBoardForm({ setInput, handleCancle }) {
           title={"teenybox.com 내용:"}
           content={"글 등록이 완료되었습니다!"}
           btnCloseHidden={true}
-          time={2000}
+          time={1000}
         />
       </Backdrop>
     </div>
