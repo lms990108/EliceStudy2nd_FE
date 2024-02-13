@@ -9,11 +9,11 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import FormHelperText from "@mui/material/FormHelperText";
 import { userUrl, uploadImgUrl, presignedUrl } from "../../apis/apiURLs";
 import { Alert, Backdrop, TextField } from "@mui/material";
-import { EditAttributes, ErrorOutline, ImageSearchRounded } from "@mui/icons-material";
+import { EditAttributes, ErrorOutline, ImageSearchRounded, WarningRounded } from "@mui/icons-material";
 import { AlertCustom } from "../common/alert/Alerts";
 import { useNavigate } from "react-router-dom";
 
-const regex = /[!@#$%^&*(),.?":{}|<>0-9]/;
+const regex = /[0-9]|[ \[\]{}()<>?|`~!@#$%^&*-_+=,.;:\"'\\]/;
 
 function MemberInfo({ user, setUserData }) {
   const [inputNickname, setInputNickname] = useState(user?.nickname);
@@ -107,6 +107,13 @@ function MemberInfo({ user, setUserData }) {
     console.log(data);
     if (res.ok) {
       setIsUnique(true);
+    } else {
+      setErrorNickname(
+        <div className="nick-err">
+          <WarningRounded sx={{ fontSize: 16, marginRight: "6px" }} />
+          중복된 닉네임 입니다.
+        </div>
+      );
     }
   };
 

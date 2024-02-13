@@ -108,11 +108,17 @@
       .textfield * {
         line-height: 1;
       }
+
       display: flex;
       align-items: center;
       padding: 20px 0;
       gap: 40px;
       border-bottom: 0.5px dotted black;
+
+      .nick-err {
+        display: flex;
+        align-items: center;
+      }
     }
   }
 
