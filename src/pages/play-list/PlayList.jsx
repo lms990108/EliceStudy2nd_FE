@@ -133,7 +133,7 @@ export function PlayList() {
         if (res.ok) {
           return res.json();
         } else {
-          setError("연극 목록을 가져오는 데 실패하였습니다.");
+          setError("연극 목록 가져오기에 실패하였습니다.");
         }
       })
       .then((data) => {
@@ -141,10 +141,13 @@ export function PlayList() {
         setPlays(data.shows);
         setPlayTotalCnt(data.total);
         setIsLoading(false);
+        setError(null);
       })
       .finally(() => setPrevPlayListQuery(null))
       .catch(() => {
-        setError("연극 목록을 가져오는 데 실패하였습니다.");
+        setError("연극 목록 가져오기에 실패하였습니다.");
+        setPlays(null);
+        setPlayTotalCnt(0);
         setIsAlertOpen(true);
         setIsLoading(false);
       });
@@ -236,7 +239,7 @@ export function PlayList() {
               />
             )}
           </Stack>
-          {!playTotalCnt ? (
+          {!playTotalCnt || error === "연극 목록 가져오기에 실패하였습니다." ? (
             <>
               <PlayListHeader
                 count={playTotalCnt}
