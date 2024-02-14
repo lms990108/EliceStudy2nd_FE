@@ -19,7 +19,6 @@ const columns = [
     renderCell: (data) => (
       <Link className="link" to={`/promotion/${data.promotion_number}`}>
         {data.value}
-        {console.log(data)}
       </Link>
     ),
   },
@@ -54,11 +53,10 @@ function MyPRBoard({ user, setUserData }) {
 
   const getPosts = async () => {
     setState("loading");
-    console.log(user.user_id);
+
     try {
       const res = await fetch(`${promotionUrl}/user/${user._id}`);
       const data = await res.json();
-      console.log(data);
 
       if (res.ok) {
         setPosts(
@@ -69,6 +67,7 @@ function MyPRBoard({ user, setUserData }) {
         setState("hasValue");
       } else {
         setState("hasError");
+        console.error(data);
       }
     } catch (err) {
       setState("hasError");
@@ -76,7 +75,6 @@ function MyPRBoard({ user, setUserData }) {
   };
 
   const handleDelete = async () => {
-    console.log(checkedList);
     try {
       const res = await fetch(`${promotionUrl}/bulk`, {
         method: "DELETE",
@@ -86,8 +84,6 @@ function MyPRBoard({ user, setUserData }) {
           promotionNumbers: checkedList,
         }),
       });
-      // const data = await res.json();
-      // console.log(data);
 
       if (res.ok) {
         let newPosts = [...posts];

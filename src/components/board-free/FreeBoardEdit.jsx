@@ -35,11 +35,12 @@ export function FreeBoardEditForm({ setInput, handleCancle, post }) {
           tags: tagList,
         }),
       });
-      const data = await res.json();
-      console.log(data);
 
       if (res.ok) {
         setOpenComplete(true);
+      } else {
+        const data = await res.json();
+        console.error(data);
       }
     } catch (e) {
       setOpenFetchErrorAlert(true);
@@ -107,7 +108,6 @@ export function FreeBoardEditForm({ setInput, handleCancle, post }) {
   }, [inputTitle, inputContent, tagList]);
 
   useEffect(() => {
-    console.log(post);
     if (post) {
       setInputTitle(post.title);
       setInputContent(post.content);

@@ -22,7 +22,6 @@ export default function CommunitySearchResult({ searchKeyword }) {
     try {
       const res = await fetch(`${postUrl}/search?type=${type}&query=${searchKeyword}&page=${page}&limit=10`);
       const data = await res.json();
-      console.log(data);
 
       if (res.ok) {
         setSearchResult(data.posts);
@@ -30,6 +29,7 @@ export default function CommunitySearchResult({ searchKeyword }) {
         setState("hasValue");
       } else {
         setState("hasError");
+        console.error(data);
       }
     } catch (err) {
       setState("hasError");

@@ -55,11 +55,10 @@ function MyPlayReview({ user, setUserData }) {
 
   const getReviews = async () => {
     setState("loading");
-    console.log(user.user_id);
+
     try {
       const res = await fetch(`${reviewUrl}?userId=${user.user_id}`);
       const data = await res.json();
-      console.log(data);
 
       if (res.ok) {
         setReviews(
@@ -70,6 +69,7 @@ function MyPlayReview({ user, setUserData }) {
         setState("hasValue");
       } else {
         setState("hasError");
+        console.error(data);
       }
     } catch (err) {
       setState("hasError");
@@ -86,8 +86,6 @@ function MyPlayReview({ user, setUserData }) {
           reviewIds: checkedList,
         }),
       });
-      const data = await res.json();
-      console.log(data);
 
       if (res.ok) {
         let newReviews = [...reviews];
@@ -107,6 +105,9 @@ function MyPlayReview({ user, setUserData }) {
           setUserData({ isLoggedIn: false });
           return nav(`/signup-in`);
         }
+      } else {
+        const data = await res.json();
+        console.error(data);
       }
     } catch (e) {
       setOpenFetchErrorAlert(true);

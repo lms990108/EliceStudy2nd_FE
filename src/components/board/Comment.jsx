@@ -35,7 +35,6 @@ export function Comment({ commentData, deleteComment }) {
         body: JSON.stringify({ content: inputComment }),
       });
       const data = await res.json();
-      console.log(data);
 
       if (res.ok) {
         setComment(data);
