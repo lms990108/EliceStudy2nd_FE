@@ -19,6 +19,13 @@ export default function PromotionSearchResult({ searchKeyword }) {
 
   const getPromotionSearchResult = async () => {
     setState("loading");
+
+    if (!searchKeyword.trim()) {
+      setSearchResult([]);
+      setState("hasValue");
+      return;
+    }
+
     try {
       const res = await fetch(`${promotionUrl}/search?type=${type}&query=${searchKeyword}&page=${page}&limit=10`);
       const data = await res.json();
