@@ -37,7 +37,7 @@ export function Comment({ commentData, deleteComment }) {
       const data = await res.json();
 
       if (res.ok) {
-        setComment(data);
+        setComment({ ...comment, content: data.content });
         setIsEditing(false);
       } else if (res.status === 401 || res.status === 403) {
         setUserData({ isLoggedIn: false });

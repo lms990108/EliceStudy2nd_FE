@@ -188,7 +188,7 @@ export function PRBoardEditForm({ setInput, handleCancle, post }) {
       }
       return data.public_url;
     } catch (e) {
-      console.log(e);
+      console.error(e);
       setOpenFetchErrorAlert(true);
     }
   };
