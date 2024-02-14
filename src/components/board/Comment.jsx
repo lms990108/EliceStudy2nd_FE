@@ -42,6 +42,8 @@ export function Comment({ commentData, deleteComment }) {
       } else if (res.status === 401 || res.status === 403) {
         setUserData({ isLoggedIn: false });
         nav("/signup-in");
+      } else {
+        console.error(data);
       }
     } catch (err) {
       setOpenFetchErrorAlert(true);

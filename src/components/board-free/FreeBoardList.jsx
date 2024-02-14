@@ -8,6 +8,7 @@ import numberFormat from "../../utils/numberFormat";
 import { DELETE_USER_NICKNAME } from "../../utils/const";
 
 export default function FreeBoardList({ boardList }) {
+  console.log(boardList);
   return (
     <div className="free-board-list-box">
       {boardList.map((post) => (

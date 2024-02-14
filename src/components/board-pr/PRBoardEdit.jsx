@@ -74,11 +74,11 @@ export function PRBoardEditForm({ setInput, handleCancle, post }) {
           host: inputHost || "",
         }),
       });
+      const data = await res.json();
 
       if (res.ok) {
         setOpenComplete(true);
       } else {
-        const data = await res.json();
         console.error(data);
       }
     } catch (e) {
@@ -170,9 +170,9 @@ export function PRBoardEditForm({ setInput, handleCancle, post }) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ key: file.name }),
       });
+      const data = await res.json();
 
       if (!res.ok) {
-        const data = await res.json();
         console.error(data);
         return false;
       }
@@ -188,6 +188,7 @@ export function PRBoardEditForm({ setInput, handleCancle, post }) {
       }
       return data.public_url;
     } catch (e) {
+      console.log(e);
       setOpenFetchErrorAlert(true);
     }
   };

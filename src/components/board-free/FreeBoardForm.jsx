@@ -35,11 +35,11 @@ export function FreeBoardForm({ setInput, handleCancle }) {
           tags: tagList,
         }),
       });
+      const data = await res.json();
 
       if (res.ok) {
         setOpenComplete(true);
       } else {
-        const data = await res.json();
         console.error(data);
       }
     } catch (e) {
