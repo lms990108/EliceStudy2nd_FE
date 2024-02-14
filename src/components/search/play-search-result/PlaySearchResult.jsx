@@ -3,14 +3,33 @@ import PlaySearchHeader from "./PlaySearchHeader";
 import PlaySearchContentBox from "./PlaySearchContentBox";
 import PlaySearchPagination from "./PlaySearchPagination";
 import EmptySearchResult from "../../common/state/EmptySearchResult";
+import ServerError from "../../common/state/ServerError";
 
-export default function PlaySearchResult({ playSearchResult, setPlaySearchResult, curPage, setCurPage, playTotalCnt, searchKeyword, setAlert, setSortStandard }) {
+export default function PlaySearchResult({
+  playSearchResult,
+  setPlaySearchResult,
+  curPage,
+  setCurPage,
+  playTotalCnt,
+  searchKeyword,
+  setAlert,
+  setSortStandard,
+  getPlaySearchResult,
+}) {
   return (
     <>
       <section className="play-search-result-container">
-        <PlaySearchHeader setSortStandard={setSortStandard} setCurPage={setCurPage} resultCnt={playTotalCnt} />
+        <PlaySearchHeader
+          setSortStandard={setSortStandard}
+          setCurPage={setCurPage}
+          resultCnt={playTotalCnt}
+        />
         <div className="play-search-content">
-          {playSearchResult.length ? (
+          {playSearchResult === "error" ? (
+            <div style={{ margin: "80px auto" }}>
+              <ServerError onClickBtn={() => getPlaySearchResult()} />
+            </div>
+          ) : playSearchResult.length ? (
             <>
               {playSearchResult.map((play, idx) => (
                 <PlaySearchContentBox
