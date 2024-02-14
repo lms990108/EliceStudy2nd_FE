@@ -133,14 +133,22 @@ export function BoardRightContainer({ post }) {
       getPopularList();
       getLatestList();
       getLatesTCommentList();
-      if (post?._id) {
-        setStoreViewList(post);
-      }
       getStoreViewList();
     } catch (e) {
       setOpenFetchErrorAlert(true);
     }
-  }, [params, post]);
+  }, []);
+
+  useEffect(() => {
+    try {
+      if (post?._id) {
+        setStoreViewList(post);
+        getStoreViewList();
+      }
+    } catch (e) {
+      setOpenFetchErrorAlert(true);
+    }
+  }, [post]);
 
   return (
     <div className="free-board-right-container">
