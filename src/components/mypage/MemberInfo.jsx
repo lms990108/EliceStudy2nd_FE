@@ -44,6 +44,7 @@ function MemberInfo({ user, setUserData }) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ key: file.name }),
       });
+      let data = await res.json();
 
       if (!res.ok) {
         if (res.status === 401 || res.status === 403) {

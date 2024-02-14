@@ -130,6 +130,9 @@ export function PRBoardDetailPage() {
 
   useEffect(() => {
     getPromotion();
+    setTotalCount(0);
+    setPage(1);
+    setComments([]);
   }, [params]);
 
   return (

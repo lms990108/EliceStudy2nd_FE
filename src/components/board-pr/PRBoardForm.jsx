@@ -74,13 +74,13 @@ export function PRBoardForm({ setInput, handleComplete, handleCancle }) {
           host: inputHost || "",
         }),
       });
+      const data = await res.json();
 
       if (res.ok) {
         setOpenComplete(true);
       } else {
+        console.error(data);
       }
-      const data = await res.json();
-      console.error(data);
     } catch (e) {
       setOpenFetchErrorAlert(true);
     }
@@ -170,9 +170,9 @@ export function PRBoardForm({ setInput, handleComplete, handleCancle }) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ key: file.name }),
       });
+      const data = await res.json();
 
       if (!res.ok) {
-        const data = await res.json();
         console.error(data);
         return false;
       }
@@ -188,6 +188,7 @@ export function PRBoardForm({ setInput, handleComplete, handleCancle }) {
       }
       return data.public_url;
     } catch (e) {
+      console.error(e);
       setOpenFetchErrorAlert(true);
     }
   };

@@ -14,13 +14,7 @@ export default function PRBoardPost({ data, totalCommentCount }) {
     <div className="pr-board-post">
       <PostTop user={data.user_id || { nickname: "user" }} type={"promotion"} post={data} totalCommentCount={totalCommentCount} />
       <div className="top-container">
-        <img
-          className="main-img pointer"
-          src={data.image_url[0] || empty_image}
-          onError={(e) => (e.target.src = empty_image)}
-          alt="홍보 포스터"
-          onClick={() => setOpenMainImg(true)}
-        />
+        <img className="main-img" src={data.image_url[0] || empty_image} onError={(e) => (e.target.src = empty_image)} alt="홍보 포스터" onClick={() => setOpenMainImg(true)} />
         <div className="flex-column">
           <div className="box">
             <div className="lable">타이틀</div>

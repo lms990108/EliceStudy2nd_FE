@@ -19,6 +19,13 @@ export default function CommunitySearchResult({ searchKeyword }) {
 
   const getCommunitySearchResult = async () => {
     setState("loading");
+
+    if (!searchKeyword.trim()) {
+      setSearchResult([]);
+      setState("hasValue");
+      return;
+    }
+
     try {
       const res = await fetch(`${postUrl}/search?type=${type}&query=${searchKeyword}&page=${page}&limit=10`);
       const data = await res.json();

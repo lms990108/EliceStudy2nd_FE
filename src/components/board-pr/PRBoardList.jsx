@@ -15,7 +15,7 @@ export default function PRBoardList({ newList }) {
           </Link>
           <div className="post-card-content">
             <div className={`title ${post.tags?.length ? "" : "tl-2"}`}>
-              <Link to={`${post.promotion_number}`}>{post.play_title}</Link>
+              <Link to={`${post.promotion_number}`}>{post.title}</Link>
             </div>
 
             <div className="date">
@@ -39,7 +39,7 @@ export default function PRBoardList({ newList }) {
             <ThumbUpOutlined sx={{ fontSize: 16 }} />
             <span>{numberFormat(post.likes || 0)}</span>
             <SmsOutlined sx={{ fontSize: 16 }} />
-            <span>{numberFormat(post.comments || 0)}</span>
+            <span>{numberFormat(post.commentsCount || 0)}</span>
           </div>
         </div>
       ))}

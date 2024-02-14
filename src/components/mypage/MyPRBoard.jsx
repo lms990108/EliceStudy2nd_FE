@@ -17,7 +17,7 @@ const columns = [
     field: "promotion_number",
     headerName: "번호",
     renderCell: (data) => (
-      <Link className="link" to={`/promotion/${data.promotion_number}`}>
+      <Link className="link" to={`/promotion/${data.value}`}>
         {data.value}
       </Link>
     ),
@@ -27,7 +27,7 @@ const columns = [
     headerName: "제목",
     width: 248,
     renderCell: (data) => (
-      <Link className="link" to={`/promotion/${data.promotion_number}`}>
+      <Link className="link" to={`/promotion/${data.row.promotion_number}`}>
         {data.value}
       </Link>
     ),
@@ -37,9 +37,7 @@ const columns = [
     field: "createdAt",
     headerName: "작성 시기",
     width: 200,
-    renderCell: (data) => (
-      <TimeFormat time={data.row.createdAt} type={"time"} />
-    ),
+    renderCell: (data) => <TimeFormat time={data.row.createdAt} type={"time"} />,
   },
 ];
 
@@ -119,12 +117,7 @@ function MyPRBoard({ user, setUserData }) {
         <div className="header">
           <h1>MY 홍보 게시글</h1>
           {!posts.length || (
-            <Button
-              onClick={() => setOpenAlert(true)}
-              variant="contained"
-              color="orange"
-              sx={{ width: "70px", height: "36px", color: "white" }}
-            >
+            <Button onClick={() => setOpenAlert(true)} variant="contained" color="orange" sx={{ width: "70px", height: "36px", color: "white" }}>
               <h4>삭제</h4>
             </Button>
           )}
@@ -153,10 +146,7 @@ function MyPRBoard({ user, setUserData }) {
           )}
         </div>
       </div>
-      <Backdrop
-        open={openAlert}
-        sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
-      >
+      <Backdrop open={openAlert} sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
         <AlertCustom
           severity="error"
           open={openAlert}

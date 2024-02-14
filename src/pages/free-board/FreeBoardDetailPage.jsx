@@ -130,6 +130,9 @@ export function FreeBoardDetailPage() {
 
   useEffect(() => {
     getPost();
+    setTotalCount(0);
+    setPage(1);
+    setComments([]);
   }, [params]);
 
   return (
