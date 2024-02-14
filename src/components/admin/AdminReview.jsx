@@ -2,20 +2,30 @@ import React, { useState, useEffect } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import "./AdminReview.scss";
 import Button from "@mui/material/Button";
+import TimeFormat from "../common/time/TimeFormat";
+import { AlertCustom } from "../common/alert/Alerts";
+import { Backdrop } from "@mui/material";
 
 const columns = [
-  { field: "id", headerName: "후기 번호", width: 100 },
-  { field: "title", headerName: "후기 제목", width: 180 },
-  { field: "user_nickname", headerName: "작성자", width: 120 },
-  { field: "show_title", headerName: "해당 공연 제목", width: 180 },
-  { field: "updated_at", headerName: "작성 시기", width: 150 },
+  { field: "_id", headerName: "후기 번호", width: 128 },
+  { field: "show_title", headerName: "해당 공연 제목", width: 128 },
+  { field: "title", headerName: "후기 제목", width: 128 },
+  { field: "rate", headerName: "평점", width: 128 },
+  { field: "user_nickname", headerName: "작성자", width: 128 },
+  {
+    field: "created_at",
+    headerName: "작성 시기",
+    width: 100,
+    renderCell: (data) => <TimeFormat time={data.createdAt} />,
+  },
 ];
 
 const AdminReview = () => {
+  const [openAlert, setOpenAlert] = useState(false);
+  const [openAlert2, setOpenAlert2] = useState(false);
   const [reviews, setReviews] = useState([]);
-  const [checkedList, setCheckedList] = useState([]);
 
-  useEffect(() => {
+  const fetchData = () => {
     fetch(`https://dailytopia2.shop/api/reviews`, {
       credentials: "include",
     })
@@ -25,7 +35,6 @@ const AdminReview = () => {
         if (Array.isArray(data.data) && data.data.length > 0) {
           const reviewsWithIds = data.data.map((review) => ({
             ...review,
-            id: review._id,
           }));
           setReviews(reviewsWithIds);
           console.log(reviewsWithIds);
@@ -34,13 +43,17 @@ const AdminReview = () => {
         }
       })
       .catch((err) => console.error(err));
+  };
+
+  useEffect(() => {
+    fetchData();
   }, []);
 
   const handleDelete = () => {
     // 선택된 후기의 ID 목록
-    const selectedReviewIds = checkedList
-      .filter((index) => index >= 0 && index < reviews.length)
-      .map((index) => reviews[index].id);
+    const selectedReviewIds = reviews
+      .filter((review) => review.selected)
+      .map((review) => review._id);
 
     // DELETE 요청 보내기
     fetch(`https://dailytopia2.shop/api/reviews`, {
@@ -54,6 +67,9 @@ const AdminReview = () => {
       .then((res) => res.json())
       .then((data) => {
         console.log(data); // 성공 또는 실패 메시지 확인
+        console.log(selectedReviewIds);
+        fetchData(); // 탈퇴 처리 후에 데이터 다시 불러오기
+        setOpenAlert2(true);
       })
       .catch((err) => console.error(err));
   };
@@ -67,7 +83,10 @@ const AdminReview = () => {
             variant="contained"
             color="moreDarkGray"
             sx={{ width: "80px", height: "40px", color: "white" }}
-            onClick={handleDelete} // 삭제 버튼 클릭 시 handleDelete 함수 호출
+            onClick={() => {
+              const hasSelectedReviews = reviews.some((review) => review.selected);
+              if (hasSelectedReviews) setOpenAlert(true);
+            }}
           >
             <h4>삭제</h4>
           </Button>
@@ -82,13 +101,43 @@ const AdminReview = () => {
               },
             }}
             checkboxSelection
-            disableRowSelectionOnClick
-            getRowId={(review) => review._id}
-            rowSelectionModel={checkedList}
-            onRowSelectionModelChange={(e) => setCheckedList(e)}
+            getRowId={(reviews) => reviews._id}
+            onRowSelectionModelChange={(selectionModel) => {
+              const updateReviews = reviews.map((review) => ({
+                ...review,
+                selected: selectionModel.includes(review._id),
+              }));
+              setReviews(updateReviews);
+            }}
           />
         </div>
       </div>
+      <Backdrop
+        open={openAlert}
+        sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
+      >
+        <AlertCustom
+          severity="error"
+          open={openAlert}
+          onclose={() => setOpenAlert(false)}
+          onclick={() => handleDelete()}
+          checkBtn={"확인"}
+          closeBtn={"취소"}
+          checkBtnColor={"#fa2828"}
+          title={"teenybox.com 내용:"}
+          width={500}
+          content={<p>선택하신 후기를 정말로 삭제시키시겠습니까?</p>}
+        />
+      </Backdrop>
+      <AlertCustom
+        severity="success"
+        open={openAlert2}
+        onclose={() => setOpenAlert2(false)}
+        title={"완료"}
+        width={500}
+        content={<p>선택하신 후기가 정상적으로 삭제되었습니다.</p>}
+        time={1000}
+      />
     </>
   );
 };

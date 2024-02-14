@@ -40,6 +40,7 @@ const Footer = () => {
           open={alert.open}
           onclose={alert.onclose}
           severity={alert.severity}
+          time={1000}
         />
       )}
       <div className="footer-nav">
@@ -61,21 +62,23 @@ const Footer = () => {
       <div className="footer-container">
         <div className="footer-inner-box">
           <p className="footer-comment">
-            사이트 이용 중에 불편한 점이나 피드백이 있으시면 <a className="footer-text-link"
-            href="https://docs.google.com/forms/d/e/1FAIpQLSfVEaTNtLfpYnCg1RFbDj77CI-2yrTLam9f8LoruiFaLi44Yw/viewform?usp=sf_link"
-            target="_blank"
-            rel="noopener noreferrer"
-          >위 링크</a>를 통해
-            의견을 보내주시면 감사하겠습니다.
+            사이트 이용 중에 불편한 점이나 피드백이 있으시면{" "}
+            <a
+              className="footer-text-link"
+              href="https://docs.google.com/forms/d/e/1FAIpQLSfVEaTNtLfpYnCg1RFbDj77CI-2yrTLam9f8LoruiFaLi44Yw/viewform?usp=sf_link"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              위 링크
+            </a>
+            를 통해 의견을 보내주시면 감사하겠습니다.
           </p>
           <p className="footer-inner">
             주소: (04799) 서울특별시 성동구 아차산로17길 48 성수낙낙 2층
           </p>
           <p className="footer-inner">
             <span className="footer-span1">대표: 이민섭</span>
-            <span className="footer-span2">
-              E-mail: teenybox2023@gmail.com
-            </span>
+            <span className="footer-span2">E-mail: teenybox2023@gmail.com</span>
           </p>
           <p className="footer-copyright">
             COPYRIGHT © KOREA PERFORMING ARTS BOX OFFICE INFORMATION SYSTEM

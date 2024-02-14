@@ -35,7 +35,14 @@ const columns = [
   },
   { field: "content", headerName: "내용", width: 200 },
   { field: "rate", headerName: "별점", width: 100 },
-  { field: "created_at", headerName: "작성 시기", width: 150, renderCell: (data) => <TimeFormat time={data.row.createdAt} type={"time"} /> },
+  {
+    field: "created_at",
+    headerName: "작성 시기",
+    width: 150,
+    renderCell: (data) => (
+      <TimeFormat time={data.row.createdAt} type={"time"} />
+    ),
+  },
 ];
 
 function MyPlayReview({ user, setUserData }) {
@@ -117,7 +124,13 @@ function MyPlayReview({ user, setUserData }) {
         <div className="header">
           <h1>MY 연극 리뷰</h1>
           {!reviews.length || (
-            <Button onClick={() => setOpenAlert(true)} disabled={!checkedList.length} variant="contained" color="orange" sx={{ width: "70px", height: "36px", color: "white" }}>
+            <Button
+              onClick={() => setOpenAlert(true)}
+              disabled={!checkedList.length}
+              variant="contained"
+              color="orange"
+              sx={{ width: "70px", height: "36px", color: "white" }}
+            >
               삭제
             </Button>
           )}
@@ -146,7 +159,10 @@ function MyPlayReview({ user, setUserData }) {
           )}
         </div>
       </div>
-      <Backdrop open={openAlert} sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
+      <Backdrop
+        open={openAlert}
+        sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
+      >
         <AlertCustom
           severity="error"
           open={openAlert}
