@@ -9,6 +9,7 @@ import { postUrl } from "../../apis/apiURLs";
 import { AlertContext } from "../../App";
 
 export function FreeBoardEditForm({ setInput, handleCancle, post }) {
+  console.log(post);
   const [submit, setSubmit] = useState(false);
   const [openSubmit, setOpenSubmit] = useState(false);
   const [openComplete, setOpenComplete] = useState(false);
@@ -111,6 +112,7 @@ export function FreeBoardEditForm({ setInput, handleCancle, post }) {
     if (post) {
       setInputTitle(post.title);
       setInputContent(post.content);
+      setTagList(post.tags);
     }
   }, [post]);
 
@@ -151,7 +153,7 @@ export function FreeBoardEditForm({ setInput, handleCancle, post }) {
         {tagList && (
           <div className="tag-list flex">
             {tagList.map((tag, idx) => (
-              <div id={idx} className="tag-box flex">
+              <div key={tag + idx} id={idx} className="tag-box flex">
                 <span># {tag} </span>
                 <IconButton onClick={handleRemoveTag} size="small" sx={{ padding: "2px", fontSize: 14, marginLeft: "4px" }}>
                   <CloseIcon fontSize="inherit" />
