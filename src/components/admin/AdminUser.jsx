@@ -14,9 +14,9 @@ const columns = [
   { field: "state", headerName: "회원 상태", width: 128 },
   {
     field: "createdAt",
-    headerName: "작성 시기",
+    headerName: "가입 시기",
     width: 100,
-    renderCell: (data) => <TimeFormat time={data.createdAt} />,
+    renderCell: (data) => <TimeFormat time={data.row.createdAt} />,
   },
 ];
 
@@ -36,6 +36,7 @@ const AdminUser = () => {
             ...user,
           }));
           setUsers(usersWithIds);
+          console.log(data);
         } else {
           console.error("No user data found");
         }

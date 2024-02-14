@@ -5,6 +5,7 @@ import Button from "@mui/material/Button";
 import TimeFormat from "../common/time/TimeFormat";
 import { AlertCustom } from "../common/alert/Alerts";
 import { Backdrop } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const columns = [
   { field: "_id", headerName: "댓글 번호", width: 213 },
@@ -14,7 +15,7 @@ const columns = [
     field: "createdAt",
     headerName: "작성 시기",
     width: 100,
-    renderCell: (data) => <TimeFormat time={data.createdAt} />,
+    renderCell: (data) => <TimeFormat time={data.row.createdAt} />,
   },
 ];
 
@@ -22,6 +23,8 @@ const AdminPRComments = () => {
   const [openAlert, setOpenAlert] = useState(false);
   const [openAlert2, setOpenAlert2] = useState(false);
   const [comments, setComments] = useState([]);
+
+  const navigate = useNavigate();
 
   const fetchData = () => {
     fetch(`https://dailytopia2.shop/api/comments/admins/promotions`)
@@ -80,7 +83,9 @@ const AdminPRComments = () => {
             color="moreDarkGray"
             sx={{ width: "80px", height: "40px", color: "white" }}
             onClick={() => {
-              const hasSelectedComments = comments.some((comment) => comment.selected);
+              const hasSelectedComments = comments.some(
+                (comment) => comment.selected
+              );
               if (hasSelectedComments) setOpenAlert(true);
             }}
           >
@@ -89,6 +94,10 @@ const AdminPRComments = () => {
         </div>
         <div style={{ height: "631px", width: "800px" }}>
           <DataGrid
+            onRowClick={(params) => {
+              const promotionNumber = params.row.promotion.promotion_number;
+              navigate(`/promotion/${promotionNumber}`);
+            }}
             rows={comments}
             columns={columns}
             initialState={{

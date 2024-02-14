@@ -5,6 +5,7 @@ import Button from "@mui/material/Button";
 import TimeFormat from "../common/time/TimeFormat";
 import { AlertCustom } from "../common/alert/Alerts";
 import { Backdrop } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const columns = [
   { field: "_id", headerName: "후기 번호", width: 128 },
@@ -16,7 +17,7 @@ const columns = [
     field: "created_at",
     headerName: "작성 시기",
     width: 100,
-    renderCell: (data) => <TimeFormat time={data.createdAt} />,
+    renderCell: (data) => <TimeFormat time={data.row.createdAt} />,
   },
 ];
 
@@ -24,6 +25,8 @@ const AdminReview = () => {
   const [openAlert, setOpenAlert] = useState(false);
   const [openAlert2, setOpenAlert2] = useState(false);
   const [reviews, setReviews] = useState([]);
+
+  const navigate = useNavigate();
 
   const fetchData = () => {
     fetch(`https://dailytopia2.shop/api/reviews`, {
@@ -84,7 +87,9 @@ const AdminReview = () => {
             color="moreDarkGray"
             sx={{ width: "80px", height: "40px", color: "white" }}
             onClick={() => {
-              const hasSelectedReviews = reviews.some((review) => review.selected);
+              const hasSelectedReviews = reviews.some(
+                (review) => review.selected
+              );
               if (hasSelectedReviews) setOpenAlert(true);
             }}
           >
@@ -93,6 +98,10 @@ const AdminReview = () => {
         </div>
         <div style={{ height: "631px", width: "800px" }}>
           <DataGrid
+            onRowClick={(params) => {
+              const showNumber = params.row.show_id;
+              navigate(`/Play/${showNumber}`);
+            }}
             rows={reviews}
             columns={columns}
             initialState={{
