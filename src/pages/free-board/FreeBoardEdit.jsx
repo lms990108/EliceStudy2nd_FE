@@ -24,8 +24,9 @@ export function FreeBoardEdit() {
     try {
       const res = await fetch(`${postUrl}/${params.postId}`);
       const data = await res.json();
-      console.log(data);
+
       if (!res.ok) {
+        console.error(data);
         nav("/not-found");
         return;
       }

@@ -45,12 +45,11 @@ export function PRBoardListPage() {
 
   const getPage = async (curPage, method) => {
     setState("loading");
+
     const [by, order] = sort.split(" ");
-    console.log(by, order);
     try {
       const res = await fetch(`${promotionUrl}?page=${curPage || page}&limit=20&sortBy=${by}&sortOrder=${order}&category=${category}`);
       const data = await res.json();
-      console.log(data);
 
       if (res.ok) {
         if (data.totalCount) {
@@ -61,6 +60,7 @@ export function PRBoardListPage() {
         setState("hasValue");
       } else {
         setState("hasError");
+        console.error(data);
       }
     } catch (err) {
       setState("hasError");

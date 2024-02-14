@@ -100,7 +100,6 @@ export function BoardRightContainer({ post }) {
     });
 
     setLatestList(newList.slice(0, 5));
-    console.log(newList);
   };
 
   const getLatesTCommentList = async () => {
@@ -127,7 +126,6 @@ export function BoardRightContainer({ post }) {
     });
 
     setLatestCommentList(newList.slice(0, 5));
-    console.log(newList);
   };
 
   useEffect(() => {

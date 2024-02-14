@@ -53,7 +53,6 @@ function MyFreeBoard({ user, setUserData }) {
     try {
       const res = await fetch(`${postUrl}/user/${user._id}`);
       const data = await res.json();
-      console.log(data);
 
       if (res.ok) {
         setPosts(
@@ -64,6 +63,7 @@ function MyFreeBoard({ user, setUserData }) {
         setState("hasValue");
       } else {
         setState("hasError");
+        console.error(data);
       }
     } catch (err) {
       setState("hasError");
@@ -71,7 +71,6 @@ function MyFreeBoard({ user, setUserData }) {
   };
 
   const handleDelete = async () => {
-    console.log(checkedList);
     try {
       const res = await fetch(`${postUrl}/bulk`, {
         method: "DELETE",
@@ -81,8 +80,6 @@ function MyFreeBoard({ user, setUserData }) {
           postNumbers: checkedList,
         }),
       });
-      // const data = await res.json();
-      // console.log(data);
 
       if (res.ok) {
         let newPosts = [...posts];

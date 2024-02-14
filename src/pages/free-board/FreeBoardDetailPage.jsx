@@ -29,7 +29,6 @@ export function FreeBoardDetailPage() {
       const postId = params.postId;
       const res = await fetch(`${postUrl}/${postId}`);
       const data = await res.json();
-      console.log(data);
 
       if (res.ok) {
         setPost(data);
@@ -37,6 +36,7 @@ export function FreeBoardDetailPage() {
       } else {
         setPost();
         setState("hasError");
+        console.error(data);
       }
     } catch (err) {
       setState("hasError");
@@ -50,7 +50,6 @@ export function FreeBoardDetailPage() {
     try {
       const res = await fetch(`${commentUrl}/posts/${post._id}?page=${page}&limit=${COMMENTS_LIMIT}`);
       const data = await res.json();
-      console.log(data);
 
       if (res.ok) {
         setComments([...comments, ...data.comments]);
@@ -59,6 +58,7 @@ export function FreeBoardDetailPage() {
         setCommentState("hasValue");
       } else {
         setCommentState("hasError");
+        console.error(data);
       }
     } catch (err) {
       setCommentState("hasError");
@@ -77,7 +77,6 @@ export function FreeBoardDetailPage() {
         }),
       });
       const data = await res.json();
-      console.log(data);
       const newComment = { ...data, user: { nickname: userData.user.nickname, profile_url: userData.user.profile_url, state: "가입", _id: userData.user._id } };
 
       if (res.ok) {
@@ -92,6 +91,8 @@ export function FreeBoardDetailPage() {
           setUserData({ isLoggedIn: false });
           setOpenLoginAlertBack(true);
         }
+      } else {
+        console.error(data);
       }
     } catch (e) {
       setOpenFetchErrorAlert(true);
@@ -105,7 +106,6 @@ export function FreeBoardDetailPage() {
     try {
       const res = await fetch(`${commentUrl}/posts/${post._id}?page=1&limit=${COMMENTS_LIMIT}`);
       const data = await res.json();
-      console.log(data);
 
       if (res.ok) {
         setComments(data.comments);
@@ -114,6 +114,7 @@ export function FreeBoardDetailPage() {
         setCommentState("hasValue");
       } else {
         setCommentState("hasError");
+        console.error(data);
       }
     } catch (err) {
       setCommentState("hasError");

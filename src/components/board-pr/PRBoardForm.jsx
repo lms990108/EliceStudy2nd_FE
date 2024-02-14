@@ -74,12 +74,13 @@ export function PRBoardForm({ setInput, handleComplete, handleCancle }) {
           host: inputHost || "",
         }),
       });
-      const data = await res.json();
-      console.log(data);
 
       if (res.ok) {
         setOpenComplete(true);
+      } else {
       }
+      const data = await res.json();
+      console.error(data);
     } catch (e) {
       setOpenFetchErrorAlert(true);
     }
@@ -128,7 +129,6 @@ export function PRBoardForm({ setInput, handleComplete, handleCancle }) {
   };
 
   const handleErrorDate = (error) => {
-    console.log(error);
     setErrorDate("날짜를 선택해주세요.");
   };
 
@@ -170,10 +170,10 @@ export function PRBoardForm({ setInput, handleComplete, handleCancle }) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ key: file.name }),
       });
-      const data = await res.json();
-      console.log(data);
 
       if (!res.ok) {
+        const data = await res.json();
+        console.error(data);
         return false;
       }
 
@@ -193,7 +193,6 @@ export function PRBoardForm({ setInput, handleComplete, handleCancle }) {
   };
 
   const handleChangeMainImage = async (e) => {
-    console.log(e.target.files);
     if (!e.target.files.length) return;
     const file = e.target.files[0];
 
@@ -209,7 +208,6 @@ export function PRBoardForm({ setInput, handleComplete, handleCancle }) {
       let image = new Image();
       image.src = data;
       image.onload = function () {
-        console.log(image, image.width, image.height);
         if (image.width > image.height) {
           setWarningMainImage("red");
         } else {
@@ -244,7 +242,6 @@ export function PRBoardForm({ setInput, handleComplete, handleCancle }) {
 
       if (data) {
         newImg.push(data);
-        console.log(newImage);
       } else {
         error = error || "사진 업로드에 실패했습니다. 다시 시도해주세요.";
       }

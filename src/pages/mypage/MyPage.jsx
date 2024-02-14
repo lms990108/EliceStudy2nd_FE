@@ -62,13 +62,11 @@ export default function MyPage() {
   };
 
   useEffect(() => {
-    console.log(searchParams.get("tab"));
     searchParams.set("tab", selectedComponent);
     setSearchParams(searchParams);
   }, [selectedComponent]);
 
   useEffect(() => {
-    console.log(searchParams.get("tab"));
     setSelectedComponent(searchParams.get("tab") || "MemberInfo");
     isLoggedIn();
   }, [searchParams]);

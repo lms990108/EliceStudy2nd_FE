@@ -33,7 +33,6 @@ export function FreeBoardListPage() {
       const [by, order] = sort.split(" ");
       const res = await fetch(`${postUrl}?page=${page}&limit=10&sortBy=${by}&sortOrder=${order}`);
       const data = await res.json();
-      console.log(data);
 
       if (res.ok) {
         setBoardList(data.posts);
@@ -41,6 +40,7 @@ export function FreeBoardListPage() {
         setState("hasValue");
       } else {
         setState("hasError");
+        console.error(data);
       }
     } catch (err) {
       setState("hasError");

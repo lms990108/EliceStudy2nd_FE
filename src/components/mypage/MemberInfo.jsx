@@ -44,8 +44,6 @@ function MemberInfo({ user, setUserData }) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ key: file.name }),
       });
-      const data = await res.json();
-      console.log(data);
 
       if (!res.ok) {
         if (res.status === 401 || res.status === 403) {
@@ -57,6 +55,9 @@ function MemberInfo({ user, setUserData }) {
             setUserData({ isLoggedIn: false });
             return nav(`/signup-in`);
           }
+        } else {
+          const data = await res.json();
+          console.error(data);
         }
         return setErrorImage("사진 업로드에 실패했습니다. 다시 시도해주세요");
       }
@@ -111,8 +112,7 @@ function MemberInfo({ user, setUserData }) {
           nickname: inputNickname.trim(),
         }),
       });
-      const data = await res.json();
-      console.log(data);
+
       if (res.ok) {
         setIsUnique(true);
       } else {
@@ -143,9 +143,7 @@ function MemberInfo({ user, setUserData }) {
         credentials: "include",
         body: JSON.stringify(bodyData),
       });
-      const data = await res.json();
 
-      console.log(data);
       if (res.ok) {
         setUserData({ isLoggedIn: true, user: { ...user, ...bodyData } });
         setOpenComplete(true);
@@ -160,6 +158,9 @@ function MemberInfo({ user, setUserData }) {
           setUserData({ isLoggedIn: false });
           return nav(`/signup-in`);
         }
+      } else {
+        const data = await res.json();
+        console.error(data);
       }
     } catch (e) {
       setOpenFetchErrorAlert(true);

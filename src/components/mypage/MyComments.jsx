@@ -48,7 +48,6 @@ function MyComments({ user, setUserData }) {
     try {
       const res = await fetch(`${commentUrl}/users`, { credentials: "include" });
       const data = await res.json();
-      console.log(data);
 
       if (res.ok) {
         setComments(
@@ -59,6 +58,7 @@ function MyComments({ user, setUserData }) {
         setState("hasValue");
       } else {
         setState("hasError");
+        console.error(data);
       }
     } catch (err) {
       setState("hasError");
@@ -75,8 +75,6 @@ function MyComments({ user, setUserData }) {
           commentIds: checkedList,
         }),
       });
-      const data = await res.json();
-      console.log(data);
 
       if (res.ok) {
         let newComments = [...comments];
@@ -96,6 +94,9 @@ function MyComments({ user, setUserData }) {
           setUserData({ isLoggedIn: false });
           return nav(`/signup-in`);
         }
+      } else {
+        const data = await res.json();
+        console.error(data);
       }
     } catch (e) {
       setOpenFetchErrorAlert(true);

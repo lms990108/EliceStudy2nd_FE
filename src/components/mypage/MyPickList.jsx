@@ -24,7 +24,6 @@ function MyPickList({ user, setUserData }) {
     try {
       const res = await fetch(`${userUrl}/bookmarks?page=${page}&limit=6`, { credentials: "include" });
       const data = await res.json();
-      console.log(data);
 
       if (res.ok) {
         setBookmarks(data.bookmarks.validShows);
@@ -32,6 +31,7 @@ function MyPickList({ user, setUserData }) {
         setState("hasValue");
       } else {
         setState("hasError");
+        console.error(data);
       }
     } catch (err) {
       setState("hasError");
@@ -43,7 +43,6 @@ function MyPickList({ user, setUserData }) {
   };
 
   const handleChangeChecked = (e) => {
-    console.log(e.target.value);
     if (e.target.checked) {
       setCheckedList((cur) => [...cur, e.target.value]);
     } else {
@@ -61,8 +60,6 @@ function MyPickList({ user, setUserData }) {
           showIds: checkedList,
         }),
       });
-      const data = await res.json();
-      console.log(data);
 
       if (res.ok) {
         if (bookmarks.length <= checkedList.length) {
@@ -80,6 +77,9 @@ function MyPickList({ user, setUserData }) {
           setUserData({ isLoggedIn: false });
           return nav(`/signup-in`);
         }
+      } else {
+        const data = await res.json();
+        console.error(data);
       }
     } catch (e) {
       setOpenFetchErrorAlert(true);

@@ -15,8 +15,6 @@ export function CommentsList({ comments, totalCount, getComments, setComments, s
   const deleteOneComment = async (_id) => {
     try {
       const res = await fetch(`${commentUrl}/${_id}`, { method: "DELETE", credentials: "include" });
-      const data = await res.json();
-      console.log(data);
 
       if (res.ok) {
         const newComments = uniqueComments.filter((current) => current._id !== _id);
@@ -26,6 +24,9 @@ export function CommentsList({ comments, totalCount, getComments, setComments, s
       } else if (res.status === 401 || res.status === 403) {
         setUserData({ isLoggedIn: false });
         nav("/signup-in");
+      } else {
+        const data = await res.json();
+        console.error(data);
       }
     } catch {
       setOpenFetchErrorAlert(true);

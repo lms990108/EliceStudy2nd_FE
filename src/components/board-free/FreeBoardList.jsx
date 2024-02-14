@@ -1,22 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import "./FreeBoardList.scss";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { SmsOutlined, ThumbUpOutlined, VisibilityOutlined } from "@mui/icons-material";
 import LiveTimeDiff from "../common/time/LiveTimeDiff";
 import default_user_img from "../../assets/img/default_user_img.svg";
-import formatLargeNumber from "../../utils/numberFormat";
 import numberFormat from "../../utils/numberFormat";
 import { DELETE_USER_NICKNAME } from "../../utils/const";
 
 export default function FreeBoardList({ boardList }) {
-  const nav = useNavigate();
-
-  const handleClick = (e) => {
-    const postId = e.currentTarget.id;
-    console.log(postId);
-    nav(`/community/${postId}`);
-  };
-
   return (
     <div className="free-board-list-box">
       {boardList.map((post) => (

@@ -25,8 +25,9 @@ export function PRBoardEdit() {
     try {
       const res = await fetch(`${promotionUrl}/${params.postId}`);
       const data = await res.json();
-      console.log(data);
+
       if (!res.ok) {
+        console.error(data);
         nav("/not-found");
         return;
       }

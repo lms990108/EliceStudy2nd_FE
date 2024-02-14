@@ -22,7 +22,6 @@ export default function PromotionSearchResult({ searchKeyword }) {
     try {
       const res = await fetch(`${promotionUrl}/search?type=${type}&query=${searchKeyword}&page=${page}&limit=10`);
       const data = await res.json();
-      console.log(data);
 
       if (res.ok) {
         setSearchResult(data.promotions);
@@ -30,6 +29,7 @@ export default function PromotionSearchResult({ searchKeyword }) {
         setState("hasValue");
       } else {
         setState("hasError");
+        console.error(data);
       }
     } catch (err) {
       setState("hasError");

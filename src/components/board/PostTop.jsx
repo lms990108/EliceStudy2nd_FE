@@ -52,25 +52,27 @@ export function PostTop({ user, type, post, commentsCnt }) {
     try {
       if (isLiked) {
         const res = await fetch(url, { method: "DELETE", credentials: "include" });
-        const data = await res.json();
-        console.log(data);
 
         if (res.ok) {
           setIsLiked(false);
           setLikes((cur) => cur - 1);
         } else if (res.status === 403) {
           setOpenLoginAlert(true);
+        } else {
+          const data = await res.json();
+          console.error(data);
         }
       } else {
         const res = await fetch(url, { method: "POST", credentials: "include" });
-        const data = await res.json();
-        console.log(data);
 
         if (res.ok) {
           setIsLiked(true);
           setLikes((cur) => cur + 1);
         } else if (res.status === 403) {
           setOpenLoginAlert(true);
+        } else {
+          const data = await res.json();
+          console.error(data);
         }
       }
     } catch (e) {
@@ -85,10 +87,12 @@ export function PostTop({ user, type, post, commentsCnt }) {
         method: "DELETE",
         credentials: "include",
       });
-      const data = await res.json();
-      console.log(data);
+
       if (res.ok) {
         nav(`/${type}`);
+      } else {
+        const data = await res.json();
+        console.error(data);
       }
     } catch (e) {
       setOpenFetchErrorAlert(true);
@@ -139,7 +143,6 @@ export function PostTop({ user, type, post, commentsCnt }) {
   }, [openShareBox]);
 
   useEffect(() => {
-    console.log(userData, user);
     if (userData?.user?.nickname === user?.nickname) {
       setIsWriter(true);
     }

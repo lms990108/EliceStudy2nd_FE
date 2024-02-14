@@ -15,8 +15,6 @@ function MemberDeletion({ user, setUserData }) {
   const handleDelete = async () => {
     try {
       const res = await fetch(`${userUrl}`, { method: "DELETE", credentials: "include" });
-      const data = await res.json();
-      console.log(data);
 
       if (res.ok) {
         setUserData({ isLoggedIn: false });
@@ -29,6 +27,9 @@ function MemberDeletion({ user, setUserData }) {
           setUserData({ isLoggedIn: false });
           return nav(`/signup-in`);
         }
+      } else {
+        const data = await res.json();
+        console.error(data);
       }
     } catch (e) {
       setOpenFetchErrorAlert(true);
