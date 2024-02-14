@@ -47,6 +47,8 @@ function App() {
           // 두 번째 시도 자체가 실패하면 isLoggedIn을 false로 설정
           setUserData({ isLoggedIn: false });
         }
+      } else {
+        setUserData({ isLoggedIn: false });
       }
     } catch (err) {
       console.error(err);
@@ -60,7 +62,11 @@ function App() {
   return (
     <div className="App">
       <Helmet>
-        <script type="text/javascript" defer src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.REACT_APP_KAKAO_MAP_API_KEY}&autoload=false`} />
+        <script
+          type="text/javascript"
+          defer
+          src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.REACT_APP_KAKAO_MAP_API_KEY}&autoload=false`}
+        />
       </Helmet>
       <ThemeProvider theme={theme}>
         <AppContext.Provider
