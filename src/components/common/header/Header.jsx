@@ -71,7 +71,7 @@ const Header = () => {
         onclose={handleClose}
         title="로그아웃"
         content={<div>정상적으로 로그아웃 되었습니다.</div>}
-        time={1500}
+        time={1000}
         severity="success"
         width={450}
         color="secondary"

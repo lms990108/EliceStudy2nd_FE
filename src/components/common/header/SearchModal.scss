@@ -117,13 +117,20 @@
   margin-top: 14px;
 }
 .recent-search-contents {
-  margin: 2px 8px;
+  margin: 4px 8px;
 }
 .recent-search-text {
   display: inline-block;
+  font-size: 16px;
   color: #898989;
 }
 .recent-search-text:hover {
   color: #555555;
+  font-weight: 500;
   cursor: pointer;
+}
+.no-recent-search-text {
+  margin-top: 12px;
+  color: #ababab;
+  font-size: 20px;
 }
