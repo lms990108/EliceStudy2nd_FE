@@ -78,9 +78,10 @@ export function FreeBoardDetailPage() {
       });
       const data = await res.json();
       console.log(data);
+      const newComment = { ...data, user: { nickname: userData.user.nickname, profile_url: userData.user.profile_url, state: "가입", _id: userData.user._id } };
 
       if (res.ok) {
-        setComments([data, ...comments]);
+        setComments([newComment, ...comments]);
         setTotalCount(totalCount + 1);
       } else if (res.status === 401 || res.status === 403) {
         const loginRes = await fetch(`${userUrl}`, { credentials: "include" });
@@ -99,6 +100,7 @@ export function FreeBoardDetailPage() {
 
   const handleRefreshComments = async () => {
     setCommentState("loading");
+    setComments([]);
 
     try {
       const res = await fetch(`${commentUrl}/posts/${post._id}?page=1&limit=${COMMENTS_LIMIT}`);
